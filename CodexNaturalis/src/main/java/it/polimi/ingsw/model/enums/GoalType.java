@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.enums;
 
-public enum Types {
+public enum GoalType {
     POSITION,
     SET
 }
