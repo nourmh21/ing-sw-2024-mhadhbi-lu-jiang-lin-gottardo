@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.enums.CardType;
 import java.util.List;
 
 public class GoldCard extends Card{
-    private List<Symbols> condition;
+    private List<Symbol> condition;
     private Symbol basicPointCriterion;
 
 
