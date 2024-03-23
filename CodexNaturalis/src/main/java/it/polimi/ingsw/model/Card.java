@@ -1,6 +1,6 @@
-package it.polimi.ingsw;
-import it.polimi.ingsw.enums.Symbols;
-import it.polimi.ingsw.enums.Types;
+package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.enums.Symbols;
+import it.polimi.ingsw.model.enums.Types;
 
 public class Card {
     private Symbols kingdom;

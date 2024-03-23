@@ -1,7 +1,7 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.enums.Symbols;
-import it.polimi.ingsw.enums.Types;
+import it.polimi.ingsw.model.enums.Symbols;
+import it.polimi.ingsw.model.enums.Types;
 
 public class InitialCard extends Card{
     private Symbols[] centerResource;
