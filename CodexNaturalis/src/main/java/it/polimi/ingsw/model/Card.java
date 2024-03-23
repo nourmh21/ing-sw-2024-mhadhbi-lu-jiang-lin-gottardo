@@ -22,7 +22,7 @@ public class Card {
      * @param isBackSide specifies if the card is representing its corresponding back
      * @param type
      */
-    public Card(Symbols kingdom, int x, int y, Symbols topLeftAngle, Symbols topRightAngle, Symbols bottomLeftAngle, Symbols bottomRightAngle, int points, boolean isBackSide, Types type) {
+    public Card(Symbols kingdom, int x, int y, Symbols topLeftAngle, Symbols topRightAngle, Symbols bottomRightAngle,Symbols bottomLeftAngle,  int points, boolean isBackSide, Types type) {
         this.kingdom = kingdom;
         this.x = x;
         this.y = y;

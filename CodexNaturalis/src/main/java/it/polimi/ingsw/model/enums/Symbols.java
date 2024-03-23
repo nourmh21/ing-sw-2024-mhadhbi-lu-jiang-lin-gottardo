@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model.enums;
 
 public enum Symbols {
-    ANIMAL_KINGDOM,
-    PLANT_KINGDOM,
-    MUSHROOM_KINGDOM,
-    INSECTS_KINGDOM,
+    ANIMAL,
+    PLANT,
+    FUNGI,
+    INSECTS,
     FEATHER,
     INK_BOTTLE,
     PARCHMENT,
-    COVERED_ANGLES
+    COVERED_ANGLES,
+    EMPTY
 }
