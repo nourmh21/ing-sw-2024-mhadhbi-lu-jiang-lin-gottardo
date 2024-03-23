@@ -4,10 +4,11 @@ public enum Symbol {
     ANIMAL,
     PLANT,
     FUNGI,
-    INSECTS,
+    INSECT,
     FEATHER,
     INK_BOTTLE,
     PARCHMENT,
-    COVERED_ANGLES,
-    EMPTY
+    COVERED_ANGLE,
+    EMPTY,
+    HIDDEN
 }
