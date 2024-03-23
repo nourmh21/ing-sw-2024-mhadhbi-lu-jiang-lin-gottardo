@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.enums;
 
-public enum Symbols {
+public enum Symbol {
     ANIMAL,
     PLANT,
     FUNGI,
