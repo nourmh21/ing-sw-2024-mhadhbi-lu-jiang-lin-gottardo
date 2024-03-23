@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enums.Symbols;
-import it.polimi.ingsw.model.enums.Types;
+import it.polimi.ingsw.model.enums.Symbol;
+import it.polimi.ingsw.model.enums.CardType;
 
 import java.util.List;
 
 public class GoldCard extends Card{
     private List<Symbols> condition;
-    private String basicPointCriterion;
+    private Symbol basicPointCriterion;
 
 
     /**
@@ -15,7 +15,7 @@ public class GoldCard extends Card{
      * @param condition
      * @param basicPointCriterion
      */
-    public GoldCard(Symbols kingdom, int x, int y, Symbols topLeftAngle, Symbols topRightAngle, Symbols bottomLeftAngle, Symbols bottomRightAngle, int points, boolean isBackSide, Types type, List<Symbols> condition, String basicPointCriterion) {
+    public GoldCard(Symbol kingdom, int x, int y, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomRightAngle, Symbol bottomLeftAngle, int points, boolean isBackSide, CardType type, List<Symbol> condition, Symbol basicPointCriterion) {
         super(kingdom, x, y, topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
         this.condition = condition;
         this.basicPointCriterion = basicPointCriterion;
@@ -24,14 +24,14 @@ public class GoldCard extends Card{
     /**
      *
      */
-    public List<Symbols> getCondition() {
+    public List<Symbol> getCondition() {
         return condition;
     }
 
     /**
      *
      */
-    public String getBasicPointCriterion() {
+    public Symbol getBasicPointCriterion() {
         return basicPointCriterion;
     }
 }
