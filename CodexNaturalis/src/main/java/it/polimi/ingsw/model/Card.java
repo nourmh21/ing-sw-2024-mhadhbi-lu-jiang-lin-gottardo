@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Symbols;
-import it.polimi.ingsw.model.enums.Types;
+
 
 public class Card {
     private Symbols kingdom;
@@ -8,7 +9,7 @@ public class Card {
     private Symbols topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
     private int points;
     private boolean isBackSide;
-    private Types type;
+    private CardType type;
 
     /**
      * @param kingdom defines the gold card's kingdom
@@ -22,7 +23,7 @@ public class Card {
      * @param isBackSide specifies if the card is representing its corresponding back
      * @param type
      */
-    public Card(Symbols kingdom, int x, int y, Symbols topLeftAngle, Symbols topRightAngle, Symbols bottomRightAngle,Symbols bottomLeftAngle,  int points, boolean isBackSide, Types type) {
+    public Card(Symbols kingdom, int x, int y, Symbols topLeftAngle, Symbols topRightAngle, Symbols bottomRightAngle,Symbols bottomLeftAngle,  int points, boolean isBackSide, CardType type) {
         this.kingdom = kingdom;
         this.x = x;
         this.y = y;
@@ -39,7 +40,7 @@ public class Card {
     /**
      * Type can be POSITION or SET.
      */
-    public Types getType() {
+    public CardType getType() {
         return type;
     }
 
