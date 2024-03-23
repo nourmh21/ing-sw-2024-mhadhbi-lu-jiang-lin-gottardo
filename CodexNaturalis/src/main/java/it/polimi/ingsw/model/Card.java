@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.CardType;
-import it.polimi.ingsw.model.enums.Symbols;
+import it.polimi.ingsw.model.enums.Symbol;
 
 
 public class Card {
-    private Symbols kingdom;
+    private Symbol kingdom;
     private int x, y;
-    private Symbols topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
+    private Symbol topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
     private int points;
     private boolean isBackSide;
     private CardType type;
@@ -23,7 +23,7 @@ public class Card {
      * @param isBackSide specifies if the card is representing its corresponding back
      * @param type
      */
-    public Card(Symbols kingdom, int x, int y, Symbols topLeftAngle, Symbols topRightAngle, Symbols bottomRightAngle,Symbols bottomLeftAngle,  int points, boolean isBackSide, CardType type) {
+    public Card(Symbol kingdom, int x, int y, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomRightAngle,Symbol bottomLeftAngle,  int points, boolean isBackSide, CardType type) {
         this.kingdom = kingdom;
         this.x = x;
         this.y = y;
@@ -61,28 +61,28 @@ public class Card {
     /**
      * topLeftAngle defines the resource, if there is one, that is contained in the upper left corner
      */
-    public Symbols getTopLeftAngle() {
+    public Symbol getTopLeftAngle() {
         return topLeftAngle;
     }
 
     /**
      * topRightAngle defines the resource, if there is one, that is contained in the upper right corner
      */
-    public Symbols getTopRightAngle() {
+    public Symbol getTopRightAngle() {
         return topRightAngle;
     }
 
     /**
      * bottomLeftAngle defines the resource, if there is one, that is contained in the bottom left corner
      */
-    public Symbols getBottomLeftAngle() {
+    public Symbol getBottomLeftAngle() {
         return bottomLeftAngle;
     }
 
     /**
      * bottomRightAngle defines the resource, if there is one, that is contained in the bottom right corner
      */
-    public Symbols getBottomRightAngle() {
+    public Symbol getBottomRightAngle() {
         return bottomRightAngle;
     }
 
