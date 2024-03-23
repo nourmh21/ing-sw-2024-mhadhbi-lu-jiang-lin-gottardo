@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enums.Symbols;
-import it.polimi.ingsw.model.enums.Types;
+import it.polimi.ingsw.model.enums.Symbol;
+import it.polimi.ingsw.model.enums.CardType;
 
 public class InitialCard extends Card{
     private Symbols[] centerResource;
@@ -10,7 +10,7 @@ public class InitialCard extends Card{
      * constructor for the InitialCard class which extends the Card constructor
      * @param centerResource defines the optional center resource
      */
-    public InitialCard(Symbols kingdom, int x, int y, Symbols topLeftAngle, Symbols topRightAngle, Symbols bottomLeftAngle, Symbols bottomRightAngle, int points, boolean isBackSide, Types type, Symbols[] centerResource) {
+    public InitialCard(Symbol kingdom, int x, int y, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, boolean isBackSide, CardType type, Symbol[] centerResource) {
         super(kingdom, x, y, topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
         this.centerResource = centerResource;
     }
@@ -18,7 +18,7 @@ public class InitialCard extends Card{
     /**
      * centerResource are the resources that aren't placed on specific angles of some cards but at the center of them
      */
-    public Symbols[] getCenterResource() {
+    public Symbol[] getCenterResource() {
         return centerResource;
     }
 }
