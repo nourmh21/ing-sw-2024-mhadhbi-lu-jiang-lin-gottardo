@@ -299,6 +299,6 @@ public class Desk {
 
 }
 
-// I haven't checked if there are any exceptional cases
+// I haven't checked yet if there are any exceptional cases
 
 
