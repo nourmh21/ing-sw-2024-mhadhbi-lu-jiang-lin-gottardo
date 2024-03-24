@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.enums.CardType;
 
 public class InitialCard extends Card{
-    private Symbols[] centerResource;
+    private Symbol[] centerResource;
 
     /**
      * constructor for the InitialCard class which extends the Card constructor
