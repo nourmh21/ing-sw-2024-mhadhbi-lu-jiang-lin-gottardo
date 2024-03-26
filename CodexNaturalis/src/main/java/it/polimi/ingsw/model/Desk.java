@@ -21,7 +21,7 @@ public class Desk {
     private List<Card> resourceCard;          //list of resource cards - resource card deck
     private List<Card> goldCard;              //list of gold cards - gold card deck
     private List<Card> initialCard;           //list of initial cards - initial card deck
-    private List<Card> goalCard;              //list of goal cards - goal card deck
+    private List<GoalCard> goalCard;              //list of goal cards - goal card deck
     private List<Card> displayedResourceCard; //list that will contain two face up resource card
     private List<Card> displayedGoldCard;     //list that will contain two face up gold card
 
@@ -203,11 +203,14 @@ public class Desk {
                 c = initialCard.get(0);
                 initialCard.remove(0);
                 break;
-            case GOAL:
-                c = goalCard.get(0);
-                goalCard.remove(0);
-                break;
         }
+        return c;
+    }
+
+    //method that pick one goal type card
+    public GoalCard pickOneGoalCard(){
+        GoalCard c = goalCard.get(0);
+        goalCard.remove(0);
         return c;
     }
 
