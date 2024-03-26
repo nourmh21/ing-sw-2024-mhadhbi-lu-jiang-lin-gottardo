@@ -18,16 +18,16 @@ public class Game {
     private Desk desk;
     private boolean isLastTurn; //
     private String winner; //it contains the winner of the game
-    private Chat chat; //is a chat of the game
+    //private Chat chat; //is a chat of the game
 
 
 
     public Game(){
-        players = new List<>();
-        commonGoals = new List<>();
+        players = new ArrayList<>();
+        commonGoals = new ArrayList<>();
 
         desk = new Desk();
-        chat = new Chat();
+        //chat = new Chat();
 
         Random random=new Random();
         idGame=random.nextInt(500);
@@ -66,7 +66,7 @@ public class Game {
     }
 
     /**
-     * @param player indicates the new player in addition*/
+     * @param p indicates the new player in addition*/
     public void addPlayers(Player p) {
         if (numOfPlayer<4){
             players.add(p);
@@ -104,19 +104,20 @@ public class Game {
     }
 
      /**
-      * @param Player defines the next current player */
-    public void setCurrentPlayer(Player) {
-        this.currentPlayer = Player;
+      * @param player defines the next current player */
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
 
     }
 
     /**
      * @return the game's chat
      * */
-    public Chat getChat(){
+
+    /*public Chat getChat(){
 
         return chat;
-    }
+    }*/
 
     /**check if it's the last turn*/
     public void isLastTurn() {
