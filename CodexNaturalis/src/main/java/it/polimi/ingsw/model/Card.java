@@ -80,6 +80,10 @@ public class Card {
         return bottomRightAngle;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
     //SETTERS
 
     /**
