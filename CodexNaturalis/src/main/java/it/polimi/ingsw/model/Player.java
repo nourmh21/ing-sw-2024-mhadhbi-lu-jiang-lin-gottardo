@@ -44,6 +44,7 @@ public class Player{
     }
 
     public boolean isConnected() {
+
         return isConnected;
     }
 }

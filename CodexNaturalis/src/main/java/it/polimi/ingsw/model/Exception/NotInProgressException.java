@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Exception;
+package it.polimi.ingsw.model.Exception;
 
 public class NotInProgressException extends RuntimeException{
     public NotInProgressException() {

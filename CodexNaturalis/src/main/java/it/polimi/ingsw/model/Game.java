@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.Exception.InvalidNumOfPlayerException;
-import it.polimi.ingsw.Exception.NotInProgressException;
+import it.polimi.ingsw.model.Exception.InvalidNumOfPlayerException;
+import it.polimi.ingsw.model.Exception.NotInProgressException;
 import it.polimi.ingsw.model.enums.State;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class Game {
         return players;
     }
 
-    public void disconnect() {
+    public void disconnect(Player p) {
 
     }
 
@@ -121,9 +121,26 @@ public class Game {
 
     /**check if it's the last turn*/
     public void isLastTurn() {
-        if ((!isLastTurn)){
+
+    }
+
+    /**
+     * control if one of player has 20 points
+     *
+     * @return
+     */
+    public void is20(Player p){
+        int i=0;
+
+        for (i=0; i<numOfPlayer; i++){
 
         }
+
+    }
+
+    /**check max points in the game*/
+    public void checkMax(){
+
     }
 
     /** throw an exception when the numOfPlayer is 1*/
