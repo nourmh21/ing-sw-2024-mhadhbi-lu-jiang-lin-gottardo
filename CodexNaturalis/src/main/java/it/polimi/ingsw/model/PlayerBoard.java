@@ -314,7 +314,7 @@ public class PlayerBoard {
             case GOLD:
                 switch (card.getBasicPointCriterion()){
                     case EMPTY :
-                        x = card.getPoints();
+                        x = card.getPoints() ;
                         break;
                     case COVERED_ANGLE:
                         int y = card.getX();
