@@ -169,11 +169,13 @@ public class Game {
     public String checkMax(Player p){
         int i=0;
         int max=-1;
-        if (isLastTurn())
+        if (isLastTurn) {
 
-        for (i=0;i<numOfPlayer; i++){
-            if ((p.getPoint()>max)){
-                max=p.getPoint();
+
+            for (i = 0; i < numOfPlayer; i++) {
+                if ((p.getPoint() > max)) {
+                    max = p.getPoint();
+                }
             }
         }
         winner = p.getNickName();
