@@ -37,6 +37,7 @@ public class Desk {
        Create 100 objects is not too much, right? Will it have any bad consequences? Will it spend a lot of time?
        (Should I divide this class in some smaller one? In class like ResourceCardDeck, GoldCardDeck,... or is it indifferent?)
        Is there any difference using switch and if/else ?
+       Can I return a primitive type's value only using local variables?
        UML:
        If I use dynamic type, like Card c = new GoldCard(); should I connected only to Card class and also to GoldCard?
        We decide to add a class account, it will not cause duplicate problems, right?
@@ -304,6 +305,7 @@ public class Desk {
         updateNextGCard();
         return c;
     }
+
 
 
 
