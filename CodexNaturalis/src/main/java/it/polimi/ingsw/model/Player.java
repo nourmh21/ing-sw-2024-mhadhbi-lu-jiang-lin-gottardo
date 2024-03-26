@@ -1,7 +1,15 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Color;
 
-
+/**
+ * Player is a class that contains information of each player
+ * -nickName: player's name
+ * -position: player's turn during game
+ * -point: points acquired during game
+ * -playerColor: player's color
+ * -personalGoal: objective that each player has to realize in order to acquire points at the end of game
+ * -isConnected: verify if the player is connected
+ */
 public class Player{
     private String nickName;
     private int position;
@@ -9,42 +17,61 @@ public class Player{
     private Color playerColor;
     private GoalCard personalGoal;
     private boolean isConnected;
+    private PlayerBoard board;
 
-    public Player(String nickName){
+    public Player(String nickName, int position, Color color){
         this.nickName = nickName;
+        this.position = position;
+        point = 0;
+        personalGoal = null;
+        playerColor = color;
+        isConnected = true;
+        board = new PlayerBoard();
     }
 
-    public void setNickName(String nickName){
-        this.nickName = nickName;
+    public String getNickName() {
+        return nickName;
     }
+
+    //method that returns player's turn
     public int getPosition(){
         return position;
     }
-    public void setPosition(int position){
-        this.position = position;
-    }
 
+    //method that returns player's point
     public int getPoint(){
         return point;
     }
-    public void setPoint(int point){
-        this.point=point;
+
+    //method that update player's point
+    public void updatePoint(int newPoint){
+        point = point + newPoint;
     }
 
+    //method that returns player's color
     public Color getPlayerColor() {
         return playerColor;
     }
 
-    public void setPlayerColor(Color playerColor) {
-        this.playerColor = playerColor;
-    }
-
+    //method that returns player's personal goal
     public GoalCard getPersonalGoal() {
         return personalGoal;
     }
 
+    //method that return the connection of player
     public boolean isConnected() {
 
         return isConnected;
+
+    }
+
+    //method that disconnect player from game
+    public void setDisconnected(){
+        isConnected = false;
+    }
+
+    //method that reconnect player from game
+    public void setConnected(){
+        isConnected = true;
     }
 }

@@ -31,10 +31,18 @@ public class Desk {
 
     /*
     Questions:
-       Do I really need to type so much? Is there any other solution? Or just tell me it exists or not
-       Should I divide this class in some smaller one? In class like ResourceCardDeck, GoldCardDeck,... or is it indifferent?
+       Java Code:
+       Do I really need to type so much?
+       This solution(create all cards at the beginning of the game) is a good or bad idea?
+       Create 100 objects is not too much, right? Will it have any bad consequences? Will it spend a lot of time?
+       (Should I divide this class in some smaller one? In class like ResourceCardDeck, GoldCardDeck,... or is it indifferent?)
        Is there any difference using switch and if/else ?
-       If one deck finished their Card, should I pick from another deck?
+       UML:
+       If I use dynamic type, like Card c = new GoldCard(); should I connected to Card class or to GoldCard?
+       We decide to add a class account, it will not cause duplicate problems, right?
+       We decide to memorize the username and the password, we want to check the pwd at login, is better using a database or just a file?
+       ------
+       Need to ask in slack: if one deck finished their Card, should I pick from another deck?
     */
 
 

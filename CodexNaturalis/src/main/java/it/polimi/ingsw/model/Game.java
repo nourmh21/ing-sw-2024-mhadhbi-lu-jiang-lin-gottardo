@@ -120,26 +120,45 @@ public class Game {
     }*/
 
     /**check if it's the last turn*/
-    public void isLastTurn() {
+    public void setIsLastTurn() {
+        if (is20()){
+            isLastTurn=true;
+        }
+    }
 
+    public boolean getIsLastTurn(){
+        return isLastTurn;
     }
 
     /**
      * control if one of player has 20 points
      *
-     * @return
+     * @return p player that have >=20 points
      */
-    public void is20(Player p){
+    public boolean is20(){
         int i=0;
 
         for (i=0; i<numOfPlayer; i++){
-
+            if (((players.get(i)).getPoint()>=20)){
+                break;
+            }
         }
 
+        return true;
     }
 
     /**check max points in the game*/
-    public void checkMax(){
+    public String checkMax(Player p){
+        int i=0;
+        int max=-1;
+
+        for (i=0;i<numOfPlayer; i++){
+            if ((p.getPoint()>max)){
+                max=p.getPoint();
+            }
+        }
+        winner = p.getNickName();
+        return winner;
 
     }
 
