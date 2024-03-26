@@ -2,11 +2,13 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Exception.InvalidNumOfPlayerException;
 import it.polimi.ingsw.model.Exception.NotInProgressException;
+import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.State;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 public class Game {
     private int idGame;
@@ -19,6 +21,7 @@ public class Game {
     private boolean isLastTurn; //
     private String winner; //it contains the winner of the game
     //private Chat chat; //is a chat of the game
+    private int connectedPlayers;   //num of player connected
 
 
 
@@ -30,17 +33,22 @@ public class Game {
         //chat = new Chat();
 
         Random random=new Random();
-        idGame=random.nextInt(500);
+        idGame=random.nextInt(1000);
 
         gameState = State.STARTING;
         isLastTurn=false;
         winner="";
+
+
+
+
+
+
     }
 
    /**
     *@return the unique code of game*/
     public int getIdGame() {
-
         return idGame;
     }
 
@@ -48,19 +56,31 @@ public class Game {
      * @return gameState that indicates what state the game is in
      * */
     public State getGameState() {
-
         return gameState;
     }
 
     /**
      *sets game state
      *@param gameState indicate the state of the game*/
+
     public void setGameState(State gameState) {
-        if (gameState.equals(State.IN_PROGRESS) && (numOfPlayer==1)){
-            throw new NotInProgressException();
+        if ((numOfPlayer>1)){
+            gameState=State.IN_PROGRESS;
         }
-        else {
-            this.gameState=gameState;
+        if ((numOfPlayer==1)){
+            gameState=State.WAITING;
+            //TIMER
+
+            //set unique player as winner after timer
+            for (int i=0; i<numOfPlayer; i++) {
+                if (players.get(i).isConnected()){
+                    winner = players.get(i).getNickName();
+                }
+            }
+            gameState = State.FINISHED;
+
+            // se durante il conteggio del timer rientra un giocatore come faccio a implementarla
+
         }
 
     }
@@ -106,8 +126,7 @@ public class Game {
      /**
       * @param player defines the next current player */
     public void setCurrentPlayer(Player player) {
-        this.currentPlayer = player;
-
+            this.currentPlayer = player;
     }
 
     /**
@@ -136,9 +155,8 @@ public class Game {
      * @return p player that have >=20 points
      */
     public boolean is20(){
-        int i=0;
 
-        for (i=0; i<numOfPlayer; i++){
+        for (int i=0; i<numOfPlayer; i++){
             if (((players.get(i)).getPoint()>=20)){
                 break;
             }
@@ -151,15 +169,29 @@ public class Game {
     public String checkMax(Player p){
         int i=0;
         int max=-1;
+        if (isLastTurn) {
 
-        for (i=0;i<numOfPlayer; i++){
-            if ((p.getPoint()>max)){
-                max=p.getPoint();
+
+            for (i = 0; i < numOfPlayer; i++) {
+                if ((p.getPoint() > max)) {
+                    max = p.getPoint();
+                }
             }
         }
         winner = p.getNickName();
+        gameState=State.FINISHED;
         return winner;
 
+    }
+
+
+
+    /**
+     *defines 2 common Goal Card for players */
+    public List<GoalCard> getCommonGoals() {
+        commonGoals.add(desk.pickOneCard(CardType.GOAL));
+        commonGoals.add(desk.pickOneCard(CardType.GOAL));
+        return commonGoals;
     }
 
     /** throw an exception when the numOfPlayer is 1*/
