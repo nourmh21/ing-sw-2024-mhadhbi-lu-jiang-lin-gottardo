@@ -1,6 +1,4 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.model.enums.Symbol;
-
 import java.util.*;
 
 import static it.polimi.ingsw.model.enums.Symbol.*;
@@ -43,15 +41,13 @@ public class PlayerBoard {
     }
 
     public void placeCard(Card card){
-        setCardList(card);
+        cardList.add(card);
+        handList.remove(card);
         addSymbolsList(card);
         removeSymbolsList(card);
 
     }
-    private void setCardList(Card card) {
-        cardList.add(card);
-        handList.remove(card);
-    }
+
     private void addSymbolsList(Card card){
         if(card.isBackSide()){
             switch (card.getKingdom()){
@@ -306,6 +302,25 @@ public class PlayerBoard {
     }
     public List<Card> getHandList() {
         return handList;
+    }
+
+    public int calculatepoint(Card card){
+        int x = 0;
+        switch (card.getType()){
+            case RESOURCE:
+                x+= card.getPoints();
+                break;
+            case GOLD:
+
+
+                break;
+            case GOAL:
+
+                break;
+        }
+
+
+        return x;
     }
 
 
