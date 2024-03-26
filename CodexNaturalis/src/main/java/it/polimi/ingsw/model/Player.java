@@ -29,6 +29,10 @@ public class Player{
         board = new PlayerBoard();
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
     //method that returns player's turn
     public int getPosition(){
         return position;
