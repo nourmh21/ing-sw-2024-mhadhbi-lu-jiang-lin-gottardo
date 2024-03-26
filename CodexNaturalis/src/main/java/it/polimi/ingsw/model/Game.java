@@ -171,7 +171,6 @@ public class Game {
         int max=-1;
         if (isLastTurn) {
 
-
             for (i = 0; i < numOfPlayer; i++) {
                 if ((p.getPoint() > max)) {
                     max = p.getPoint();
@@ -189,8 +188,8 @@ public class Game {
     /**
      *defines 2 common Goal Card for players */
     public List<GoalCard> getCommonGoals() {
-        commonGoals.add(desk.pickOneCard(CardType.GOAL));
-        commonGoals.add(desk.pickOneCard(CardType.GOAL));
+        commonGoals.add(desk.pickOneGoalCard());
+        commonGoals.add(desk.pickOneGoalCard());
         return commonGoals;
     }
 
