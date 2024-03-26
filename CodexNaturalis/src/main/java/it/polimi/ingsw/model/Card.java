@@ -2,10 +2,12 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Symbol;
 
+import static it.polimi.ingsw.model.enums.Symbol.COVERED_ANGLE;
+
 
 public class Card {
     private Symbol kingdom;
-    private int x, y;
+    private int x;
     private Symbol topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
     private int points;
     private boolean isBackSide;
@@ -14,7 +16,6 @@ public class Card {
     /**
      * @param kingdom defines the gold card's kingdom
      * @param x defines the x-coordinate of the gold card
-     * @param y defines the y-coordinate of the gold card
      * @param topLeftAngle defines the optional resource in the upper left angle
      * @param topRightAngle defines the optional resource in the upper right angle
      * @param bottomLeftAngle defines the optional resource in the bottom left angle
@@ -23,10 +24,9 @@ public class Card {
      * @param isBackSide specifies if the card is representing its corresponding back
      * @param type
      */
-    public Card(Symbol kingdom, int x, int y, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomRightAngle,Symbol bottomLeftAngle,  int points, boolean isBackSide, CardType type) {
+    public Card(Symbol kingdom, int x, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomRightAngle,Symbol bottomLeftAngle,  int points, boolean isBackSide, CardType type) {
         this.kingdom = kingdom;
         this.x = x;
-        this.y = y;
         this.topLeftAngle = topLeftAngle;
         this.topRightAngle = topRightAngle;
         this.bottomLeftAngle = bottomLeftAngle;
@@ -38,7 +38,7 @@ public class Card {
 //GETTERS
 
     /**
-     * Type can be POSITION or SET.
+     * Type can be RESOURCE or GOLD or INITIAL or GOAL.
      */
     public CardType getType() {
         return type;
@@ -51,12 +51,6 @@ public class Card {
         return x;
     }
 
-    /**
-     * Y is the y-axis coordinate of the card
-     */
-    public int getY() {
-        return y;
-    }
 
     /**
      * topLeftAngle defines the resource, if there is one, that is contained in the upper left corner
@@ -95,12 +89,16 @@ public class Card {
         this.x = x;
     }
 
-    /**
-     * @param y y-axis coordinate of the card that is being placed
-     */
-    public void setY(int y) {
-        this.y = y;
+    public void setTopLeftAngle() {topLeftAngle=COVERED_ANGLE;}
+    public void setTopRightAngle() {topRightAngle=COVERED_ANGLE;}
+    public void setBottomLeftAngle() {bottomLeftAngle=COVERED_ANGLE;}
+    public void setBottomRightAngle() {bottomRightAngle=COVERED_ANGLE;}
+
+
+    public boolean isBackSide() {
+        return isBackSide;
     }
-
-
+    public Symbol getKingdom(){
+        return kingdom;
+    }
 }
