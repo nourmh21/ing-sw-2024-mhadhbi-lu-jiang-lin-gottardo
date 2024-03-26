@@ -38,7 +38,7 @@ public class Desk {
        (Should I divide this class in some smaller one? In class like ResourceCardDeck, GoldCardDeck,... or is it indifferent?)
        Is there any difference using switch and if/else ?
        UML:
-       If I use dynamic type, like Card c = new GoldCard(); should I connected to Card class or to GoldCard?
+       If I use dynamic type, like Card c = new GoldCard(); should I connected only to Card class and also to GoldCard?
        We decide to add a class account, it will not cause duplicate problems, right?
        We decide to memorize the username and the password, we want to check the pwd at login, is better using a database or just a file?
        ------
@@ -304,6 +304,8 @@ public class Desk {
         updateNextGCard();
         return c;
     }
+
+
 
 }
 
