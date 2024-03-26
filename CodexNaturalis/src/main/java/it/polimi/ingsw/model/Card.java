@@ -83,7 +83,7 @@ public class Card {
     //SETTERS
 
     /**
-     * @param x x-axis coordinate of the card that is being placed
+     * @param x coordinate of the card that is being placed
      */
     public void setX(int x) {
         this.x = x;
@@ -100,5 +100,9 @@ public class Card {
     }
     public Symbol getKingdom(){
         return kingdom;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }
