@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 import java.util.*;
 
+import static it.polimi.ingsw.model.enums.CardType.RESOURCE;
 import static it.polimi.ingsw.model.enums.Symbol.*;
 
 
@@ -233,7 +234,7 @@ public class PlayerBoard {
                         symbolsList[6] -= 1;
                         break;
                 }
-                elem.getBottomLeftAngle();
+                elem.setBottomLeftAngle();
                 break;
             }
             if(elem.getX()==(x-100+1)){
@@ -304,23 +305,68 @@ public class PlayerBoard {
         return handList;
     }
 
-    public int calculatepoint(Card card){
+    public int calculatepoint(GoldCard card){
         int x = 0;
-        switch (card.getType()){
+        switch (card.getType()) {
             case RESOURCE:
-                x+= card.getPoints();
+                x = card.getPoints();
                 break;
             case GOLD:
-
+                switch (card.getBasicPointCriterion()){
+                    case EMPTY :
+                        x = card.getPoints() ;
+                        break;
+                    case COVERED_ANGLE:
+                        int y = card.getX();
+                        for(Card elem : cardList) {
+                            int p = elem.getX();
+                            if (p == (y - 1 + 100)||p == (y - 1 - 100)||p == (y + 1 - 100)||p == (y + 1 + 100))  x+=2;
+                        }
+                        break;
+                    case FEATHER:
+                        x = (symbolsList[4]+1)*card.getPoints();
+                        break;
+                    case PARCHMENT:
+                        x = (symbolsList[6]+1)*card.getPoints();
+                        break;
+                    case INK_BOTTLE:
+                        x = (symbolsList[5]+1)*card.getPoints();
+                        break;
+                }
+                break;
+        }
+        return x;
+    }
+    public int calculgoalpoint(GoalCard card){
+        int x=0;
+        switch (card.getType()){
+            case SET:
 
                 break;
-            case GOAL:
-
-                break;
+            case POSITION:
+                switch (card.getPositionType()){
+                    case REDG:
+                        break;
+                    case BLUEG:
+                        break;
+                    case VIOLAD:
+                        break;
+                    case GREEND:
+                        break;
+                    case BBR:
+                        break;
+                    case VVB:
+                        break;
+                    case RRG:
+                        break;
+                    case GGV:
+                        break;
+                }
         }
 
 
         return x;
+
     }
 
 
