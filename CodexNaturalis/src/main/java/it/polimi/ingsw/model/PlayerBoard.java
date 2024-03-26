@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.model.enums.Symbol;
-
 import java.util.*;
+
+import static it.polimi.ingsw.model.enums.Symbol.*;
 
 
 public class PlayerBoard {
@@ -41,28 +41,26 @@ public class PlayerBoard {
     }
 
     public void placeCard(Card card){
-        setCardList(card);
+        cardList.add(card);
+        handList.remove(card);
         addSymbolsList(card);
         removeSymbolsList(card);
 
     }
-    private void setCardList(Card card) {
-        cardList.add(card);
-        handList.remove(card);
-    }
+
     private void addSymbolsList(Card card){
         if(card.isBackSide()){
             switch (card.getKingdom()){
-                case Symbol.ANIMAL:
+                case ANIMAL:
                     symbolsList[0] += 1;
                     break;
-                case Symbol.PLANT:
+                case PLANT:
                     symbolsList[1] += 1;
                     break;
-                case Symbol.FUNGI:
+                case FUNGI:
                     symbolsList[2] += 1;
                     break;
-                case Symbol.INSECT:
+                case INSECT:
                     symbolsList[3] += 1;
                     break;
             }
@@ -72,25 +70,25 @@ public class PlayerBoard {
                     break;
                 case HIDDEN :
                     break;
-                case Symbol.ANIMAL:
+                case ANIMAL:
                     symbolsList[0] += 1;
                     break;
-                case Symbol.PLANT:
+                case PLANT:
                     symbolsList[1] += 1;
                     break;
-                case Symbol.FUNGI:
+                case FUNGI:
                     symbolsList[2] += 1;
                     break;
-                case Symbol.INSECT:
+                case INSECT:
                     symbolsList[3] += 1;
                     break;
-                case Symbol.FEATHER:
+                case FEATHER:
                     symbolsList[4] += 1;
                     break;
-                case Symbol.INK_BOTTLE:
+                case INK_BOTTLE:
                     symbolsList[5] += 1;
                     break;
-                case Symbol.PARCHMENT:
+                case PARCHMENT:
                     symbolsList[6] += 1;
                     break;
             }
@@ -99,25 +97,25 @@ public class PlayerBoard {
                     break;
                 case HIDDEN :
                     break;
-                case Symbol.ANIMAL:
+                case ANIMAL:
                     symbolsList[0] += 1;
                     break;
-                case Symbol.PLANT:
+                case PLANT:
                     symbolsList[1] += 1;
                     break;
-                case Symbol.FUNGI:
+                case FUNGI:
                     symbolsList[2] += 1;
                     break;
-                case Symbol.INSECT:
+                case INSECT:
                     symbolsList[3] += 1;
                     break;
-                case Symbol.FEATHER:
+                case FEATHER:
                     symbolsList[4] += 1;
                     break;
-                case Symbol.INK_BOTTLE:
+                case INK_BOTTLE:
                     symbolsList[5] += 1;
                     break;
-                case Symbol.PARCHMENT:
+                case PARCHMENT:
                     symbolsList[6] += 1;
                     break;
             }
@@ -126,25 +124,25 @@ public class PlayerBoard {
                     break;
                 case HIDDEN :
                     break;
-                case Symbol.ANIMAL:
+                case ANIMAL:
                     symbolsList[0] += 1;
                     break;
-                case Symbol.PLANT:
+                case PLANT:
                     symbolsList[1] += 1;
                     break;
-                case Symbol.FUNGI:
+                case FUNGI:
                     symbolsList[2] += 1;
                     break;
-                case Symbol.INSECT:
+                case INSECT:
                     symbolsList[3] += 1;
                     break;
-                case Symbol.FEATHER:
+                case FEATHER:
                     symbolsList[4] += 1;
                     break;
-                case Symbol.INK_BOTTLE:
+                case INK_BOTTLE:
                     symbolsList[5] += 1;
                     break;
-                case Symbol.PARCHMENT:
+                case PARCHMENT:
                     symbolsList[6] += 1;
                     break;
             }
@@ -153,25 +151,25 @@ public class PlayerBoard {
                     break;
                 case HIDDEN :
                     break;
-                case Symbol.ANIMAL:
+                case ANIMAL:
                     symbolsList[0] += 1;
                     break;
-                case Symbol.PLANT:
+                case PLANT:
                     symbolsList[1] += 1;
                     break;
-                case Symbol.FUNGI:
+                case FUNGI:
                     symbolsList[2] += 1;
                     break;
-                case Symbol.INSECT:
+                case INSECT:
                     symbolsList[3] += 1;
                     break;
-                case Symbol.FEATHER:
+                case FEATHER:
                     symbolsList[4] += 1;
                     break;
-                case Symbol.INK_BOTTLE:
+                case INK_BOTTLE:
                     symbolsList[5] += 1;
                     break;
-                case Symbol.PARCHMENT:
+                case PARCHMENT:
                     symbolsList[6] += 1;
                     break;
             }
@@ -184,25 +182,25 @@ public class PlayerBoard {
                 switch (elem.getBottomRightAngle()){
                     case EMPTY :
                         break;
-                    case Symbol.ANIMAL:
+                    case ANIMAL:
                         symbolsList[0] -= 1;
                         break;
-                    case Symbol.PLANT:
+                    case PLANT:
                         symbolsList[1] -= 1;
                         break;
-                    case Symbol.FUNGI:
+                    case FUNGI:
                         symbolsList[2] -= 1;
                         break;
-                    case Symbol.INSECT:
+                    case INSECT:
                         symbolsList[3] -= 1;
                         break;
-                    case Symbol.FEATHER:
+                    case FEATHER:
                         symbolsList[4] -= 1;
                         break;
-                    case Symbol.INK_BOTTLE:
+                    case INK_BOTTLE:
                         symbolsList[5] -= 1;
                         break;
-                    case Symbol.PARCHMENT:
+                    case PARCHMENT:
                         symbolsList[6] -= 1;
                         break;
                 }
@@ -213,25 +211,25 @@ public class PlayerBoard {
                 switch (elem.getBottomLeftAngle()){
                     case EMPTY :
                         break;
-                    case Symbol.ANIMAL:
+                    case ANIMAL:
                         symbolsList[0] -= 1;
                         break;
-                    case Symbol.PLANT:
+                    case PLANT:
                         symbolsList[1] -= 1;
                         break;
-                    case Symbol.FUNGI:
+                    case FUNGI:
                         symbolsList[2] -= 1;
                         break;
-                    case Symbol.INSECT:
+                    case INSECT:
                         symbolsList[3] -= 1;
                         break;
-                    case Symbol.FEATHER:
+                    case FEATHER:
                         symbolsList[4] -= 1;
                         break;
-                    case Symbol.INK_BOTTLE:
+                    case INK_BOTTLE:
                         symbolsList[5] -= 1;
                         break;
-                    case Symbol.PARCHMENT:
+                    case PARCHMENT:
                         symbolsList[6] -= 1;
                         break;
                 }
@@ -242,25 +240,25 @@ public class PlayerBoard {
                 switch (elem.getTopLeftAngle()){
                     case EMPTY :
                         break;
-                    case Symbol.ANIMAL:
+                    case ANIMAL:
                         symbolsList[0] -= 1;
                         break;
-                    case Symbol.PLANT:
+                    case PLANT:
                         symbolsList[1] -= 1;
                         break;
-                    case Symbol.FUNGI:
+                    case FUNGI:
                         symbolsList[2] -= 1;
                         break;
-                    case Symbol.INSECT:
+                    case INSECT:
                         symbolsList[3] -= 1;
                         break;
-                    case Symbol.FEATHER:
+                    case FEATHER:
                         symbolsList[4] -= 1;
                         break;
-                    case Symbol.INK_BOTTLE:
+                    case INK_BOTTLE:
                         symbolsList[5] -= 1;
                         break;
-                    case Symbol.PARCHMENT:
+                    case PARCHMENT:
                         symbolsList[6] -= 1;
                         break;
                 }
@@ -271,25 +269,25 @@ public class PlayerBoard {
                 switch (elem.getTopRightAngle()){
                     case EMPTY :
                         break;
-                    case Symbol.ANIMAL:
+                    case ANIMAL:
                         symbolsList[0] -= 1;
                         break;
-                    case Symbol.PLANT:
+                    case PLANT:
                         symbolsList[1] -= 1;
                         break;
-                    case Symbol.FUNGI:
+                    case FUNGI:
                         symbolsList[2] -= 1;
                         break;
-                    case Symbol.INSECT:
+                    case INSECT:
                         symbolsList[3] -= 1;
                         break;
-                    case Symbol.FEATHER:
+                    case FEATHER:
                         symbolsList[4] -= 1;
                         break;
-                    case Symbol.INK_BOTTLE:
+                    case INK_BOTTLE:
                         symbolsList[5] -= 1;
                         break;
-                    case Symbol.PARCHMENT:
+                    case PARCHMENT:
                         symbolsList[6] -= 1;
                         break;
                 }
@@ -304,6 +302,25 @@ public class PlayerBoard {
     }
     public List<Card> getHandList() {
         return handList;
+    }
+
+    public int calculatepoint(Card card){
+        int x = 0;
+        switch (card.getType()){
+            case RESOURCE:
+                x+= card.getPoints();
+                break;
+            case GOLD:
+
+
+                break;
+            case GOAL:
+
+                break;
+        }
+
+
+        return x;
     }
 
 

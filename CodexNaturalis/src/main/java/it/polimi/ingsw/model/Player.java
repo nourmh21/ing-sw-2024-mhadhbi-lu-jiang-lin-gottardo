@@ -56,6 +56,7 @@ public class Player{
 
     //method that return the connection of player
     public boolean isConnected() {
+
         return isConnected;
 
     }

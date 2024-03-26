@@ -19,9 +19,9 @@ public class GoldCard extends Card{
                     boolean isBackSide, CardType type,  Symbol basicPointCriterion,int n_fungi, int n_plant, int n_animal, int n_insect) {
         super(kingdom, x, topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
         this.basicPointCriterion = basicPointCriterion;
-        condition[0] = n_fungi;
+        condition[0] = n_animal;
         condition[1] = n_plant;
-        condition[2] = n_animal;
+        condition[2] = n_fungi;
         condition[3] = n_insect;
 
     }
