@@ -175,7 +175,7 @@ public class Desk {
 
 
     //method that picks one card from the right deck according the type passed as parameter
-    public Card pickOneCard(CardType type){
+    public GoalCard pickOneCard(CardType type){
         Card c = null;
         switch (type){
             case RESOURCE:
