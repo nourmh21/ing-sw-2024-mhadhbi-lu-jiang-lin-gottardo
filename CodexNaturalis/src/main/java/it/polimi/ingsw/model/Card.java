@@ -8,7 +8,7 @@ import static it.polimi.ingsw.model.enums.Symbol.COVERED_ANGLE;
 public class Card {
     private Symbol kingdom;
     private int x;
-    private int y;
+    private int y ;
     private Symbol topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
     private int points;
     private boolean isBackSide;
