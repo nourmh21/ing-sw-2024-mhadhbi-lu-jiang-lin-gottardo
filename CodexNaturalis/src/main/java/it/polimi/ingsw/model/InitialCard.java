@@ -11,7 +11,7 @@ public class InitialCard extends Card{
      * @param centerResource defines the optional center resource
      */
     public InitialCard(Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, boolean isBackSide, CardType type, int[] centerResource) {
-        super(kingdom, 4040,  topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
+        super(kingdom, 0,0,  topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
         this.centerResource = centerResource;
     }
 
@@ -23,4 +23,3 @@ public class InitialCard extends Card{
     }
 }
 
-//fissare x 4040, non variano!!

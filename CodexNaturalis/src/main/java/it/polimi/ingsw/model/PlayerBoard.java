@@ -178,6 +178,7 @@ public class PlayerBoard {
     }
     private void removeSymbolsList(Card card){
         int x = card.getX();
+        int y = card.getY();
         for(Card elem : cardList){
             if(elem.getX()==(x-1+100)){
                 switch (elem.getBottomRightAngle()){
