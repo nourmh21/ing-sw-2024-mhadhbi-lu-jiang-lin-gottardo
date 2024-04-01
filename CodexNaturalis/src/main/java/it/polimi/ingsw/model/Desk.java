@@ -80,26 +80,9 @@ public class Desk {
         updateNextGCard();
     }
 
-    public int getNumberOfCard(CardType type){
-        int n = 0;
-        switch (type){
-            case RESOURCE:
-                return resourceCardDeck.size();
-            case GOLD:
-                return goalCardDeck.size();
-        }
-        return n;
-    }
 
-    public  List<Integer> getResourceCardDeck(){
-        return resourceCardDeck;
-    }
 
-    public  List<Integer> getDisplayedResourceCards() {
-        return displayedResourceCards;
-    }
-
-    //method that picks one card from the right deck according the type passed as parameter: RESOURCE, GOLD or INITIAL
+    //method that picks one card from the right deck according the type passed as parameter
     public Integer pickOneCard(CardType type){
         Integer c = null;
         switch (type){
@@ -222,7 +205,23 @@ public class Desk {
         return c;
     }
 
-
+    public boolean isOneDeckEmpty(CardType type){
+        switch (type){
+            case RESOURCE:
+                if (resourceCardDeck.isEmpty()){
+                    return true;
+                }else{
+                    return false;
+                }
+            case GOLD:
+                if (goldCardDeck.isEmpty()){
+                    return true;
+                }else{
+                    return false;
+                }
+        }
+        return false;
+    }
 
 }
 
