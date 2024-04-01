@@ -1,12 +1,9 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.enums.CardType;
-import it.polimi.ingsw.Server;
 
 /**
  * Desk is a class that contains:
@@ -16,7 +13,8 @@ import it.polimi.ingsw.Server;
  *    1 card that represent the first card of gold card deck
  *    some methods to pick card, to update the card list after picking (in general it will be automatic)
  * @author Valeria Lu
- * @version 2024-04-01-12:45
+ * @version 2024-04-01-13:10
+ * Status: need to be complete and refine
  * */
 
 public class Desk {
@@ -29,7 +27,6 @@ public class Desk {
 
     private Integer nextResourceCard;            //the first card of resource card deck
     private Integer nextGoldCard;                //the first card of gold card deck
-
 
 
     /*
@@ -46,7 +43,6 @@ public class Desk {
 
     //the class constructor
     public Desk(){
-        //resourceCardDeck = new ArrayList<>(40);
         resourceCardDeck = new ArrayList<>(40);
         goldCardDeck = new ArrayList<>(40);
         initialCardDeck = new ArrayList<>(6);
@@ -111,7 +107,8 @@ public class Desk {
     }
 
 
-    //method that fills the list of face up resource cards with resource card if the list size is less than 2 and resource card deck is not empty
+    //method that fills the list of face up resource cards with resource cards
+    //       if the list size is less than 2 and resource card deck is not empty
     public void updateDisplayedRCard(){
         while (displayedResourceCards.size() < 2 && !resourceCardDeck.isEmpty()){
             displayedResourceCards.add(pickOneCard(CardType.RESOURCE));
@@ -119,7 +116,8 @@ public class Desk {
     }
 
 
-    //method that fills the list of face up gold cards with resource card if the list size is less than 2 and gold card deck is not empty
+    //method that fills the list of face up gold cards with gold card
+    //       if the list size is less than 2 and gold card deck is not empty
     public void updateDisplayedGCard(){
         while(displayedGoldCards.size() < 2 && !goalCardDeck.isEmpty()){
             displayedGoldCards.add(pickOneCard(CardType.GOLD));
@@ -205,6 +203,7 @@ public class Desk {
         return c;
     }
 
+    //method that check if one deck is empty or not
     public boolean isOneDeckEmpty(CardType type){
         switch (type){
             case RESOURCE:
