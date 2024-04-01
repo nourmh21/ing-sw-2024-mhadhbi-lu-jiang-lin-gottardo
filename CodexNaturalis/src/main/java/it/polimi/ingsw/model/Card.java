@@ -38,6 +38,10 @@ public class Card {
     }
 //GETTERS
 
+    public  int getIdCard(){
+        return idCard;
+    }
+
     /**
      * Type can be RESOURCE or GOLD or INITIAL or GOAL.
      */

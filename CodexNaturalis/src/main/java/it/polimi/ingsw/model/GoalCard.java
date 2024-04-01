@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.enums.GoalType;
 import java.util.List;
 
 public class GoalCard {
+    private  int idCard;
     private int points;
     private GoalType type;
     private PCorner positionType;
@@ -19,12 +20,16 @@ public class GoalCard {
      */
 
 
-    public GoalCard(int points,GoalType type,PCorner positionType,List<Symbol> setlist){
+    public GoalCard(int idCard, int points,GoalType type,PCorner positionType,List<Symbol> setlist){
+        this.idCard = idCard;
         this.points=points;
         this.type=type;
         this.positionType=positionType;
         this.setlist=setlist;
 
+    }
+    public  int getIdCard(){
+        return idCard;
     }
     /**
      * @return points given bye the GoalCard.
