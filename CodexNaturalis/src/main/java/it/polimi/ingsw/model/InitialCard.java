@@ -10,8 +10,8 @@ public class InitialCard extends Card{
      * constructor for the InitialCard class which extends the Card constructor
      * @param centerResource defines the optional center resource
      */
-    public InitialCard(Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, boolean isBackSide, CardType type, int[] centerResource) {
-        super(kingdom, 0,0,  topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
+    public InitialCard(int idCard, Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, boolean isBackSide, CardType type, int[] centerResource) {
+        super(idCard, kingdom, topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
         this.centerResource = centerResource;
     }
 
