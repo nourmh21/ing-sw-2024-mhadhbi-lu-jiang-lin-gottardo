@@ -338,7 +338,7 @@ public class PlayerBoard {
                             }
                         }
                     }
-                    if (CardColor.get(index3) == symbol3) {
+                    if (CardColor.get(index3) ==symbol3) {
                         point += 3;
                         CardColor.set(index1, EMPTY);
                         CardColor.set(index2, EMPTY);
