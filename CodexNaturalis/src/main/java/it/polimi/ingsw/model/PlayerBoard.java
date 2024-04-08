@@ -1,4 +1,8 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.Server;
+import it.polimi.ingsw.model.enums.Color;
+import it.polimi.ingsw.model.enums.Symbol;
+
 import java.util.*;
 
 import static it.polimi.ingsw.model.enums.CardType.RESOURCE;
@@ -6,8 +10,23 @@ import static it.polimi.ingsw.model.enums.Symbol.*;
 
 
 public class PlayerBoard {
-    private List<Card> cardList;
-    private List<Card> handList;
+    private List<Integer> cardList;
+    private List<Boolean>coveredTopLeftAngle;
+    private List<Boolean>coveredTopRightAngle;
+    private List<Boolean>coveredBottomLeftAngle;
+    private List<Boolean>coveredBottomRightAngle;
+    private List<Symbol> cardcolor;
+    private List<Integer>x;
+    private List<Integer>y;
+    private List<Integer> handList;
+
+    //symbolsList[0] ANIMAL,
+    //symbolsList[1] PLANT,
+    //symbolsList[2] FUNGI,
+    //symbolsList[3] INSECT,
+    //symbolsList[4] FEATHER,
+    //symbolsList[5] INK_BOTTLE,
+    //symbolsList[6] PARCHMENT,
     private int[] symbolsList ;
 
     /**
@@ -18,14 +37,40 @@ public class PlayerBoard {
     public PlayerBoard() {
         handList =new ArrayList<>();
         cardList =new ArrayList<>();
+        x=new ArrayList<>();
+        y=new ArrayList<>();
+        coveredTopLeftAngle = new ArrayList<>();
+        coveredTopRightAngle = new ArrayList<>();
+        coveredBottomLeftAngle = new ArrayList<>();
+        coveredBottomRightAngle = new ArrayList<>();
+        cardcolor= new ArrayList<>();
         symbolsList=new int[7];
     }
-    
-    public void placeInitCard(InitialCard initcard){
-        cardList.add(initcard);
-        if(initcard.isBackSide()){
+    Server server= new Server();
+    public void placeCard(int idcard){
+
+        Card card = server.getC(idcard);
+        cardList.add(idcard);
+        handList.remove(idcard);
+        cardcolor.add(card.getKingdom());
+        int index = cardList.indexOf(idcard);
+        addSymbolsList(card);
+        calculatepoint((GoldCard) card,index);
+
+    }
+    public void placeInitCard(Integer idcard){
+        InitialCard initialcard = server.getIC(idcard);
+        cardList.add(idcard);
+        cardcolor.add(initialcard.getKingdom());
+        x.add(0);
+        y.add(0);
+        coveredTopLeftAngle.add(false);
+        coveredTopRightAngle.add(false);
+        coveredBottomLeftAngle.add(false);
+        coveredBottomRightAngle.add(false);
+        if(initialcard.isBackSide()){
             int[] t= new int[4];
-            t = initcard.getCenterResource() ;
+            t = initialcard.getCenterResource() ;
             symbolsList[0] = t[0];
             symbolsList[1] = t[1];
             symbolsList[2] = t[2];
@@ -41,15 +86,9 @@ public class PlayerBoard {
         symbolsList[6] = 0;
     }
 
-    public void placeCard(Card card){
-        cardList.add(card);
-        handList.remove(card);
-        addSymbolsList(card);
-        removeSymbolsList(card);
 
-    }
 
-    private void addSymbolsList(Card card){
+    private void addSymbolsList(Card  card){
         if(card.isBackSide()){
             switch (card.getKingdom()){
                 case ANIMAL:
@@ -176,12 +215,14 @@ public class PlayerBoard {
             }
         }
     }
-    private void removeSymbolsList(Card card){
-        int x = card.getX();
-        int y = card.getY();
-        for(Card elem : cardList){
-            if(elem.getX()==(x-1+100)){
-                switch (elem.getBottomRightAngle()){
+    private void removeSymbolsList(Card card,int i){
+        int xx =x.get(i);
+        int yy =y.get(i);
+        for(int elem : x){
+            int index =x.indexOf(elem);
+            if(elem==(xx-1) & y.get(index)==(yy+1)){
+                Card elemcard = server.getC(index);
+                switch (elemcard.getBottomRightAngle()){
                     case EMPTY :
                         break;
                     case ANIMAL:
@@ -206,11 +247,13 @@ public class PlayerBoard {
                         symbolsList[6] -= 1;
                         break;
                 }
-                elem.setBottomRightAngle();
+                coveredBottomRightAngle.set(index,true);
+                coveredTopLeftAngle.set(i,true);
                 break;
             }
-            if(elem.getX()==(x+100+1)){
-                switch (elem.getBottomLeftAngle()){
+            if(elem==(xx+1) & y.get(index)==(yy+1)){
+                Card elemcard = server.getC(index);
+                switch (elemcard.getBottomLeftAngle()){
                     case EMPTY :
                         break;
                     case ANIMAL:
@@ -235,11 +278,13 @@ public class PlayerBoard {
                         symbolsList[6] -= 1;
                         break;
                 }
-                elem.setBottomLeftAngle();
+                coveredBottomLeftAngle.set(index,true);
+                coveredTopRightAngle.set(i,true);
                 break;
             }
-            if(elem.getX()==(x-100+1)){
-                switch (elem.getTopLeftAngle()){
+            if(elem==(xx+1) & y.get(index)==(yy-1)){
+                Card elemcard = server.getC(index);
+                switch (elemcard.getTopLeftAngle()){
                     case EMPTY :
                         break;
                     case ANIMAL:
@@ -264,11 +309,13 @@ public class PlayerBoard {
                         symbolsList[6] -= 1;
                         break;
                 }
-                elem.setTopLeftAngle();
+                coveredTopLeftAngle.set(index,true);
+                coveredBottomRightAngle.set(i,true);
                 break;
             }
-            if(elem.getX()==(x-100-1)){
-                switch (elem.getTopRightAngle()){
+            if(elem==(xx-1) & y.get(index)==(yy-1)){
+                Card elemcard = server.getC(index);
+                switch (elemcard.getTopRightAngle()){
                     case EMPTY :
                         break;
                     case ANIMAL:
@@ -293,80 +340,443 @@ public class PlayerBoard {
                         symbolsList[6] -= 1;
                         break;
                 }
-                elem.setTopRightAngle();
+                coveredTopRightAngle.set(index,true);
+                coveredBottomLeftAngle.set(i,true);
                 break;
             }
         }
 
     }
-    public List<Card> getCardList() {
+    public List<Integer> getCardList() {
         return cardList;
     }
-    public List<Card> getHandList() {
+    public List<Integer> getHandList() {
         return handList;
     }
 
-    public int calculatepoint(GoldCard card){
+    public int calculatepoint(GoldCard card,int i){
         int x = 0;
         switch (card.getType()) {
             case RESOURCE:
                 x = card.getPoints();
+                removeSymbolsList(card,i);
                 break;
             case GOLD:
                 switch (card.getBasicPointCriterion()){
                     case EMPTY :
-                        x = card.getPoints() ;
+                        x = card.getPoints();
+                        removeSymbolsList(card,i);
                         break;
                     case COVERED_ANGLE:
-                        int y = card.getX();
-                        for(Card elem : cardList) {
-                            int p = elem.getX();
-                            if (p == (y - 1 + 100)||p == (y - 1 - 100)||p == (y + 1 - 100)||p == (y + 1 + 100))  x+=2;
-                        }
+                        removeSymbolsList(card,i);
+                        if (coveredTopRightAngle.get(i)) x+=2;
+                        if (coveredTopLeftAngle.get(i)) x+=2;
+                        if (coveredBottomRightAngle.get(i)) x+=2;
+                        if (coveredBottomLeftAngle.get(i)) x+=2;
                         break;
                     case FEATHER:
-                        x = (symbolsList[4]+1)*card.getPoints();
+                        x = symbolsList[4]*card.getPoints();
+                        removeSymbolsList(card,i);
                         break;
                     case PARCHMENT:
-                        x = (symbolsList[6]+1)*card.getPoints();
+                        x = symbolsList[6]*card.getPoints();
+                        removeSymbolsList(card,i);
                         break;
                     case INK_BOTTLE:
-                        x = (symbolsList[5]+1)*card.getPoints();
+                        x = symbolsList[5]*card.getPoints();
+                        removeSymbolsList(card,i);
                         break;
                 }
                 break;
         }
         return x;
     }
-    public int calculgoalpoint(GoalCard card){
-        int x=0;
+
+
+    public int calculategoalpoint(GoalCard card){
+        int point=0;
         switch (card.getType()){
-            case SET:
+            case REDG:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== FUNGI){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1+1;
+                        int y2 = y1+1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (cardcolor.get(index2)== FUNGI){
+                            int index3=0;
+                            int x3 = x2+1;
+                            int y3 = y2+1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (cardcolor.get(index3)== FUNGI){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
+                }
+                break;
+            case BLUEG:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== ANIMAL){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1+1;
+                        int y2 = y1+1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (cardcolor.get(index2)== ANIMAL){
+                            int index3 = 0;
+                            int x3 = x2+1;
+                            int y3 = y2+1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if ( cardcolor.get(index3)== ANIMAL){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
+                }
+                break;
+            case VIOLAD:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== INSECT){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1+1;
+                        int y2 = y1-1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (cardcolor.get(index2)== INSECT){
+                            int index3 =0;
+                            int x3 = x2+1;
+                            int y3 = y2-1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if ( cardcolor.get(index3)== INSECT){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
+                }
 
                 break;
-            case POSITION:
-                switch (card.getPositionType()){
-                    case REDG:
-                        break;
-                    case BLUEG:
-                        break;
-                    case VIOLAD:
-                        break;
-                    case GREEND:
-                        break;
-                    case BBR:
-                        break;
-                    case VVB:
-                        break;
-                    case RRG:
-                        break;
-                    case GGV:
-                        break;
+            case GREEND:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== PLANT){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1+1;
+                        int y2 = y1-1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (cardcolor.get(index2)== PLANT){
+                            int index3 = 0;
+                            int x3 = x2+1;
+                            int y3 = y2-1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if ( cardcolor.get(index3)== PLANT){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
                 }
+                break;
+            case GGV:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== PLANT){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1;
+                        int y2 = y1-1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (cardcolor.get(index2)== PLANT){
+                            int index3 = 0;
+                            int x3 = x2-1;
+                            int y3 = y2-1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (cardcolor.get(index3)== INSECT){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
+                }
+                break;
+            case RRG:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== FUNGI){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1;
+                        int y2 = y1-1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if ( cardcolor.get(index2)== FUNGI){
+                            int index3 = 0;
+                            int x3 = x2+1;
+                            int y3 = y2-1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (cardcolor.get(index3)== PLANT){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
+                }
+                break;
+            case VVB:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== ANIMAL){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1+1;
+                        int y2 = y1-1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (cardcolor.get(index2)== INSECT){
+                            int index3 = 0;
+                            int x3 = x2;
+                            int y3 = y2-1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (cardcolor.get(index3)== INSECT){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
+                }
+                break;
+            case BBR:
+                for (int elem : cardList){
+                    int index1 = cardList.indexOf(elem);
+                    if(cardcolor.get(index1)== FUNGI){
+                        int x1 = x.get(index1);
+                        int y1 = y.get(index1);
+                        int x2 = x1-1;
+                        int y2 = y1-1;
+                        int index2=0;
+                        for (int xelem : x){
+                            if (xelem == x2 ) {
+                                for (int yelem : y){
+                                    if (yelem==y2 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                        index2 = x.indexOf(xelem);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if ( cardcolor.get(index2)== ANIMAL){
+                            int index3 = 0;
+                            int x3 = x2;
+                            int y3 = y2-1;
+                            for (int xelem : x){
+                                if (xelem == x3 ) {
+                                    for (int yelem : y){
+                                        if (yelem==y3 & x.indexOf(xelem)==y.indexOf(yelem)){
+                                            index3 = x.indexOf(xelem);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if (cardcolor.get(index3)== ANIMAL){
+                                point +=3;
+                                cardcolor.set(index1,EMPTY);
+                                cardcolor.set(index2,EMPTY);
+                                cardcolor.set(index3,EMPTY);
+                            }
+                        }
+                    }
+                }
+                break;
+            //symbolsList[0] ANIMAL,
+            //symbolsList[1] PLANT,
+            //symbolsList[2] FUNGI,
+            //symbolsList[3] INSECT,
+            //symbolsList[4] FEATHER,
+            //symbolsList[5] INK_BOTTLE,
+            //symbolsList[6] PARCHMENT,
+            case FFF:
+                point=2*(symbolsList[2]/3);
+                break;
+            case AAA:
+                point=2*(symbolsList[0]/3);
+                break;
+            case PPP:
+                point=2*(symbolsList[1]/3);
+                break;
+            case III:
+                point=2*(symbolsList[3]/3);
+                break;
+            case BFP:
+                int min = symbolsList[4];
+                if (min > symbolsList[5]) min = symbolsList[5];
+                if (min > symbolsList[6]) min = symbolsList[6];
+                point=min*3;
+                break;
+            case BB:
+                point=2*(symbolsList[5]/2);
+                break;
+            case FF:
+                point=2*(symbolsList[4]/2);
+                break;
+            case PP:
+                point=2*(symbolsList[6]/2);
+                break;
         }
-
-
-        return x;
+        return point;
 
     }
 

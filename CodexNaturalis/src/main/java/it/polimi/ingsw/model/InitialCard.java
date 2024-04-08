@@ -10,9 +10,12 @@ public class InitialCard extends Card{
      * constructor for the InitialCard class which extends the Card constructor
      * @param centerResource defines the optional center resource
      */
-    public InitialCard(int idCard, Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, boolean isBackSide, CardType type, int[] centerResource) {
+    public InitialCard(int idCard, Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, boolean isBackSide, CardType type, int n_fungi, int n_plant, int n_animal, int n_insect) {
         super(idCard, kingdom, topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, isBackSide, type);
-        this.centerResource = centerResource;
+        centerResource[0] = n_animal;
+        centerResource[1] = n_plant;
+        centerResource[2] = n_fungi;
+        centerResource[3] = n_insect;
     }
 
     /**

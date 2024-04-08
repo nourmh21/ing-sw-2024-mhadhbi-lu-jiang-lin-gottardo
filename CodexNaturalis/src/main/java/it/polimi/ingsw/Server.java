@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.GoldCard;
+import it.polimi.ingsw.model.InitialCard;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Symbol;
 
@@ -75,7 +76,15 @@ public class Server {
             Symbol.INK_BOTTLE, 0,0,0,0);
     Card c49 = new GoldCard(49, Symbol.FUNGI, Symbol.EMPTY, Symbol.INK_BOTTLE, Symbol.EMPTY, Symbol.HIDDEN, 0,false, CardType.GOLD,
             Symbol.INK_BOTTLE, 0,0,0,0);
+    InitialCard c81= new InitialCard(81,Symbol.EMPTY,Symbol.EMPTY,Symbol.ANIMAL,Symbol.FUNGI,Symbol.EMPTY,0,false,CardType.INITIAL,1,0,0,0);
 
+    public Card getC(int i){
 
+        return c48;
+    }
+    public InitialCard getIC(int i){
+
+        return c81;
+    }
 
 }

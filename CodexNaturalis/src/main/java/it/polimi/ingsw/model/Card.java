@@ -6,10 +6,8 @@ import static it.polimi.ingsw.model.enums.Symbol.COVERED_ANGLE;
 
 
 public class Card {
-    private Symbol kingdom;
     private int idCard;
-    private int x;
-    private int y ;
+    private Symbol kingdom;
     private Symbol topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
     private int points;
     private boolean isBackSide;
@@ -84,11 +82,6 @@ public class Card {
 
     //SETTERS
 
-
-    public void setTopLeftAngle() {topLeftAngle=COVERED_ANGLE;}
-    public void setTopRightAngle() {topRightAngle=COVERED_ANGLE;}
-    public void setBottomLeftAngle() {bottomLeftAngle=COVERED_ANGLE;}
-    public void setBottomRightAngle() {bottomRightAngle=COVERED_ANGLE;}
 
 
     public boolean isBackSide() {
