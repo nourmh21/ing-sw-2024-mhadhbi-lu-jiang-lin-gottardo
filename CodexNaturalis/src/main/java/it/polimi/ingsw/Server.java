@@ -11,7 +11,6 @@ import java.util.List;
 public class Server {
 
 
-
     Card c1 = new Card(1, Symbol.FUNGI,Symbol.FUNGI, Symbol.FUNGI, Symbol.EMPTY, Symbol.HIDDEN, 0,false, CardType.RESOURCE);
     Card c2 = new Card(2, Symbol.FUNGI,Symbol.FUNGI, Symbol.EMPTY, Symbol.HIDDEN, Symbol.FUNGI, 0,false, CardType.RESOURCE);
     Card c3 = new Card(3, Symbol.FUNGI,Symbol.EMPTY, Symbol.HIDDEN, Symbol.FUNGI, Symbol.FUNGI, 0,false, CardType.RESOURCE);
@@ -76,15 +75,12 @@ public class Server {
             Symbol.INK_BOTTLE, 0,0,0,0);
     Card c49 = new GoldCard(49, Symbol.FUNGI, Symbol.EMPTY, Symbol.INK_BOTTLE, Symbol.EMPTY, Symbol.HIDDEN, 0,false, CardType.GOLD,
             Symbol.INK_BOTTLE, 0,0,0,0);
-    InitialCard c81= new InitialCard(81,Symbol.EMPTY,Symbol.EMPTY,Symbol.ANIMAL,Symbol.FUNGI,Symbol.EMPTY,0,false,CardType.INITIAL,1,0,0,0);
+
+    //example
+    Card c81= new InitialCard(81,Symbol.EMPTY,Symbol.EMPTY,Symbol.ANIMAL,Symbol.FUNGI,Symbol.EMPTY,0,false,CardType.INITIAL,1,0,0,0);
 
     public Card getC(int i){
-
-        return c48;
-    }
-    public InitialCard getIC(int i){
-
-        return c81;
+        return c1;
     }
 
 }
