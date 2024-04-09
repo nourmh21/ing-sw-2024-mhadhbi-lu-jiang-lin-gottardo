@@ -1,14 +1,12 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exception.InvalidNumOfPlayerException;
-import it.polimi.ingsw.model.Exception.NotInProgressException;
 import it.polimi.ingsw.model.enums.CardType;
+import it.polimi.ingsw.model.exceptions.InvalidNumOfPlayerException;
 import it.polimi.ingsw.model.enums.State;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
 
 public class Game {
     private int idGame;
@@ -16,7 +14,7 @@ public class Game {
     private int numOfPlayer; //indicates the number of player in the game
     private List<Player> players; //is the list of player
     private Player currentPlayer; //indicates the current player of the game
-    private List<GoalCard> commonGoals; //in contains the common goals for players
+    private List<Integer> commonGoals; //in contains the common goals for players
     private Desk desk;
     private boolean isLastTurn; //
     private String winner; //it contains the winner of the game
@@ -26,23 +24,22 @@ public class Game {
 
 
     public Game(){
+
+        desk = new Desk();
         players = new ArrayList<>();
         commonGoals = new ArrayList<>();
 
-        desk = new Desk();
+        commonGoals.add(desk.pickOneCard(CardType.GOAL));
+        commonGoals.add(desk.pickOneCard(CardType.GOAL));
+
         //chat = new Chat();
 
         Random random=new Random();
-        idGame=random.nextInt(1000);
+        idGame = random.nextInt(1000);
 
         gameState = State.STARTING;
         isLastTurn=false;
         winner="";
-
-
-
-
-
 
     }
 
@@ -186,10 +183,8 @@ public class Game {
 
 
     /**
-     *defines 2 common Goal Card for players */
-    public List<GoalCard> getCommonGoals() {
-        commonGoals.add(desk.pickOneGoalCard());
-        commonGoals.add(desk.pickOneGoalCard());
+     *return the common Goal Cards of the current game*/
+    public List<Integer> getCommonGoals() {
         return commonGoals;
     }
 
