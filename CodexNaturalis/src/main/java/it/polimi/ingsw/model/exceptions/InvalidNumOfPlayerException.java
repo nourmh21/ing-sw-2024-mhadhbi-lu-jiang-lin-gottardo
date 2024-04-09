@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.Exception;
+package it.polimi.ingsw.model.exceptions;
 
 /**IvalidNumOfPlayer defines an exception when there is a number that fails to start the game */
 
