@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enums.CardType;
-import it.polimi.ingsw.model.exceptions.InvalidNumOfPlayerException;
+import it.polimi.ingsw.model.exceptions.TooFewPlayersException;
 import it.polimi.ingsw.model.enums.State;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Game {
     private boolean isLastTurn; //
     private String winner; //it contains the winner of the game
     //private Chat chat; //is a chat of the game
-    private int connectedPlayers;   //num of player connected
+    private int numOfConnectedPlayers;   //num of player connected
 
 
 
@@ -90,7 +90,7 @@ public class Game {
             numOfPlayer++;
         }
         else {
-            throw new InvalidNumOfPlayerException();
+            throw new TooFewPlayersException();
         }
 
     }
@@ -104,12 +104,16 @@ public class Game {
         return players;
     }
 
-    public void disconnect(Player p) {
-
+    public void disconnect(Player p) throws TooFewPlayersException {
+        p.setDisconnected();
+        numOfConnectedPlayers -= 1;
+        if (numOfConnectedPlayers == 1)
+            throw new TooFewPlayersException();
     }
 
     public void reconnected(Player p){
-
+        p.setConnected();
+        numOfConnectedPlayers += 1;
 
     }
 
@@ -152,7 +156,6 @@ public class Game {
      * @return p player that have >=20 points
      */
     public boolean is20(){
-
         for (int i=0; i<numOfPlayer; i++){
             if (((players.get(i)).getPoint()>=20)){
                 break;
@@ -163,40 +166,24 @@ public class Game {
     }
 
     /**check max points in the game*/
-    public String checkMax(Player p){
-        int i=0;
-        int max=-1;
-        if (isLastTurn) {
-
-            for (i = 0; i < numOfPlayer; i++) {
-                if ((p.getPoint() > max)) {
-                    max = p.getPoint();
-                }
+    public String checkMaxPoint(){
+        int max = 20;
+        for (Player p:players) {
+            if ((p.getPoint() > max)) {
+                max = p.getPoint();
+                winner = p.getNickName();
             }
         }
-        winner = p.getNickName();
-        gameState=State.FINISHED;
+        gameState = State.FINISHED;
         return winner;
 
     }
-
 
 
     /**
      *return the common Goal Cards of the current game*/
     public List<Integer> getCommonGoals() {
         return commonGoals;
-    }
-
-    /** throw an exception when the numOfPlayer is 1*/
-    public Game(int numOfPlayer) throws InvalidNumOfPlayerException{
-        if (numOfPlayer ==1) {
-            throw new InvalidNumOfPlayerException();
-        }
-        desk = null;
-        this.numOfPlayer=numOfPlayer;
-        gameState = State.FINISHED;
-        winner = "";
     }
 
 
