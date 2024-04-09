@@ -15,7 +15,7 @@ public class Player{
     private int position;
     private int point;
     private Color playerColor;
-    private GoalCard personalGoal;
+    private Integer personalGoal;
     private boolean isConnected;
     private PlayerBoard board;
 
@@ -54,7 +54,7 @@ public class Player{
     }
 
     //method that returns player's personal goal
-    public GoalCard getPersonalGoal() {
+    public Integer getPersonalGoal() {
         return personalGoal;
     }
 

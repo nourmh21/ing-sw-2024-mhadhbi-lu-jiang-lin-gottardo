@@ -37,9 +37,9 @@ public class DeskTest {
     @Test(expected = NullPointerException.class)
     public void pickOneCard_EmptyGoalCardDeck_throwsNullPointerException(){
         for (int i = 0; i < 16; i++){
-            desk.pickOneCard(CardType.GOAL);
+            desk.pickOneCard(CardType.OBJECTIVE);
         }
-        desk.pickOneCard(CardType.GOAL);
+        desk.pickOneCard(CardType.OBJECTIVE);
     }
 
 

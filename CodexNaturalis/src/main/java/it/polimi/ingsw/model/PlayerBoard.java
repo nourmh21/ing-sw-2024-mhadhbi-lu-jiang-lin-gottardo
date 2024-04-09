@@ -183,7 +183,7 @@ public class PlayerBoard {
     }
 
 
-    public int calculategoalpoint(GoalCard card) {
+    public int calculategoalpoint(ObjectiveCard card) {
         int point = 0;
         switch (card.getType()) {
             case REDG:

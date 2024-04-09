@@ -29,8 +29,8 @@ public class Game {
         players = new ArrayList<>();
         commonGoals = new ArrayList<>();
 
-        commonGoals.add(desk.pickOneCard(CardType.GOAL));
-        commonGoals.add(desk.pickOneCard(CardType.GOAL));
+        commonGoals.add(desk.pickOneCard(CardType.OBJECTIVE));
+        commonGoals.add(desk.pickOneCard(CardType.OBJECTIVE));
 
         //chat = new Chat();
 

@@ -1,11 +1,7 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.model.enums.Symbol;
-import it.polimi.ingsw.model.enums.PCorner;
 import it.polimi.ingsw.model.enums.GoalType;
 
-import java.util.List;
-
-public class GoalCard {
+public class ObjectiveCard {
     private int idCard;
     private int points;
     private GoalType type;
@@ -17,7 +13,7 @@ public class GoalCard {
      */
 
 
-    public GoalCard(int idCard, int points, GoalType type) {
+    public ObjectiveCard(int idCard, int points, GoalType type) {
         this.idCard = idCard;
         this.points = points;
         this.type = type;

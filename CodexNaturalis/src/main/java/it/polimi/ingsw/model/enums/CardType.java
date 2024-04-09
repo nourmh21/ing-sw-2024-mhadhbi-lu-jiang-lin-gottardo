@@ -4,5 +4,5 @@ public enum CardType {
     RESOURCE,
     GOLD,
     INITIAL,
-    GOAL
+    OBJECTIVE
 }

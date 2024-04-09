@@ -21,7 +21,7 @@ public class Desk {
     private List<Integer> resourceCardDeck;          //list of resource cards - resource card deck
     private List<Integer> goldCardDeck;              //list of gold cards - gold card deck
     private List<Integer> initialCardDeck;           //list of initial cards - initial card deck
-    private List<Integer> goalCardDeck;              //list of goal cards - goal card deck
+    private List<Integer> objectiveCardDeck;              //list of goal cards - goal card deck
     private List<Integer> displayedResourceCards; //list that will contain two face up resource card
     private List<Integer> displayedGoldCards;     //list that will contain two face up gold card
 
@@ -34,7 +34,7 @@ public class Desk {
         resourceCardDeck = new ArrayList<>(40);
         goldCardDeck = new ArrayList<>(40);
         initialCardDeck = new ArrayList<>(6);
-        goalCardDeck = new ArrayList<>(16);
+        objectiveCardDeck = new ArrayList<>(16);
         displayedResourceCards = new ArrayList<>(2);
         displayedGoldCards = new ArrayList<>(2);
 
@@ -48,14 +48,14 @@ public class Desk {
             initialCardDeck.add(i);
         }
         for (int i = 87; i <= 102; i++){
-            goalCardDeck.add(i);
+            objectiveCardDeck.add(i);
         }
 
 
         Collections.shuffle(resourceCardDeck);
         Collections.shuffle(goldCardDeck);
         Collections.shuffle(initialCardDeck);
-        Collections.shuffle(goalCardDeck);
+        Collections.shuffle(objectiveCardDeck);
 
         updateDisplayedRCard();
         updateDisplayedGCard();
@@ -94,10 +94,10 @@ public class Desk {
                     throw new NullPointerException();
                 }
                 break;
-            case GOAL:
-                if (!goalCardDeck.isEmpty()){
-                    idCard = goalCardDeck.get(0);
-                    goalCardDeck.remove(0);
+            case OBJECTIVE:
+                if (!objectiveCardDeck.isEmpty()){
+                    idCard = objectiveCardDeck.get(0);
+                    objectiveCardDeck.remove(0);
                 }else{
                     throw new NullPointerException();
                 }
@@ -108,7 +108,7 @@ public class Desk {
 
 
     //method that fills the list of face up resource cards with resource cards
-    public void updateDisplayedRCard(){
+    private void updateDisplayedRCard(){
         while (displayedResourceCards.size() < 2 && !resourceCardDeck.isEmpty()){
             displayedResourceCards.add(pickOneCard(CardType.RESOURCE));
         }
@@ -116,21 +116,21 @@ public class Desk {
 
 
     //method that fills the list of face up gold cards with gold card
-    public void updateDisplayedGCard(){
-        while(displayedGoldCards.size() < 2 && !goalCardDeck.isEmpty()){
+    private void updateDisplayedGCard(){
+        while(displayedGoldCards.size() < 2 && !goldCardDeck.isEmpty()){
             displayedGoldCards.add(pickOneCard(CardType.GOLD));
         }
     }
 
 
     //method that returns the current face up resource cards
-    public List<Integer> getDisplayedRCard(){
+    public List<Integer> getDisplayedRCards(){
         return displayedResourceCards;
     }
 
 
     //method that returns the current face up gold cards
-    public List<Integer> getDisplayedGCard(){
+    public List<Integer> getDisplayedGCards(){
         return displayedGoldCards;
     }
 
@@ -166,13 +166,13 @@ public class Desk {
 
 
     //method that updates the first card of resource card deck, if it was used
-    public void updateNextRCard(){
+    private void updateNextRCard(){
         nextResourceCard = pickOneCard(CardType.RESOURCE);
     }
 
 
     //method that updates the first card of gold card deck, if it was used
-    public void updateNextGCard(){
+    private void updateNextGCard(){
         nextGoldCard = pickOneCard(CardType.GOLD);
     }
 
