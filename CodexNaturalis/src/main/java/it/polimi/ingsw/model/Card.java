@@ -2,8 +2,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Symbol;
 
-import static it.polimi.ingsw.model.enums.Symbol.COVERED_ANGLE;
-
 
 public class Card {
     private int idCard;
@@ -77,7 +75,7 @@ public class Card {
         return bottomRightAngle;
     }
 
-    public int getPoints() {
+    public int getPoint() {
         return points;
     }
 
