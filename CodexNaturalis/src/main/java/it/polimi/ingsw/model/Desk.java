@@ -13,7 +13,7 @@ import it.polimi.ingsw.model.enums.CardType;
  *    1 card that represent the first card of gold card deck
  *    some methods to pick card, to update the card list after picking (in general it will be automatic)
  * @author Valeria Lu
- * @version 2024-04-01-13:10
+ * @version 2024-04-09-18:13
  * Status: need to be complete and refine
  * */
 
@@ -27,18 +27,6 @@ public class Desk {
 
     private Integer nextResourceCard;            //the first card of resource card deck
     private Integer nextGoldCard;                //the first card of gold card deck
-
-
-    /*
-    Questions:
-       Java Code:
-
-
-       UML:
-
-       ------
-       Need to ask in slack: if one deck finished their Card, should I pick from another deck?
-    */
 
 
     //the class constructor
@@ -80,35 +68,46 @@ public class Desk {
 
     //method that picks one card from the right deck according the type passed as parameter
     public Integer pickOneCard(CardType type){
-        Integer c = null;
+        Integer idCard = null;
         switch (type){
             case RESOURCE:
-                if (!resourceCardDeck.isEmpty()){
-                    c = resourceCardDeck.get(0);
+                if (!resourceCardDeck.isEmpty()) {
+                    idCard = resourceCardDeck.get(0);
                     resourceCardDeck.remove(0);
+                }else{
+                    throw new NullPointerException();
                 }
                 break;
             case GOLD:
-                if (!goalCardDeck.isEmpty()){
-                    c = goldCardDeck.get(0);
-                    goalCardDeck.remove(0);
+                if (!goldCardDeck.isEmpty()){
+                    idCard = goldCardDeck.get(0);
+                    goldCardDeck.remove(0);
+                }else{
+                    throw new NullPointerException();
                 }
                 break;
             case INITIAL:
-                c = initialCardDeck.get(0);
-                initialCardDeck.remove(0);
+                if(!initialCardDeck.isEmpty()){
+                    idCard = initialCardDeck.get(0);
+                    initialCardDeck.remove(0);
+                }else{
+                    throw new NullPointerException();
+                }
                 break;
             case GOAL:
-                c = goalCardDeck.get(0);
-                goalCardDeck.remove(0);
+                if (!goalCardDeck.isEmpty()){
+                    idCard = goalCardDeck.get(0);
+                    goalCardDeck.remove(0);
+                }else{
+                    throw new NullPointerException();
+                }
                 break;
         }
-        return c;
+        return idCard;
     }
 
 
     //method that fills the list of face up resource cards with resource cards
-    //       if the list size is less than 2 and resource card deck is not empty
     public void updateDisplayedRCard(){
         while (displayedResourceCards.size() < 2 && !resourceCardDeck.isEmpty()){
             displayedResourceCards.add(pickOneCard(CardType.RESOURCE));
@@ -117,7 +116,6 @@ public class Desk {
 
 
     //method that fills the list of face up gold cards with gold card
-    //       if the list size is less than 2 and gold card deck is not empty
     public void updateDisplayedGCard(){
         while(displayedGoldCards.size() < 2 && !goalCardDeck.isEmpty()){
             displayedGoldCards.add(pickOneCard(CardType.GOLD));
@@ -169,22 +167,13 @@ public class Desk {
 
     //method that updates the first card of resource card deck, if it was used
     public void updateNextRCard(){
-        if (!resourceCardDeck.isEmpty()){
-            nextResourceCard = pickOneCard(CardType.RESOURCE);
-        }else{
-            nextResourceCard = null;
-        }
+        nextResourceCard = pickOneCard(CardType.RESOURCE);
     }
 
 
     //method that updates the first card of gold card deck, if it was used
     public void updateNextGCard(){
-        if (!goalCardDeck.isEmpty()){
-            nextGoldCard = pickOneCard(CardType.GOLD);
-        }else{
-            nextGoldCard = null;
-        }
-
+        nextGoldCard = pickOneCard(CardType.GOLD);
     }
 
 
@@ -203,24 +192,7 @@ public class Desk {
         return c;
     }
 
-    //method that check if one deck is empty or not
-    public boolean isOneDeckEmpty(CardType type){
-        switch (type){
-            case RESOURCE:
-                if (resourceCardDeck.isEmpty()){
-                    return true;
-                }else{
-                    return false;
-                }
-            case GOLD:
-                if (goldCardDeck.isEmpty()){
-                    return true;
-                }else{
-                    return false;
-                }
-        }
-        return false;
-    }
+
 
 }
 
