@@ -13,7 +13,7 @@ public class PlayerBoard {
     private List<Boolean> isCoveredTopRightAngle;
     private List<Boolean> isCoveredBottomLeftAngle;
     private List<Boolean> isCoveredBottomRightAngle;
-    private List<Symbol> cardColor;
+    private List<Symbol> cardKingdom;
     private List<Integer> x;
     private List<Integer> y;
     private List<Integer> handCards;
@@ -41,36 +41,36 @@ public class PlayerBoard {
         isCoveredTopRightAngle = new ArrayList<>();
         isCoveredBottomLeftAngle = new ArrayList<>();
         isCoveredBottomRightAngle = new ArrayList<>();
-        cardColor = new ArrayList<>();
+        cardKingdom = new ArrayList<>();
         symbolsList = new int[7];
     }
 
     Server server = new Server();
 
-    public void placeCard(int IdCard) {
-        Card card = server.getC(IdCard);
-        boardCards.add(IdCard);
-        handCards.remove(IdCard);
-        cardColor.add(card.getKingdom());
-        int index = boardCards.indexOf(IdCard);
-        addSymbolsList(card);
+    public void placeCard(int idCard,boolean isBackSide) {
+        Card card = server.getC(idCard);
+        boardCards.add(idCard);
+        handCards.remove(idCard);
+        cardKingdom.add(card.getKingdom());
+        int index = boardCards.indexOf(idCard);
+        addSymbolsList(card,isBackSide);
         calculatePoint((GoldCard) card, index);
     }
 
-    public void placeInitCard(Integer idCard) {
+    public void placeInitCard(int idCard,boolean isBackSide) {
         Card card = server.getC(idCard);
         InitialCard initialcard = null;
         InitialCard initialCard = (InitialCard) card;
 
         boardCards.add(idCard);
-        cardColor.add(initialcard.getKingdom());
+        cardKingdom.add(initialcard.getKingdom());
         x.add(0);
         y.add(0);
         isCoveredTopLeftAngle.add(false);
         isCoveredTopRightAngle.add(false);
         isCoveredBottomLeftAngle.add(false);
         isCoveredBottomRightAngle.add(false);
-        if (initialcard.isBackSide()) {
+        if (isBackSide) {
             int[] t = new int[4];
             t = initialcard.getCenterResource();
             symbolsList[0] = t[0];
@@ -89,8 +89,8 @@ public class PlayerBoard {
     }
 
 
-    private void addSymbolsList(Card card) {
-        if (card.isBackSide()) {
+    private void addSymbolsList(Card card,boolean isBackSide) {
+        if (isBackSide) {
             editAddSymbolsList(card.getKingdom());
         } else {
             editAddSymbolsList(card.getTopLeftAngle());
@@ -308,7 +308,7 @@ public class PlayerBoard {
         int point = 0 ;
         for (int elem : boardCards) {
             int index1 = boardCards.indexOf(elem);
-            if (cardColor.get(index1) == symbol1) {
+            if (cardKingdom.get(index1) == symbol1) {
                 int x1 = x.get(index1);
                 int y1 = y.get(index1);
                 int x2 = x1+i;
@@ -324,7 +324,7 @@ public class PlayerBoard {
                         }
                     }
                 }
-                if (cardColor.get(index2) == symbol2) {
+                if (cardKingdom.get(index2) == symbol2) {
                     int index3 = 0;
                     int x3 = x2 +iii;
                     int y3 = y2 +ii;
@@ -338,16 +338,15 @@ public class PlayerBoard {
                             }
                         }
                     }
-                    if (cardColor.get(index3) ==symbol3) {
+                    if (cardKingdom.get(index3) ==symbol3) {
                         point += 3;
-                        cardColor.set(index1, EMPTY);
-                        cardColor.set(index2, EMPTY);
-                        cardColor.set(index3, EMPTY);
+                        cardKingdom.set(index1, EMPTY);
+                        cardKingdom.set(index2, EMPTY);
+                        cardKingdom.set(index3, EMPTY);
                     }
                 }
             }
         }
         return point;
     }
-
 }
