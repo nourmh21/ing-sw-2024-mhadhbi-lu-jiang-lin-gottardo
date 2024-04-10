@@ -174,7 +174,6 @@ public class Game {
                 winner = p.getNickName();
             }
         }
-        gameState = State.FINISHED;
         return winner;
 
     }
