@@ -169,7 +169,7 @@ public class Game {
     public String checkMaxPoint(){
         int max = 20;
         for (Player p:players) {
-            if ((p.getPoint() > max)) {
+            if ((p.getPoint() >= max)) {
                 max = p.getPoint();
                 winner = p.getNickName();
             }
