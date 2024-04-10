@@ -11,25 +11,27 @@ import it.polimi.ingsw.model.enums.CardType;
  *    2 displayed card list,
  *    1 card that represent the first card of resource card deck
  *    1 card that represent the first card of gold card deck
- *    some methods to pick card, to update the card list after picking (in general it will be automatic)
+ *    some methods to pick card, to update the card list after picking (it will be automatic)
+ * Note: there are only card ids here, therefore only integers and not card objects
+ * Status: almost complete
  * @author Valeria Lu
- * @version 2024-04-09-18:13
- * Status: need to be complete and refine
+ * @version 2024-04-10-20:00
  * */
 
 public class Desk {
     private List<Integer> resourceCardDeck;          //list of resource cards - resource card deck
     private List<Integer> goldCardDeck;              //list of gold cards - gold card deck
     private List<Integer> initialCardDeck;           //list of initial cards - initial card deck
-    private List<Integer> objectiveCardDeck;              //list of goal cards - goal card deck
-    private List<Integer> displayedResourceCards; //list that will contain two face up resource card
-    private List<Integer> displayedGoldCards;     //list that will contain two face up gold card
+    private List<Integer> objectiveCardDeck;         //list of goal cards - goal card deck
+    private List<Integer> displayedResourceCards;    //list that will contain two face up resource card
+    private List<Integer> displayedGoldCards;        //list that will contain two face up gold card
+    private Integer nextResourceCard;                //the first card of resource card deck
+    private Integer nextGoldCard;                    //the first card of gold card deck
 
-    private Integer nextResourceCard;            //the first card of resource card deck
-    private Integer nextGoldCard;                //the first card of gold card deck
 
-
-    //the class constructor
+    /**
+     * The class constructor
+     */
     public Desk(){
         resourceCardDeck = new ArrayList<>(40);
         goldCardDeck = new ArrayList<>(40);
@@ -51,7 +53,6 @@ public class Desk {
             objectiveCardDeck.add(i);
         }
 
-
         Collections.shuffle(resourceCardDeck);
         Collections.shuffle(goldCardDeck);
         Collections.shuffle(initialCardDeck);
@@ -65,9 +66,13 @@ public class Desk {
     }
 
 
-
-    //method that picks one card from the right deck according the type passed as parameter
-    public Integer pickOneCard(CardType type){
+    /**
+     * Pick one card id from the right deck
+     * @param type the type of card that one wants to pick
+     * @return a card id of the required type
+     * @throws NullPointerException in case that the required card deck is empty
+     */
+    public Integer pickOneCard(CardType type) throws NullPointerException{
         Integer idCard = null;
         switch (type){
             case RESOURCE:
@@ -107,7 +112,9 @@ public class Desk {
     }
 
 
-    //method that fills the list of face up resource cards with resource cards
+    /**
+     * Fill the list of displayed resource card with resource card
+     */
     private void updateDisplayedRCard(){
         while (displayedResourceCards.size() < 2 && !resourceCardDeck.isEmpty()){
             displayedResourceCards.add(pickOneCard(CardType.RESOURCE));
@@ -115,7 +122,9 @@ public class Desk {
     }
 
 
-    //method that fills the list of face up gold cards with gold card
+    /**
+     * Fill the list of displayed gold card with gold card
+     */
     private void updateDisplayedGCard(){
         while(displayedGoldCards.size() < 2 && !goldCardDeck.isEmpty()){
             displayedGoldCards.add(pickOneCard(CardType.GOLD));
@@ -123,19 +132,27 @@ public class Desk {
     }
 
 
-    //method that returns the current face up resource cards
+    /**
+     * @return the current list of displayed resource card id
+     */
     public List<Integer> getDisplayedRCards(){
         return displayedResourceCards;
     }
 
 
-    //method that returns the current face up gold cards
+    /**
+     * @return the current list of displayed gold card id
+     */
     public List<Integer> getDisplayedGCards(){
         return displayedGoldCards;
     }
 
 
-    //method that picks one resource card from face up cards according the index of position i, with automatic refill
+    /**
+     * Pick one resource card from displayed resource card list, with automatic refill after picking
+     * @param i the position of the card in the arraylist
+     * @return a resource card id
+     */
     public Integer pickOneDisplayedRCard(int i){
         Integer c = null;
         if( i == 0){
@@ -150,7 +167,11 @@ public class Desk {
     }
 
 
-    //method that picks one gold card from face up cards according the index of position i, with automatic refill
+    /**
+     * Pick one gold card from displayed gold card list, with automatic refill after picking
+     * @param i the position of the card in the arraylist
+     * @return a gold card id
+     */
     public Integer pickOneDisplayedGCard(int i){
         Integer c = null;
         if( i == 0){
@@ -165,19 +186,26 @@ public class Desk {
     }
 
 
-    //method that updates the first card of resource card deck, if it was used
+    /**
+     * Update the first card of resource card deck (when it was used)
+     */
     private void updateNextRCard(){
         nextResourceCard = pickOneCard(CardType.RESOURCE);
     }
 
 
-    //method that updates the first card of gold card deck, if it was used
+    /**
+     * Update the first card of gold card deck (when it was used)
+     */
     private void updateNextGCard(){
         nextGoldCard = pickOneCard(CardType.GOLD);
     }
 
 
-    //method that picks the first card of resource card deck, with automatic refill
+    /**
+     * Pick the first card of resource card deck, with automatic refill
+     * @return a resource card id
+     */
     public Integer pickNextRCard(){
         Integer c = nextResourceCard;
         updateNextRCard();
@@ -185,17 +213,17 @@ public class Desk {
     }
 
 
-    //method that picks the first card of gold card deck, with automatic refill
+    /**
+     * Pick the first card of gold card deck, with automatic refill
+     * @return a gold card id
+     */
     public Integer pickNextGCard(){
         Integer c = nextGoldCard;
         updateNextGCard();
         return c;
     }
 
-
-
 }
 
-// I haven't checked yet if there are any exceptional cases
 
 
