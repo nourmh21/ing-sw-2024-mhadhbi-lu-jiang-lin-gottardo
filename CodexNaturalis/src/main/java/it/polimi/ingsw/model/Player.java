@@ -29,48 +29,77 @@ public class Player{
         board = new PlayerBoard();
     }
 
+
+    /**
+     * @return player's Nickname
+     */
     public String getNickName() {
         return nickName;
     }
 
-    //method that returns player's turn
+
+    /**
+     * @return player's turn
+     */
     public int getPosition(){
         return position;
     }
 
-    //method that returns player's point
+
+    /**
+     * @return player's game point
+     */
     public int getPoint(){
         return point;
     }
 
-    //method that update player's point
+
+    /**
+     * Update player's point
+     * @param newPoint the new points to be added
+     */
     public void updatePoint(int newPoint){
         point = point + newPoint;
     }
 
-    //method that returns player's color
+
+    /**
+     * @return player's color
+     */
     public Color getPlayerColor() {
         return playerColor;
     }
 
-    //method that returns player's personal goal
+
+    /**
+     * @return player's personal goal card id
+     */
     public Integer getPersonalGoal() {
         return personalGoal;
     }
 
-    //method that return the connection of player
+
+    /**
+     * @return true if the player is connected, false otherwise
+     */
     public boolean isConnected() {
 
         return isConnected;
 
     }
 
-    //method that disconnect player from game
+
+    /**
+     * Set player disconnected from the game
+     */
     public void setDisconnected(){
         isConnected = false;
     }
 
-    //method that reconnect player from game
+
+    /**
+     * Set player connected to the game
+     */
     public void setConnected(){
         isConnected = true;
     }
