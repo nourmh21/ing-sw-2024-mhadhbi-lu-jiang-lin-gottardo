@@ -46,11 +46,11 @@ public class Desk {
         for (int i = 41; i <= 80; i++){
             goldCardDeck.add(i);
         }
-        for (int i = 81; i <= 86; i++){
-            initialCardDeck.add(i);
-        }
-        for (int i = 87; i <= 102; i++){
+        for (int i = 81; i <= 96; i++){
             objectiveCardDeck.add(i);
+        }
+        for (int i = 97; i <= 102; i++){
+            initialCardDeck.add(i);
         }
 
         Collections.shuffle(resourceCardDeck);
