@@ -16,13 +16,15 @@ public class Game {
     private Player currentPlayer; //indicates the current player of the game
     private List<Integer> commonGoals; //in contains the common goals for players
     private Desk desk;
-    private boolean isLastTurn; //
-    private String winner; //it contains the winner of the game
-    //private Chat chat; //is a chat of the game
+    private String winner;
+    private boolean isLastTurn;
+    //private Chat chat;
     private int numOfConnectedPlayers;   //num of player connected
 
 
-
+    /***
+     * the class constructor
+     */
     public Game(){
 
         desk = new Desk();
@@ -34,7 +36,7 @@ public class Game {
 
         //chat = new Chat();
 
-        Random random=new Random();
+        Random random=new Random();            //genera codice alfanumerici (è presente un file dove memorizza...)
         idGame = random.nextInt(1000);
 
         gameState = State.STARTING;
@@ -44,7 +46,8 @@ public class Game {
     }
 
    /**
-    *@return the unique code of game*/
+    *@return the unique code of game generated random
+    * */
     public int getIdGame() {
         return idGame;
     }
@@ -56,34 +59,21 @@ public class Game {
         return gameState;
     }
 
+
     /**
      *sets game state
-     *@param gameState indicate the state of the game*/
-
+     *@param gameState indicate the present state of the game
+     * */
     public void setGameState(State gameState) {
-        if ((numOfPlayer>1)){
-            gameState=State.IN_PROGRESS;
-        }
-        if ((numOfPlayer==1)){
-            gameState=State.WAITING;
-            //TIMER
-
-            //set unique player as winner after timer
-            for (int i=0; i<numOfPlayer; i++) {
-                if (players.get(i).isConnected()){
-                    winner = players.get(i).getNickName();
-                }
-            }
-            gameState = State.FINISHED;
-
-            // se durante il conteggio del timer rientra un giocatore come faccio a implementarla
-
-        }
+       this.gameState=gameState;
 
     }
 
     /**
-     * @param p indicates the new player in addition*/
+     * add the new player in the player list
+     * @param p indicates the new player in addition
+     * @throws  TooFewPlayersException when only one player is connected
+     */
     public void addPlayers(Player p) {
         if (numOfPlayer<4){
             players.add(p);
@@ -98,12 +88,15 @@ public class Game {
 
     /**
      * @return player's list of the game
-     * */
+     */
     public List<Player> getPlayers() {
-
         return players;
     }
 
+    /**
+     * @param p indicated the player disconnect
+     * @throws TooFewPlayersException when in the game remains one player
+     */
     public void disconnect(Player p) throws TooFewPlayersException {
         p.setDisconnected();
         numOfConnectedPlayers -= 1;
@@ -111,7 +104,10 @@ public class Game {
             throw new TooFewPlayersException();
     }
 
-    public void reconnected(Player p){
+    /**
+     * @param p indicates the player who reconnects
+     */
+    public void reconnect(Player p){
         p.setConnected();
         numOfConnectedPlayers += 1;
 
@@ -125,26 +121,29 @@ public class Game {
     }
 
      /**
-      * @param player defines the next current player */
+      * @param player defines the next current player
+      */
     public void setCurrentPlayer(Player player) {
             this.currentPlayer = player;
     }
 
     /**
      * @return the game's chat
-     * */
-
+     */
     /*public Chat getChat(){
 
         return chat;
     }*/
 
-    /**check if it's the last turn*/
+    /**
+     * set isLastTurn when is20 is true
+     */
     public void setIsLastTurn() {
         if (is20()){
             isLastTurn=true;
         }
     }
+
 
     public boolean getIsLastTurn(){
         return isLastTurn;
@@ -152,7 +151,6 @@ public class Game {
 
     /**
      * control if one of player has 20 points
-     *
      * @return p player that have >=20 points
      */
     public boolean is20(){
@@ -165,7 +163,10 @@ public class Game {
         return true;
     }
 
-    /**check max points in the game*/
+    /**
+     * check max points in the game
+     * @return winner indicates the player who has the most points
+     */
     public String checkMaxPoint(){
         int max = 20;
         for (Player p:players) {
@@ -180,7 +181,8 @@ public class Game {
 
 
     /**
-     *return the common Goal Cards of the current game*/
+     * return the common Goal Cards of the current game
+     * */
     public List<Integer> getCommonGoals() {
         return commonGoals;
     }
