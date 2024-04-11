@@ -31,50 +31,60 @@ public class Card {
     }
 //GETTERS
 
+    /**
+     * @return id of the card
+     */
     public  int getIdCard(){
         return idCard;
     }
 
     /**
-     * Type can be RESOURCE or GOLD or INITIAL or GOAL.
+     * @return type can be RESOURCE, GOLD, INITIAL or GOAL (type: enums.CardType)
      */
     public CardType getType() {
         return type;
     }
 
+    /**
+     * @return kingdom can be FUNGI, PLANT, ANIMAL or INSECT (type: enums.Symbol)
+     */
     public Symbol getKingdom(){
         return kingdom;
     }
 
 
     /**
-     * topLeftAngle defines the resource, if there is one, that is contained in the upper left corner
+     * @return topLeftAngle defines the resource, if there is one, that is contained in the upper left corner (type: enums.Symbol)
      */
     public Symbol getTopLeftAngle() {
         return topLeftAngle;
     }
 
     /**
-     * topRightAngle defines the resource, if there is one, that is contained in the upper right corner
+     * @return topRightAngle defines the resource, if there is one, that is contained in the upper right corner (type: enums.Symbol)
      */
     public Symbol getTopRightAngle() {
         return topRightAngle;
     }
 
     /**
-     * bottomLeftAngle defines the resource, if there is one, that is contained in the bottom left corner
+     * @return bottomLeftAngle defines the resource, if there is one, that is contained in the bottom left corner (type: enums.Symbol)
      */
     public Symbol getBottomLeftAngle() {
         return bottomLeftAngle;
     }
 
     /**
-     * bottomRightAngle defines the resource, if there is one, that is contained in the bottom right corner
+     *
+     * @return bottomRightAngle defines the resource, if there is one, that is contained in the bottom right corner (type: enums.Symbol)
      */
     public Symbol getBottomRightAngle() {
         return bottomRightAngle;
     }
 
+    /**
+     * @return points given by the card
+     */
     public int getPoint() {
         return points;
     }
