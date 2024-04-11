@@ -9,17 +9,17 @@ import java.util.List;
 import java.util.Random;
 
 public class Game {
-    private int idGame;
-    private State gameState;  //indicates the status of the game
+    private final int idGame;
+    private State gameState;
     private int numOfPlayer; //indicates the number of player in the game
-    private List<Player> players; //is the list of player
+    private final List<Player> players; //is the list of player
     private Player currentPlayer; //indicates the current player of the game
-    private List<Integer> commonGoals; //in contains the common goals for players
+    private final List<Integer> commonGoals; //in contains the common goals for all players
     private Desk desk;
     private String winner;
     private boolean isLastTurn;
     //private Chat chat;
-    private int numOfConnectedPlayers;   //num of player connected
+    private int numOfConnectedPlayers;   //num of player connect in the game
 
 
     /***
@@ -54,7 +54,7 @@ public class Game {
 
     /**
      * @return gameState that indicates what state the game is in
-     * */
+     */
     public State getGameState() {
         return gameState;
     }
@@ -63,7 +63,7 @@ public class Game {
     /**
      *sets game state
      *@param gameState indicate the present state of the game
-     * */
+     */
     public void setGameState(State gameState) {
        this.gameState=gameState;
 
@@ -136,7 +136,7 @@ public class Game {
     }*/
 
     /**
-     * set isLastTurn when is20 is true
+     * set isLastTurn true when is20 is true
      */
     public void setIsLastTurn() {
         if (is20()){
