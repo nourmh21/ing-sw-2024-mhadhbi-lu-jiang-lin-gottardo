@@ -56,7 +56,7 @@ public class Player{
 
     /**
      * Update player's point
-     * @param newPoint the new points to be added
+     * @param newPoint new points to be added
      */
     public void updatePoint(int newPoint){
         point = point + newPoint;
@@ -80,7 +80,7 @@ public class Player{
 
 
     /**
-     * @return true if the player is connected, false otherwise
+     * @return true if player's connected, otherwise false
      */
     public boolean isConnected() {
 
