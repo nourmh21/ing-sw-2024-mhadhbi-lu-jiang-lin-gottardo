@@ -22,8 +22,8 @@ public class testGame {
     @Before
     public void setGame(){
         game = new Game();
-        p1 = new Player("A", 1, Color.BLACK);
-        p2 = new Player ("B", 2, Color.RED);
+        p1 = new Player("A", 1, Color.RED);
+        p2 = new Player ("B", 2, Color.GREEN);
         p3 = new Player("C", 3, Color.YELLOW);
 
 
@@ -32,11 +32,11 @@ public class testGame {
     @Test
     public void testAddPlayers(){
         game.addPlayers(p1);
-        assertEquals(p1, game.getPlayers());
+        assertEquals(p1, game.getPlayers().size());
 
         game.addPlayers(p2);
         game.addPlayers(p3);
-        assertEquals(p3, game.getPlayers());
+        assertEquals(p3.getPosition(), game.getPlayers().size());
 
     }
 
@@ -44,7 +44,7 @@ public class testGame {
     public void testCheckMaxPoint(){
         String name;
         name = p1.getNickName();
-        game.checkMaxPoint()= name;
+        name=game.checkMaxPoint();
         assertEquals("A", game.checkMaxPoint());
     }
 

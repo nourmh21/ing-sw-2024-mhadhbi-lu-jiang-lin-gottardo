@@ -20,6 +20,8 @@ public class Game {
     private boolean isLastTurn;
     //private Chat chat;
     private int numOfConnectedPlayers;   //num of player connect in the game
+    public String firstPlayer;
+
 
 
     /***
@@ -90,8 +92,11 @@ public class Game {
      * @return player's list of the game
      */
     public List<Player> getPlayers() {
+
         return players;
     }
+
+
 
     /**
      * @param p indicated the player disconnect
@@ -168,14 +173,15 @@ public class Game {
      * @return winner indicates the player who has the most points
      */
     public String checkMaxPoint(){
+        String w;
         int max = 20;
         for (Player p:players) {
             if ((p.getPoint() >= max)) {
                 max = p.getPoint();
-                winner = p.getNickName();
+                winner=p.getNickName();
             }
         }
-        return winner;
+        return winner ;
 
     }
 
@@ -185,6 +191,15 @@ public class Game {
      * */
     public List<Integer> getCommonGoals() {
         return commonGoals;
+    }
+
+    public void setFirstPlayer(String name){
+        this.firstPlayer=name;
+
+    }
+
+    public String getFirstPlayer(String name){
+        return name;
     }
 
 
