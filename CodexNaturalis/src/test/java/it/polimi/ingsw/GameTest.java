@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Tests for class Game
  */
-public class testGame {
+public class GameTest {
 
     private Game game;
     int numOfPlayer=3;
