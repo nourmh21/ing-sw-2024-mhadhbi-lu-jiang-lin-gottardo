@@ -18,7 +18,6 @@ public class Game {
     private Desk desk;
     private String winner;
     private boolean isLastTurn;
-    //private Chat chat;
     private int numOfConnectedPlayers;   //num of player connect in the game
     public String firstPlayer;
 
@@ -36,7 +35,6 @@ public class Game {
         commonGoals.add(desk.pickOneCard(CardType.OBJECTIVE));
         commonGoals.add(desk.pickOneCard(CardType.OBJECTIVE));
 
-        //chat = new Chat();
 
         Random random=new Random();            //genera codice alfanumerici (è presente un file dove memorizza...)
         idGame = random.nextInt(1000);
@@ -132,13 +130,6 @@ public class Game {
             this.currentPlayer = player;
     }
 
-    /**
-     * @return the game's chat
-     */
-    /*public Chat getChat(){
-
-        return chat;
-    }*/
 
     /**
      * set isLastTurn true when is20 is true
