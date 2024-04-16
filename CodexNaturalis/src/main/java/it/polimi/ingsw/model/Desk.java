@@ -11,11 +11,11 @@ import it.polimi.ingsw.model.enums.CardType;
  *    2 displayed card list,
  *    1 card that represent the first card of resource card deck
  *    1 card that represent the first card of gold card deck
- *    some methods to pick card, to update the card list after picking (it will be automatic)
+ *    some methods to pick a card
  * Note: there are only card ids here, therefore only integers and not card objects
  * Status: almost complete
  * @author Valeria Lu
- * @version 2024-04-10-20:00
+ * @version 2024-04-16-00:32
  * */
 
 public class Desk {
@@ -58,11 +58,12 @@ public class Desk {
         Collections.shuffle(initialCardDeck);
         Collections.shuffle(objectiveCardDeck);
 
+        updateNextRCard();
+        updateNextGCard();
+
         updateDisplayedRCard();
         updateDisplayedGCard();
 
-        updateNextRCard();
-        updateNextGCard();
     }
 
 
@@ -115,9 +116,10 @@ public class Desk {
     /**
      * Fill the list of displayed resource card with resource card
      */
-    private void updateDisplayedRCard(){
-        while (displayedResourceCards.size() < 2 && !resourceCardDeck.isEmpty()){
-            displayedResourceCards.add(pickOneCard(CardType.RESOURCE));
+    public void updateDisplayedRCard(){
+        while (displayedResourceCards.size() < 2){
+            displayedResourceCards.add(pickNextRCard());
+            updateNextRCard();
         }
     }
 
@@ -125,9 +127,10 @@ public class Desk {
     /**
      * Fill the list of displayed gold card with gold card
      */
-    private void updateDisplayedGCard(){
-        while(displayedGoldCards.size() < 2 && !goldCardDeck.isEmpty()){
-            displayedGoldCards.add(pickOneCard(CardType.GOLD));
+    public void updateDisplayedGCard(){
+        while(displayedGoldCards.size() < 2){
+            displayedGoldCards.add(pickNextGCard());
+            updateNextGCard();
         }
     }
 
@@ -149,39 +152,39 @@ public class Desk {
 
 
     /**
-     * Pick one resource card from displayed resource card list, with automatic refill after picking
-     * @param i the position of the card in the arraylist
+     * Pick one resource card from displayed resource card list
+     * @param idCard the id of the card that one wants to pick
      * @return a resource card id
+     * @throws IllegalArgumentException when idCard is not in the displayed resource card list
      */
-    public Integer pickOneDisplayedRCard(int i){
+    public Integer pickOneDisplayedRCard(int idCard){
         Integer c = null;
-        if( i == 0){
-            c = displayedResourceCards.get(i);
-            displayedResourceCards.remove(i);
-        }else if( i == 1 ){
-            c = displayedResourceCards.get(i);
-            displayedResourceCards.remove(i);
+        for (int i = 0; i < 2; i++){
+            if(idCard == displayedResourceCards.get(i)){
+                c = displayedResourceCards.get(i);
+                displayedResourceCards.remove(i);
+                break;
+            }
         }
-        updateDisplayedRCard();
         return c;
     }
 
 
     /**
-     * Pick one gold card from displayed gold card list, with automatic refill after picking
-     * @param i the position of the card in the arraylist
+     * Pick one gold card from displayed gold card list
+     * @param idCard the id of the card that one wants to pick
      * @return a gold card id
+     * @throws IllegalArgumentException when idCard is not in the displayed gold card list
      */
-    public Integer pickOneDisplayedGCard(int i){
+    public Integer pickOneDisplayedGCard(int idCard){
         Integer c = null;
-        if( i == 0){
-            c = displayedGoldCards.get(i);
-            displayedGoldCards.remove(i);
-        }else if( i == 1 ){
-            c = displayedResourceCards.get(i);
-            displayedGoldCards.remove(i);
+        for (int i = 0; i < 2; i++){
+            if( idCard == displayedGoldCards.get(i)){
+                c = displayedGoldCards.get(i);
+                displayedGoldCards.remove(i);
+                break;
+            }
         }
-        updateDisplayedGCard();
         return c;
     }
 
@@ -189,7 +192,7 @@ public class Desk {
     /**
      * Update the first card of resource card deck (when it was used)
      */
-    private void updateNextRCard(){
+    public void updateNextRCard(){
         nextResourceCard = pickOneCard(CardType.RESOURCE);
     }
 
@@ -197,29 +200,29 @@ public class Desk {
     /**
      * Update the first card of gold card deck (when it was used)
      */
-    private void updateNextGCard(){
+    public void updateNextGCard(){
         nextGoldCard = pickOneCard(CardType.GOLD);
     }
 
 
     /**
-     * Pick the first card of resource card deck, with automatic refill
+     * Pick the first card of resource card deck
      * @return a resource card id
      */
     public Integer pickNextRCard(){
         Integer c = nextResourceCard;
-        updateNextRCard();
+        nextResourceCard = null;
         return c;
     }
 
 
     /**
-     * Pick the first card of gold card deck, with automatic refill
+     * Pick the first card of gold card deck
      * @return a gold card id
      */
     public Integer pickNextGCard(){
         Integer c = nextGoldCard;
-        updateNextGCard();
+        nextGoldCard = null;
         return c;
     }
 
