@@ -1,5 +1,4 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.Server;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.IllegalCoordinateInsertionException;
 import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
@@ -9,29 +8,28 @@ import java.util.*;
 
 import static it.polimi.ingsw.model.enums.Symbol.*;
 
-//lista di coordinate permessi??
 public class PlayerBoard {
 
-    private List<Integer> boardCards;
-    private List<Boolean> isCoveredTopLeftAngle;
-    private List<Boolean> isCoveredTopRightAngle;
-    private List<Boolean> isCoveredBottomLeftAngle;
-    private List<Boolean> isCoveredBottomRightAngle;
-    private List<Symbol> cardKingdom;
-    private List<Integer> x;
-    private List<Integer> y;
-    private List<Integer> handCards;
-    private int[] symbolsList;
+    final private List<Integer> boardCards;
+    final private List<Symbol> topLeftAngle;
+    final private List<Symbol> topRightAngle;
+    final private List<Symbol> bottomLeftAngle;
+    final private List<Symbol> bottomRightAngle;
+    final private List<Symbol> cardKingdom;
+    final private List<Integer> x;
+    final private List<Integer> y;
+    final private List<Integer> handCards;
+    final private int[] symbolsList;
 
     /**
      * cardList define list of card use on the board.
      * handList define list of card in hnd of player.
      * x coordinate for the position
      * y coordinate for the position
-     * isCoveredTopLeftAngle whether the corner is covered or not
-     * isCoveredTopRightAngle whether the corner is covered or not
-     * isCoveredBottomLeftAngle whether the corner is covered or not
-     * isCoveredBottomRightAngle whether the corner is covered or not
+     * isCoveredTopLeftAngle whether the corner is covered or show the resource
+     * isCoveredTopRightAngle whether the corner is covered or show the resource
+     * isCoveredBottomLeftAngle whether the corner is covered or show the resource
+     * isCoveredBottomRightAngle whether the corner is covered or show the resource
      * cardKingdom defines the color of the card
      * symbolsList define the resources and objects visible in the PlayerBoard.
      * symbolsList[0] indicates the number of ANIMAL,
@@ -47,15 +45,14 @@ public class PlayerBoard {
         handCards = new ArrayList<>();
         x = new ArrayList<>();
         y = new ArrayList<>();
-        isCoveredTopLeftAngle = new ArrayList<>();
-        isCoveredTopRightAngle = new ArrayList<>();
-        isCoveredBottomLeftAngle = new ArrayList<>();
-        isCoveredBottomRightAngle = new ArrayList<>();
+        topLeftAngle = new ArrayList<>();
+        topRightAngle = new ArrayList<>();
+        bottomLeftAngle = new ArrayList<>();
+        bottomRightAngle = new ArrayList<>();
         cardKingdom = new ArrayList<>();
         symbolsList = new int[7];
     }
 
-    Server server = new Server();
 
     /**
      * adding cards to hand
@@ -90,8 +87,8 @@ public class PlayerBoard {
             int index = boardCards.indexOf(idCard);
             x.set(index,xx);
             y.set(index,yy);
-            addSymbolsList(card,isBackSide);
-            int point = calculatePoint((GoldCard) card, index);
+            addSymbolsList(card,isBackSide,index);
+            int point = calculatePoint(card , index);
             return point;
         }catch (NumberFormatException e){
             //System.err.println("Errore");
@@ -111,7 +108,7 @@ public class PlayerBoard {
 
     public void placeInitCard(InitialCard initialCard,boolean isBackSide)  throws InvalidIdCardException {
         int idCard = initialCard.getIdCard();
-        if (idCard > 86 || idCard < 81) {
+        if (idCard > 102 || idCard < 97) {
             throw new InvalidIdCardException();
         }
         try {
@@ -119,15 +116,16 @@ public class PlayerBoard {
             cardKingdom.add(initialCard.getKingdom());
             x.add(0);
             y.add(0);
-            isCoveredTopLeftAngle.add(false);
-            isCoveredTopRightAngle.add(false);
-            isCoveredBottomLeftAngle.add(false);
-            isCoveredBottomRightAngle.add(false);
+
             if (isBackSide) {
                 symbolsList[0] = 1;
                 symbolsList[1] = 1;
                 symbolsList[2] = 1;
                 symbolsList[3] = 1;
+                topLeftAngle.add(initialCard.getTopLeftAngle());
+                topRightAngle.add(initialCard.getTopRightAngle());
+                bottomLeftAngle.add(initialCard.getBottomLeftAngle());
+                bottomRightAngle.add(initialCard.getBottomRightAngle());
             } else {
                 int[] t = new int[4];
                 t = initialCard.getCenterResource();
@@ -135,6 +133,11 @@ public class PlayerBoard {
                 symbolsList[1] = t[1];
                 symbolsList[2] = t[2];
                 symbolsList[3] = t[3];
+                topLeftAngle.add(initialCard.getTopLeftAngleFront());
+                topRightAngle.add(initialCard.getTopRightAngleFront());
+                bottomLeftAngle.add(initialCard.getBottomLeftAngleFront());
+                bottomRightAngle.add(initialCard.getBottomRightAngleFront());
+
             }
             symbolsList[4] = 0;
             symbolsList[5] = 0;
@@ -146,16 +149,25 @@ public class PlayerBoard {
      * add resources to the symbol list
      * @param card card to be analyzed
      * @param isBackSide if the card is used on the back side
+     * @param index card index in the card list array
      */
 
-    private void addSymbolsList(Card card,boolean isBackSide) {
+    private void addSymbolsList(Card card,boolean isBackSide,int index) {
         if (isBackSide) {
             editAddSymbolsList(card.getKingdom());
+            bottomLeftAngle.set(index, EMPTY);
+            bottomRightAngle.set(index, EMPTY);
+            topLeftAngle.set(index, EMPTY);
+            topRightAngle.set(index, EMPTY);
         } else {
             editAddSymbolsList(card.getTopLeftAngle());
             editAddSymbolsList(card.getTopRightAngle());
             editAddSymbolsList(card.getBottomLeftAngle());
             editAddSymbolsList(card.getBottomRightAngle());
+            bottomLeftAngle.set(index, card.getBottomLeftAngle());
+            bottomRightAngle.set(index, card.getBottomRightAngle());
+            topLeftAngle.set(index, card.getTopLeftAngle());
+            topRightAngle.set(index, card.getTopRightAngle());
         }
     }
 
@@ -169,32 +181,29 @@ public class PlayerBoard {
         int yy = y.get(i);
         for (int elem : x) {
             int index = x.indexOf(elem);
-            if (elem == (xx - 1) & this.y.get(index) == (yy + 1)) {
-                Card elemCard = server.getC(index);
-                editRemoveSymbolsList(elemCard.getBottomRightAngle());
-                isCoveredBottomRightAngle.set(index, true);
-                isCoveredTopLeftAngle.set(i, true);
+            if (elem == (xx - 1) & y.get(index) == (yy + 1)) {
+                editRemoveSymbolsList(bottomRightAngle.get(index));
+                bottomRightAngle.set(index, COVERED_ANGLE);
+                //also the card that I place even if the resource is not covered, I need it to calculate point
+                topLeftAngle.set(i, COVERED_ANGLE);
                 break;
             }
-            if (elem == (xx + 1) & this.y.get(index) == (yy + 1)) {
-                Card elemCard = server.getC(index);
-                editRemoveSymbolsList(elemCard.getBottomLeftAngle());
-                isCoveredBottomLeftAngle.set(index, true);
-                isCoveredTopRightAngle.set(i, true);
+            if (elem == (xx + 1) & y.get(index) == (yy + 1)) {
+                editRemoveSymbolsList(bottomLeftAngle.get(index));
+                bottomLeftAngle.set(index, COVERED_ANGLE);
+                topRightAngle.set(i, COVERED_ANGLE);
                 break;
             }
             if (elem == (xx + 1) & this.y.get(index) == (yy - 1)) {
-                Card elemCard = server.getC(index);
-                editRemoveSymbolsList(elemCard.getTopLeftAngle());
-                isCoveredTopLeftAngle.set(index, true);
-                isCoveredBottomRightAngle.set(i, true);
+                editRemoveSymbolsList(topLeftAngle.get(index));
+                topLeftAngle.set(index, COVERED_ANGLE);
+                bottomRightAngle.set(i, COVERED_ANGLE);
                 break;
             }
             if (elem == (xx - 1) & this.y.get(index) == (yy - 1)) {
-                Card elemCard = server.getC(index);
-                editRemoveSymbolsList(elemCard.getTopRightAngle());
-                isCoveredTopRightAngle.set(index, true);
-                isCoveredBottomLeftAngle.set(i, true);
+                editRemoveSymbolsList(topRightAngle.get(index));
+                topRightAngle.set(index,COVERED_ANGLE);
+                bottomLeftAngle.set(i, COVERED_ANGLE);
                 break;
             }
         }
@@ -233,10 +242,10 @@ public class PlayerBoard {
                         break;
                     case COVERED_ANGLE:
                         removeSymbolsList(card, i);
-                        if (isCoveredTopRightAngle.get(i)) x += 2;
-                        if (isCoveredTopLeftAngle.get(i)) x += 2;
-                        if (isCoveredBottomRightAngle.get(i)) x += 2;
-                        if (isCoveredBottomLeftAngle.get(i)) x += 2;
+                        if (topRightAngle.get(i)==COVERED_ANGLE) x += 2;
+                        if (topLeftAngle.get(i)==COVERED_ANGLE) x += 2;
+                        if (bottomRightAngle.get(i)==COVERED_ANGLE) x += 2;
+                        if (bottomLeftAngle.get(i)==COVERED_ANGLE) x += 2;
                         break;
                     case FEATHER:
                         x = symbolsList[4] * card.getPoint();
