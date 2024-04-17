@@ -72,7 +72,7 @@ public class PlayerBoard {
     }
     /**
      * represents the placement of a card on the board
-     * @param idCard card id to place
+     * @param card  to place
      * @param isBackSide if the card is used on the back side
      * @param xx the x position of the card
      * @param yy the y position of the card
@@ -80,11 +80,10 @@ public class PlayerBoard {
      * @throws IllegalCoordinateInsertionException if the coordinates are invalid, or represent a prohibited position
      */
 
-    public int placeCard(int idCard,boolean isBackSide,int xx, int yy) throws InvalidIdCardException, IllegalCoordinateInsertionException {
+    public int placeCard(Card card,boolean isBackSide,int xx, int yy) throws InvalidIdCardException {
+        int idCard = card.getIdCard();
         if (idCard>80||idCard<1) {throw new InvalidIdCardException();}
-        if (){throw new IllegalCoordinateInsertionException();}
         try {
-            Card card = server.getC(idCard);
             boardCards.add(idCard);
             handCards.remove(idCard);
             cardKingdom.add(card.getKingdom());
@@ -94,26 +93,30 @@ public class PlayerBoard {
             addSymbolsList(card,isBackSide);
             int point = calculatePoint((GoldCard) card, index);
             return point;
-        }catch (NumberFormatException e){}
+        }catch (NumberFormatException e){
+            //System.err.println("Errore");
+            //e.printStackTrace();
+            return -1;
+        }
+
     }
+
 
     /**
      * represents the placement of an initial card on the board
-     * @param idCard initial card id to place
+     * @param initialCard initial card id to place
      * @param isBackSide if the card is used on the back side
      *@throws InvalidIdCardException when id is not for initial card
      */
 
-    public void placeInitCard(int idCard,boolean isBackSide)  throws InvalidIdCardException {
+    public void placeInitCard(InitialCard initialCard,boolean isBackSide)  throws InvalidIdCardException {
+        int idCard = initialCard.getIdCard();
         if (idCard > 86 || idCard < 81) {
             throw new InvalidIdCardException();
         }
         try {
-            Card card = server.getC(idCard);
-            InitialCard initialcard = null;
-            InitialCard initialCard = (InitialCard) card;
             boardCards.add(idCard);
-            cardKingdom.add(initialcard.getKingdom());
+            cardKingdom.add(initialCard.getKingdom());
             x.add(0);
             y.add(0);
             isCoveredTopLeftAngle.add(false);
@@ -127,7 +130,7 @@ public class PlayerBoard {
                 symbolsList[3] = 1;
             } else {
                 int[] t = new int[4];
-                t = initialcard.getCenterResource();
+                t = initialCard.getCenterResource();
                 symbolsList[0] = t[0];
                 symbolsList[1] = t[1];
                 symbolsList[2] = t[2];
@@ -214,7 +217,7 @@ public class PlayerBoard {
      * @param card resource card and gold card to be analyzed
      * @return card points earned
      */
-    private int calculatePoint(GoldCard card, int i) {
+    private int calculatePoint(Card card, int i) {
         int x = 0;
         switch (card.getType()) {
             case RESOURCE:
@@ -222,7 +225,8 @@ public class PlayerBoard {
                 removeSymbolsList(card, i);
                 break;
             case GOLD:
-                switch (card.getBasicPointCriterion()) {
+                GoldCard goldCard = (GoldCard)card;
+                switch (goldCard.getBasicPointCriterion()) {
                     case EMPTY:
                         x = card.getPoint();
                         removeSymbolsList(card, i);
@@ -315,7 +319,9 @@ public class PlayerBoard {
                     break;
             }
 
-        }catch (NumberFormatException e){}
+        }catch (NumberFormatException e){
+            return -1;
+        }
 
         return point; //domanda guisto cosi??
     }
