@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import it.polimi.ingsw.model.enums.CardType;
+import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 
 /**
  * Desk is a class that contains:
@@ -15,7 +16,7 @@ import it.polimi.ingsw.model.enums.CardType;
  * Note: there are only card ids here, therefore only integers and not card objects
  * Status: almost complete
  * @author Valeria Lu
- * @version 2024-04-16-00:32
+ * @version 2024-04-17-23:55
  * */
 
 public class Desk {
@@ -71,44 +72,39 @@ public class Desk {
      * Pick one card id from the right deck
      * @param type the type of card that one wants to pick
      * @return a card id of the required type
-     * @throws NullPointerException in case that the required card deck is empty
+     * @throws EmptyDeckException in case that the required card deck is empty
      */
-    public Integer pickOneCard(CardType type) throws NullPointerException{
+    public Integer pickOneCard(CardType type) throws EmptyDeckException{
         Integer idCard = null;
         switch (type){
             case RESOURCE:
-                if (!resourceCardDeck.isEmpty()) {
-                    idCard = resourceCardDeck.get(0);
-                    resourceCardDeck.remove(0);
-                }else{
-                    throw new NullPointerException();
-                }
+                idCard = pick(resourceCardDeck);
                 break;
             case GOLD:
-                if (!goldCardDeck.isEmpty()){
-                    idCard = goldCardDeck.get(0);
-                    goldCardDeck.remove(0);
-                }else{
-                    throw new NullPointerException();
-                }
+                idCard = pick(goldCardDeck);
                 break;
             case INITIAL:
-                if(!initialCardDeck.isEmpty()){
-                    idCard = initialCardDeck.get(0);
-                    initialCardDeck.remove(0);
-                }else{
-                    throw new NullPointerException();
-                }
+                idCard = pick(initialCardDeck);
                 break;
             case OBJECTIVE:
-                if (!objectiveCardDeck.isEmpty()){
-                    idCard = objectiveCardDeck.get(0);
-                    objectiveCardDeck.remove(0);
-                }else{
-                    throw new NullPointerException();
-                }
+                idCard = pick(objectiveCardDeck);
                 break;
         }
+        return idCard;
+    }
+
+
+    /**
+     * Support the pickOneCard method, in order to avoid repetitive code
+     * @param list the list of card id
+     * @return a card id
+     * @throws EmptyDeckException if the list is empty
+     */
+    private Integer pick(List<Integer> list) throws EmptyDeckException {
+        if (list.isEmpty())
+            throw new EmptyDeckException();
+        Integer idCard = list.get(0);
+        list.remove(0);
         return idCard;
     }
 
