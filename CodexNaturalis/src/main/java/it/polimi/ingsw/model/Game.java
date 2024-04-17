@@ -164,8 +164,7 @@ public class Game {
      * @return winner indicates the player who has the most points
      */
     public String checkMaxPoint(){
-        String w;
-        int max = 20;
+        int max=20;
         for (Player p:players) {
             if ((p.getPoint() >= max)) {
                 max = p.getPoint();

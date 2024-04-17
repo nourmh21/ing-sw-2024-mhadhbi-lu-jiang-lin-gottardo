@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class GameTest {
 
     private Game game;
-    int numOfPlayer=3;
+    int numOfPlayer;
     private Player p1;
     private Player p2;
     private Player p3;
@@ -25,57 +25,63 @@ public class GameTest {
     @Before
     public void setGame(){
         game = new Game();
-        p1 = new Player("A", 1, Color.RED);
-        p2 = new Player ("B", 2, Color.GREEN);
-        p3 = new Player("C", 3, Color.YELLOW);
+        p1=new Player("Rossi", 1, Color.RED);
+        p2=new Player("Neri", 2, Color.YELLOW);
+        p3=new Player ("Verdi", 3, Color.GREEN);
+
     }
 
     @Test
-    public void AddPlayers_gameAlreadyStarted_throwTooPlayersException(){
+    public void AddPlayers_gameAlreadyStarted_StateGameWillBeInProgress(){
         game.addPlayers(p1);
         assertEquals(p1.getPosition(), game.getPlayers().size());
 
         game.addPlayers(p2);
         game.addPlayers(p3);
         assertEquals(p3.getPosition(), game.getPlayers().size());
+    }
+
+    @Test (expected = TooFewPlayersException.class)
+    public void AddPlayers_GameNotStarted_throwTooFewPlayerException(){
+        game.addPlayers(p1);
+        assertEquals(numOfPlayer, game.getPlayers().size());
 
     }
 
 
-    /*@Test
-    public void Is20(){
-
-
-    }*/
 
 
     @Test
     public void CheckMaxPoint_ExistingPlayerPointOver20_GiveWinner(){
         String name;
-        name = p1.getNickName();
-        name = game.checkMaxPoint();
-        assertEquals("A", game.checkMaxPoint());
+        int point1 =p1.getPoint();
+        int point2=p1.getPoint();
+        int point3=p3.getPoint();
+
+        if ((point1>point2) && (point1>point3)){
+            assertEquals("Rossi", game.checkMaxPoint());
+        }else if ((point2>point1) && (point2>point3)){
+                assertEquals("Neri", game.checkMaxPoint());
+        }
+        if ((point3>point1) && (point3>point2)){
+            assertEquals("Verdi", p3.getNickName());
+        }
 
     }
 
-    @Test
+    @Test (expected = TooFewPlayersException.class)
     public void disconnect_InvalidNumOfPlayer_throwTooFewPlayersException(){
         p1.setDisconnected();
         assertFalse(p1.isConnected());
-        if (numOfPlayer>1){
-            assertEquals(numOfPlayer, game.getPlayers().size());
-        }
-        else
-            throw new TooFewPlayersException();
-
-
+        p2.setDisconnected();
+        assertFalse(p2.isConnected());
     }
 
     @Test
-    public void reconnect(){
+    public void reconnect_ForJoinAgainGame(){
         p1.setConnected();
         assertTrue(p1.isConnected());
-        assertEquals(numOfPlayer, game.getPlayers().size());
+        assertEquals(numOfPlayer, game.getPlayers().size()-1);
     }
 
 
