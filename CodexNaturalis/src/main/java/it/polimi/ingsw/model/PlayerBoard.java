@@ -18,12 +18,10 @@ public class PlayerBoard {
     final private List<Symbol> cardKingdom;
     final private List<Integer> x;
     final private List<Integer> y;
-    final private List<Integer> handCards;
     final private int[] symbolsList;
 
     /**
      * cardList define list of card use on the board.
-     * handList define list of card in hnd of player.
      * x coordinate for the position
      * y coordinate for the position
      * isCoveredTopLeftAngle whether the corner is covered or show the resource
@@ -42,7 +40,6 @@ public class PlayerBoard {
      */
     public PlayerBoard() {
         boardCards = new ArrayList<>();
-        handCards = new ArrayList<>();
         x = new ArrayList<>();
         y = new ArrayList<>();
         topLeftAngle = new ArrayList<>();
@@ -54,20 +51,7 @@ public class PlayerBoard {
     }
 
 
-    /**
-     * adding cards to hand
-     *
-     * @param idCard card id to add
-     * @throws InvalidNumOfHandCardsException I can only add cards if I had 2 in my hand
-     */
-    public void addcardtoHandcards(int idCard) throws InvalidNumOfHandCardsException {
-        if (handCards.size()!=2) {
-            throw new InvalidNumOfHandCardsException();
-        }
-        try {
-            handCards.add(idCard);
-        }catch (NumberFormatException e){}
-    }
+
     /**
      * represents the placement of a card on the board
      * @param card  to place
@@ -83,7 +67,7 @@ public class PlayerBoard {
         if (idCard>80||idCard<1) {throw new InvalidIdCardException();}
         try {
             boardCards.add(idCard);
-            handCards.remove(idCard);
+            //handCards.remove(idCard);
             cardKingdom.add(card.getKingdom());
             int index = boardCards.indexOf(idCard);
             x.set(index,xx);
@@ -216,12 +200,7 @@ public class PlayerBoard {
     public List<Integer> getBoardCards() {
         return boardCards;
     }
-    /**
-     * @return list of Hand cards
-     */
-    public List<Integer> getHandCards() {
-        return handCards;
-    }
+
     /**
      * calculates points of the placed card
      * @param card resource card and gold card to be analyzed
