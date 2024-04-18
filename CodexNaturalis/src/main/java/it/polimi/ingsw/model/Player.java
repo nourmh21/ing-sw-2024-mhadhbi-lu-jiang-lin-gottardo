@@ -53,6 +53,12 @@ public class Player{
         return point;
     }
 
+    /** set player's point
+     * @param point player's point
+     */
+    public void setPoint(int point) {
+        this.point = point;
+    }
 
     /**
      * Update player's point
