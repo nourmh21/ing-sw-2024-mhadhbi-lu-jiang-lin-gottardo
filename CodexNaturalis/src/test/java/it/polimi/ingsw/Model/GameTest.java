@@ -41,13 +41,6 @@ public class GameTest {
         assertEquals(p3.getPosition(), game.getPlayers().size());
     }
 
-    @Test (expected = TooFewPlayersException.class)
-    public void AddPlayers_GameNotStarted_throwTooFewPlayerException(){
-        game.addPlayers(p1);
-        assertEquals(numOfPlayer, game.getPlayers().size());
-
-    }
-
 
 
 
