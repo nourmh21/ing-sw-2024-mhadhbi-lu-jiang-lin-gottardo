@@ -56,6 +56,7 @@ public class PlayerBoard {
 
     /**
      * adding cards to hand
+     *
      * @param idCard card id to add
      * @throws InvalidNumOfHandCardsException I can only add cards if I had 2 in my hand
      */

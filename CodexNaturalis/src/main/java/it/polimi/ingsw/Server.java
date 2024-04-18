@@ -165,6 +165,7 @@ public class Server {
 
 
     //INITIAL CARDS
+
     Card c97 = new InitialCard(97, Symbol.EMPTY, Symbol.FUNGI, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, 0, CardType.INITIAL, 0, 1, 0, 2, Symbol.EMPTY, Symbol.PLANT, Symbol.EMPTY, Symbol.INSECT);
     Card c98 = new InitialCard(98, Symbol.EMPTY, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, Symbol.FUNGI, 0, CardType.INITIAL, 2, 0, 1, 0, Symbol.ANIMAL, Symbol.EMPTY, Symbol.FUNGI, Symbol.EMPTY);
     Card c99 = new InitialCard(99, Symbol.EMPTY, Symbol.INSECT, Symbol.ANIMAL, Symbol.PLANT, Symbol.FUNGI, 0, CardType.INITIAL, 1, 1, 0, 0, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY);

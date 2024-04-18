@@ -9,6 +9,7 @@ public class InitialCard extends Card{
 
 
     /**
+     *
      * constructor for the InitialCard class which extends the Card constructor
      * @param n_animal defines the optional center resource
      */
