@@ -14,7 +14,7 @@ import java.util.List;
  * -playerColor: player's color
  * -personalGoal: objective that each player has to realize in order to acquire points at the end of game
  * -isConnected: verify if the player is connected
- * -handList define list of card in hnd of player.
+ * -handCards define list of card in hand of player.
  */
 public class Player{
     private String nickName;
@@ -64,21 +64,6 @@ public class Player{
         return point;
     }
 
-    /**
-     * @return player's goalPoint
-     */
-    public int getGoalPoint() {
-        return goalPoint;
-    }
-
-    /**
-     * update player's goalPoint
-     * @param goalPoint player's goalPoint
-     */
-    public void addGoalPoint(int goalPoint) {
-        this.goalPoint += goalPoint;
-    }
-
     /** set player's point
      * @param point player's point
      */
@@ -94,6 +79,20 @@ public class Player{
         point = point + newPoint;
     }
 
+    /**
+     * @return player's goalPoint
+     */
+    public int getGoalPoint() {
+        return goalPoint;
+    }
+
+    /**
+     * update player's goalPoint
+     * @param goalPoint player's goalPoint
+     */
+    public void addGoalPoint(int goalPoint) {
+        this.goalPoint += goalPoint;
+    }
 
     /**
      * @return player's color
@@ -145,7 +144,7 @@ public class Player{
 
     /**
      * adding cards to hand
-     * @param idCard card id to add
+     * @param idCard card's id to add
      * @throws InvalidNumOfHandCardsException I can only add cards if I had 2 in my hand
      */
     public void addcardtoHandcards(int idCard) throws InvalidNumOfHandCardsException {
