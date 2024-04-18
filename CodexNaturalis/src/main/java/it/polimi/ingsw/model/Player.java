@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Color;
+import it.polimi.ingsw.model.exceptions.InvalidNumOfHandCardsException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Player is a class that contains information of each player
@@ -10,6 +14,7 @@ import it.polimi.ingsw.model.enums.Color;
  * -playerColor: player's color
  * -personalGoal: objective that each player has to realize in order to acquire points at the end of game
  * -isConnected: verify if the player is connected
+ * -handList define list of card in hnd of player.
  */
 public class Player{
     private String nickName;
@@ -20,10 +25,12 @@ public class Player{
     private Integer personalGoal;
     private boolean isConnected;
     private PlayerBoard board;
+    private List<Integer> handCards;
 
     public Player(String nickName, int position, Color color){
         this.nickName = nickName;
         this.position = position;
+        handCards = new ArrayList<>();
         point = 0;
         goalPoint = 0;
         personalGoal = null;
@@ -126,5 +133,26 @@ public class Player{
      */
     public void setConnected(){
         isConnected = true;
+    }
+
+    /**
+     * @return list of Hand cards
+     */
+    public List<Integer> getHandCards() {
+        return handCards;
+    }
+
+    /**
+     * adding cards to hand
+     * @param idCard card id to add
+     * @throws InvalidNumOfHandCardsException I can only add cards if I had 2 in my hand
+     */
+    public void addcardtoHandcards(int idCard) throws InvalidNumOfHandCardsException {
+        if (handCards.size()!=2) {
+            throw new InvalidNumOfHandCardsException();
+        }
+        try {
+            handCards.add(idCard);
+        }catch (NumberFormatException e){}
     }
 }
