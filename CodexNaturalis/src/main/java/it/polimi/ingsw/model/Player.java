@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.enums.Color;
  * -nickName: player's name
  * -position: player's turn during game
  * -point: points acquired during game
+ * -goalPoint: points acquired from objective cards
  * -playerColor: player's color
  * -personalGoal: objective that each player has to realize in order to acquire points at the end of game
  * -isConnected: verify if the player is connected
@@ -14,6 +15,7 @@ public class Player{
     private String nickName;
     private int position;
     private int point;
+    private int goalPoint;
     private Color playerColor;
     private Integer personalGoal;
     private boolean isConnected;
@@ -23,6 +25,7 @@ public class Player{
         this.nickName = nickName;
         this.position = position;
         point = 0;
+        goalPoint = 0;
         personalGoal = null;
         playerColor = color;
         isConnected = true;
@@ -51,6 +54,21 @@ public class Player{
      */
     public int getPoint(){
         return point;
+    }
+
+    /**
+     * @return player's goalPoint
+     */
+    public int getGoalPoint() {
+        return goalPoint;
+    }
+
+    /**
+     * update player's goalPoint
+     * @param goalPoint player's goalPoint
+     */
+    public void addGoalPoint(int goalPoint) {
+        this.goalPoint += goalPoint;
     }
 
     /** set player's point
