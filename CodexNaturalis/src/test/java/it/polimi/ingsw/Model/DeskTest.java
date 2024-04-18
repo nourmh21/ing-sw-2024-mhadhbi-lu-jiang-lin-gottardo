@@ -1,7 +1,8 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.model.Desk;
 import it.polimi.ingsw.model.enums.CardType;
+import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class DeskTest {
         desk = new Desk();
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = EmptyDeckException.class)
     public void pickOneCard_EmptyResourceCardDeck_throwsNullPointerException(){
         for (int i = 0; i < 37; i++){
             desk.pickOneCard(CardType.RESOURCE);
@@ -28,7 +29,7 @@ public class DeskTest {
         desk.pickOneCard(CardType.RESOURCE);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = EmptyDeckException.class)
     public void pickOneCard_EmptyGoldCardDeck_throwsNullPointerException(){
         for (int i = 0; i < 37; i++){
             desk.pickOneCard(CardType.GOLD);
@@ -37,7 +38,7 @@ public class DeskTest {
     }
 
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = EmptyDeckException.class)
     public void pickOneCard_EmptyGoalCardDeck_throwsNullPointerException(){
         for (int i = 0; i < 16; i++){
             desk.pickOneCard(CardType.OBJECTIVE);
@@ -46,7 +47,7 @@ public class DeskTest {
     }
 
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = EmptyDeckException.class)
     public void pickOneCard_EmptyInitialDeck_throwsNullPointerException(){
         for (int i = 0; i < 6; i++){
             desk.pickOneCard(CardType.INITIAL);
@@ -126,7 +127,7 @@ public class DeskTest {
     }
 
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = EmptyDeckException.class)
     public void pickOneCard_CalledByUpdatingMethodWhenTheDeckIsEmpty_throwsNullPointerException(){
         for (int i = 0; i < 37; i++){
             desk.pickOneCard(CardType.RESOURCE);

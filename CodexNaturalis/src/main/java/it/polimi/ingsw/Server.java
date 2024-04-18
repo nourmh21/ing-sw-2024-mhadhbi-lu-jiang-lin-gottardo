@@ -165,19 +165,13 @@ public class Server {
 
 
     //INITIAL CARDS
-    Card c97 = new InitialCard(97, Symbol.EMPTY, Symbol.EMPTY, Symbol.PLANT, Symbol.EMPTY, Symbol.INSECT, 0, CardType.INITIAL, 0, 0, 0, 1);
-    Card c98 = new InitialCard(98, Symbol.EMPTY, Symbol.ANIMAL, Symbol.EMPTY, Symbol.FUNGI, Symbol.EMPTY, 0, CardType.INITIAL, 1, 0, 0, 0);
-    Card c99 = new InitialCard(99, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, 0, CardType.INITIAL, 1, 2, 0, 0);
-    Card c100 = new InitialCard(100, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, 0, CardType.INITIAL, 0, 0, 1, 1);
-    Card c101 = new InitialCard(101, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.HIDDEN, Symbol.HIDDEN, 0, CardType.INITIAL, 0, 1, 1, 1);
-    Card C102 = new InitialCard(102, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.HIDDEN, Symbol.HIDDEN, 0, CardType.INITIAL, 1, 1, 1, 0);
-    Card c103 = new InitialCard(97, Symbol.EMPTY, Symbol.FUNGI, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, 0, CardType.INITIAL, 0, 0, 0, 0);
-    Card c104 = new InitialCard(98, Symbol.EMPTY, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, Symbol.FUNGI, 0, CardType.INITIAL, 0, 0, 0, 0);
-    Card c105 = new InitialCard(99, Symbol.EMPTY, Symbol.INSECT, Symbol.ANIMAL, Symbol.PLANT, Symbol.FUNGI, 0, CardType.INITIAL, 0, 0, 0, 0);
-    Card c106 = new InitialCard(100, Symbol.EMPTY, Symbol.PLANT, Symbol.INSECT, Symbol.FUNGI, Symbol.ANIMAL, 0, CardType.INITIAL, 0, 0, 0, 0);
-    Card c107 = new InitialCard(101, Symbol.EMPTY, Symbol.INSECT, Symbol.FUNGI, Symbol.ANIMAL, Symbol.PLANT, 0, CardType.INITIAL, 0, 0, 0, 0);
-    Card C108 = new InitialCard(102, Symbol.EMPTY, Symbol.FUNGI, Symbol.ANIMAL, Symbol.INSECT, Symbol.PLANT, 0, CardType.INITIAL, 0, 0, 0, 0);
 
+    Card c97 = new InitialCard(97, Symbol.EMPTY, Symbol.FUNGI, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, 0, CardType.INITIAL, 0, 1, 0, 2, Symbol.EMPTY, Symbol.PLANT, Symbol.EMPTY, Symbol.INSECT);
+    Card c98 = new InitialCard(98, Symbol.EMPTY, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, Symbol.FUNGI, 0, CardType.INITIAL, 2, 0, 1, 0, Symbol.ANIMAL, Symbol.EMPTY, Symbol.FUNGI, Symbol.EMPTY);
+    Card c99 = new InitialCard(99, Symbol.EMPTY, Symbol.INSECT, Symbol.ANIMAL, Symbol.PLANT, Symbol.FUNGI, 0, CardType.INITIAL, 1, 1, 0, 0, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY);
+    Card c100 = new InitialCard(100, Symbol.EMPTY, Symbol.PLANT, Symbol.INSECT, Symbol.FUNGI, Symbol.ANIMAL, 0, CardType.INITIAL, 0, 0, 1, 1,Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY);
+    Card c101 = new InitialCard(101, Symbol.EMPTY, Symbol.INSECT, Symbol.FUNGI, Symbol.ANIMAL, Symbol.PLANT, 0, CardType.INITIAL, 0, 1, 1, 1, Symbol.EMPTY, Symbol.EMPTY, Symbol.HIDDEN, Symbol.HIDDEN);
+    Card C102 = new InitialCard(102, Symbol.EMPTY, Symbol.FUNGI, Symbol.ANIMAL, Symbol.INSECT, Symbol.PLANT, 0, CardType.INITIAL, 1, 1, 1, 0, Symbol.EMPTY, Symbol.EMPTY, Symbol.HIDDEN, Symbol.HIDDEN);
 
 
     public Card getC(int i){
