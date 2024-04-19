@@ -40,7 +40,6 @@ public class Player{
     }
 
 
-
     /**
      * @return player's Nickname
      */
@@ -64,12 +63,14 @@ public class Player{
         return point;
     }
 
+
     /** set player's point
      * @param point player's point
      */
     public void setPoint(int point) {
         this.point = point;
     }
+
 
     /**
      * Update player's point
@@ -79,12 +80,14 @@ public class Player{
         point = point + newPoint;
     }
 
+
     /**
      * @return player's goalPoint
      */
     public int getGoalPoint() {
         return goalPoint;
     }
+
 
     /**
      * update player's goalPoint
@@ -93,6 +96,7 @@ public class Player{
     public void addGoalPoint(int goalPoint) {
         this.goalPoint += goalPoint;
     }
+
 
     /**
      * @return player's color
@@ -114,9 +118,7 @@ public class Player{
      * @return true if player's connected, otherwise false
      */
     public boolean isConnected() {
-
         return isConnected;
-
     }
 
 
@@ -135,6 +137,7 @@ public class Player{
         isConnected = true;
     }
 
+
     /**
      * @return list of Hand cards
      */
@@ -142,17 +145,20 @@ public class Player{
         return handCards;
     }
 
+
     /**
-     * adding cards to hand
-     * @param idCard card's id to add
-     * @throws InvalidNumOfHandCardsException I can only add cards if I had 2 in my hand
+     * add card to hand
+     * @param idCard id of the card
+     * @throws InvalidNumOfHandCardsException when the player already has three cards in the hand
      */
-    public void addcardtoHandcards(int idCard) throws InvalidNumOfHandCardsException {
-        if (handCards.size()!=2) {
+    public void addCardToHandCards(int idCard) throws InvalidNumOfHandCardsException {
+        if (handCards.size() == 3) {
             throw new InvalidNumOfHandCardsException();
         }
         try {
             handCards.add(idCard);
         }catch (NumberFormatException e){}
     }
+
+
 }

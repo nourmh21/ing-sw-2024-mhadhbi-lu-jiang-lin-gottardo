@@ -10,14 +10,16 @@ public class Card {
     private int points;
     private CardType type;
 
+
     /**
-     * @param kingdom defines the gold card's kingdom
-     * @param topLeftAngle defines the optional resource in the upper left angle
-     * @param topRightAngle defines the optional resource in the upper right angle
-     * @param bottomLeftAngle defines the optional resource in the bottom left angle
-     * @param bottomRightAngle defines the optional resource in the bottom right angle
-     * @param points defines the optional points given if the
-     * @param type
+     * the class constructor
+     * @param kingdom the gold card's kingdom
+     * @param topLeftAngle the optional resource in the upper left angle
+     * @param topRightAngle the optional resource in the upper right angle
+     * @param bottomLeftAngle the optional resource in the bottom left angle
+     * @param bottomRightAngle the optional resource in the bottom right angle
+     * @param points the optional points of the card
+     * @param type the type of the card
      */
     public Card(int idCard, Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomRightAngle,Symbol bottomLeftAngle, int points, CardType type) {
         this.idCard = idCard;
@@ -29,7 +31,7 @@ public class Card {
         this.bottomRightAngle = bottomRightAngle;
         this.points = points;
     }
-//GETTERS
+
 
     /**
      * @return id of the card
@@ -38,15 +40,17 @@ public class Card {
         return idCard;
     }
 
+
     /**
-     * @return type can be RESOURCE, GOLD, INITIAL or GOAL (type: enums.CardType)
+     * @return type of the card
      */
     public CardType getType() {
         return type;
     }
 
+
     /**
-     * @return kingdom can be FUNGI, PLANT, ANIMAL or INSECT (type: enums.Symbol)
+     * @return kingdom of the card, it can be FUNGI, PLANT, ANIMAL or INSECT
      */
     public Symbol getKingdom(){
         return kingdom;
@@ -54,33 +58,36 @@ public class Card {
 
 
     /**
-     * @return topLeftAngle defines the resource, if there is one, that is contained in the upper left corner (type: enums.Symbol)
+     * @return symbol in the top left angle, on the front of the card
      */
     public Symbol getTopLeftAngle() {
         return topLeftAngle;
     }
 
+
     /**
-     * @return topRightAngle defines the resource, if there is one, that is contained in the upper right corner (type: enums.Symbol)
+     * @return symbol in the top right angle, on the front of the card
      */
     public Symbol getTopRightAngle() {
         return topRightAngle;
     }
 
+
     /**
-     * @return bottomLeftAngle defines the resource, if there is one, that is contained in the bottom left corner (type: enums.Symbol)
+     * @return symbol in the bottom left angle, on the front of the card
      */
     public Symbol getBottomLeftAngle() {
         return bottomLeftAngle;
     }
 
+
     /**
-     *
-     * @return bottomRightAngle defines the resource, if there is one, that is contained in the bottom right corner (type: enums.Symbol)
+     * @return symbol in the bottom right angle, on the front of the card
      */
     public Symbol getBottomRightAngle() {
         return bottomRightAngle;
     }
+
 
     /**
      * @return points given by the card
@@ -88,8 +95,6 @@ public class Card {
     public int getPoint() {
         return points;
     }
-
-
 
 
 }

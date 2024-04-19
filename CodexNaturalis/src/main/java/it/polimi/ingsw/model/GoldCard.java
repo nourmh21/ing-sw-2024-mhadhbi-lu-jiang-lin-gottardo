@@ -11,8 +11,8 @@ public class GoldCard extends Card{
 
 
     /**
-     * Constructor for the GoldCard class which extends the Card class
-     * @param basicPointCriterion defines the critieria for giving the specified points
+     * constructor of the GoldCard class which extends the Card class
+     * @param basicPointCriterion defines the criteria for giving the specified points
      * @param n_fungi defines the number of fungi needed for placing the card
      * @param n_plant defines the number of plants needed for placing the card
      * @param n_animal defines the number of animals needed for placing the card
@@ -36,11 +36,14 @@ public class GoldCard extends Card{
         return condition;
     }
 
+
     /**
-     * @return basicPointCriterion which defines the critieria for giving the specified points
+     * @return basicPointCriterion which defines the criteria for giving the specified points
      */
     public Symbol getBasicPointCriterion() {
         return basicPointCriterion;
     }
+
+
 }
 
