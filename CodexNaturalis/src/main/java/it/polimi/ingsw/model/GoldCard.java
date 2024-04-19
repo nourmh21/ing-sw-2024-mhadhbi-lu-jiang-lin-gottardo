@@ -3,11 +3,10 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.enums.CardType;
 
-import java.util.List;
 
 public class GoldCard extends Card{
-    private int condition[] = new int[4];
-    private Symbol basicPointCriterion;
+    private final int condition[] = new int[4];
+    private final Symbol basicPointCriterion;
 
 
     /**

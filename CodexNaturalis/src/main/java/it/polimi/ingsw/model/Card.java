@@ -4,11 +4,11 @@ import it.polimi.ingsw.model.enums.Symbol;
 
 
 public class Card {
-    private int idCard;
-    private Symbol kingdom;
-    private Symbol topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
-    private int points;
-    private CardType type;
+    private final int idCard;
+    private final Symbol kingdom;
+    private final Symbol topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle;
+    private final int points;
+    private final CardType type;
 
 
     /**

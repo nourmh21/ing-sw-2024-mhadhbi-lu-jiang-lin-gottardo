@@ -4,8 +4,8 @@ import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.enums.CardType;
 
 public class InitialCard extends Card{
-    private int[] centerResource = new int[4];
-    private Symbol topLeftAngleFront, topRightAngleFront, bottomLeftAngleFront, bottomRightAngleFront;
+    private final int[] centerResource = new int[4];
+    private final Symbol topLeftAngleFront, topRightAngleFront, bottomLeftAngleFront, bottomRightAngleFront;
 
 
     /**
