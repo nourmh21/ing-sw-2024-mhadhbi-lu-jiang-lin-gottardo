@@ -16,7 +16,7 @@ import it.polimi.ingsw.model.exceptions.EmptyDeckException;
  * Note: there are only card ids here, therefore only integers and not card objects
  * Status: almost complete
  * @author Valeria Lu
- * @version 2024-04-17-23:55
+ * @version 2024-04-19
  * */
 
 public class Desk {
@@ -72,9 +72,8 @@ public class Desk {
      * Pick one card id from the right deck
      * @param type the type of card that one wants to pick
      * @return a card id of the required type
-     * @throws EmptyDeckException in case that the required card deck is empty
      */
-    public Integer pickOneCard(CardType type) throws EmptyDeckException{
+    public Integer pickOneCard(CardType type){
         Integer idCard = null;
         switch (type){
             case RESOURCE:
@@ -151,7 +150,6 @@ public class Desk {
      * Pick one resource card from displayed resource card list
      * @param idCard the id of the card that one wants to pick
      * @return a resource card id
-     * @throws IllegalArgumentException when idCard is not in the displayed resource card list
      */
     public Integer pickOneDisplayedRCard(int idCard){
         Integer c = null;
@@ -170,7 +168,6 @@ public class Desk {
      * Pick one gold card from displayed gold card list
      * @param idCard the id of the card that one wants to pick
      * @return a gold card id
-     * @throws IllegalArgumentException when idCard is not in the displayed gold card list
      */
     public Integer pickOneDisplayedGCard(int idCard){
         Integer c = null;
@@ -221,6 +218,7 @@ public class Desk {
         nextGoldCard = null;
         return c;
     }
+
 
 }
 
