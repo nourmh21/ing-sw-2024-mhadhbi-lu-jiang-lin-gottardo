@@ -2,7 +2,6 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.IllegalCoordinateInsertionException;
 import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
-import it.polimi.ingsw.model.exceptions.InvalidNumOfHandCardsException;
 
 import java.util.*;
 
@@ -19,6 +18,8 @@ public class PlayerBoard {
     final private List<Integer> x;
     final private List<Integer> y;
     final private int[] symbolsList;
+    final private ArrayList<int[]> availablePosition;
+
 
     /**
      * cardList define list of card use on the board.
@@ -37,6 +38,7 @@ public class PlayerBoard {
      * symbolsList[4] indicates the number of FEATHER,
      * symbolsList[5] indicates the number of INK_BOTTLE,
      * symbolsList[6] indicates the number of PARCHMENT,
+     * availablePosition list of Position where can player place a new card
      */
     public PlayerBoard() {
         boardCards = new ArrayList<>();
@@ -48,6 +50,7 @@ public class PlayerBoard {
         bottomRightAngle = new ArrayList<>();
         cardKingdom = new ArrayList<>();
         symbolsList = new int[7];
+        availablePosition = new ArrayList<>();
     }
 
 
@@ -58,29 +61,22 @@ public class PlayerBoard {
      * @param isBackSide if the card is used on the back side
      * @param xx the x position of the card
      * @param yy the y position of the card
-     * @throws InvalidIdCardException when Id is not for resource or gold card
+     * @throws InvalidIdCardException when id is not for resource or gold card
      * @throws IllegalCoordinateInsertionException if the coordinates are invalid, or represent a prohibited position
      */
 
     public int placeCard(Card card,boolean isBackSide,int xx, int yy) throws InvalidIdCardException {
         int idCard = card.getIdCard();
         if (idCard>80||idCard<1) {throw new InvalidIdCardException();}
-        try {
-            boardCards.add(idCard);
-            //handCards.remove(idCard);
-            cardKingdom.add(card.getKingdom());
-            int index = boardCards.indexOf(idCard);
-            x.set(index,xx);
-            y.set(index,yy);
-            addSymbolsList(card,isBackSide,index);
-            int point = calculatePoint(card , index);
-            return point;
-        }catch (NumberFormatException e){
-            //System.err.println("Errore");
-            //e.printStackTrace();
-            return -1;
-        }
-
+        boardCards.add(idCard);
+        removeAvailablePosition(new int[]{xx,yy});
+        addAvailablePosition(xx,yy);
+        cardKingdom.add(card.getKingdom());
+        int index = boardCards.indexOf(idCard);
+        x.set(index,xx);
+        y.set(index,yy);
+        addSymbolsList(card,isBackSide,index,xx,yy);
+        return calculatePoint(card , index);
     }
 
 
@@ -96,13 +92,14 @@ public class PlayerBoard {
         if (idCard > 102 || idCard < 97) {
             throw new InvalidIdCardException();
         }
-        try {
-            boardCards.add(idCard);
-            cardKingdom.add(initialCard.getKingdom());
-            x.add(0);
-            y.add(0);
 
-            if (isBackSide) {
+        boardCards.add(idCard);
+        cardKingdom.add(initialCard.getKingdom());
+        x.add(0);
+        y.add(0);
+        addAvailablePosition(0,0);
+
+        if (isBackSide) {
                 symbolsList[0] = 1;
                 symbolsList[1] = 1;
                 symbolsList[2] = 1;
@@ -111,23 +108,25 @@ public class PlayerBoard {
                 topRightAngle.add(initialCard.getTopRightAngle());
                 bottomLeftAngle.add(initialCard.getBottomLeftAngle());
                 bottomRightAngle.add(initialCard.getBottomRightAngle());
-            } else {
-                int[] t = new int[4];
-                t = initialCard.getCenterResource();
-                symbolsList[0] = t[0];
-                symbolsList[1] = t[1];
-                symbolsList[2] = t[2];
-                symbolsList[3] = t[3];
+
+        } else {
+
+                symbolsList[0] = initialCard.getCenterResource()[0];
+                symbolsList[1] = initialCard.getCenterResource()[1];
+                symbolsList[2] = initialCard.getCenterResource()[2];
+                symbolsList[3] = initialCard.getCenterResource()[3];
                 topLeftAngle.add(initialCard.getTopLeftAngleFront());
                 topRightAngle.add(initialCard.getTopRightAngleFront());
                 bottomLeftAngle.add(initialCard.getBottomLeftAngleFront());
+                if(initialCard.getBottomLeftAngleFront()==HIDDEN)removeAvailablePosition(new int[]{-1, -1});
                 bottomRightAngle.add(initialCard.getBottomRightAngleFront());
+                if(initialCard.getBottomRightAngleFront()==HIDDEN)removeAvailablePosition(new int[]{1, -1});
 
             }
             symbolsList[4] = 0;
             symbolsList[5] = 0;
             symbolsList[6] = 0;
-        }catch (NumberFormatException e){}
+
     }
 
     /**
@@ -137,18 +136,19 @@ public class PlayerBoard {
      * @param index card index in the card list array
      */
 
-    private void addSymbolsList(Card card,boolean isBackSide,int index) {
+    private void addSymbolsList(Card card,boolean isBackSide,int index,int xx,int yy) {
         if (isBackSide) {
-            editAddSymbolsList(card.getKingdom());
+            editAddSymbolsList(card.getKingdom(),new int[]{0,0});
             bottomLeftAngle.set(index, EMPTY);
             bottomRightAngle.set(index, EMPTY);
             topLeftAngle.set(index, EMPTY);
             topRightAngle.set(index, EMPTY);
+
         } else {
-            editAddSymbolsList(card.getTopLeftAngle());
-            editAddSymbolsList(card.getTopRightAngle());
-            editAddSymbolsList(card.getBottomLeftAngle());
-            editAddSymbolsList(card.getBottomRightAngle());
+            editAddSymbolsList(card.getTopLeftAngle(),new int[]{xx-1,yy+1});
+            editAddSymbolsList(card.getTopRightAngle(),new int[]{xx+1,yy+1});
+            editAddSymbolsList(card.getBottomLeftAngle(),new int[]{xx-1,yy-1});
+            editAddSymbolsList(card.getBottomRightAngle(),new int[]{xx+1,yy-1});
             bottomLeftAngle.set(index, card.getBottomLeftAngle());
             bottomRightAngle.set(index, card.getBottomRightAngle());
             topLeftAngle.set(index, card.getTopLeftAngle());
@@ -158,10 +158,9 @@ public class PlayerBoard {
 
     /**
      * remove resources to the symbol list
-     * @param card card to be analyzed
      * @param i card index in the card list array
      */
-    private void removeSymbolsList(Card card, int i) {
+    private void removeSymbolsList(int i) {
         int xx = x.get(i);
         int yy = y.get(i);
         for (int elem : x) {
@@ -171,27 +170,39 @@ public class PlayerBoard {
                 bottomRightAngle.set(index, COVERED_ANGLE);
                 //also the card that I place even if the resource is not covered, I need it to calculate point
                 topLeftAngle.set(i, COVERED_ANGLE);
-                break;
+                removeAvailablePosition(new int[]{xx-1,yy+1});
+
             }
             if (elem == (xx + 1) & y.get(index) == (yy + 1)) {
                 editRemoveSymbolsList(bottomLeftAngle.get(index));
                 bottomLeftAngle.set(index, COVERED_ANGLE);
                 topRightAngle.set(i, COVERED_ANGLE);
-                break;
+                removeAvailablePosition(new int[]{xx+1,yy+1});
+
             }
             if (elem == (xx + 1) & this.y.get(index) == (yy - 1)) {
                 editRemoveSymbolsList(topLeftAngle.get(index));
                 topLeftAngle.set(index, COVERED_ANGLE);
                 bottomRightAngle.set(i, COVERED_ANGLE);
-                break;
+                removeAvailablePosition(new int[]{xx+1,yy-1});
+
             }
             if (elem == (xx - 1) & this.y.get(index) == (yy - 1)) {
                 editRemoveSymbolsList(topRightAngle.get(index));
                 topRightAngle.set(index,COVERED_ANGLE);
                 bottomLeftAngle.set(i, COVERED_ANGLE);
-                break;
+                removeAvailablePosition(new int[]{xx-1,yy-1});
+
             }
         }
+    }
+
+    /**
+     *
+     * @return list of AvailablePosition
+     */
+    public ArrayList<int[]> getAvailablePosition() {
+        return availablePosition;
     }
 
     /**
@@ -211,17 +222,17 @@ public class PlayerBoard {
         switch (card.getType()) {
             case RESOURCE:
                 x = card.getPoint();
-                removeSymbolsList(card, i);
+                removeSymbolsList(i);
                 break;
             case GOLD:
                 GoldCard goldCard = (GoldCard)card;
                 switch (goldCard.getBasicPointCriterion()) {
                     case EMPTY:
                         x = card.getPoint();
-                        removeSymbolsList(card, i);
+                        removeSymbolsList(i);
                         break;
                     case COVERED_ANGLE:
-                        removeSymbolsList(card, i);
+                        removeSymbolsList(i);
                         if (topRightAngle.get(i)==COVERED_ANGLE) x += 2;
                         if (topLeftAngle.get(i)==COVERED_ANGLE) x += 2;
                         if (bottomRightAngle.get(i)==COVERED_ANGLE) x += 2;
@@ -229,15 +240,15 @@ public class PlayerBoard {
                         break;
                     case FEATHER:
                         x = symbolsList[4] * card.getPoint();
-                        removeSymbolsList(card, i);
+                        removeSymbolsList( i);
                         break;
                     case PARCHMENT:
                         x = symbolsList[6] * card.getPoint();
-                        removeSymbolsList(card, i);
+                        removeSymbolsList( i);
                         break;
                     case INK_BOTTLE:
                         x = symbolsList[5] * card.getPoint();
-                        removeSymbolsList(card, i);
+                        removeSymbolsList(i);
                         break;
                 }
                 break;
@@ -312,18 +323,19 @@ public class PlayerBoard {
             return -1;
         }
 
-        return point; //domanda guisto cosi??
+        return point;
     }
 
     /**
      * add resources to the symbol list
      * @param symbol symbol to ADD from the symbol list
      */
-    private void editAddSymbolsList(Symbol symbol) {
+    private void editAddSymbolsList(Symbol symbol,int[] position) {
         switch (symbol) {
             case EMPTY:
                 break;
             case HIDDEN:
+                removeAvailablePosition(position);
                 break;
             case ANIMAL:
                 symbolsList[0] += 1;
@@ -405,11 +417,11 @@ public class PlayerBoard {
                 int x2 = x1+i;
                 int y2 = y1 + ii;
                 int index2 = 0;
-                for (int xelem : x) {
-                    if (xelem == x2) {
-                        for (int yelem : y) {
-                            if (yelem == y2 & x.indexOf(xelem) == y.indexOf(yelem)) {
-                                index2 = x.indexOf(xelem);
+                for (int xx : x) {
+                    if (xx == x2) {
+                        for (int yy : y) {
+                            if (yy == y2 & x.indexOf(xx) == y.indexOf(yy)) {
+                                index2 = x.indexOf(xx);
                                 break;
                             }
                         }
@@ -419,11 +431,11 @@ public class PlayerBoard {
                     int index3 = 0;
                     int x3 = x2 +iii;
                     int y3 = y2 +ii;
-                    for (int xelem : x) {
-                        if (xelem == x3) {
-                            for (int yelem : y) {
-                                if (yelem == y3 & x.indexOf(xelem) == y.indexOf(yelem)) {
-                                    index3 = x.indexOf(xelem);
+                    for (int xx : x) {
+                        if (xx == x3) {
+                            for (int yy : y) {
+                                if (yy == y3 & x.indexOf(xx) == y.indexOf(yy)) {
+                                    index3 = x.indexOf(xx);
                                     break;
                                 }
                             }
@@ -439,5 +451,31 @@ public class PlayerBoard {
             }
         }
         return point;
+    }
+
+    /**
+     * add position to AvailablePosition list
+     * @param xx refers to x position
+     * @param yy refers to y position
+     */
+    private void addAvailablePosition(int xx ,int yy){
+        availablePosition.add(new int[]{xx-1, yy-1});
+        availablePosition.add(new int[]{xx+1, yy+1});
+        availablePosition.add(new int[]{xx+1, yy-1});
+        availablePosition.add(new int[]{yy-1, yy+1});
+    }
+
+    /**
+     * remove position to AvailablePosition list
+     * @param position to be removed
+     */
+    private void removeAvailablePosition(int[] position){
+        for (int i = 0; i < availablePosition.size(); i++) {
+            int[] array = availablePosition.get(i);
+            if (Arrays.equals(array, position)) {
+                availablePosition.remove(i);
+                break;
+            }
+        }
     }
 }
