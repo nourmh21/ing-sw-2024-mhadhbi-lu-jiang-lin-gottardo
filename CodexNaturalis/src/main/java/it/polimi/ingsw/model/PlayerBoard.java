@@ -19,6 +19,7 @@ public class PlayerBoard {
     final private List<Integer> y;
     final private int[] symbolsList;
     final private ArrayList<int[]> availablePosition;
+    final private ArrayList<int[]> forbiddenPosition;
 
 
     /**
@@ -38,7 +39,8 @@ public class PlayerBoard {
      * symbolsList[4] indicates the number of FEATHER,
      * symbolsList[5] indicates the number of INK_BOTTLE,
      * symbolsList[6] indicates the number of PARCHMENT,
-     * availablePosition list of Position where can player place a new card
+     * availablePosition list of Position where player can place a new card
+     * forbiddenPosition list of Position where player can't place a new card
      */
     public PlayerBoard() {
         boardCards = new ArrayList<>();
@@ -51,6 +53,7 @@ public class PlayerBoard {
         cardKingdom = new ArrayList<>();
         symbolsList = new int[7];
         availablePosition = new ArrayList<>();
+        forbiddenPosition= new ArrayList<>();
     }
 
 
@@ -76,6 +79,7 @@ public class PlayerBoard {
         x.set(index,xx);
         y.set(index,yy);
         addSymbolsList(card,isBackSide,index,xx,yy);
+        updateAvailablePosition();
         return calculatePoint(card , index);
     }
 
@@ -118,9 +122,13 @@ public class PlayerBoard {
                 topLeftAngle.add(initialCard.getTopLeftAngleFront());
                 topRightAngle.add(initialCard.getTopRightAngleFront());
                 bottomLeftAngle.add(initialCard.getBottomLeftAngleFront());
-                if(initialCard.getBottomLeftAngleFront()==HIDDEN)removeAvailablePosition(new int[]{-1, -1});
                 bottomRightAngle.add(initialCard.getBottomRightAngleFront());
-                if(initialCard.getBottomRightAngleFront()==HIDDEN)removeAvailablePosition(new int[]{1, -1});
+                if(initialCard.getBottomLeftAngleFront()==HIDDEN){
+                    removeAvailablePosition(new int[]{-1, -1});
+                    removeAvailablePosition(new int[]{1, -1});
+                    forbiddenPosition.add(new int[]{-1, -1});
+                    forbiddenPosition.add(new int[]{1, -1});
+                }
 
             }
             symbolsList[4] = 0;
@@ -202,7 +210,11 @@ public class PlayerBoard {
      * @return list of AvailablePosition
      */
     public ArrayList<int[]> getAvailablePosition() {
+
         return availablePosition;
+    }
+    public int[] getSymbolsList(){
+        return symbolsList;
     }
 
     /**
@@ -336,6 +348,7 @@ public class PlayerBoard {
                 break;
             case HIDDEN:
                 removeAvailablePosition(position);
+                forbiddenPosition.add(position);
                 break;
             case ANIMAL:
                 symbolsList[0] += 1;
@@ -459,12 +472,27 @@ public class PlayerBoard {
      * @param yy refers to y position
      */
     private void addAvailablePosition(int xx ,int yy){
-        availablePosition.add(new int[]{xx-1, yy-1});
+        availablePosition.add(new int[]{xx-1, yy+1});
         availablePosition.add(new int[]{xx+1, yy+1});
         availablePosition.add(new int[]{xx+1, yy-1});
-        availablePosition.add(new int[]{yy-1, yy+1});
+        availablePosition.add(new int[]{xx-1, yy-1});
     }
 
+    /**
+     * remove forbidden position from available position list
+     */
+    private void updateAvailablePosition(){
+        for (int i = 0; i < forbiddenPosition.size(); i++) {
+            int[] elementToControlled = forbiddenPosition.get(i);
+            for (int j = 0; j < availablePosition.size(); j++) {
+                int[] arrayAvailablePosition = availablePosition.get(j);
+                if (Arrays.equals(elementToControlled, arrayAvailablePosition)) {
+                    availablePosition.remove(j);
+                    break;
+                }
+            }
+        }
+    }
     /**
      * remove position to AvailablePosition list
      * @param position to be removed
