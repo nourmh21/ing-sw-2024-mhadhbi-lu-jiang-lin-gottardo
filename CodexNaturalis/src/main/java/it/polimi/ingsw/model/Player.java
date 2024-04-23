@@ -160,5 +160,10 @@ public class Player{
         }catch (NumberFormatException e){}
     }
 
-
+    /**
+     * @return player's board
+     */
+    public  PlayerBoard getBoard(){
+        return board;
+    }
 }
