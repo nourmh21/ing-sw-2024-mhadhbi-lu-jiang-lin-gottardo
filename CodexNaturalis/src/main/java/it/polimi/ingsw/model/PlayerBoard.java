@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.IllegalCoordinateInsertionException;
 import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
+import it.polimi.ingsw.modelView.PlayerBoardView;
 
 import java.util.*;
 
@@ -55,7 +56,15 @@ public class PlayerBoard {
         availablePosition = new ArrayList<>();
         forbiddenPosition= new ArrayList<>();
     }
+    /**
+     * Gets the ModelView representation of the player.
+     *
+     * @return a {@link PlayerBoardView}
+     */
+    public PlayerBoardView getView() {
 
+        return new PlayerBoardView(this);
+    }
 
 
     /**
@@ -500,7 +509,6 @@ public class PlayerBoard {
             }
         }
     }
-
 
     /**
      * remove position to AvailablePosition list

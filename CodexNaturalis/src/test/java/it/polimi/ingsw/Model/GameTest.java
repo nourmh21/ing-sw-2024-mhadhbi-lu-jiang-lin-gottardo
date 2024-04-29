@@ -46,7 +46,7 @@ public class GameTest {
     @Test
     public void AddPlayers_NoPlayers_ReallyAdded(){
         game.addPlayers(p1);
-        assertNotEquals(0, game.getPlayers().size());
+        assertNotEquals(0, game.getPlayersSize());
     }
 
 
@@ -112,7 +112,7 @@ public class GameTest {
     }
 
     @Test (expected = InvalidNumOfConnectedPlayer.class)
-    public void disconnect_InvalidNumOfPlayer_throwTooFewPlayersException(){
+    public void disconnect_InvalidNumOfPlayer_throwInvalidNumOfConnectedPlayer() throws InvalidNumOfConnectedPlayer {
         game.addPlayers(p1);
         game.addPlayers(p2);
         game.addPlayers(p3);
@@ -123,7 +123,7 @@ public class GameTest {
     @Test
     public void reconnect_ForJoinAgainGame(){
         game.addPlayers(p1);
-        assertEquals(game.getNumOfConnectedPlayers(), game.getPlayers().size());
+        assertEquals(game.getNumOfConnectedPlayers(), game.getPlayersSize());
     }
 
 
