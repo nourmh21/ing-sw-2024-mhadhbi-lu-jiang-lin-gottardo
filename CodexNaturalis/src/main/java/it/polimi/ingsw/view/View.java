@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.Listener.ViewListener;
-import it.polimi.ingsw.Messages.Message;
+import it.polimi.ingsw.view.ViewListener;
+import it.polimi.ingsw.messagge.Message;
 
 /**
  * The View interface represents the view component of the client application.
