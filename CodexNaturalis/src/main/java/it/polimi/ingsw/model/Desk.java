@@ -219,6 +219,10 @@ public class Desk {
         return c;
     }
 
+    public boolean isEmptyBothRGDeck(){
+        return resourceCardDeck.isEmpty() && goldCardDeck.isEmpty();
+    }
+
 
 }
 

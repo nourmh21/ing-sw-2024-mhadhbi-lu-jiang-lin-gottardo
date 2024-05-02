@@ -27,14 +27,14 @@ public class Player{
     private PlayerBoard board;
     private List<Integer> handCards;
 
-    public Player(String nickName, int position, Color color){
+    public Player(String nickName){
         this.nickName = nickName;
-        this.position = position;
+        //this.position = position;
         handCards = new ArrayList<>();
         point = 0;
         goalPoint = 0;
         personalGoal = null;
-        playerColor = color;
+        //playerColor = color;
         isConnected = true;
         board = new PlayerBoard();
     }
@@ -160,10 +160,8 @@ public class Player{
         }catch (NumberFormatException e){}
     }
 
-    /**
-     * @return player's board
-     */
-    public  PlayerBoard getBoard(){
+
+    public PlayerBoard getBoard() {
         return board;
     }
 }

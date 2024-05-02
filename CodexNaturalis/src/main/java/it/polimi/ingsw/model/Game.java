@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
-import it.polimi.ingsw.model.enums.State;
+import it.polimi.ingsw.model.enums.GameState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,17 +10,19 @@ import java.util.Random;
 
 public class Game {
     private final int idGame;
-    private State gameState;
+    private GameState gameState;
     private int numOfPlayer;  //indicates the number of player in the game
     private List<Player> players; //is the list of player
-    private Player currentPlayer; //indicates the current player of the game
     private final List<Integer> commonGoals; //in contains the common goals for all players
     private Desk desk;
     private List<Player> winners;
     public List<Player> possibleWinners;
-    private boolean isLastTurn;
+    private boolean isLastRound;
     private int numOfConnectedPlayers;   //num of player connect in the game
-    public String firstPlayer;
+    private Player currentPlayer; //indicates the current player of the game
+    public Player firstPlayer;
+
+    private int round;
 
 
     /***
@@ -42,9 +44,9 @@ public class Game {
         Random random=new Random();            //genera codice alfanumerici (è presente un file dove memorizza...)
         idGame = random.nextInt(1000000);
 
-        gameState = State.STARTING;
-        isLastTurn=false;
-        firstPlayer="";
+        gameState = GameState.SETUP;
+        isLastRound =false;
+
 
     }
 
@@ -60,7 +62,7 @@ public class Game {
     /**
      * @return gameState that indicates what state the game is in
      */
-    public State getGameState() {
+    public GameState getGameState() {
         return gameState;
     }
 
@@ -69,7 +71,7 @@ public class Game {
      *sets game state
      *@param gameState indicate the present state of the game
      */
-    public void setGameState(State gameState) {
+    public void setGameState(GameState gameState) {
        this.gameState=gameState;
 
     }
@@ -77,12 +79,11 @@ public class Game {
 
     /**
      * add the new player in the player list
-     * @param p indicates the new player in addition
+     * //@param p indicates the new player in addition
      * @throws InvalidNumOfConnectedPlayer when only one player is connected
      */
-    public void addPlayers(Player p) {
-        players.add(p);
-        numOfPlayer++;
+    public void addPlayers(String nickname) {
+        players.add(new Player(nickname));
         numOfConnectedPlayers++;
 
     }
@@ -143,18 +144,18 @@ public class Game {
 
 
     /**
-     * set isLastTurn true
+     * set isLastRound true
      */
-    public void setIsLastTurn() {
-            isLastTurn=true;
+    public void setIsLastRound() {
+            isLastRound =true;
     }
 
 
     /**
      * @return if is last turn
      */
-    public boolean getIsLastTurn(){
-        return isLastTurn;
+    public boolean getIsLastRound(){
+        return isLastRound;
     }
 
 
@@ -162,9 +163,8 @@ public class Game {
      * find a player or some players whose have max point
      * @return the list of possible winner
      */
-    public List<Player> checkMaxPoint(){
+    public void checkMaxPoint(){
         int max = 20;
-
         for (Player p:players){
             if ((p.getPoint() >= max) && (p.isConnected()))
                 max = p.getPoint();
@@ -175,16 +175,17 @@ public class Game {
                 possibleWinners.add(p);
             }
         }
-        return possibleWinners;
-
     }
 
+    public int getNumOfPossibleWinner(){
+        return possibleWinners.size();
+    }
 
     /**
      * find final winner in the game
      * @return the final winners list
      */
-    public List<Player> checkExtraPoint(){
+    public void checkExtraPoint(){
         int maxExtraPoint=0;
 
         for (Player p:possibleWinners){
@@ -197,8 +198,12 @@ public class Game {
                 winners.add(p);
 
         }
-        return winners;
     };
+
+
+    public List<Player> getWinners(){
+        return winners;
+    }
 
 
     /**
@@ -212,14 +217,13 @@ public class Game {
     /**
      * @return the first player of the game
      */
-    public String getFirstPlayer(){
+    public Player getFirstPlayer(){
         return firstPlayer;
     }
 
 
-    public void setFirstPlayer(String name){
-        this.firstPlayer=name;
-
+    public void setFirstPlayer(Player player){
+        firstPlayer = player;
     }
 
 
@@ -236,6 +240,16 @@ public class Game {
      */
     public int getNumOfPlayer(){
         return numOfPlayer;
+    }
+
+
+    public Desk getDesk() {
+        return desk;
+    }
+
+
+    public void updateRound(){
+        round++;
     }
 
 
