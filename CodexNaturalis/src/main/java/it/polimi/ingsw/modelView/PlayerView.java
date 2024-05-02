@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * The {@code PlayerView} class represents the immutable version of the {@link it.polimi.ingsw.model.Player}.
+ * The {@code PlayerView} represents the immutable version of the {@link it.polimi.ingsw.model.Player}.
  */
 
 public class PlayerView implements Serializable {
