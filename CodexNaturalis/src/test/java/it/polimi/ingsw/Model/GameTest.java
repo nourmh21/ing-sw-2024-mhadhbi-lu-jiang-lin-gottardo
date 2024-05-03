@@ -33,11 +33,11 @@ public class GameTest {
     public void setGame(){
         game = new Game(3);
         players = new ArrayList<>();
-        p1 = new Player("Rossi", 1, Color.RED);
-        p2 = new Player("Neri", 2, Color.YELLOW);
-        p3 = new Player ("Verdi", 3, Color.GREEN);
         possibleWinners = new ArrayList<>();
         winners = new ArrayList<>();
+        p1 = new Player("Rossi");
+        p2 = new Player("Neri");
+        p3 = new Player("Verdi");
 
 
     }
@@ -45,7 +45,7 @@ public class GameTest {
 
     @Test
     public void AddPlayers_NoPlayers_ReallyAdded(){
-        game.addPlayers(p1);
+        game.addPlayers("Rossi");
         assertNotEquals(0, game.getPlayersSize());
     }
 
@@ -55,13 +55,13 @@ public class GameTest {
         int max=20;
 
 
-        game.addPlayers(p1);
+        game.addPlayers(p1.getNickName());
         players.add(p1);
         p1.setPoint(25);
-        game.addPlayers(p2);
+        game.addPlayers(p2.getNickName());
         players.add(p2);
         p2.setPoint(22);
-        game.addPlayers(p3);
+        game.addPlayers(p3.getNickName());
         players.add(p3);
         p3.setPoint(25);
 
@@ -79,17 +79,19 @@ public class GameTest {
         }
 
         assertEquals(possibleWinners.size(), 2);
+        assertEquals(possibleWinners.get(0).getNickName(), "Rossi");
+        assertEquals(possibleWinners.get(1).getNickName(), "Verdi");
 
     }
 
 
     @Test
     public void checkExtraPoint_GetMaxExtraPoint_ShouldReturnFinalWinners(){
-        game.addPlayers(p1);
+        game.addPlayers(p1.getNickName());
         possibleWinners.add(p1);
         p1.addGoalPoint(6);
 
-        game.addPlayers(p3);
+        game.addPlayers(p3.getNickName());
         possibleWinners.add(p3);
         p3.addGoalPoint(6);
 
@@ -107,22 +109,24 @@ public class GameTest {
         }
 
         assertEquals(winners.size(), 2);
+        assertEquals(winners.get(0).getNickName(), "Rossi");
+        assertEquals(winners.get(1).getNickName(), "Verdi");
 
 
     }
 
     @Test (expected = InvalidNumOfConnectedPlayer.class)
     public void disconnect_InvalidNumOfPlayer_throwInvalidNumOfConnectedPlayer() throws InvalidNumOfConnectedPlayer {
-        game.addPlayers(p1);
-        game.addPlayers(p2);
-        game.addPlayers(p3);
+        game.addPlayers(p1.getNickName());
+        game.addPlayers(p2.getNickName());
+        game.addPlayers(p3.getNickName());
         game.disconnect(p1);
         game.disconnect(p2);
     }
 
     @Test
     public void reconnect_ForJoinAgainGame(){
-        game.addPlayers(p1);
+        game.addPlayers(p1.getNickName());
         assertEquals(game.getNumOfConnectedPlayers(), game.getPlayersSize());
     }
 
