@@ -1,4 +1,4 @@
-package it.polimi.ingsw.modelView;
+package it.polimi.ingsw.view.modelView;
 import it.polimi.ingsw.model.PlayerBoard;
 import it.polimi.ingsw.model.enums.Symbol;
 
