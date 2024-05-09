@@ -26,7 +26,7 @@ public class PlayerView implements Serializable {
     private final List<Integer> handCards;
 
     public PlayerView(Player player){
-        this.nickName = player.getNickName();
+        this.nickName = player.getNickname();
         this.position = player.getPosition();
         this.point = player.getPoint();
         this.goalPoint = player.getPoint();
