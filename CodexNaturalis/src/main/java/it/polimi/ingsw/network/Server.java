@@ -4,6 +4,7 @@ package it.polimi.ingsw.network;
 import it.polimi.ingsw.model.CardList;
 import it.polimi.ingsw.network.socket.ClientHandler;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,17 +17,17 @@ public class Server {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
-                try {
 
+                try {
                     Socket socket = serverSocket.accept();
                     new ClientHandler(socket).start();
-
+                    System.out.println("Client connected");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }
