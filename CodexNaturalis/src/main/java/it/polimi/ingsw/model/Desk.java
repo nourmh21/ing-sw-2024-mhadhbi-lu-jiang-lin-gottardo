@@ -3,8 +3,12 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.model.immutable.ImmutableGame;
 
 /**
  * Desk is a class that contains:
@@ -16,10 +20,9 @@ import it.polimi.ingsw.model.exceptions.EmptyDeckException;
  * Note: there are only card ids here, therefore only integers and not card objects
  * Status: almost complete
  * @author Valeria Lu
- * @version 2024-04-19
  * */
 
-public class Desk {
+public class Desk extends Observable{
     private List<Integer> resourceCardDeck;          //list of resource cards - resource card deck
     private List<Integer> goldCardDeck;              //list of gold cards - gold card deck
     private List<Integer> initialCardDeck;           //list of initial cards - initial card deck
@@ -28,12 +31,13 @@ public class Desk {
     private List<Integer> displayedGoldCards;        //list that will contain two face up gold card
     private Integer nextResourceCard;                //the first card of resource card deck
     private Integer nextGoldCard;                    //the first card of gold card deck
-
-
+    private Game game;
     /**
      * The class constructor
      */
-    public Desk(){
+    public Desk(Game game){
+        this.game = game;
+        observers = game.getGameObservers();
         resourceCardDeck = new ArrayList<>(40);
         goldCardDeck = new ArrayList<>(40);
         initialCardDeck = new ArrayList<>(6);
@@ -59,11 +63,25 @@ public class Desk {
         Collections.shuffle(initialCardDeck);
         Collections.shuffle(objectiveCardDeck);
 
-        updateNextRCard();
-        updateNextGCard();
+        /*
+        I didn't use method below because I want to avoid the propagation of an exception
+        that in theory, wouldn't happen during construct phase
+         */
+        displayedResourceCards.add(resourceCardDeck.get(0));
+        resourceCardDeck.remove(0);
+        displayedResourceCards.add(resourceCardDeck.get(0));
+        resourceCardDeck.remove(0);
 
-        updateDisplayedRCard();
-        updateDisplayedGCard();
+        displayedGoldCards.add(goldCardDeck.get(0));
+        goldCardDeck.remove(0);
+        displayedGoldCards.add(goldCardDeck.get(0));
+        goldCardDeck.remove(0);
+
+        nextResourceCard = resourceCardDeck.get(0);
+        resourceCardDeck.remove(0);
+
+        nextGoldCard = goldCardDeck.get(0);
+        goldCardDeck.remove(0);
 
     }
 
@@ -73,7 +91,7 @@ public class Desk {
      * @param type the type of card that one wants to pick
      * @return a card id of the required type
      */
-    public Integer pickOneCard(CardType type){
+    public Integer pickOneCard(CardType type) throws EmptyDeckException{
         Integer idCard = null;
         switch (type){
             case RESOURCE:
@@ -113,8 +131,10 @@ public class Desk {
      */
     public void updateDisplayedRCard(){
         while (displayedResourceCards.size() < 2){
-            displayedResourceCards.add(pickNextRCard());
-            updateNextRCard();
+            if (nextResourceCard != null){
+                displayedResourceCards.add(pickNextRCard());
+                updateNextRCard();
+            }
         }
     }
 
@@ -124,8 +144,10 @@ public class Desk {
      */
     public void updateDisplayedGCard(){
         while(displayedGoldCards.size() < 2){
-            displayedGoldCards.add(pickNextGCard());
-            updateNextGCard();
+            if (nextGoldCard != null){
+                displayedGoldCards.add(pickNextGCard());
+                updateNextGCard();
+            }
         }
     }
 
@@ -186,15 +208,31 @@ public class Desk {
      * Update the first card of resource card deck (when it was used)
      */
     public void updateNextRCard(){
-        nextResourceCard = pickOneCard(CardType.RESOURCE);
+        try {
+            nextResourceCard = pickOneCard(CardType.RESOURCE);
+            //
+            notify_game_status(game);
+        } catch (EmptyDeckException e) {
+            nextResourceCard = null;
+            //
+            notify_game_status(game);
+        }
     }
 
 
     /**
      * Update the first card of gold card deck (when it was used)
      */
-    public void updateNextGCard(){
-        nextGoldCard = pickOneCard(CardType.GOLD);
+    public void updateNextGCard() {
+        try {
+            nextGoldCard = pickOneCard(CardType.GOLD);
+            //
+            notify_game_status(game);
+        } catch (EmptyDeckException e) {
+            nextGoldCard = null;
+            //
+            notify_game_status(game);
+        }
     }
 
 
@@ -219,9 +257,20 @@ public class Desk {
         return c;
     }
 
+
+    public Integer getNextResourceCard() {
+        return nextResourceCard;
+    }
+
+
+    public Integer getNextGoldCard() {
+        return nextGoldCard;
+    }
+
     public boolean isEmptyBothRGDeck(){
         return resourceCardDeck.isEmpty() && goldCardDeck.isEmpty();
     }
+
 
 
 }

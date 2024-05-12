@@ -1,18 +1,23 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.model.enums.CardType;
+import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
 import it.polimi.ingsw.model.enums.GameState;
+import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
+import it.polimi.ingsw.model.immutable.ImmutableGame;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Game {
+public class Game extends Observable{
     private final int idGame;
     private GameState gameState;
-    private int numOfPlayer;  //indicates the number of player in the game
-    private List<Player> players; //is the list of player
+    private int numOfPlayer;      //indicates the number of player in the game
+    private List<Player> players;  //is the list of player
     private final List<Integer> commonGoals; //in contains the common goals for all players
     private Desk desk;
     private List<Player> winners;
@@ -21,34 +26,58 @@ public class Game {
     private int numOfConnectedPlayers;   //num of player connect in the game
     private Player currentPlayer; //indicates the current player of the game
     public Player firstPlayer;
-
     private int round;
 
 
     /***
      * the class constructor
      */
-    public Game(int numOfPlayer){
-
-        desk = new Desk();
+    public Game(int numOfPlayer) {
+        desk = new Desk(this);
         players = new ArrayList<>();
         winners = new ArrayList<>();
         commonGoals = new ArrayList<>();
-
-        commonGoals.add(desk.pickOneCard(CardType.OBJECTIVE));
-        commonGoals.add(desk.pickOneCard(CardType.OBJECTIVE));
-
         this.numOfPlayer = numOfPlayer;
         numOfConnectedPlayers = 0;
-
-        Random random=new Random();            //genera codice alfanumerici (è presente un file dove memorizza...)
+        Random random=new Random();                //genera codice alfanumerici (è presente un file dove memorizza...)
         idGame = random.nextInt(1000000);
-
-        gameState = GameState.SETUP;
+        gameState = GameState.SETUP_PHASE_1;
         isLastRound =false;
-
-
+        //
+        notify_game_status(this);
     }
+
+
+
+
+
+    public void setGameObservers(List<Observer> observers){
+        this.observers = observers;
+    }
+
+
+    public List<Observer> getGameObservers(){
+        return observers;
+    }
+
+
+    public void setCommonGoals(Integer idCard){
+        if (commonGoals.size() < 2)
+            commonGoals.add(idCard);
+        //
+        if (commonGoals.size() == 2)
+            notify_game_status(this);
+    }
+
+
+    /*
+    public void setInitialCard() throws EmptyDeckException{
+        for (Player p:players) {
+            p.setInitialCard(desk.pickOneCard(CardType.INITIAL));
+        }
+    }
+
+     */
 
 
     /**
@@ -72,8 +101,9 @@ public class Game {
      *@param gameState indicate the present state of the game
      */
     public void setGameState(GameState gameState) {
-       this.gameState=gameState;
-
+        this.gameState = gameState;
+        //
+        notify_game_status(this);
     }
 
 
@@ -83,9 +113,8 @@ public class Game {
      * @throws InvalidNumOfConnectedPlayer when only one player is connected
      */
     public void addPlayers(String nickname) {
-        players.add(new Player(nickname));
+        players.add(new Player(nickname, this));
         numOfConnectedPlayers++;
-
     }
 
 
@@ -139,7 +168,9 @@ public class Game {
       * @param p defines the next current player
       */
     public void setCurrentPlayer(Player p) {
-            this.currentPlayer = p;
+        this.currentPlayer = p;
+        //
+        notify_game_status(this);
     }
 
 
@@ -147,7 +178,9 @@ public class Game {
      * set isLastRound true
      */
     public void setIsLastRound() {
-            isLastRound =true;
+        isLastRound = true;
+        //
+        notify_game_status(this);
     }
 
 
@@ -175,30 +208,34 @@ public class Game {
                 possibleWinners.add(p);
             }
         }
+        if (possibleWinners.size() > 1)
+            checkExtraPoint();
+        //
+        notify_final_result(this);
     }
+
 
     public int getNumOfPossibleWinner(){
         return possibleWinners.size();
     }
 
+
     /**
      * find final winner in the game
      * @return the final winners list
      */
-    public void checkExtraPoint(){
+    private void checkExtraPoint(){
         int maxExtraPoint=0;
-
         for (Player p:possibleWinners){
             if (p.getPoint() >= maxExtraPoint)
                 maxExtraPoint = p.getPoint();
         }
-
         for (Player p:possibleWinners){
             if (p.getPoint() == maxExtraPoint)
                 winners.add(p);
-
         }
-    };
+
+    }
 
 
     public List<Player> getWinners(){
@@ -251,7 +288,6 @@ public class Game {
     public void updateRound(){
         round++;
     }
-
 
 
 }

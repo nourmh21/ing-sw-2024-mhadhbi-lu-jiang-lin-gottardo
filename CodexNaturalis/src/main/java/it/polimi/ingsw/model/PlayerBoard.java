@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.IllegalCoordinateInsertionException;
 import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
-import it.polimi.ingsw.modelView.PlayerBoardView;
+import it.polimi.ingsw.view.theirWork.modelView.PlayerBoardView;
 
 import java.util.*;
 
@@ -22,6 +22,7 @@ public class PlayerBoard {
     final private ArrayList<int[]> availablePosition;
     final private ArrayList<int[]> forbiddenPosition;
 
+    private boolean isInitCardPlaced;
 
     /**
      * cardList define list of card use on the board.
@@ -55,17 +56,45 @@ public class PlayerBoard {
         symbolsList = new int[7];
         availablePosition = new ArrayList<>();
         forbiddenPosition= new ArrayList<>();
+        isInitCardPlaced = false;
     }
+
+
     /**
      * Gets the ModelView representation of the player.
      *
      * @return a {@link PlayerBoardView}
      */
     public PlayerBoardView getView() {
-
         return new PlayerBoardView(this);
     }
 
+
+    public List<Symbol> getTopLeftAngle() {
+        return topLeftAngle;
+    }
+    public List<Symbol> getTopRightAngle() {
+        return topRightAngle;
+    }
+    public List<Symbol> getBottomLeftAngle() {
+        return bottomLeftAngle;
+    }
+    public List<Symbol> getBottomRightAngle() {
+        return bottomRightAngle;
+    }
+    public List<Symbol> getCardKingdom() {
+        return cardKingdom;
+    }
+    public List<Integer> getX() {
+        return x;
+    }
+    public List<Integer> getY() {
+        return y;
+    }
+
+    public boolean getIsInitCardPlaced(){
+        return isInitCardPlaced;
+    }
 
     /**
      * represents the placement of a card on the board
@@ -143,6 +172,7 @@ public class PlayerBoard {
             symbolsList[5] = 0;
             symbolsList[6] = 0;
 
+        isInitCardPlaced = true;
     }
 
 
@@ -158,8 +188,6 @@ public class PlayerBoard {
             bottomRightAngle.add(EMPTY);
             topLeftAngle.add( EMPTY);
             topRightAngle.add(EMPTY);
-
-
         } else {
             editAddSymbolsList(card.getTopLeftAngle(),new int[]{xx-1,yy+1});
             editAddSymbolsList(card.getTopRightAngle(),new int[]{xx+1,yy+1});
@@ -224,7 +252,6 @@ public class PlayerBoard {
      * @return list of AvailablePosition
      */
     public ArrayList<int[]> getAvailablePosition() {
-
         return availablePosition;
     }
 
@@ -523,5 +550,6 @@ public class PlayerBoard {
             }
         }
     }
+
 
 }
