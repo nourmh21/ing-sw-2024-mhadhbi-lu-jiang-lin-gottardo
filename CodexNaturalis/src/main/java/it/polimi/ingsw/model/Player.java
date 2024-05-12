@@ -1,4 +1,7 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.enums.CardType;
+import it.polimi.ingsw.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfHandCardsException;
 
@@ -7,7 +10,7 @@ import java.util.List;
 
 /**
  * Player is a class that contains information of each player
- * -nickName: player's name
+ * -nickname: player's name
  * -position: player's turn during game
  * -point: points acquired during game
  * -goalPoint: points acquired from objective cards
@@ -16,19 +19,28 @@ import java.util.List;
  * -isConnected: verify if the player is connected
  * -handCards define list of card in hand of player.
  */
-public class Player{
-    private String nickName;
+public class Player extends Observable {
+    private final String nickname;
+
+    @Deprecated
     private int position;
+
     private int point;
     private int goalPoint;
     private Color playerColor;
     private Integer personalGoal;
+
+    private Integer[] initialPossibleGoals;
+
     private boolean isConnected;
     private PlayerBoard board;
     private List<Integer> handCards;
 
-    public Player(String nickName){
-        this.nickName = nickName;
+    private Integer initialCard;
+
+
+    public Player(String nickname, Game game){
+        this.nickname = nickname;
         //this.position = position;
         handCards = new ArrayList<>();
         point = 0;
@@ -37,17 +49,55 @@ public class Player{
         //playerColor = color;
         isConnected = true;
         board = new PlayerBoard();
+        initialPossibleGoals = new Integer[2];
+        try {
+            initialCard = game.getDesk().pickOneCard(CardType.INITIAL);
+        } catch (EmptyDeckException e) {
+            throw new RuntimeException(e);
+        }
+        observers = game.getGameObservers();
+        //
+        notify_player_status(this);
+    }
+
+
+    /*
+    public void setInitialCard(Integer initialCard) {
+        this.initialCard = initialCard;
+        //
+        notifyStatus();
+    }*/
+
+    public Integer getInitialCard(){
+        return initialCard;
+    }
+
+
+    public void setPersonalGoal(Integer idCard){
+        personalGoal = idCard;
+    }
+
+
+    public void setInitialPossibleGoals(Integer[] goals){
+        initialPossibleGoals = goals;
+        //
+        notify_two_personal_goals(this);
+    }
+
+
+    public Integer[] getInitialPossibleGoals(){
+        return initialPossibleGoals;
     }
 
 
     /**
      * @return player's Nickname
      */
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-
+    @Deprecated
     /**
      * @return player's turn
      */
@@ -64,13 +114,6 @@ public class Player{
     }
 
 
-    /** set player's point
-     * @param point player's point
-     */
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
 
     /**
      * Update player's point
@@ -78,6 +121,8 @@ public class Player{
      */
     public void updatePoint(int newPoint){
         point = point + newPoint;
+        //
+        notify_player_status(this);
     }
 
 
@@ -151,17 +196,27 @@ public class Player{
      * @param idCard id of the card
      * @throws InvalidNumOfHandCardsException when the player already has three cards in the hand
      */
-    public void addCardToHandCards(int idCard) throws InvalidNumOfHandCardsException {
-        if (handCards.size() == 3) {
-            throw new InvalidNumOfHandCardsException();
+    public void addCardToHandCards(int idCard){
+        handCards.add(idCard);
+        //
+        if (handCards.size() == 3){
+            notify_hand_cards(this);
+            notify_player_status(this);
         }
-        try {
-            handCards.add(idCard);
-        }catch (NumberFormatException e){}
+
+    }
+
+
+    public void removeHandCard(Integer idCard){
+        handCards.remove(idCard);
+        //
+        notify_player_status(this);
     }
 
 
     public PlayerBoard getBoard() {
         return board;
     }
+
+
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.GoalType;
-import it.polimi.ingsw.modelView.ObjectiveCardView;
+import it.polimi.ingsw.view.theirWork.modelView.ObjectiveCardView;
 
 public class ObjectiveCard{
     private final int idCard;
@@ -18,15 +18,6 @@ public class ObjectiveCard{
         this.idCard = idCard;
         this.points = points;
         this.type = type;
-    }
-
-    /**
-     * Gets the view representation of the global goal.
-     *
-     * @return the view representation of the global goal.
-     */
-    public ObjectiveCardView getView(){
-        return new ObjectiveCardView(this);
     }
 
 

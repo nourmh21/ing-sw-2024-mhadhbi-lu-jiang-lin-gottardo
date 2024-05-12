@@ -33,7 +33,7 @@ public class SendHeartbeat extends Thread{
             }
 
         } catch (SocketException e){
-            System.out.println("You lose connection to server");
+            System.out.println("Server crashed, try later");
         }catch (InterruptedException e) {
             throw new RuntimeException(e);
         }catch (IOException e){

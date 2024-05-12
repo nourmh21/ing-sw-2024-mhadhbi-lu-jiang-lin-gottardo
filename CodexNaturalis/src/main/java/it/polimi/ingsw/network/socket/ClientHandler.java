@@ -7,6 +7,7 @@ import it.polimi.ingsw.message.Message;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 import static it.polimi.ingsw.message.enums.MessageType.*;
 
@@ -44,13 +45,15 @@ public class ClientHandler extends Thread{
             oos.writeObject(response);
 
 
-            while (true){
+            while (!this.isInterrupted()){
                 try {
                     Message message = (Message) ois.readObject();
                     if (message.getType() != HEARTBEAT)
-                        //??
+                        //
                         GameController.getInstance().messageHandler(message,oos);
-                }catch (EOFException e){
+
+                }catch (SocketException e){
+                    System.out.println("Client disconnected");
                     close();
                 }catch (IOException e){
                     e.printStackTrace();
