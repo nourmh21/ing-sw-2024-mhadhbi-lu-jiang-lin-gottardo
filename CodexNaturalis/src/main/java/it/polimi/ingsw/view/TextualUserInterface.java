@@ -163,7 +163,7 @@ public class TextualUserInterface {
     }
     public void signInFailure(){
         int c;
-        out.println(red + "ERROR: Credentials not valid!" + reset);
+        out.println(red + "ERROR: Invalid credentials!" + reset);
         out.println("Choose: ");
         out.println("1 - Continue with login");
         out.println("2 - Go back to selection");
