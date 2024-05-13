@@ -18,6 +18,7 @@ public class ImmutableGame implements Serializable {
     private final int numOfPlayer;
     private final GameState gameState;
     private final List<Integer> commonGoals;
+    private final boolean isLastRound;
     private final List<String> players;
     private final String currentPlayer;
 
@@ -33,6 +34,7 @@ public class ImmutableGame implements Serializable {
         numOfPlayer = game.getNumOfPlayer();
         gameState = game.getGameState();
         commonGoals = game.getCommonGoals();
+        isLastRound = game.getIsLastRound();
         if (game.getPlayers() != null){
             players = game.getPlayers().stream()
                     .map(Player::getNickname)
@@ -89,6 +91,9 @@ public class ImmutableGame implements Serializable {
         return commonGoals;
     }
 
+    public boolean isLastRound() {
+        return isLastRound;
+    }
 
     public List<String> getPlayers() {
         return players;
