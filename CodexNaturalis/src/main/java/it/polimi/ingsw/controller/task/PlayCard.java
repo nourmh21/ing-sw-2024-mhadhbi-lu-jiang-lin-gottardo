@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.task;
 
-import it.polimi.ingsw.message.ErrorMessage;
+import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Game;

@@ -2,7 +2,7 @@ package it.polimi.ingsw.controller;
 
 
 import it.polimi.ingsw.message.Message;
-import it.polimi.ingsw.message.ReqNewGameInfoMessage;
+import it.polimi.ingsw.message.general.ReqNewGameInfoMessage;
 
 import it.polimi.ingsw.model.CardList;
 import it.polimi.ingsw.model.Game;

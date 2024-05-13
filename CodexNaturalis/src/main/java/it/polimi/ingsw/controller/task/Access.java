@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller.task;
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.message.ErrorMessage;
-import it.polimi.ingsw.message.LoginSuccessMessage;
+import it.polimi.ingsw.message.error.ErrorMessage;
+import it.polimi.ingsw.message.general.LoginSuccessMessage;
 import it.polimi.ingsw.message.Message;
 
 import java.io.*;

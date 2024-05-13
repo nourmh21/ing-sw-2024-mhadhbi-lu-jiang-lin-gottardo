@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.socket;
 
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.message.ConnectedMessage;
+import it.polimi.ingsw.message.general.ConnectedMessage;
 import it.polimi.ingsw.message.Message;
 
 import java.io.*;

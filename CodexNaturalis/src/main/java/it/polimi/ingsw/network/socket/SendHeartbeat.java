@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.socket;
 
 import it.polimi.ingsw.message.enums.MessageType;
-import it.polimi.ingsw.message.HeartbeatMessage;
+import it.polimi.ingsw.message.general.HeartbeatMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -26,7 +26,7 @@ public class SendHeartbeat extends Thread{
                 //there are decisions to be made here
                 Thread.sleep(1*1000);
                 if ((System.currentTimeMillis() - lastSendTime) >= 3*1000){
-                    oos.writeObject(new HeartbeatMessage(MessageType.HEARTBEAT));
+                    oos.writeObject(new HeartbeatMessage());
                     lastSendTime = System.currentTimeMillis();
                 }
 

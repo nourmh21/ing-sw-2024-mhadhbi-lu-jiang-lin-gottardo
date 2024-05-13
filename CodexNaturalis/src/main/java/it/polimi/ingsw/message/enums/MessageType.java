@@ -4,6 +4,7 @@ public enum MessageType {
     HEARTBEAT,
     ACCESS,
     LOGIN_SUCCESS,
+    CONNECTED,
     JOIN_GAME,
     NEW_GAME_INFO,
     REQ_NEW_GAME_INFO,
