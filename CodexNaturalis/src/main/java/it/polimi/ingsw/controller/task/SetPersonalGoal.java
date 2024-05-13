@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller.task;
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.message.ErrorMessage;
+import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
@@ -12,7 +12,6 @@ import java.io.ObjectOutputStream;
 import java.util.Objects;
 
 import static it.polimi.ingsw.message.enums.ErrorType.INVALID_PERSONAL_GOAL;
-import static it.polimi.ingsw.message.enums.ErrorType.INVALID_POSITION;
 
 public class SetPersonalGoal implements Runnable{
     Game game;

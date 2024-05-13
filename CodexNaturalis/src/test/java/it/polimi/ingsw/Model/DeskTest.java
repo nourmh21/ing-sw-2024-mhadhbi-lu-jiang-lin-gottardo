@@ -1,6 +1,5 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Desk;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 import org.junit.Before;
@@ -10,19 +9,25 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+
+/**
+ * To be updated because I have modified desk class
+ */
 public class DeskTest {
 
     Desk desk = null;
+    Game game = null;
 
 
     @Before
     public void setUp()
     {
-        desk = new Desk();
+        game = new Game(2);
+        desk = new Desk(game);
     }
 
     @Test(expected = EmptyDeckException.class)
-    public void pickOneCard_EmptyResourceCardDeck_throwsNullPointerException(){
+    public void pickOneCard_EmptyResourceCardDeck_throwsNullPointerException() throws EmptyDeckException {
         for (int i = 0; i < 37; i++){
             desk.pickOneCard(CardType.RESOURCE);
         }
@@ -30,7 +35,7 @@ public class DeskTest {
     }
 
     @Test(expected = EmptyDeckException.class)
-    public void pickOneCard_EmptyGoldCardDeck_throwsNullPointerException(){
+    public void pickOneCard_EmptyGoldCardDeck_throwsNullPointerException() throws EmptyDeckException {
         for (int i = 0; i < 37; i++){
             desk.pickOneCard(CardType.GOLD);
         }
@@ -39,7 +44,7 @@ public class DeskTest {
 
 
     @Test(expected = EmptyDeckException.class)
-    public void pickOneCard_EmptyGoalCardDeck_throwsNullPointerException(){
+    public void pickOneCard_EmptyGoalCardDeck_throwsNullPointerException() throws EmptyDeckException {
         for (int i = 0; i < 16; i++){
             desk.pickOneCard(CardType.OBJECTIVE);
         }
@@ -48,7 +53,7 @@ public class DeskTest {
 
 
     @Test(expected = EmptyDeckException.class)
-    public void pickOneCard_EmptyInitialDeck_throwsNullPointerException(){
+    public void pickOneCard_EmptyInitialDeck_throwsNullPointerException() throws EmptyDeckException {
         for (int i = 0; i < 6; i++){
             desk.pickOneCard(CardType.INITIAL);
         }
@@ -76,7 +81,7 @@ public class DeskTest {
 
 
     @Test
-    public void pickDisplayedNextRCard_PickCardWithUpdate_ReallyUpdated(){
+    public void pickDisplayedNextRCard_PickCardWithUpdate_ReallyUpdated() throws EmptyDeckException {
         List<Integer> testList = desk.getDisplayedRCards();
         desk.pickOneDisplayedRCard(testList.getFirst());
         int sizeBeforeUpdating = testList.size();
@@ -86,7 +91,7 @@ public class DeskTest {
 
 
     @Test
-    public void pickDisplayedNextGCard_PickCardWithUpdate_ReallyUpdated(){
+    public void pickDisplayedNextGCard_PickCardWithUpdate_ReallyUpdated() throws EmptyDeckException {
         List<Integer> testList = desk.getDisplayedGCards();
         desk.pickOneDisplayedGCard(testList.getFirst());
         int sizeBeforeUpdating = testList.size();
@@ -96,7 +101,7 @@ public class DeskTest {
 
 
     @Test
-    public void updateNextRCard_PickTwoTimes_ShouldNotBeTheSame(){
+    public void updateNextRCard_PickTwoTimes_ShouldNotBeTheSame() throws EmptyDeckException {
         int card1 = desk.pickNextRCard();
         desk.updateNextRCard();
         int card2 = desk.pickNextRCard();
@@ -105,7 +110,7 @@ public class DeskTest {
 
 
     @Test
-    public void updateNextGCard_PickTwoTimes_ShouldNotBeTheSame(){
+    public void updateNextGCard_PickTwoTimes_ShouldNotBeTheSame() throws EmptyDeckException {
         int card1 = desk.pickNextGCard();
         desk.updateNextGCard();
         int card2 = desk.pickNextGCard();
@@ -126,14 +131,14 @@ public class DeskTest {
         assertNull(desk.pickNextGCard());
     }
 
-
-    @Test(expected = EmptyDeckException.class)
-    public void pickOneCard_CalledByUpdatingMethodWhenTheDeckIsEmpty_throwsNullPointerException(){
+    @Test
+    public void pickOneCard_CalledByUpdatingMethodWhenTheDeckIsEmpty_throwsNullPointerException() throws EmptyDeckException {
         for (int i = 0; i < 37; i++){
             desk.pickOneCard(CardType.RESOURCE);
         }
         desk.pickOneDisplayedRCard(desk.getDisplayedRCards().getFirst());
         desk.updateDisplayedRCard();
+        assertNull(desk.getNextResourceCard());
     }
 
 }

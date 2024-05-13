@@ -115,6 +115,10 @@ public class Game extends Observable{
     public void addPlayers(String nickname) {
         players.add(new Player(nickname, this));
         numOfConnectedPlayers++;
+
+        if (players.size() == numOfPlayer){
+            notify_game_status(this);
+        }
     }
 
 
