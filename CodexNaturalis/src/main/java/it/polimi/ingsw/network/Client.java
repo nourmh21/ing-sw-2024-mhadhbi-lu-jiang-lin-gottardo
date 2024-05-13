@@ -4,12 +4,11 @@ package it.polimi.ingsw.network;
 
 
 import it.polimi.ingsw.network.socket.SendHeartbeat;
-import it.polimi.ingsw.view.TUI;
+import it.polimi.ingsw.view.TUI.TUI;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Scanner;
 
 
 public class Client

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.view.TUI;
 
 import it.polimi.ingsw.controller.ImmutableLobby;
 import it.polimi.ingsw.message.general.ConnectedMessage;
