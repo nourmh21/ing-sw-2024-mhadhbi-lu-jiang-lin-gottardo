@@ -196,7 +196,7 @@ public class Player extends Observable {
      * @param idCard id of the card
      * @throws InvalidNumOfHandCardsException when the player already has three cards in the hand
      */
-    public void addCardToHandCards(int idCard){
+    public void addCardToHandCards(Integer idCard){
         handCards.add(idCard);
         //
         if (handCards.size() == 3){

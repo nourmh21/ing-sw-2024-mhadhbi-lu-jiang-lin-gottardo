@@ -21,6 +21,7 @@ public class PlayerBoard {
     final private ArrayList<int[]> availablePosition;
     final private ArrayList<int[]> forbiddenPosition;
 
+    private boolean isInitCardPlaced;
 
     /**
      * cardList define list of card use on the board.
@@ -54,8 +55,13 @@ public class PlayerBoard {
         symbolsList = new int[7];
         availablePosition = new ArrayList<>();
         forbiddenPosition= new ArrayList<>();
+        isInitCardPlaced = false;
     }
 
+
+    public boolean getIsInitCardPlaced() {
+        return isInitCardPlaced;
+    }
 
     /**
      * represents the placement of a card on the board
@@ -132,6 +138,7 @@ public class PlayerBoard {
             symbolsList[4] = 0;
             symbolsList[5] = 0;
             symbolsList[6] = 0;
+            isInitCardPlaced = true;
 
     }
 
