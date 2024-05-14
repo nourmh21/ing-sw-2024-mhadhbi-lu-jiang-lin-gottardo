@@ -135,6 +135,35 @@ public class PlayerBoard {
 
     }
 
+    public List<Integer> getY() {
+        return y;
+    }
+
+    public List<Integer> getX() {
+        return x;
+    }
+
+    public List<Symbol> getCardKingdom() {
+        return cardKingdom;
+    }
+
+    public List<Symbol> getBottomRightAngle() {
+        return bottomRightAngle;
+    }
+
+    public List<Symbol> getBottomLeftAngle() {
+        return bottomLeftAngle;
+    }
+
+    public List<Symbol> getTopRightAngle() {
+        return topRightAngle;
+    }
+
+    public List<Symbol> getTopLeftAngle() {
+        return topLeftAngle;
+    }
+
+
 
     /**
      * add resources to the symbol list
