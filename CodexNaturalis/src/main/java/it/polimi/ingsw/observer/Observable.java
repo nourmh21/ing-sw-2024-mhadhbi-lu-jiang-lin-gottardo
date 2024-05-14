@@ -1,3 +1,4 @@
+
 package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.controller.ImmutableLobby;

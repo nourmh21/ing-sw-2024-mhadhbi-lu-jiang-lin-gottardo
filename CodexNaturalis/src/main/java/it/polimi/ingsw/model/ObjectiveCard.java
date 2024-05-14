@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.GoalType;
-import it.polimi.ingsw.view.theirWork.modelView.ObjectiveCardView;
 
 public class ObjectiveCard{
     private final int idCard;

@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
-import static it.polimi.ingsw.message.enums.MessageType.*;
+import static it.polimi.ingsw.message.enums.MessageType.HEARTBEAT;
 
 public class ClientHandler extends Thread{
 
