@@ -33,7 +33,7 @@ public class Access implements Runnable{
     @Override
     public void run() {
         //file containing password
-        String path = "C:\\Users\\lsy10\\Desktop\\Progetto\\Project\\CodexNaturalis\\src\\main\\java\\it\\polimi\\ingsw\\controller\\controller_task\\data.txt";
+        String path = "";
         File file = new File(path);
 
         //if user is already register
