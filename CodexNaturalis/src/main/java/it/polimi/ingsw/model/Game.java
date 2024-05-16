@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.model.enums.CardType;
@@ -291,6 +292,15 @@ public class Game extends Observable{
 
     public void updateRound(){
         round++;
+    }
+
+
+    /**
+     * @return the color get by random
+     */
+    public Color randomColor(){
+        Random random = new Random();
+        return Color.values()[random.nextInt(Color.values().length)];
     }
 
 
