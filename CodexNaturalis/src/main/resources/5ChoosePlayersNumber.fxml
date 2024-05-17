@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.chooseNumOfPlayersController">
+   <children>
+      <VBox alignment="CENTER" layoutX="378.0" layoutY="43.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text fill="#6b5339" strokeType="OUTSIDE" strokeWidth="0.0" text="There aren't available games to join. Please, create a new one by choosing the number of players:" wrappingWidth="844.0">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="50.0" left="100.0" right="100.0" />
+               </VBox.margin>
+            </Text>
+            <HBox alignment="CENTER" prefHeight="101.0" prefWidth="1100.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <VBox prefHeight="102.0" prefWidth="125.0">
+                     <children>
+                        <RadioButton fx:id="two" mnemonicParsing="false" onAction="#getTwo" text="Two" textFill="#6b5339">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="nOfPlayers" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="three" mnemonicParsing="false" onAction="#getThree" text="Three" textFill="#6b5339" toggleGroup="$nOfPlayers">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="four" mnemonicParsing="false" onAction="#getFour" text="Four" textFill="#6b5339" toggleGroup="$nOfPlayers">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </VBox>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </HBox>
+            <Label fx:id="errorNLabel" prefHeight="17.0" prefWidth="364.0" textFill="RED">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="40.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="create" mnemonicParsing="false" onAction="#switchToLobby" style="-fx-border-color: #6b5339; -fx-border-width: 1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Create" textFill="#6b5339">
+               <font>
+                  <Font name="Arial Black" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
