@@ -5,8 +5,8 @@ import it.polimi.ingsw.message.enums.MessageType;
 
 
 public class PlayInitCardMessage implements Message {
-    private final Integer idCard;
-    private final boolean isBackSide;
+    private Integer idCard;
+    private boolean isBackSide;
 
     public PlayInitCardMessage(Integer idCard, boolean isBackSide){
         this.idCard = idCard;

@@ -4,22 +4,20 @@ import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.enums.MessageType;
 
-import java.util.Optional;
-
 public class DrawCardMessage implements Message {
 
     private LocationType location;
-    private Optional<Integer> idCard;
+    private Integer idCard;
 
 
     public DrawCardMessage(LocationType location){
         this.location = location;
-        idCard = Optional.empty();
+        idCard = null;
     }
 
     public DrawCardMessage(LocationType location, Integer idCard){
         this.location = location;
-        this.idCard = Optional.of(idCard);
+        this.idCard = idCard;
     }
 
 
@@ -32,7 +30,7 @@ public class DrawCardMessage implements Message {
         return location;
     }
 
-    public Optional<Integer> getIdCard() {
+    public Integer getIdCard() {
         return idCard;
     }
 }
