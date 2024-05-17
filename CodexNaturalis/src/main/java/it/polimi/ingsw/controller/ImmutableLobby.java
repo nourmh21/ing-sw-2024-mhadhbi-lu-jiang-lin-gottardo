@@ -1,8 +1,9 @@
 package it.polimi.ingsw.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ImmutableLobby {
+public class ImmutableLobby implements Serializable {
     private final List<String> players;
     private final int numOfPlayer;
     public ImmutableLobby(Lobby lobby){
