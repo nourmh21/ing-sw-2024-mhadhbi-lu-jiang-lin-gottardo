@@ -1,14 +1,16 @@
 package it.polimi.ingsw.network;
 
 
-
-
+import it.polimi.ingsw.controller.client.ClientController;
+import it.polimi.ingsw.controller.client.SocketAction;
+import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.network.socket.SendHeartbeat;
 import it.polimi.ingsw.view.TUI.TUI;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+
 
 
 public class Client
@@ -24,14 +26,20 @@ public class Client
             }
         }
 
+        //for test
         isTUI = true;
 
         if (isTUI){
+
             try {
-                new TUI();
+                TUI tui = new TUI();
+                ClientController.getInstance().setView(tui);
+                new Thread(tui).start();
+
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+
         } else
             ;
 
@@ -40,6 +48,7 @@ public class Client
 
 
     public static void trySocketConnection(String ip){
+
         try {
             Socket socket = new Socket(ip, 49251);
             OutputStream output = socket.getOutputStream();
@@ -49,9 +58,21 @@ public class Client
             ObjectInputStream ois = new ObjectInputStream(input);
 
             new SendHeartbeat(oos).start();
+            ClientController.getInstance().setClientAction(new SocketAction(oos));
+
+            while (true){
+                try {
+                    Message message = (Message) ois.readUnshared();
+                    ClientController.getInstance().messageHandler(message);
+                }catch (SocketException e){
+                    ClientController.getInstance().getView().showServerOffline();
+                }catch (IOException |ClassNotFoundException e){
+                    e.printStackTrace();
+                }
+            }
 
         } catch (SocketException e){
-            System.out.println("Server crashed, try later");
+            ClientController.getInstance().getView().showServerOffline();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,8 +99,6 @@ public class Client
         }
         return true;
     }
-
-
 
 
 }
