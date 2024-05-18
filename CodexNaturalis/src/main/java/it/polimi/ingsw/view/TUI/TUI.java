@@ -208,12 +208,18 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public void loginFailed(){
+    public void loginFailed(int type){
         out.println();
-        out.println("[Credential errors]");
+        if (type == 1){
+            out.println("[Credential errors]");
+        }else if (type == 2){
+            out.println("[Account already logged in]");
+        }
         tryNickname = null;
         login();
     }
+
+
 
 
     public void registrationFailed(){
@@ -407,7 +413,7 @@ public class TUI implements UserInterface, Runnable{
 
 
     public void setGameStatus(ImmutableGame newStatus){
-        /*used for test:
+        /*used for CmdLaunchTest:
         out.println();
         out.println(newStatus);
          */

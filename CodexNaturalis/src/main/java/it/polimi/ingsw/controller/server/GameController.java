@@ -3,7 +3,9 @@ package it.polimi.ingsw.controller.server;
 
 import it.polimi.ingsw.controller.server.task.*;
 import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.enums.ErrorType;
 import it.polimi.ingsw.message.enums.LocationType;
+import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.general.*;
 
 import it.polimi.ingsw.model.Card;
@@ -48,7 +50,16 @@ public class GameController {
         switch (message.getType()){
             case ACCESS:
                 AccessMessage accessMessage = (AccessMessage) message;
-                executor.execute(new Access(accessMessage.getNickname(),accessMessage.getPwd(),accessMessage.isRegistered(),oos));
+                if (loggedInUsers.containsValue(accessMessage.getNickname())){
+                    try {
+                        oos.reset();
+                        oos.writeObject(new ErrorMessage(ErrorType.ACCOUNT_ALREADY_LOGGED));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    executor.execute(new Access(accessMessage.getNickname(),accessMessage.getPwd(),accessMessage.isRegistered(),oos));
+                }
                 break;
             case JOIN_GAME:
                 if (loggedInUsers.containsKey(oos))

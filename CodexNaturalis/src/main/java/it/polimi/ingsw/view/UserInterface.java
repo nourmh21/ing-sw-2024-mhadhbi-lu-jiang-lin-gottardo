@@ -10,7 +10,8 @@ import java.util.List;
 public interface UserInterface {
     public void loginSuccess();
 
-    public void loginFailed();
+    public void loginFailed(int type);   //type: 1 if wrong credentials, 2 if account already logged in
+
     public void registrationFailed();
 
     public void connectionSuccess();

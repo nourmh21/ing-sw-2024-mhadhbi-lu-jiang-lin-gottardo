@@ -38,7 +38,10 @@ public class ClientController {
                 ErrorMessage errorMessage = (ErrorMessage) message;
                 switch (errorMessage.getError()) {
                     case CREDENTIAL_WRONG:
-                        view.loginFailed();
+                        view.loginFailed(1);
+                        break;
+                    case ACCOUNT_ALREADY_LOGGED:
+                        view.loginFailed(2);
                         break;
                     case NICKNAME_ALREADY_EXIST:
                         view.registrationFailed();
