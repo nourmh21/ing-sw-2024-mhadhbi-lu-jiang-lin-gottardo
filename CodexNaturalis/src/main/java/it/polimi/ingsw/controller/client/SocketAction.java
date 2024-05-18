@@ -85,6 +85,7 @@ public class SocketAction implements ClientAction {
     @Override
     public void drawCard(LocationType location, Integer idCard) {
         try {
+            oos.reset();
             if (idCard != null)
                 oos.writeObject(new DrawCardMessage(location,idCard));
             else
