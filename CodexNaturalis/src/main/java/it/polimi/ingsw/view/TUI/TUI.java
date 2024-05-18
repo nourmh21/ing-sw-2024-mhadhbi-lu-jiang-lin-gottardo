@@ -1,18 +1,20 @@
 package it.polimi.ingsw.view.TUI;
 
-import it.polimi.ingsw.controller.ImmutableLobby;
-import it.polimi.ingsw.message.general.ConnectedMessage;
+import it.polimi.ingsw.controller.client.ClientController;
+import it.polimi.ingsw.controller.server.ImmutableLobby;
+import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.network.Client;
+import it.polimi.ingsw.view.UserInterface;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 
-public class TUI {
+public class TUI implements UserInterface, Runnable{
     private final Scanner in;
     private final PrintStream out;
 
@@ -24,7 +26,12 @@ public class TUI {
 
     private Optional<List<Integer>> handCards;
 
+    private Optional<Integer[]> possiblePersonalGoals;
+
     private Optional<ImmutablePlayer> me;
+
+    private Optional<Integer> myNumOfPlayerChoose;
+
 
 
     public TUI() throws IOException {
@@ -36,8 +43,15 @@ public class TUI {
         game = Optional.empty();
         players = Optional.empty();
         handCards = Optional.empty();
-        showWinTitle();
+        me = Optional.empty();
+        possiblePersonalGoals = Optional.empty();
+        myNumOfPlayerChoose = Optional.empty();
+    }
+
+    @Override
+    public void run() {
         askServerIP();
+        while (true){}
 
     }
 
@@ -63,17 +77,16 @@ public class TUI {
 
     public void askConnectionType(String ip){
         String choice;
+        out.println();
         out.println("CONNECTION TYPE: ");
         out.println("1- Socket");
         out.println("2- RMI");
         choice = in.nextLine();
         if (choice.equals("1")){
             Client.trySocketConnection(ip);
-            //out.println("Connecting...");
-            connectionSuccess();
+
         }else if(choice.equals("2")){
-            ////
-            connectionSuccess();
+            //
         }else {
             invalidChoice();
             askConnectionType(ip);
@@ -83,6 +96,7 @@ public class TUI {
 
 
     public void connectionSuccess(){
+        out.println();
         out.println("[Connection successful]");
         askAccessMode();
     }
@@ -90,6 +104,7 @@ public class TUI {
 
     public void askAccessMode(){
         String choice;
+        out.println();
         out.println("ACCESS MODE ");
         out.println("1- Login");
         out.println("2- Registration");
@@ -106,6 +121,7 @@ public class TUI {
 
 
     public void login(){
+        out.println();
         String password;
         out.println("LOGIN");
         out.print("Please enter nickname: ");
@@ -119,7 +135,7 @@ public class TUI {
         if(choice.equals("1")){
             ///
             //out.println("data checking ...");
-            loginSuccess();
+            ClientController.getInstance().getClientAction().access(tryNickname,password,true);
         }else if(choice.equals("2")){
             askAccessMode();
         }else{
@@ -131,6 +147,7 @@ public class TUI {
 
 
     public void registration() {
+        out.println();
         String pwd1, pwd2;
         out.println("REGISTRATION");
         out.print("Please enter nickName [at least 1 alphabetic letter]:  ");
@@ -149,6 +166,7 @@ public class TUI {
         String choice = in.nextLine();
         if(choice.equals("1")){
             ;///
+            ClientController.getInstance().getClientAction().access(tryNickname,pwd1,false);
         }else if(choice.equals("2")){
             askAccessMode();
         }else{
@@ -182,6 +200,7 @@ public class TUI {
 
 
     public void loginSuccess(){
+        out.println();
         out.println("[Login Success]");
         myNickname = tryNickname;
         showGameNameTitle();
@@ -190,6 +209,7 @@ public class TUI {
 
 
     public void loginFailed(){
+        out.println();
         out.println("[Credential errors]");
         tryNickname = null;
         login();
@@ -222,6 +242,7 @@ public class TUI {
 
 
     public void home() {
+        out.println();
         out.println("HOME");
         out.println("1- Play a match");
         out.println("2- Exit from game");
@@ -239,11 +260,12 @@ public class TUI {
 
 
     public void playGame(){
-        ///
+        ClientController.getInstance().getClientAction().joinGame();
     }
 
 
     public void askNumOfPlayer(){
+        out.println();
         out.println("[No waiting room available in this moment, you're creating one]");
         boolean isValid = false;
         do {
@@ -253,13 +275,16 @@ public class TUI {
             out.println("3- Four");
             String choice = in.nextLine();
             if (choice.equals("1")){
-                ///
+                myNumOfPlayerChoose = Optional.of(2);
+                ClientController.getInstance().getClientAction().newGame(2);
                 isValid = true;
             }else if (choice.equals("2")){
-                ///
+                myNumOfPlayerChoose = Optional.of(3);
+                ClientController.getInstance().getClientAction().newGame(3);
                 isValid = true;
             }else if (choice.equals("3")){
-                ///
+                myNumOfPlayerChoose = Optional.of(4);
+                ClientController.getInstance().getClientAction().newGame(4);
                 isValid = true;
             }else {
                 invalidChoice();
@@ -270,12 +295,24 @@ public class TUI {
 
 
     public void setLobbyStatus(ImmutableLobby lobby){
+        if (myNumOfPlayerChoose.isPresent() && this.lobby.isEmpty())
+            if (myNumOfPlayerChoose.get() != lobby.getNumOfPlayer()){
+                out.println();
+                out.println("[Someone created a waiting room faster than you, you entered in that one]");
+            }
+        out.println();
         this.lobby = Optional.of(lobby);
         showLobbyStatus();
+        if (lobby.getPlayers().size() == lobby.getNumOfPlayer())
+            out.println("[All players gathered, game is preparing...]");
+        else
+            out.println("[Waiting other player...]");
+
     }
 
 
     public void showLobbyStatus(){
+
         if (lobby.isPresent()){
             out.println("WAITING ROOM ["+ lobby.get().getNumOfPlayer()+"]");
             for (String player: lobby.get().getPlayers())
@@ -283,21 +320,40 @@ public class TUI {
         }else{
             out.println("You're not in a waiting room");
         }
-        if (lobby.get().getPlayers().size() == lobby.get().getNumOfPlayer())
-            out.println("Player gathered, game is preparing...]");
     }
 
 
-    public void addPlayerStatus(ImmutablePlayer player){
+    //this will call showInitGameStatus() in specific condition
+    public void setPlayerStatus(ImmutablePlayer player){
+
         if (players.isEmpty())
             players = Optional.of(new ArrayList<>());
-        players.get().add(player);
-        if (player.getNickname().equals(myNickname))
-            me = Optional.of(player);
+        //I doubt the correctness of this method
+        if (players.get().size() < game.get().getNumOfPlayer()){
+            addPlayerStatus(player);
+        }else {
+            updatePlayerStatus(player);
+        }
+
+
+        if (player.getNickname().equals(myNickname) &&
+                game.get().getGameState() == GameState.SETUP_PHASE_1 && me.get().getBoardCards().isEmpty()){
+            showInitGameStatus();
+        }
+
+
+
     }
 
 
-    public void updatePlayerStatus(ImmutablePlayer newStatus){
+    private void addPlayerStatus(ImmutablePlayer player){
+        if (player.getNickname().equals(myNickname))
+            me = Optional.of(player);
+        players.get().add(player);
+    }
+
+
+    private void updatePlayerStatus(ImmutablePlayer newStatus){
         for (ImmutablePlayer oldStatus: players.get()) {
             if (oldStatus.getNickname().equals(newStatus.getNickname())){
                 players.get().remove(oldStatus);
@@ -312,9 +368,9 @@ public class TUI {
 
 
     public void showPlayerStatus(ImmutablePlayer player){
-        out.println("nickname: " + player.getNickname());
+        out.println("player: " + player.getNickname());
         out.println("initial card: " + player.getInitialCard());
-        out.println("kingdoms of the back side of hand cards: " + player.getCardKingdom());
+        out.println("kingdoms of the back side of hand cards: " + player.getHandCardKingdoms());
         out.print("board: ");
         if (!player.getBoardCards().isEmpty()){
             for (int i = 0; i < player.getBoardCards().size(); i++) {
@@ -329,6 +385,7 @@ public class TUI {
 
     public void showScoreBoard(){
         if (players.isPresent()){
+            out.println();
             out.println("SCORE BOARD:");
             for (ImmutablePlayer player:players.get()) {
                 out.println(player.getNickname()+"["+player.getColor()+"]: "+ player.getPoint());
@@ -339,8 +396,10 @@ public class TUI {
 
     public void showInitGameStatus(){
         if (game.isPresent()){
-            out.println("GAME SETUP:");
-            showScoreBoard();
+            out.println();
+            out.println("[GAME SETUP]");
+            out.println();
+            //showScoreBoard();
             showDeskStatus();
             askInitCardPlace();
         }
@@ -349,66 +408,88 @@ public class TUI {
 
     public void setGameStatus(ImmutableGame newStatus){
 
-        //the old state
-        ImmutableGame old = null;
+        out.println();
+        out.println(newStatus);
+        //the oldStatus state
+        ImmutableGame oldStatus = null;
 
         if (game.isPresent()) {
-            old = game.get();
+            oldStatus = game.get();
         }
+
 
         //update to the new state
         game = Optional.of(newStatus);
 
+
+
         //realize all players are added to current match
-        if (old.getPlayers() == null && newStatus.getPlayers() != null){
-            showInitGameStatus();
-        }
+        if (oldStatus != null){
 
-
-        //realize common goals are drawn
-        if (newStatus.getCommonGoals() != null && old.getCommonGoals() == null){
-            showCommonGoals();
-        }
-
-        //realize that game is started
-        if (old.getCurrentPlayer() == null && newStatus.getCurrentPlayer() != null){
-            for (ImmutablePlayer player: players.get()) {
-                showPlayerStatus(player);
+            //realize common goals are drawn
+            if (oldStatus.getCommonGoals().isEmpty() && !newStatus.getCommonGoals().isEmpty()){
+                showCommonGoals();
             }
-            out.println("[GAME START]");
-        }
 
 
-        //realize it is the last round
-        if (!old.isLastRound() && newStatus.isLastRound()){
-            out.println("[Last round begins]");
-        }
+            //realize that game is started
+            if (oldStatus.getCurrentPlayer() == null && newStatus.getCurrentPlayer() != null){
+                out.println();
+                out.println("[GAME START]");
+                showScoreBoard();
+                for (ImmutablePlayer player: players.get()) {
+                    out.println();
+                    showPlayerStatus(player);
+                }
+                out.println();
+                out.println("[Round begins with player " + newStatus.getCurrentPlayer()+"]");
+                out.println();
+                out.println("[" + newStatus.getCurrentPlayer() + " is playing...]");
+                if (newStatus.getCurrentPlayer().equals(myNickname)){
+                    askPlayHandCard();
+                }
+            }
 
-        //realize change of turn
-        if (!Objects.equals(old.getCurrentPlayer(), newStatus.getCurrentPlayer())) {
-            out.println("[" + newStatus.getCurrentPlayer() + "is playing]");
-            //realize it is my turn to play a card
-            if (newStatus.getCurrentPlayer().equals(myNickname)){
-                askPlayHandCard();
+
+            //realize it is the last round
+            if (!oldStatus.isLastRound() && newStatus.isLastRound()){
+                out.println();
+                out.println("[Last round begins]");
+            }
+
+
+            //realize change of turn
+            if (oldStatus.getCurrentPlayer() != null &&
+                    !oldStatus.getCurrentPlayer().equals(newStatus.getCurrentPlayer())) {
+                out.println();
+                out.println("[" + newStatus.getCurrentPlayer() + " is playing...]");
+                //realize it is my turn to play a card
+                if (newStatus.getCurrentPlayer() != null && newStatus.getCurrentPlayer().equals(myNickname)){
+                    askPlayHandCard();
+                }
+            }
+
+
+            //realize that current turn player has played a card
+            if (oldStatus.getGameState() == GameState.PLAY_CARD && newStatus.getGameState() == GameState.DRAW_CARD ){
+                out.println();
+                out.println("["+ newStatus.getCurrentPlayer()+ " has played a card]");
+                //realize it is my turn to draw a card
+                if (newStatus.getCurrentPlayer().equals(myNickname)){
+                    askDrawCard();
+                }
+            }
+
+            //realize that current turn player has drawn a card
+            if (oldStatus.getGameState() == GameState.DRAW_CARD && newStatus.getGameState() == GameState.TURN_MANAGE){
+                out.println();
+                out.println("["+newStatus.getCurrentPlayer()+" has draw a card]");
             }
         }
 
-
-        //realize that current turn player has played a card
-        if (old.getGameState() == GameState.PLAY_CARD && newStatus.getGameState() == GameState.DRAW_CARD ){
-            out.println("["+ newStatus.getCurrentPlayer()+ "has played a card]");
-            //realize it is my turn to draw a card
-            if (newStatus.getCurrentPlayer().equals(myNickname)){
-                askDrawCard();
-            }
-        }
-
-        //realize that current turn player has drawn a card
-        if (newStatus.getGameState() == GameState.TURN_MANAGE){
-            out.println("["+newStatus.getCurrentPlayer()+" has draw a card]");
-        }
 
         if (newStatus.getGameState() == GameState.ENDING){
+            out.println();
             out.println("Final score calculating...");
         }
 
@@ -419,29 +500,36 @@ public class TUI {
             players = Optional.empty();
             handCards = Optional.empty();
             me = Optional.empty();
+            myNumOfPlayerChoose = Optional.empty();
             home();
         }
     }
 
 
     public void showCommonGoals(){
+        out.println();
         out.println("The two common goals of this game are: " + game.get().getCommonGoals());
     }
 
+    private void showWaitingComment(){
+        out.println();
+        out.println("[Waiting all players take that action...]");
+    }
 
     public void askInitCardPlace(){
-        out.println("This is your initial card: " + me.get().getInitialCard());
-        askCardSide(me.get().getInitialCard(), new int[]{0, 0});
-
+        out.println();
+        out.println("Your initial card: " + me.get().getInitialCard());
+        askInitialCardSide(me.get().getInitialCard());
+        showWaitingComment();
     }
 
     public void askInitialCardSide(Integer id){
         askSide();
         String choice = in.nextLine();
         if (choice.equals("1"))
-            ;
+            ClientController.getInstance().getClientAction().playInitCard(id, false);
         else if(choice.equals("2"))
-            ;
+            ClientController.getInstance().getClientAction().playInitCard(id, true);
         else {
             invalidChoice();
             askInitialCardSide(id);
@@ -454,33 +542,33 @@ public class TUI {
         out.println("2- back");
     }
 
-    public void askCardSide(Integer id, int[] position){
-        askSide();
+
+    public void setPossiblePersonalGoals(Integer[] possiblePersonalGoals) {
+        this.possiblePersonalGoals = Optional.of(possiblePersonalGoals);
+        askPersonalGoalChoose();
+    }
+
+    public void askPersonalGoalChoose(){
+        out.println();
+        out.println("Choose your personal goal: ");
+        out.println("1- "+possiblePersonalGoals.get()[0]);
+        out.println("2- "+possiblePersonalGoals.get()[1]);
         String choice = in.nextLine();
-        if (choice.equals("1"))
-            ;
-        else if(choice.equals("2"))
-            ;
-        else {
+        if (choice.equals("1")){
+            ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals.get()[0]);
+            showWaitingComment();
+        }else if (choice.equals("2")){
+            ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals.get()[1]);
+            showWaitingComment();
+        }else {
             invalidChoice();
-            askCardSide(id, position);
+            askPersonalGoalChoose();
         }
     }
 
-
-    public void askPersonalGoalChoose(List<Integer> possiblePersonalGoals){
-        out.println("Choose your personal goal: ");
-        out.println("1- "+possiblePersonalGoals.get(0));
-        out.println("2- "+possiblePersonalGoals.get(1));
-        String choice = in.nextLine();
-        if (choice.equals("1")){
-            //possiblePersonalGoals.get(0)
-        }else if (choice.equals("2")){
-            //possiblePersonalGoals.get(1)
-        }else {
-            invalidChoice();
-            askPersonalGoalChoose(possiblePersonalGoals);
-        }
+    public void personalGoalChooseFailed(){
+        out.println("[Action failed: invalid goal]");
+        askPersonalGoalChoose();
     }
 
 
@@ -501,28 +589,60 @@ public class TUI {
 
     public void askPlayHandCard(){
         if (handCards.isPresent()) {
+            out.println();
             showHandCards();
+            out.println();
             out.println("Which one do you want to play?");
             for (int i = 0; i < handCards.get().size(); i++) {
                 if (handCards.get().get(i) != null)
-                    out.println(i + "- " + handCards.get().get(i));
+                    out.println((i+1) + "- " + handCards.get().get(i));
             }
 
-            int choice = Integer.parseInt(in.nextLine());
-            if (choice > 0 && choice <= handCards.get().size()){
-                for (int i = 0; i < handCards.get().size(); i++) {
-                    if (choice == i+1){
-                        askPosition(handCards.get().get(i));
-                        break;
+            try{
+                int choice = Integer.parseInt(in.nextLine());
+                if (choice > 0 && choice <= handCards.get().size()){
+                    for (int i = 0; i < handCards.get().size(); i++) {
+                        if (choice == i+1){
+                            askPosition(handCards.get().get(i));
+                            break;
+                        }
                     }
+                } else {
+                    invalidChoice();
+                    askPlayHandCard();
                 }
-            } else {
+            }catch (NumberFormatException e){
                 invalidChoice();
                 askPlayHandCard();
             }
+
         }
     }
 
+    public void askCardSide(Integer id, int[] position){
+        askSide();
+        String choice = in.nextLine();
+        if (choice.equals("1"))
+            ClientController.getInstance().getClientAction().playCard(id,false,position);
+        else if(choice.equals("2"))
+            ClientController.getInstance().getClientAction().playCard(id,true,position);
+        else {
+            invalidChoice();
+            askCardSide(id, position);
+        }
+    }
+
+
+    public void playCardFailed(){
+        out.println("[Action failed: invalid position]");
+        askPlayHandCard();
+    }
+
+    public void drawCardFailed(){
+        out.println();
+        out.println("[Action failed: invalid card id]");
+        askDrawCard();
+    }
 
     public void askPosition(Integer idCard){
         //position that can be chosen
@@ -531,7 +651,7 @@ public class TUI {
         //ask which one
         out.println("Which position do you want to place?");
         for (int i = 0; i < admittedPositions.size(); i++) {
-            out.println((i+1)+"- "+ admittedPositions.get(i));
+            out.println((i+1)+"- "+ Arrays.toString(admittedPositions.get(i)));
         }
         //or return back page
         out.println((admittedPositions.size()+1)+"- go back");
@@ -561,16 +681,16 @@ public class TUI {
         List<String> validChoices = new ArrayList<>();
         out.println("DESK: ");
         if (game.isPresent()){
-            if (game.get().getDisplayedRCards().isPresent()){
-                if (game.get().getDisplayedRCards().get().get(0) != null){
-                    out.println("1- card: "+ game.get().getDisplayedRCards().get().get(0));
+            if (game.get().getDisplayedRCards() != null){
+                if (game.get().getDisplayedRCards().get(0) != null){
+                    out.println("1- card: "+ game.get().getDisplayedRCards().get(0));
                     validChoices.add("1");
                 }else {
                     out.println("1- empty");
                 }
 
-                if (game.get().getDisplayedRCards().get().get(1) != null){
-                    out.println("2- card: "+ game.get().getDisplayedRCards().get().get(1));
+                if (game.get().getDisplayedRCards().get(1) != null){
+                    out.println("2- card: "+ game.get().getDisplayedRCards().get(1));
                     validChoices.add("2");
                 }else {
                     out.println("2- empty");
@@ -581,17 +701,17 @@ public class TUI {
                 out.println("2- empty");
             }
 
-            if (game.get().getDisplayedGCards().isPresent()){
-                if (game.get().getDisplayedGCards().get().get(0) != null){
-                    out.println("3- card: "+ game.get().getDisplayedGCards().get().get(0));
+            if (game.get().getDisplayedGCards() != null){
+                if (game.get().getDisplayedGCards().get(0) != null){
+                    out.println("3- card: "+ game.get().getDisplayedGCards().get(0));
                     validChoices.add("3");
                 }else {
                     out.println("3- empty");
 
                 }
 
-                if (game.get().getDisplayedGCards().get().get(1) != null){
-                    out.println("4- card: "+ game.get().getDisplayedGCards().get().get(1));
+                if (game.get().getDisplayedGCards().get(1) != null){
+                    out.println("4- card: "+ game.get().getDisplayedGCards().get(1));
                     validChoices.add("4");
                 }else {
                     out.println("4- empty");
@@ -602,14 +722,14 @@ public class TUI {
                 out.println("4- empty");
             }
 
-            if (game.get().getFirstRCardKingdom().isPresent()){
+            if (game.get().getFirstRCardKingdom() != null){
                 out.println("5- resource card deck: the first card kingdom is "+game.get().getFirstRCardKingdom());
                 validChoices.add("5");
             }else {
                 out.println("5- empty resource card deck");
             }
 
-            if (game.get().getFirstGCardKingdom().isPresent()){
+            if (game.get().getFirstGCardKingdom() != null){
                 out.println("6- gold card deck: the first card kingdom is "+game.get().getFirstGCardKingdom());
                 validChoices.add("6");
             }else {
@@ -622,28 +742,35 @@ public class TUI {
 
 
     public void askDrawCard(){
-        out.println("[Draw a card from desk]");
+        out.println();
+        out.println("Which card do you want to draw?");
         List<String> validChoices = showDeskStatus();
         String choice = in.nextLine();
         if (validChoices.contains(choice)){
             switch (choice){
                 case "1":
-
+                    ClientController.getInstance().getClientAction().drawCard(
+                            LocationType.DISPLAYED_RESOURCE_LIST,game.get().getDisplayedRCards().get(0));
                     break;
                 case "2":
-
+                    ClientController.getInstance().getClientAction().drawCard(
+                            LocationType.DISPLAYED_RESOURCE_LIST,game.get().getDisplayedRCards().get(1));
                     break;
                 case "3":
-
+                    ClientController.getInstance().getClientAction().drawCard(
+                            LocationType.DISPLAYED_GOLD_LIST,game.get().getDisplayedGCards().get(0));
                     break;
                 case "4":
-
+                    ClientController.getInstance().getClientAction().drawCard(
+                            LocationType.DISPLAYED_GOLD_LIST,game.get().getDisplayedGCards().get(1));
                     break;
                 case "5":
-
+                    ClientController.getInstance().getClientAction().drawCard(
+                            LocationType.RESOURCE_CARD_DECK,null);
                     break;
                 case "6":
-
+                    ClientController.getInstance().getClientAction().drawCard(
+                            LocationType.GOLD_CARD_DECK,null);
                     break;
             }
         }else{
@@ -654,10 +781,12 @@ public class TUI {
     }
 
     public void showFinalResult(ImmutableEndGameInfo info){
+        out.println();
         out.println("FINAL SCORE BOARD:");
         for (Map.Entry<String, int[]> entry:info.getFinalResult().entrySet()) {
-            out.println(entry.getKey() + ": "+ entry.getValue()[0] + "(include "+ entry.getValue()[1] +"goal points)");
+            out.println(entry.getKey() + ": "+ entry.getValue()[0] + " [include "+ entry.getValue()[1] +" goal points]");
         }
+        out.println();
         out.println("Game winner: "+ info.getWinners());
         if (info.getWinners().contains(myNickname))
             showWinTitle();
@@ -750,11 +879,16 @@ public class TUI {
 
 
 
-
     public void invalidChoice(){
         out.println("Invalid choice");
     }
 
+    public void showServerOffline(){
+        out.println();
+        out.println("[Server offline, please try reconnection]");
+        out.println();
+        askServerIP();
+    }
 
 }
 
