@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.server;
 
 import java.io.Serializable;
 import java.util.List;

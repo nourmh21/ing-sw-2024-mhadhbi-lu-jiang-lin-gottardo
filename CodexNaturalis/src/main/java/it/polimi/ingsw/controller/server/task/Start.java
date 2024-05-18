@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller.task;
+package it.polimi.ingsw.controller.server.task;
 
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;

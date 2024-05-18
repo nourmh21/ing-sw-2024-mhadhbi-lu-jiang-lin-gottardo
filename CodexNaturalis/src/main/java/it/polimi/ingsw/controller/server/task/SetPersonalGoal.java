@@ -1,6 +1,6 @@
-package it.polimi.ingsw.controller.task;
+package it.polimi.ingsw.controller.server.task;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.Game;
@@ -60,7 +60,7 @@ public class SetPersonalGoal implements Runnable{
             }
 
             //if all players has already set their goal;
-            if (i == game.getNumOfPlayer()-1)
+            if (i == game.getNumOfPlayer())
                 GameController.getInstance().executeTask(new Start(game));
         }
     }

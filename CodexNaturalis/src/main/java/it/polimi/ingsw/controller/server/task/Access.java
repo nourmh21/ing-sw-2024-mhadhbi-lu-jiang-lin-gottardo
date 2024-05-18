@@ -1,9 +1,10 @@
-package it.polimi.ingsw.controller.task;
+package it.polimi.ingsw.controller.server.task;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.server.GameController;
+import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.error.ErrorMessage;
-import it.polimi.ingsw.message.general.LoginSuccessMessage;
 import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.notify.NotifyMessage;
 
 import java.io.*;
 import java.util.Scanner;
@@ -33,7 +34,7 @@ public class Access implements Runnable{
     @Override
     public void run() {
         //file containing password
-        String path = "";
+        String path = "C:\\Users\\lsy10\\Desktop\\Progetto\\Project\\CodexNaturalis\\src\\main\\java\\it\\polimi\\ingsw\\controller\\task\\data.txt";
         File file = new File(path);
 
         //if user is already register
@@ -117,7 +118,7 @@ public class Access implements Runnable{
     }
 
     private void sendLoginSuccess(){
-        Message message = new LoginSuccessMessage();
+        Message message = new NotifyMessage(NotifyType.LOGIN_SUCCESS);
         try {
             oos.writeObject(message);
         } catch (IOException e) {

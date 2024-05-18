@@ -1,6 +1,6 @@
-package it.polimi.ingsw.controller.task;
+package it.polimi.ingsw.controller.server.task;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;

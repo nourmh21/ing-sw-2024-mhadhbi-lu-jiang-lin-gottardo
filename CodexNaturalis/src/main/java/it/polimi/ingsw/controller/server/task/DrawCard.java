@@ -1,9 +1,8 @@
-package it.polimi.ingsw.controller.task;
+package it.polimi.ingsw.controller.server.task;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.error.ErrorMessage;
-import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.ErrorType;
 import it.polimi.ingsw.model.Desk;
 import it.polimi.ingsw.model.Game;
@@ -22,13 +21,13 @@ public class DrawCard  implements Runnable {
     private ObjectOutputStream oos;
 
     
-    public DrawCard(String nickname, Game game, LocationType locationType, ObjectOutputStream oos){
+    public DrawCard( Game game,String nickname, LocationType locationType, ObjectOutputStream oos){
         this.game = game;
         this.locationType = locationType;
         this.nickname = nickname;
         this.oos = oos;
     }
-    public DrawCard(Game game, String nickname, LocationType locationType, int idCard, ObjectOutputStream oos){
+    public DrawCard(Game game, String nickname, LocationType locationType, Integer idCard, ObjectOutputStream oos){
         this.game = game;
         this.locationType = locationType;
         this.nickname = nickname;
@@ -39,21 +38,17 @@ public class DrawCard  implements Runnable {
     @Override
     public void run() {
 
+        if (checkDrawCondition()){
 
-        if (!checkDrawCondition()){
-            //
-        }else{
             Desk desk = game.getDesk();
             Player p = game.getCurrentPlayer();
             //draw card according locationType given
             switch (locationType){
                 case RESOURCE_CARD_DECK:
                     p.addCardToHandCards(desk.pickNextRCard());
-                    desk.updateNextRCard();
                     break;
                 case GOLD_CARD_DECK:
                     p.addCardToHandCards(desk.pickNextGCard());
-                    desk.updateNextGCard();
                     break;
                 case DISPLAYED_RESOURCE_LIST:
                     if (desk.getDisplayedRCards().contains(idCard)){
@@ -61,9 +56,8 @@ public class DrawCard  implements Runnable {
                         desk.updateDisplayedRCard();
                     }else{
                         //
-                        Message message = new ErrorMessage(ErrorType.INVALID_CARD_ID);
                         try {
-                            oos.writeObject(message);
+                            oos.writeObject(new ErrorMessage(ErrorType.INVALID_CARD_ID));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -75,9 +69,8 @@ public class DrawCard  implements Runnable {
                         desk.updateDisplayedGCard();
                     }else{
                         //
-                        Message message = new ErrorMessage(ErrorType.INVALID_CARD_ID);
                         try {
-                            oos.writeObject(message);
+                            oos.writeObject(new ErrorMessage(ErrorType.INVALID_CARD_ID));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
