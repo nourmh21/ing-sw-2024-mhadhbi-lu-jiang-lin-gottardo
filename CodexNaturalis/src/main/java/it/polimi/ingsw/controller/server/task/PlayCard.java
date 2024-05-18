@@ -58,6 +58,7 @@ public class PlayCard implements Runnable{
                 }
 
             }else {
+                game.getCurrentPlayer().removeHandCard(card.getIdCard());
                 game.getCurrentPlayer().updatePoint(board.placeCard(card, isBackSide, position[0], position[1]));
                 game.setGameState(GameState.DRAW_CARD);
             }
