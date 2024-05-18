@@ -407,9 +407,10 @@ public class TUI implements UserInterface, Runnable{
 
 
     public void setGameStatus(ImmutableGame newStatus){
-
+        /*used for test:
         out.println();
         out.println(newStatus);
+         */
         //the oldStatus state
         ImmutableGame oldStatus = null;
 
@@ -478,12 +479,13 @@ public class TUI implements UserInterface, Runnable{
                 if (newStatus.getCurrentPlayer().equals(myNickname)){
                     askDrawCard();
                 }
+
             }
 
             //realize that current turn player has drawn a card
             if (oldStatus.getGameState() == GameState.DRAW_CARD && newStatus.getGameState() == GameState.TURN_MANAGE){
                 out.println();
-                out.println("["+newStatus.getCurrentPlayer()+" has draw a card]");
+                out.println("["+newStatus.getCurrentPlayer()+" has drew a card]");
             }
         }
 
@@ -583,15 +585,14 @@ public class TUI implements UserInterface, Runnable{
     }
 
     public void showHandCards(){
+        out.println();
         out.println("Your hand card: " + handCards);
     }
 
 
     public void askPlayHandCard(){
         if (handCards.isPresent()) {
-            out.println();
             showHandCards();
-            out.println();
             out.println("Which one do you want to play?");
             for (int i = 0; i < handCards.get().size(); i++) {
                 if (handCards.get().get(i) != null)
