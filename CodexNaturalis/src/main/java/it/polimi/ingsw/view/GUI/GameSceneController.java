@@ -250,18 +250,18 @@ public class GameSceneController {
 
         if (players.size() == 2){
             if (players.get(0).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerOne.setGraphic(new ImageView(im));
             } else {
                 if (players.get(0).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-red.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-RED.png"));
                     playerOne.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(0).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-green.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-GREEN.png"));
                         playerOne.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-yellow.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-YELLOW.png"));
                         playerOne.setGraphic(new ImageView(im));
                     }
                 }
@@ -269,18 +269,18 @@ public class GameSceneController {
             }
 
             if (players.get(1).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerTwo.setGraphic(new ImageView(im));
             } else {
                 if (players.get(1).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                     playerTwo.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(1).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTwo.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTwo.setGraphic(new ImageView(im));
                     }
                 }
@@ -292,18 +292,18 @@ public class GameSceneController {
         }else if (players.size() == 3){
 
             if (players.get(0).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerOne.setGraphic(new ImageView(im));
             } else {
                 if (players.get(0).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-red.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-RED.png"));
                     playerOne.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(0).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-green.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-GREEN.png"));
                         playerOne.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-yellow.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-YELLOW.png"));
                         playerOne.setGraphic(new ImageView(im));
                     }
                 }
@@ -311,18 +311,18 @@ public class GameSceneController {
             }
 
             if (players.get(1).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerTwo.setGraphic(new ImageView(im));
             } else {
                 if (players.get(1).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                     playerTwo.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(1).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTwo.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTwo.setGraphic(new ImageView(im));
                     }
                 }
@@ -330,18 +330,18 @@ public class GameSceneController {
             }
 
             if (players.get(2).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerTree.setGraphic(new ImageView(im));
             } else {
                 if (players.get(2).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                     playerTree.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(2).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTree.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTree.setGraphic(new ImageView(im));
                     }
                 }
@@ -353,18 +353,18 @@ public class GameSceneController {
 
     }else {
             if (players.get(0).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerOne.setGraphic(new ImageView(im));
             } else {
                 if (players.get(0).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-red.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-RED.png"));
                     playerOne.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(0).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-green.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-GREEN.png"));
                         playerOne.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-yellow.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-YELLOW.png"));
                         playerOne.setGraphic(new ImageView(im));
                     }
                 }
@@ -372,18 +372,18 @@ public class GameSceneController {
             }
 
             if (players.get(1).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerTwo.setGraphic(new ImageView(im));
             } else {
                 if (players.get(1).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                     playerTwo.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(1).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTwo.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTwo.setGraphic(new ImageView(im));
                     }
                 }
@@ -391,18 +391,18 @@ public class GameSceneController {
             }
 
             if (players.get(2).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerTree.setGraphic(new ImageView(im));
             } else {
                 if (players.get(2).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                     playerTree.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(2).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTree.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerTree.setGraphic(new ImageView(im));
                     }
                 }
@@ -410,18 +410,18 @@ public class GameSceneController {
             }
 
             if (players.get(3).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerFour.setGraphic(new ImageView(im));
             } else {
                 if (players.get(3).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                     playerFour.setGraphic(new ImageView(im));
                 }else {
                     if (players.get(3).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerFour.setGraphic(new ImageView(im));
                     }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-blue.png"));
+                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                         playerFour.setGraphic(new ImageView(im));
                     }
                 }
