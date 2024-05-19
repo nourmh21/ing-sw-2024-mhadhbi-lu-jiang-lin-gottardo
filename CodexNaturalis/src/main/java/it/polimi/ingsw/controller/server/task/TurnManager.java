@@ -1,6 +1,6 @@
-package it.polimi.ingsw.controller.task;
+package it.polimi.ingsw.controller.server.task;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
@@ -27,6 +27,7 @@ public class TurnManager implements Runnable{
     public void run() {
         if (game.getGameState() == GameState.TURN_MANAGE){
 
+            //to be fixed because more probably we don't do resilience to connection
             for (int i = 0; i < numOfPlayer; i++) {
                 if (players.get(i) == lastPlayedPlayer){
                     //记得告诉做view的人让他们如果收到points更新到20让他们标出来(TUI)or改个颜色(GUI)

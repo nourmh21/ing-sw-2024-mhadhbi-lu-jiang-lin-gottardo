@@ -1,7 +1,10 @@
-package it.polimi.ingsw.controller;
+package it.polimi.ingsw.controller.server;
 
+import it.polimi.ingsw.controller.server.GameController;
+import it.polimi.ingsw.controller.server.ImmutableLobby;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +19,13 @@ public class Lobby extends Observable {
         players = new ArrayList<>();
     }
 
+
     public void addNewPlayer(String nickname){
 
         players.add(nickname);
-        //addObserver();
-        //
-        notify_lobby_status(this);
+
+        notify_lobby_status(new ImmutableLobby(this));
+
 
         if (players.size() == numOfPlayer){
             //remove that lobby from controller
@@ -34,21 +38,35 @@ public class Lobby extends Observable {
                 game.addPlayers(name);
                 GameController.getInstance().addNewUserInGame(name, game);
             }
-            /*
-            try {
-                game.setInitialCard();
-            }catch (EmptyDeckException e){
-                //in theory, it is impossible to happen
-            }*/
+
 
         }
 
     }
 
 
+    public void removePlayer(String nickname){
+        Observer observer = null;
+        for (Observer o:observers) {
+            if (o.getNickname().equals(nickname)){
+                observer = o;
+                break;
+            }
+        }
+        removeObserver(observer);
+        players.remove(nickname);
+        if(!getObservers().isEmpty()){
+            notify_lobby_status(new ImmutableLobby(this));
+        }
+        if (players.isEmpty())
+            GameController.getInstance().removeFromCurrentLobby();
+    }
+
+
     public List<String> getPlayers() {
         return players;
     }
+
 
     public int getNumOfPlayer(){
         return numOfPlayer;

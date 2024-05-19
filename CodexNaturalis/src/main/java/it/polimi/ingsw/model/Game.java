@@ -37,6 +37,7 @@ public class Game extends Observable{
         desk = new Desk(this);
         players = new ArrayList<>();
         winners = new ArrayList<>();
+        possibleWinners = new ArrayList<>();
         commonGoals = new ArrayList<>();
         this.numOfPlayer = numOfPlayer;
         numOfConnectedPlayers = 0;
@@ -45,7 +46,7 @@ public class Game extends Observable{
         gameState = GameState.SETUP_PHASE_1;
         isLastRound =false;
         //
-        notify_game_status(this);
+
     }
 
 
@@ -54,6 +55,8 @@ public class Game extends Observable{
 
     public void setGameObservers(List<Observer> observers){
         this.observers = observers;
+        //
+        notify_game_status(new ImmutableGame(this));
     }
 
 
@@ -67,7 +70,7 @@ public class Game extends Observable{
             commonGoals.add(idCard);
         //
         if (commonGoals.size() == 2)
-            notify_game_status(this);
+            notify_game_status(new ImmutableGame(this));
     }
 
 
@@ -104,7 +107,7 @@ public class Game extends Observable{
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
         //
-        notify_game_status(this);
+        notify_game_status(new ImmutableGame(this));
     }
 
 
@@ -118,7 +121,7 @@ public class Game extends Observable{
         numOfConnectedPlayers++;
 
         if (players.size() == numOfPlayer){
-            notify_game_status(this);
+            notify_game_status(new ImmutableGame(this));
         }
     }
 
@@ -175,7 +178,7 @@ public class Game extends Observable{
     public void setCurrentPlayer(Player p) {
         this.currentPlayer = p;
         //
-        notify_game_status(this);
+        notify_game_status(new ImmutableGame(this));
     }
 
 
@@ -185,7 +188,7 @@ public class Game extends Observable{
     public void setIsLastRound() {
         isLastRound = true;
         //
-        notify_game_status(this);
+        notify_game_status(new ImmutableGame(this));
     }
 
 
@@ -215,8 +218,10 @@ public class Game extends Observable{
         }
         if (possibleWinners.size() > 1)
             checkExtraPoint();
+        else
+            winners = possibleWinners;
         //
-        notify_final_result(this);
+        notify_final_result(new ImmutableEndGameInfo(this));
     }
 
 

@@ -4,7 +4,10 @@ import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 import it.polimi.ingsw.message.enums.NotifyType;
 
-public class NotifyMessage implements Message {
+import java.util.List;
+import java.util.Optional;
+
+public class NotifyMessage implements Message{
     private final NotifyType notifyType;
 
     private final Object object;
@@ -12,6 +15,11 @@ public class NotifyMessage implements Message {
     public NotifyMessage(NotifyType notifyType, Object object){
         this.notifyType = notifyType;
         this.object = object;
+    }
+
+    public NotifyMessage(NotifyType notifyType){
+        this.notifyType = notifyType;
+        object = null;
     }
 
     @Override
@@ -26,4 +34,5 @@ public class NotifyMessage implements Message {
     public Object getObject() {
         return object;
     }
+
 }

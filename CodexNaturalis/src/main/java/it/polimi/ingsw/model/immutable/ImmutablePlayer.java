@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.immutable;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerBoard;
@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ImmutablePlayer implements Serializable {

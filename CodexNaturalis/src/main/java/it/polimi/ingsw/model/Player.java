@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfHandCardsException;
@@ -57,7 +58,7 @@ public class Player extends Observable {
         }
         observers = game.getGameObservers();
         //
-        notify_player_status(this);
+        notify_player_status(new ImmutablePlayer(this,this.board));
     }
 
 
@@ -122,7 +123,7 @@ public class Player extends Observable {
     public void updatePoint(int newPoint){
         point = point + newPoint;
         //
-        notify_player_status(this);
+        notify_player_status(new ImmutablePlayer(this,this.board));
     }
 
 
@@ -201,7 +202,7 @@ public class Player extends Observable {
         //
         if (handCards.size() == 3){
             notify_hand_cards(this);
-            notify_player_status(this);
+            notify_player_status(new ImmutablePlayer(this,this.board));
         }
 
     }
@@ -210,7 +211,7 @@ public class Player extends Observable {
     public void removeHandCard(Integer idCard){
         handCards.remove(idCard);
         //
-        notify_player_status(this);
+        notify_player_status(new ImmutablePlayer(this,this.board));
     }
 
 

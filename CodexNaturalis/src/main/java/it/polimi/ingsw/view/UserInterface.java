@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.controller.ImmutableLobby;
+import it.polimi.ingsw.controller.server.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
@@ -10,14 +10,15 @@ import java.util.List;
 public interface UserInterface {
     public void loginSuccess();
 
-    public void loginFailed();
+    public void loginFailed(int type);   //type: 1 if wrong credentials, 2 if account already logged in
+
     public void registrationFailed();
 
     public void connectionSuccess();
 
     public void askNumOfPlayer();
 
-    public void setPossiblePersonalGoals(List<Integer> possiblePersonalGoals);
+    public void setPossiblePersonalGoals(Integer[] possiblePersonalGoals);
 
     public void personalGoalChooseFailed();
 
@@ -35,6 +36,6 @@ public interface UserInterface {
 
     public void showFinalResult(ImmutableEndGameInfo info);
 
-
+    public void showServerOffline();
 
 }

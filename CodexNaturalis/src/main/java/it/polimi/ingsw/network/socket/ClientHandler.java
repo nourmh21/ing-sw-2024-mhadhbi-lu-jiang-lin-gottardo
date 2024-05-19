@@ -1,9 +1,10 @@
 package it.polimi.ingsw.network.socket;
 
 
-import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.message.general.ConnectedMessage;
+import it.polimi.ingsw.controller.server.GameController;
+import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.notify.NotifyMessage;
 
 import java.io.*;
 import java.net.Socket;
@@ -34,14 +35,13 @@ public class ClientHandler extends Thread{
 
 
         try {
-
-            output = clientSocket.getOutputStream();
             input = clientSocket.getInputStream();
+            output = clientSocket.getOutputStream();
 
             ois = new ObjectInputStream(input);
             oos = new ObjectOutputStream(output);
 
-            Message response = new ConnectedMessage();
+            Message response = new NotifyMessage(NotifyType.CONNECTED);
             oos.writeObject(response);
 
 
@@ -59,6 +59,8 @@ public class ClientHandler extends Thread{
                     e.printStackTrace();
                 }
             }
+        }catch (SocketException e){
+            //System.out.println("Client disconnected");
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -69,8 +71,8 @@ public class ClientHandler extends Thread{
     }
 
     private void close() throws IOException {
-        //??
-        GameController.getInstance().removeUserLoggedIn(oos);
+        //In theory fixed
+        GameController.getInstance().socketClientLeave(oos);
         ois.close();
         oos.close();
         input.close();

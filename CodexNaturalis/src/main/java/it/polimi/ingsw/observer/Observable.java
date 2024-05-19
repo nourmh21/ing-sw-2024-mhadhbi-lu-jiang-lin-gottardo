@@ -1,9 +1,7 @@
 
 package it.polimi.ingsw.observer;
 
-import it.polimi.ingsw.controller.ImmutableLobby;
-import it.polimi.ingsw.controller.Lobby;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.controller.server.ImmutableLobby;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
@@ -24,30 +22,30 @@ public abstract class Observable {
     }
 
 
-    public void notify_lobby_status(Lobby lobby){
+    public void notify_lobby_status(ImmutableLobby lobby){
         for (Observer o: observers) {
-            o.send_lobby_status(new ImmutableLobby(lobby));
+            o.send_lobby_status(lobby);
         }
     }
 
 
-    public void notify_game_status(Game game){
+    public void notify_game_status(ImmutableGame game){
         for (Observer o:observers) {
-            o.send_game_status(new ImmutableGame(game));
+            o.send_game_status(game);
         }
     }
 
 
-    public void notify_final_result(Game game){
+    public void notify_final_result(ImmutableEndGameInfo info){
         for (Observer o:observers) {
-            o.send_end_game_info(new ImmutableEndGameInfo(game));
+            o.send_end_game_info(info);
         }
     }
 
 
-    public void notify_player_status(Player player){
+    public void notify_player_status(ImmutablePlayer player){
         for (Observer o:observers) {
-            o.send_player_status(new ImmutablePlayer(player, player.getBoard()));
+            o.send_player_status(player);
         }
     }
 
@@ -73,6 +71,9 @@ public abstract class Observable {
 
 
 
+    public List<Observer> getObservers(){
+        return observers;
+    }
 
 
 

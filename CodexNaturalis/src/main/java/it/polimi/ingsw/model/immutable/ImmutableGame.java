@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.immutable;
 
-import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
@@ -8,9 +8,7 @@ import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.enums.Symbol;
 
 import java.io.Serializable;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
-import java.util.Optional;
 
 public class ImmutableGame implements Serializable {
 
@@ -22,11 +20,11 @@ public class ImmutableGame implements Serializable {
     private final List<String> players;
     private final String currentPlayer;
 
-    private final Optional<Symbol> firstRCardKingdom;
-    private final Optional<Symbol> firstGCardKingdom;
+    private final Symbol firstRCardKingdom;
+    private final Symbol firstGCardKingdom;
 
-    private final Optional<List<Integer>> displayedRCards;
-    private final Optional<List<Integer>> displayedGCards;
+    private final List<Integer> displayedRCards;
+    private final List<Integer> displayedGCards;
 
 
     public ImmutableGame(Game game){
@@ -43,33 +41,35 @@ public class ImmutableGame implements Serializable {
             players = null;
         }
 
-        currentPlayer = game.getCurrentPlayer().getNickname();
+        if (game.getCurrentPlayer() != null)
+            currentPlayer = game.getCurrentPlayer().getNickname();
+        else
+            currentPlayer = null;
+
         if (game.getDesk().getNextResourceCard()!= null){
-            firstRCardKingdom = Optional.of(
-                    ((Card)(GameController.getInstance().getCard(game.getDesk().getNextResourceCard())))
-                            .getKingdom());
+            firstRCardKingdom = ((Card)(GameController.getInstance().getCard(game.getDesk().getNextResourceCard())))
+                            .getKingdom();
         }else{
-            firstRCardKingdom = Optional.empty();
+            firstRCardKingdom = null;
         }
 
         if (game.getDesk().getNextGoldCard()!= null){
-            firstGCardKingdom = Optional.of(((Card)GameController.getInstance().
-                    getCard(game.getDesk().getNextGoldCard())).getKingdom());
+            firstGCardKingdom = ((Card)GameController.getInstance().
+                    getCard(game.getDesk().getNextGoldCard())).getKingdom();
         }else {
-            firstGCardKingdom = Optional.empty();
+            firstGCardKingdom = null;
         }
 
         if (game.getDesk().getDisplayedRCards() != null)
-            displayedRCards = Optional.of(game.getDesk().getDisplayedRCards());
+            displayedRCards = game.getDesk().getDisplayedRCards();
         else
-            displayedRCards = Optional.empty();
+            displayedRCards = null;
 
 
         if (game.getDesk().getDisplayedGCards() != null)
-            displayedGCards = Optional.of(game.getDesk().getDisplayedGCards());
+            displayedGCards = game.getDesk().getDisplayedGCards();
         else
-            displayedGCards = Optional.empty();
-
+            displayedGCards = null;
     }
 
     public int getIdGame() {
@@ -105,22 +105,22 @@ public class ImmutableGame implements Serializable {
     }
 
 
-    public Optional<Symbol> getFirstRCardKingdom() {
+    public Symbol getFirstRCardKingdom() {
         return firstRCardKingdom;
     }
 
 
-    public Optional<Symbol> getFirstGCardKingdom() {
+    public Symbol getFirstGCardKingdom() {
         return firstGCardKingdom;
     }
 
 
-    public Optional<List<Integer>> getDisplayedRCards() {
+    public List<Integer> getDisplayedRCards() {
         return displayedRCards;
     }
 
 
-    public Optional<List<Integer>> getDisplayedGCards() {
+    public List<Integer> getDisplayedGCards() {
         return displayedGCards;
     }
 }

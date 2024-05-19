@@ -211,11 +211,11 @@ public class Desk extends Observable{
         try {
             nextResourceCard = pickOneCard(CardType.RESOURCE);
             //
-            notify_game_status(game);
+            notify_game_status(new ImmutableGame(game));
         } catch (EmptyDeckException e) {
             nextResourceCard = null;
             //
-            notify_game_status(game);
+            notify_game_status(new ImmutableGame(game));
         }
     }
 
@@ -227,11 +227,11 @@ public class Desk extends Observable{
         try {
             nextGoldCard = pickOneCard(CardType.GOLD);
             //
-            notify_game_status(game);
+            notify_game_status(new ImmutableGame(game));
         } catch (EmptyDeckException e) {
             nextGoldCard = null;
             //
-            notify_game_status(game);
+            notify_game_status(new ImmutableGame(game));
         }
     }
 
@@ -243,6 +243,7 @@ public class Desk extends Observable{
     public Integer pickNextRCard(){
         Integer c = nextResourceCard;
         nextResourceCard = null;
+        updateNextRCard();
         return c;
     }
 
@@ -254,6 +255,7 @@ public class Desk extends Observable{
     public Integer pickNextGCard(){
         Integer c = nextGoldCard;
         nextGoldCard = null;
+        updateNextGCard();
         return c;
     }
 
