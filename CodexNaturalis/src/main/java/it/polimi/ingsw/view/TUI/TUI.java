@@ -32,6 +32,8 @@ public class TUI implements UserInterface, Runnable{
 
     private Optional<Integer> myNumOfPlayerChoose;
 
+    private Optional<Integer> myPersonalGoal;
+
 
 
     public TUI() throws IOException {
@@ -46,6 +48,7 @@ public class TUI implements UserInterface, Runnable{
         me = Optional.empty();
         possiblePersonalGoals = Optional.empty();
         myNumOfPlayerChoose = Optional.empty();
+        myPersonalGoal = Optional.empty();
     }
 
     @Override
@@ -54,6 +57,7 @@ public class TUI implements UserInterface, Runnable{
         while (true){}
 
     }
+
 
 
     public void askServerIP(){
@@ -509,6 +513,7 @@ public class TUI implements UserInterface, Runnable{
             handCards = Optional.empty();
             me = Optional.empty();
             myNumOfPlayerChoose = Optional.empty();
+            myPersonalGoal = Optional.empty();
             home();
         }
     }
@@ -564,9 +569,11 @@ public class TUI implements UserInterface, Runnable{
         String choice = in.nextLine();
         if (choice.equals("1")){
             ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals.get()[0]);
+            myPersonalGoal = Optional.of(possiblePersonalGoals.get()[0]);
             showWaitingComment();
         }else if (choice.equals("2")){
             ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals.get()[1]);
+            myPersonalGoal = Optional.of(possiblePersonalGoals.get()[1]);
             showWaitingComment();
         }else {
             invalidChoice();
@@ -663,21 +670,25 @@ public class TUI implements UserInterface, Runnable{
         //or return back page
         out.println((admittedPositions.size()+1)+"- go back");
 
-        //analyse client choose
-        int choice = Integer.parseInt(in.nextLine());
-
-        if (choice > 0 && choice <= admittedPositions.size()+1){
-            if (choice == admittedPositions.size()+1){
-                askPlayHandCard();
-            }else {
-                for (int i = 0; i < admittedPositions.size(); i++) {
-                    if (choice == i+1){
-                        askCardSide(idCard, admittedPositions.get(i));
-                        break;
+        try {
+            int choice = Integer.parseInt(in.nextLine());
+            //analyse client choose
+            if (choice > 0 && choice <= admittedPositions.size()+1){
+                if (choice == admittedPositions.size()+1){
+                    askPlayHandCard();
+                }else {
+                    for (int i = 0; i < admittedPositions.size(); i++) {
+                        if (choice == i+1){
+                            askCardSide(idCard, admittedPositions.get(i));
+                            break;
+                        }
                     }
                 }
+            }else{
+                invalidChoice();
+                askPosition(idCard);
             }
-        }else{
+        }catch (NumberFormatException e){
             invalidChoice();
             askPosition(idCard);
         }
@@ -897,6 +908,13 @@ public class TUI implements UserInterface, Runnable{
         askServerIP();
     }
 
+
+    public void showPersonalGoal(){
+        if (myPersonalGoal.isPresent()){
+            out.println();
+            out.println("My personal goal: "+myPersonalGoal.get());
+        }
+    }
 }
 
 
