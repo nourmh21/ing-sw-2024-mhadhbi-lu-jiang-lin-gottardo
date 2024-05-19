@@ -2,15 +2,11 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.enums.Color;
-
 import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 
@@ -35,9 +31,9 @@ public class GameTest {
         players = new ArrayList<>();
         possibleWinners = new ArrayList<>();
         winners = new ArrayList<>();
-        p1 = new Player("Rossi");
-        p2 = new Player("Neri");
-        p3 = new Player("Verdi");
+        p1 = new Player("Rossi", game);
+        p2 = new Player("Neri", game);
+        p3 = new Player("Verdi", game);
 
 
     }
@@ -55,15 +51,15 @@ public class GameTest {
         int max=20;
 
 
-        game.addPlayers(p1.getNickName());
+        game.addPlayers(p1.getNickname());
         players.add(p1);
-        p1.setPoint(25);
-        game.addPlayers(p2.getNickName());
+        p1.updatePoint(25);
+        game.addPlayers(p2.getNickname());
         players.add(p2);
-        p2.setPoint(22);
-        game.addPlayers(p3.getNickName());
+        p2.updatePoint(22);
+        game.addPlayers(p3.getNickname());
         players.add(p3);
-        p3.setPoint(25);
+        p3.updatePoint(25);
 
 
         for (Player p: players){
@@ -79,19 +75,19 @@ public class GameTest {
         }
 
         assertEquals(possibleWinners.size(), 2);
-        assertEquals(possibleWinners.get(0).getNickName(), "Rossi");
-        assertEquals(possibleWinners.get(1).getNickName(), "Verdi");
+        assertEquals(possibleWinners.get(0).getNickname(), "Rossi");
+        assertEquals(possibleWinners.get(1).getNickname(), "Verdi");
 
     }
 
 
     @Test
     public void checkExtraPoint_GetMaxExtraPoint_ShouldReturnFinalWinners(){
-        game.addPlayers(p1.getNickName());
+        game.addPlayers(p1.getNickname());
         possibleWinners.add(p1);
         p1.addGoalPoint(6);
 
-        game.addPlayers(p3.getNickName());
+        game.addPlayers(p3.getNickname());
         possibleWinners.add(p3);
         p3.addGoalPoint(6);
 
@@ -109,24 +105,24 @@ public class GameTest {
         }
 
         assertEquals(winners.size(), 2);
-        assertEquals(winners.get(0).getNickName(), "Rossi");
-        assertEquals(winners.get(1).getNickName(), "Verdi");
+        assertEquals(winners.get(0).getNickname(), "Rossi");
+        assertEquals(winners.get(1).getNickname(), "Verdi");
 
 
     }
 
     @Test (expected = InvalidNumOfConnectedPlayer.class)
     public void disconnect_InvalidNumOfPlayer_throwInvalidNumOfConnectedPlayer() throws InvalidNumOfConnectedPlayer {
-        game.addPlayers(p1.getNickName());
-        game.addPlayers(p2.getNickName());
-        game.addPlayers(p3.getNickName());
+        game.addPlayers(p1.getNickname());
+        game.addPlayers(p2.getNickname());
+        game.addPlayers(p3.getNickname());
         game.disconnect(p1);
         game.disconnect(p2);
     }
 
     @Test
     public void reconnect_ForJoinAgainGame(){
-        game.addPlayers(p1.getNickName());
+        game.addPlayers(p1.getNickname());
         assertEquals(game.getNumOfConnectedPlayers(), game.getPlayersSize());
     }
 
