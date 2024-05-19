@@ -4,10 +4,16 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Desk;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -15,15 +21,18 @@ import javafx.scene.input.MouseEvent;
 //import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
 public class GameSceneController {
 
     @FXML
-    private AnchorPane PlayerBoard;
+    private ScrollPane playerBoard;
 
     @FXML
     private ImageView commonGoal1;
@@ -93,6 +102,21 @@ public class GameSceneController {
     private GridPane zeroToTwo;
 
     @FXML
+    private Text nicknameFour;
+
+    @FXML
+    private Text nicknameOne;
+
+    @FXML
+    private Text nicknameTree;
+
+    @FXML
+    private Text nicknameTwo;
+
+    @FXML
+    private GridPane desk;
+
+    @FXML
     private PlayerBoardController playerBoardController;
 
 
@@ -127,7 +151,6 @@ public class GameSceneController {
                 im =new Image(getClass().getResourceAsStream("/img/kingdom/Plant.png"));
             }
         }
-        assert resourceDeck != null;
         resourceDeck.setImage(im);
     }
 
@@ -214,32 +237,82 @@ public class GameSceneController {
     }
 
 
+    /**
+     * Deactivates clicks on the desk
+     */
+    public void deactivateClicksDesk(){
+        desk.setOnMouseClicked(null);
+    }
 
 
-
-
-
-
-
-    /*public void printNickname(List<Player> players){
+    /**
+     * It prints nickname of Player in the text
+     * @param players is the list of player in the game
+     */
+    public void printNickname(List<Player> players){
         int size = players.size();
         if (size == 2){
-            nicknameone.setText(players.get(0).getNickname());
-            nicknametwo.setText(players.get(1).getNickname());
+            nicknameOne.setText(players.get(0).getNickname());
+            nicknameTwo.setText(players.get(1).getNickname());
+            nicknameTree.setText(null);
+            nicknameFour.setText(null);
         }
         if (size == 3){
-            nicknameone.setText(players.get(0).getNickname());
-            nicknametwo.setText(players.get(1).getNickname());
-            nicknametree.setText(players.get(2).getNickname());
+            nicknameOne.setText(players.get(0).getNickname());
+            nicknameTwo.setText(players.get(1).getNickname());
+            nicknameTree.setText(players.get(2).getNickname());
+            nicknameFour.setText(null);
         }
         if (size == 4){
-            nicknameone.setText(players.get(0).getNickname());
-            nicknametwo.setText(players.get(1).getNickname());
-            nicknametree.setText(players.get(2).getNickname());
-            nicknamefour.setText(players.get(3).getNickname());
+            nicknameOne.setText(players.get(0).getNickname());
+            nicknameTwo.setText(players.get(1).getNickname());
+            nicknameTree.setText(players.get(2).getNickname());
+            nicknameFour.setText(players.get(3).getNickname());
         }
 
+    }
+
+
+    public void getPlayerBoard(){
+        playerBoard.getScene();
+    }
+
+
+    /**
+     * it makes image picked bloom
+     * @param event mouse click event
+     */
+    public void cardPicked(MouseEvent event) {
+        Bloom bloom = new Bloom();
+        String url = null;
+
+        if (event.getSource().equals(resourceCard1)){
+            resourceCard1.setEffect(bloom);
+            url =  resourceCard1.getImage().getUrl();
+        }else if (event.getSource().equals(resourceCard2)){
+            resourceCard2.setEffect(bloom);
+            url = resourceCard2.getImage().getUrl();
+        } else if (event.getSource().equals(resourceDeck)) {
+            resourceDeck.setEffect(bloom);
+            url = resourceDeck.getImage().getUrl();
+        } else if (event.getSource().equals(goldCard1)) {
+            goldCard1.setEffect(bloom);
+            url = goldCard1.getImage().getUrl();
+        } else if (event.getSource().equals(goldCard2)) {
+            goldCard2.setEffect(bloom);
+            url = goldCard2.getImage().getUrl();
+        } else if (event.getSource().equals(goldDeck)) {
+            goldDeck.setEffect(bloom);
+            url = goldDeck.getImage().getUrl();
+        }
+    }
+
+
+    /*public void InitializePlayerBoard() throws IOException {
+
+        playerBoard.setContent();
     }*/
+
 
     /*public void printPlayerColor(List<Player> players){
 
@@ -351,7 +424,7 @@ public class GameSceneController {
 
 
 
-    }else {
+        }else {
             if (players.get(0).getPlayerColor() == B){
                 Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
                 playerOne.setGraphic(new ImageView(im));
