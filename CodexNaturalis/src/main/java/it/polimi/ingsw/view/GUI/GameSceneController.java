@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.List;
 
 public class GameSceneController {
-
+    //TEST
     @FXML
     private ScrollPane playerBoard;
 
