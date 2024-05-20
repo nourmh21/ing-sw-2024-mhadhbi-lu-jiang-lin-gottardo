@@ -312,7 +312,6 @@ public class GameSceneController {
 
     /**
      * it makes image picked bloom and get card url (from desk and hand card)
-     *
      * @param event mouse click event
      */
     public void pickCard(MouseEvent event) {
@@ -323,14 +322,15 @@ public class GameSceneController {
 
         im = (ImageView) event.getSource();
         url = im.getImage().getUrl();
-
+        //一旦点击了一次，会亮起来，点击两次等于选择
         if (im.getEffect() == null){
             if (event.getClickCount() == 1){
                 im.setEffect(dropShadow);
             }
-        } else if (im.getEffect() != null) {
-            if (event.getClickCount() == 1){
-                im.setEffect(null);
+        }
+        if (im.getEffect() != null) {  //点击两次 等于选择了， 卡片会消失
+            if (event.getClickCount() == 2){
+                im.setImage(null);
             }
         }
 
