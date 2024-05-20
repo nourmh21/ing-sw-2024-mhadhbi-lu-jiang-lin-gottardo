@@ -2,12 +2,14 @@ package it.polimi.ingsw.view.GUI;
 
 
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,11 +17,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
+
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
 
 public class GameSceneController {
@@ -150,13 +152,13 @@ public class GameSceneController {
         Image im = null;
         if (resourceDeck == null) {
             if (symbol == Symbol.INSECT){
-                im = new Image(getClass().getResourceAsStream("/img/kingdom/Insect.png"));
+                im = new Image(getClass().getResourceAsStream("/img/kingdom/RInsect.png"));
             } else if (symbol == Symbol.ANIMAL) {
-                im = new Image(getClass().getResourceAsStream("/img/kingdom/Animal.png"));
+                im = new Image(getClass().getResourceAsStream("/img/kingdom/RAnimal.png"));
             } else if (symbol == Symbol.FUNGI) {
-                im = new Image(getClass().getResourceAsStream("/img/kingdom/Fungi.png"));
+                im = new Image(getClass().getResourceAsStream("/img/kingdom/GFungi.png"));
             }else if (symbol == Symbol.PLANT){
-                im =new Image(getClass().getResourceAsStream("/img/kingdom/Plant.png"));
+                im =new Image(getClass().getResourceAsStream("/img/kingdom/GPlant.png"));
             }
         }
         resourceDeck.setImage(im);
@@ -166,21 +168,34 @@ public class GameSceneController {
     /**
      * set the first's card image on goldDeck
      * @param symbol it contains symbol of the card
+     * @param type indicates type of the card
      */
-    public void showGoldDeck(Symbol symbol) {
+    public void showGoldDeck(Symbol symbol, CardType type) {
         Image im = null;
-        if ((goldDeck == null) && (symbol!= null)) {
-            if (symbol == Symbol.INSECT){
-                im = new Image(getClass().getResourceAsStream("/img/kingdom/Insect.png"));
-            } else if (symbol == Symbol.ANIMAL) {
-                im = new Image(getClass().getResourceAsStream("/img/kingdom/Animal.png"));
-            } else if (symbol == Symbol.FUNGI) {
-                im = new Image(getClass().getResourceAsStream("/img/kingdom/Fungi.png"));
-            }else if (symbol == Symbol.PLANT){
-                im =new Image(getClass().getResourceAsStream("/img/kingdom/Plant.png"));
+        if ((goldDeck == null) && (symbol != null)) {
+            if (type == CardType.GOLD) {
+                if ((symbol == Symbol.INSECT)) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GInsect.png"));
+                } else if (symbol == Symbol.ANIMAL) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GAnimal.png"));
+                } else if (symbol == Symbol.FUNGI) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GFungi.png"));
+                } else if (symbol == Symbol.PLANT) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GPlant.png"));
+                }
+            } else if (type == CardType.RESOURCE) {
+                if ((symbol == Symbol.INSECT)) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GInsect.png"));
+                } else if (symbol == Symbol.ANIMAL) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GAnimal.png"));
+                } else if (symbol == Symbol.FUNGI) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GFungi.png"));
+                } else if (symbol == Symbol.PLANT) {
+                    im = new Image(getClass().getResourceAsStream("/img/kingdom/GPlant.png"));
+                }
             }
             goldDeck.setImage(im);
-        }else if ((goldDeck == null) && (symbol == null)){
+        } else if ((goldDeck == null) && (symbol == null)) {
             goldDeck.setImage(null);
         }
 
@@ -255,8 +270,7 @@ public class GameSceneController {
      * Deactivates clicks on the desk
      */
     public void deactivateClicksDesk(){
-       resourceDeck.setOnMouseClicked(null);
-
+       desk.setOnMouseClicked(null);
     }
 
 
@@ -298,18 +312,27 @@ public class GameSceneController {
 
     /**
      * it makes image picked bloom and get card url (from desk and hand card)
+     *
      * @param event mouse click event
      */
     public void pickCard(MouseEvent event) {
-        Bloom bloom = new Bloom();
+
+        DropShadow dropShadow = new DropShadow(30, javafx.scene.paint.Color.color(135,206,250));
         String url = null;
         ImageView im;
 
         im = (ImageView) event.getSource();
         url = im.getImage().getUrl();
-        im.addEventFilter(MOUSE_CLICKED, e->{
-            im.setEffect(bloom);
-        });
+
+        if (im.getEffect() == null){
+            if (event.getClickCount() == 1){
+                im.setEffect(dropShadow);
+            }
+        } else if (im.getEffect() != null) {
+            if (event.getClickCount() == 1){
+                im.setEffect(null);
+            }
+        }
 
     }
 
