@@ -1,145 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane fx:id="pb" minHeight="4000.0" minWidth="3500.0" prefHeight="4000.0" prefWidth="3500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.PlayerBoardController">
+<AnchorPane fx:id="pb" minHeight="2035.0" minWidth="4080.0" prefHeight="2035.0" prefWidth="4093.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.PlayerBoardController">
    <children>
-      <GridPane fx:id="board" layoutX="165.0" layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="4000.0" minWidth="3500.0" prefHeight="4000.0" prefWidth="3500.0" style="-fx-background-color: beige;">
+      <GridPane fx:id="board" layoutX="2.0" layoutY="-5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="2040.0" minWidth="4080.0" prefHeight="2040.0" prefWidth="4080.0" style="-fx-background-color: beige;">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints fx:id="eleven" hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints fx:id="eleven" halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="80.0" minWidth="80.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="ALWAYS" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="19" />
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="20" GridPane.rowIndex="18">
-               <image>
-                  <Image url="@img/cards/back/c61.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="19" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <image>
-                  <Image url="@img/cards/front/c19.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="21" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="17" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <image>
-                  <Image url="@img/cards/front/c13.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.rowIndex="16" />
-            <ImageView fx:id="initialCards" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="20" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="20" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <image>
-                  <Image url="@img/cards/back/c14.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="21" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="19" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <image>
-                  <Image url="@img/cards/front/c3.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="19" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="21" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <image>
-                  <Image url="@img/cards/front/c16.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="20" GridPane.rowIndex="22">
-               <image>
-                  <Image url="@img/cards/front/c23.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <ImageView fx:id="initialCard" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="25" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="25" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
    </children>
