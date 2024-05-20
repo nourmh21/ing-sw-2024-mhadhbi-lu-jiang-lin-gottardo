@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerBoard;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.effect.Bloom;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +13,7 @@ import javafx.scene.layout.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerBoardController {
     @FXML
@@ -44,6 +46,7 @@ public class PlayerBoardController {
     @FXML
     private RowConstraints zero;
 
+    private int idChosenCard;
 
     /**
      * show personal goals in the pb
@@ -53,7 +56,6 @@ public class PlayerBoardController {
         Image im = new Image(getClass().getResourceAsStream("/img/cards/front/" + id + ".png"));
         personal_goal.setImage(im);
     }
-
 
     /**
      * show initial cards on player board
@@ -69,10 +71,6 @@ public class PlayerBoardController {
             initialCards.setImage(im);
         }
     }
-
-
-
-
 
     /**
      * it gets PlayerBoard of player
@@ -126,7 +124,6 @@ public class PlayerBoardController {
 
     }
 
-
     /**
      * it shows back side of hand card selected
      */
@@ -136,24 +133,50 @@ public class PlayerBoardController {
         }
     }
 
-
     /**
      * it shows the possible position of the hand card clicked
      */
-    public void showPossiblePosition(ArrayList<Integer[]> availablePosition) {
+    public void showPossiblePositions(ArrayList<Integer[]> availablePositions) {
+        //cells are highlighted
+        for (Integer[] availablePosition : availablePositions) {
+            Region r = new Region();
+            r.setStyle("-fx-background-color: #b0faac;");
+            board.add(r, availablePosition[1], availablePosition[0]);
+        }
 
+        //timer to wait for cells to stop being highlighted
+        try {
+            int SECONDS_TO_SLEEP = 2;
+            TimeUnit.SECONDS.sleep(SECONDS_TO_SLEEP);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
 
+        //cells' highlight is removed
+        for (Integer[] availablePosition : availablePositions) {
+            board.getChildren().removeIf( node -> GridPane.getColumnIndex(node).equals(availablePosition[1]) && GridPane.getRowIndex(node).equals(availablePosition[0]));
+        }
     }
-
 
     /**
-     * player choose position for the card
+     * player chooses position for the card
      */
-    public void choosePosition(){
-
+    private int[] choosePosition(MouseEvent e) {
+        Node source = (Node)e.getSource() ;
+        Integer colIndex = GridPane.getColumnIndex(source);
+        Integer rowIndex = GridPane.getRowIndex(source);
+        return new int[]{colIndex, rowIndex};
+        //send info to the server(?)
     }
 
-
-
-
+    private void placeCard(int xx, int yy, int cardID, boolean isBackSide){
+        Image im;
+        if(isBackSide){
+            im = new Image(getClass().getResourceAsStream("/img/cards/back/" + cardID + ".png"));
+        } else {
+            im = new Image(getClass().getResourceAsStream("/img/cards/front/" + cardID + ".png"));
+        }
+        board.add(new ImageView(im), yy, xx);
+        //send info to the server
+    }
 }
