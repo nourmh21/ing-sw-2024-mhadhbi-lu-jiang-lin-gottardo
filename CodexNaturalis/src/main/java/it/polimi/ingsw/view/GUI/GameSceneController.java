@@ -1,36 +1,28 @@
 package it.polimi.ingsw.view.GUI;
 
+
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Desk;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-//import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
+
 
 public class GameSceneController {
-    //TEST
     @FXML
     private ScrollPane playerBoard;
 
@@ -62,8 +54,6 @@ public class GameSceneController {
     @FXML
     private ImageView im_p4;
 
-    @FXML
-    private GridPane nineteenToTwentyseven;
 
     @FXML
     private Button playerFour;
@@ -85,6 +75,9 @@ public class GameSceneController {
 
     @FXML
     private ImageView resourceDeck;
+
+    @FXML
+    private GridPane nineteenToTwentyseven;
 
     @FXML
     private GridPane tewntyOneToTree;
@@ -117,7 +110,22 @@ public class GameSceneController {
     private GridPane desk;
 
     @FXML
-    private PlayerBoardController playerBoardController;
+    private ImageView handCard1;
+
+    @FXML
+    private ImageView handCard2;
+
+    @FXML
+    private ImageView handCard3;
+
+    @FXML
+    private HBox handCards;
+
+
+    @FXML
+    private ImageView personalGoal;
+
+    private List<PlayerBoardController> playerBoardControllers;
 
 
 
@@ -161,7 +169,7 @@ public class GameSceneController {
      */
     public void showGoldDeck(Symbol symbol) {
         Image im = null;
-        if (goldDeck == null) {
+        if ((goldDeck == null) && (symbol!= null)) {
             if (symbol == Symbol.INSECT){
                 im = new Image(getClass().getResourceAsStream("/img/kingdom/Insect.png"));
             } else if (symbol == Symbol.ANIMAL) {
@@ -171,8 +179,11 @@ public class GameSceneController {
             }else if (symbol == Symbol.PLANT){
                 im =new Image(getClass().getResourceAsStream("/img/kingdom/Plant.png"));
             }
+            goldDeck.setImage(im);
+        }else if ((goldDeck == null) && (symbol == null)){
+            goldDeck.setImage(null);
         }
-        goldDeck.setImage(im);
+
     }
 
 
@@ -180,9 +191,10 @@ public class GameSceneController {
      * update two card image of displayed resource card (after used)
      */
     public void updateDisplayRCard(){
-        if ((resourceCard1 == null) && (resourceCard2 == null)) {
-            resourceCard1.setImage(resourceDeck.getImage());
-            resourceCard1.setImage(resourceDeck.getImage());
+        if ((resourceCard1 == null) && (resourceCard2 == null) && (resourceDeck == null)) {
+            resourceCard1.setImage(null);
+            resourceCard1.setImage(null);
+            resourceDeck.setImage(null);
         }else {
             if (resourceCard1 == null){
                 resourceCard1.setImage(resourceDeck.getImage());
@@ -198,16 +210,18 @@ public class GameSceneController {
     /**
      * update two card image of displayed gold card (after used)
      */
-    public void updateDisplayGCard(){
-        if ((goldCard1 == null) && (goldCard2 == null)){
-            goldCard1.setImage(goldDeck.getImage());
-            goldCard2.setImage(goldDeck.getImage());
-        }else
-            if (goldCard1 == null){
+    public void updateDisplayGCard() {
+        if ((goldCard1 == null) && (goldCard2 == null) && (goldDeck == null)) {
+            goldCard1.setImage(null);
+            goldCard2.setImage(null);
+            goldDeck.setImage(null);
+        } else {
+            if ((goldCard1 == null) && (goldCard2 != null) && (goldDeck != null)) {
                 goldCard1.setImage(goldDeck.getImage());
-            }else if (goldCard2 == null){
-                    goldCard2.setImage(goldDeck.getImage());
-                }
+            } else if ((goldCard2 == null) && (goldCard1 != null) && (goldDeck != null)){
+                goldCard2.setImage(goldDeck.getImage());
+            }
+        }
     }
 
 
@@ -216,7 +230,7 @@ public class GameSceneController {
      * @param displayRCard contains id of the fist two resource cards
      */
     public void showDisplayRCard(List<Integer> displayRCard){
-        Image im1 = new Image(getClass().getResourceAsStream(displayRCard.get(0) + ".png"));
+        Image im1 = new Image(getClass().getResourceAsStream("/img/cards/front" + displayRCard.get(0) + ".png"));
         Image im2 = new Image(getClass().getResourceAsStream(displayRCard.get(1) + ".png"));
 
         resourceCard1.setImage(im1);
@@ -241,7 +255,16 @@ public class GameSceneController {
      * Deactivates clicks on the desk
      */
     public void deactivateClicksDesk(){
-        desk.setOnMouseClicked(null);
+       resourceDeck.setOnMouseClicked(null);
+
+    }
+
+
+    /**
+     * Deactivates click on the Hand Cards
+     */
+    public void deactivateClickHandCards(){
+        handCards.setOnMouseClicked(null);
     }
 
 
@@ -273,236 +296,187 @@ public class GameSceneController {
     }
 
 
-    public void getPlayerBoard(){
-        playerBoard.getScene();
+    /**
+     * it makes image picked bloom and get card url (from desk and hand card)
+     * @param event mouse click event
+     */
+    public void pickCard(MouseEvent event) {
+        Bloom bloom = new Bloom();
+        String url = null;
+        ImageView im;
+
+        im = (ImageView) event.getSource();
+        url = im.getImage().getUrl();
+        im.addEventFilter(MOUSE_CLICKED, e->{
+            im.setEffect(bloom);
+        });
+
+    }
+
+    //pickCard 会获取你选择的卡片的url
+    //print id 会获取你选择的卡片的id (从url获取)
+
+    /**
+     * from image url get image id
+     * @param url it is url of selected image
+     * @return id of selected image
+     */
+    public Integer printId(String url){
+        Integer id;
+
+        String regEx = "[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(url);
+        String result = m.replaceAll("").trim();
+        id = Integer.parseInt(result);
+
+        return id;
     }
 
 
     /**
-     * it makes image picked bloom
-     * @param event mouse click event
+     * show personal goals in the pb
+     * @param id is the id of the personal card chosed
      */
-    public void cardPicked(MouseEvent event) {
-        Bloom bloom = new Bloom();
-        String url = null;
+    public void showPersonalGoal(Integer id){
+        Image im = new Image(getClass().getResourceAsStream("/img/cards/front/" + id + ".png"));
+        personalGoal.setImage(im);
+    }
 
-        if (event.getSource().equals(resourceCard1)){
-            resourceCard1.setEffect(bloom);
-            url =  resourceCard1.getImage().getUrl();
-        }else if (event.getSource().equals(resourceCard2)){
-            resourceCard2.setEffect(bloom);
-            url = resourceCard2.getImage().getUrl();
-        } else if (event.getSource().equals(resourceDeck)) {
-            resourceDeck.setEffect(bloom);
-            url = resourceDeck.getImage().getUrl();
-        } else if (event.getSource().equals(goldCard1)) {
-            goldCard1.setEffect(bloom);
-            url = goldCard1.getImage().getUrl();
-        } else if (event.getSource().equals(goldCard2)) {
-            goldCard2.setEffect(bloom);
-            url = goldCard2.getImage().getUrl();
-        } else if (event.getSource().equals(goldDeck)) {
-            goldDeck.setEffect(bloom);
-            url = goldDeck.getImage().getUrl();
+
+    /**
+     * it shows first tree hand cards
+     * @param handCards contains id of hand cards
+     */
+    public void showHandCards(List<Integer> handCards){
+        Image im1 = new Image(getClass().getResourceAsStream("/img/cards/front/" + handCards.get(0) + ".png"));
+        Image im2 = new Image(getClass().getResourceAsStream("/img/cards/front/" + handCards.get(1) + ".png" ));
+        Image im3 = new Image(getClass().getResourceAsStream("/img/cards/front/" + handCards.get(2) + ".png"));
+
+        handCard1.setImage(im1);
+        handCard2.setImage(im2);
+        handCard3.setImage(im3);
+    }
+
+
+    /**
+     * it updates hand cards
+     * @param id is the card's id chosed from desk
+     */
+    public void updateHandCard(Integer id){
+        Image im = new Image(getClass().getResourceAsStream("/img/cards/front/" + id + ".png"));
+        if (handCard1 == null){
+            handCard1.setImage(im);
+        } else if (handCard2 == null) {
+            handCard2.setImage(im);
+        } else if (handCard3 == null) {
+            handCard3.setImage(im);
         }
     }
 
 
-    /*public void InitializePlayerBoard() throws IOException {
+    /**
+     * it prints player color in the button
+     * @param players is the player in the game
+     */
+    public void printPlayerColor(List<Player> players){
 
-        playerBoard.setContent();
-    }*/
+        int i=0;
+        Color c = null;
+        im_p1.setImage(null);
+        im_p2.setImage(null);
+        im_p3.setImage(null);
+        im_p4.setImage(null);
 
+        Image blue = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
+        Image red = new Image(getClass().getResourceAsStream("/img/utils/pion-RED.png"));
+        Image yellow = new Image(getClass().getResourceAsStream("/img/utils/pion-YELLOW.png"));
+        Image green = new Image(getClass().getResourceAsStream("/img/utils/pion-GREEN.png"));
 
-    /*public void printPlayerColor(List<Player> players){
-
-        Color B = Color.BLUE;
-        Color R = Color.RED;
-        Color G = Color.GREEN;
-        Color Y = Color.YELLOW;
-
-        if (players.size() == 2){
-            if (players.get(0).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerOne.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(0).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-RED.png"));
-                    playerOne.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(0).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-GREEN.png"));
-                        playerOne.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-YELLOW.png"));
-                        playerOne.setGraphic(new ImageView(im));
-                    }
+        do {
+            c = players.get(i).getPlayerColor();
+            if (i==0){
+                if (c == Color.GREEN){
+                    im_p1.setImage(green);
+                } else if (c == Color.BLUE) {
+                    im_p1.setImage(blue);
+                }else if (c == Color.RED){
+                    im_p1.setImage(red);
+                }else if (c == Color.YELLOW){
+                    im_p1.setImage(yellow);
                 }
-
+            }
+            if (i==1){
+                if (c == Color.GREEN){
+                    im_p2.setImage(green);
+                } else if (c == Color.BLUE) {
+                    im_p2.setImage(blue);
+                }else if (c == Color.RED){
+                    im_p2.setImage(red);
+                }else if (c == Color.YELLOW){
+                    im_p2.setImage(yellow);
+                }
             }
 
-            if (players.get(1).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerTwo.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(1).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                    playerTwo.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(1).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTwo.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTwo.setGraphic(new ImageView(im));
-                    }
+            if (i==2){
+                if (c == Color.GREEN){
+                    im_p3.setImage(green);
+                } else if (c == Color.BLUE) {
+                    im_p3.setImage(blue);
+                }else if (c == Color.RED){
+                    im_p3.setImage(red);
+                }else if (c == Color.YELLOW){
+                    im_p3.setImage(yellow);
                 }
-
-            }
-            playerTree.setGraphic(null);
-            playerFour.setGraphic(null);
-
-        }else if (players.size() == 3){
-
-            if (players.get(0).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerOne.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(0).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-RED.png"));
-                    playerOne.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(0).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-GREEN.png"));
-                        playerOne.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-YELLOW.png"));
-                        playerOne.setGraphic(new ImageView(im));
-                    }
-                }
-
             }
 
-            if (players.get(1).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerTwo.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(1).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                    playerTwo.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(1).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTwo.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTwo.setGraphic(new ImageView(im));
-                    }
+            if (i == 3){
+                if (c == Color.GREEN){
+                    im_p4.setImage(green);
+                } else if (c == Color.BLUE) {
+                    im_p4.setImage(green);
+                }else if (c == Color.RED){
+                    im_p4.setImage(green);
+                }else if (c == Color.YELLOW){
+                    im_p4.setImage(green);
                 }
-
             }
 
-            if (players.get(2).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerTree.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(2).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                    playerTree.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(2).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTree.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTree.setGraphic(new ImageView(im));
-                    }
-                }
-
-            }
-            playerFour.setGraphic(null);
+            i++;
+        }while (i<players.size());
+    }
 
 
+    /**
+     * it shows first player board
+     */
+    public void choosePlayerBoard1() {
+        playerBoard.setContent(playerBoardControllers.get(0));
+    }
 
-        }else {
-            if (players.get(0).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerOne.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(0).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-RED.png"));
-                    playerOne.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(0).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-GREEN.png"));
-                        playerOne.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-YELLOW.png"));
-                        playerOne.setGraphic(new ImageView(im));
-                    }
-                }
 
-            }
+    /**
+     * it shows second player boards
+     */
+    public void choosePlayerBoard2() {
+        playerBoard.setContent(playerBoardControllers.get(1));
+    }
 
-            if (players.get(1).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerTwo.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(1).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                    playerTwo.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(1).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTwo.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTwo.setGraphic(new ImageView(im));
-                    }
-                }
 
-            }
+    /**
+     * it shows third player board
+     */
+    public void choosePlayerBoard3() {
+        playerBoard.setContent(playerBoardControllers.get(2));
+    }
 
-            if (players.get(2).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerTree.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(2).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                    playerTree.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(2).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTree.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerTree.setGraphic(new ImageView(im));
-                    }
-                }
 
-            }
-
-            if (players.get(3).getPlayerColor() == B){
-                Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                playerFour.setGraphic(new ImageView(im));
-            } else {
-                if (players.get(3).getPlayerColor() == R){
-                    Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                    playerFour.setGraphic(new ImageView(im));
-                }else {
-                    if (players.get(3).getPlayerColor() == G){
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerFour.setGraphic(new ImageView(im));
-                    }else {
-                        Image im = new Image(getClass().getResourceAsStream("/img/utils/pion-BLUE.png"));
-                        playerFour.setGraphic(new ImageView(im));
-                    }
-                }
-
-            }
-        }
-
-        }*/
+    /**
+     * it shows fourth player board
+     */
+    public void choosePlayerBoard4() {
+        playerBoard.setContent(playerBoardControllers.get(3));
+    }
 
 
 

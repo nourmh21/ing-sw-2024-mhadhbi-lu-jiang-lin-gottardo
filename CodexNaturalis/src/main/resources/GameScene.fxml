@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
@@ -18,9 +19,21 @@
    <children>
       <AnchorPane layoutX="244.0" layoutY="159.0" prefHeight="388.0" prefWidth="470.0" style="-fx-background-color: beige;">
          <children>
-            <ScrollPane prefHeight="388.0" prefWidth="470.0" vvalue = "0.4"  hvalue="0.5">
-             <fx:include source = "PlayerBoard.fxml"></fx:include>
+            <ScrollPane fx:id="playerBoard" hvalue="0.5" prefHeight="388.0" prefWidth="470.0" vvalue="0.4">
+             <fx:include source="PlayerBoard.fxml" />
             </ScrollPane>
+            <ImageView fx:id="personalGoal" fitHeight="102.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <image>
+                  <Image url="@img/cards/front/27.png" />
+               </image>
+            </ImageView>
+            <HBox fx:id="handCards" alignment="CENTER" prefHeight="66.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <ImageView fx:id="handCard1" fitHeight="74.0" fitWidth="105.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="handCard2" fitHeight="65.0" fitWidth="101.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="handCard3" fitHeight="67.0" fitWidth="109.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
          </children></AnchorPane>
       <AnchorPane layoutX="57.0" layoutY="44.0">
          <children>
@@ -45,7 +58,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="commonGoal1" fitHeight="102.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="commonGoal1" fitHeight="92.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -55,32 +68,32 @@
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="99.0" fitWidth="97.0" onMouseClicked="#cardPicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                  <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="99.0" fitWidth="97.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="resourceCard2" fitHeight="93.0" fitWidth="96.0" onMouseClicked="#cardPicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                  <ImageView fx:id="resourceCard2" fitHeight="93.0" fitWidth="96.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="resourceDeck" fitHeight="101.0" fitWidth="96.0" onMouseClicked="#cardPicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+                  <ImageView fx:id="resourceDeck" fitHeight="101.0" fitWidth="96.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="goldCard1" fitHeight="97.0" fitWidth="97.0" onMouseClicked="#cardPicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <ImageView fx:id="goldCard1" fitHeight="97.0" fitWidth="97.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="goldCard2" fitHeight="92.0" fitWidth="95.0" onMouseClicked="#cardPicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="goldCard2" fitHeight="92.0" fitWidth="95.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fx:id="goldDeck" fitHeight="86.0" fitWidth="97.0" onMouseClicked="#cardPicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <ImageView fx:id="goldDeck" fitHeight="86.0" fitWidth="97.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -95,7 +108,7 @@
       <AnchorPane layoutX="244.0" layoutY="35.0" prefHeight="113.0" prefWidth="670.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a9dc9d" height="107.0" layoutX="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="670.0" />
-            <Button fx:id="playerOne" layoutX="31.0" layoutY="11.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="72.0" style="-fx-background-color: transparent;">
+            <Button fx:id="playerOne" layoutX="31.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard1" prefHeight="66.0" prefWidth="72.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="im_p1" fitHeight="58.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -107,7 +120,7 @@
                   <Insets top="3.0" />
                </padding>
             </Button>
-            <Button fx:id="playerTwo" layoutX="139.0" layoutY="11.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;">
+            <Button fx:id="playerTwo" layoutX="139.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard2" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="im_p2" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -116,7 +129,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="playerTree" layoutX="254.0" layoutY="11.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: green;">
+            <Button fx:id="playerTree" layoutX="254.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard3" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="im_p3" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -125,7 +138,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="playerFour" layoutX="369.0" layoutY="11.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: green;">
+            <Button fx:id="playerFour" layoutX="369.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard4" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fx:id="im_p4" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                      <image>
