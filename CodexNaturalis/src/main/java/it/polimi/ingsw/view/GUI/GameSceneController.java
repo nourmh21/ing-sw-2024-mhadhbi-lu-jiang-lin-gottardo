@@ -572,7 +572,7 @@ public class GameSceneController {
         } else if (players.getNickname() == name4.getText()) {
             fourthScore.setText(String.valueOf(players.getPoint()));
         }
-
+//test
     }
 
 
