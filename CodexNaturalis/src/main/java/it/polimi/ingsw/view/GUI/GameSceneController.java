@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
@@ -97,16 +98,16 @@ public class GameSceneController {
     private GridPane zeroToTwo;
 
     @FXML
-    private Text nicknameFour;
+    private Label nicknameFour;
 
     @FXML
-    private Text nicknameOne;
+    private Label nicknameOne;
 
     @FXML
-    private Text nicknameTree;
+    private Label nicknameTree;
 
     @FXML
-    private Text nicknameTwo;
+    private Label nicknameTwo;
 
     @FXML
     private GridPane desk;
@@ -126,6 +127,34 @@ public class GameSceneController {
 
     @FXML
     private ImageView personalGoal;
+
+
+    @FXML
+    private Label firstScore;
+
+    @FXML
+    private Label fourthName;
+
+    @FXML
+    private Label fourthScore;
+
+    @FXML
+    private Label name1;
+
+    @FXML
+    private Label name2;
+
+    @FXML
+    private Label name3;
+
+    @FXML
+    private Label name4;
+
+    @FXML
+    private Label secondScore;
+
+    @FXML
+    private Label thirdScore;
 
     private List<PlayerBoardController> playerBoardControllers;
 
@@ -321,7 +350,7 @@ public class GameSceneController {
         ImageView im;
 
         im = (ImageView) event.getSource();
-        url = im.getImage().getUrl();
+
         //一旦点击了一次，会亮起来，点击两次等于选择
         if (im.getEffect() == null){
             if (event.getClickCount() == 1){
@@ -330,6 +359,7 @@ public class GameSceneController {
         }
         if (im.getEffect() != null) {  //点击两次 等于选择了， 卡片会消失
             if (event.getClickCount() == 2){
+                url = im.getImage().getUrl();
                 im.setImage(null);
             }
         }
@@ -501,6 +531,49 @@ public class GameSceneController {
         playerBoard.setContent(playerBoardControllers.get(3));
     }
 
+
+    public void printTableName(List<Player> players){
+        firstScore.setText(null);
+        secondScore.setText(null);
+        thirdScore.setText(null);
+        fourthScore.setText(null);
+        name1.setText(null);
+        name2.setText(null);
+        name3.setText(null);
+        name4.setText(null);
+
+        if (players.size() == 2){
+            name1.setText(players.get(0).getNickname());
+            name2.setText(players.get(1).getNickname());
+        }
+        if (players.size() == 3){
+            name1.setText(players.get(0).getNickname());
+            name2.setText(players.get(1).getNickname());
+            name3.setText(players.get(2).getNickname());
+        }
+        if (players.size() == 4){
+            name1.setText(players.get(0).getNickname());
+            name2.setText(players.get(1).getNickname());
+            name3.setText(players.get(2).getNickname());
+            name4.setText(players.get(3).getNickname());
+        }
+    }
+
+    public void updateScore(Player players){
+        String name;
+        name = players.getNickname();
+
+        if (players.getNickname() == name1.getText()){
+            firstScore.setText(String.valueOf(players.getPoint()));
+        } else if (players.getNickname() == name2.getText()) {
+            secondScore.setText(String.valueOf(players.getPoint()));
+        } else if (players.getNickname() == name3.getText()) {
+            thirdScore.setText(String.valueOf(players.getPoint()));
+        } else if (players.getNickname() == name4.getText()) {
+            fourthScore.setText(String.valueOf(players.getPoint()));
+        }
+//test
+    }
 
 
 }
