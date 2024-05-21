@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class startController {
+public class StartController {
 
     private boolean existsLobby;
     private Stage stage;

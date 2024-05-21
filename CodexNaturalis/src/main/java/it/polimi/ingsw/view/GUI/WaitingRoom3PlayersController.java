@@ -8,17 +8,21 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
-public class waitingRoom2PlayersController {
+public class WaitingRoom3PlayersController {
 
     @FXML
     private ImageView imgFirstPlayer;
     @FXML
     private ImageView imgSecondPlayer;
+    @FXML
+    private ImageView imgThirdPlayer;
 
     @FXML
     private Text nickFirstPlayer;
     @FXML
     private Text nickSecondPlayer;
+    @FXML
+    private Text nickThirdPlayer;
 
     public void setImages(List<Player> playersInGame){
         Image[] playersImages = new Image[playersInGame.size()];
@@ -27,10 +31,12 @@ public class waitingRoom2PlayersController {
         }
         imgFirstPlayer.setImage(playersImages[0]);
         imgSecondPlayer.setImage(playersImages[1]);
+        imgThirdPlayer.setImage(playersImages[2]);
     }
 
     public void setNicknames(List<Player> playersInGame){
         nickFirstPlayer.setText(playersInGame.get(0).getNickname());
         nickSecondPlayer.setText(playersInGame.get(1).getNickname());
+        nickThirdPlayer.setText(playersInGame.get(2).getNickname());
     }
 }
