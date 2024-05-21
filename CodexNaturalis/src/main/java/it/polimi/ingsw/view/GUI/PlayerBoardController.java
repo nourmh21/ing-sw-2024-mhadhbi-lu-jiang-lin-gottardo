@@ -136,6 +136,8 @@ public class PlayerBoardController {
     /**
      * it shows the possible position of the hand card clicked
      */
+
+    /* il metodo è da ritestare, risultano errori solo su alcuni terminali */
     public void showPossiblePositions(ArrayList<Integer[]> availablePositions) {
         //cells are highlighted
         for (Integer[] availablePosition : availablePositions) {
@@ -157,6 +159,8 @@ public class PlayerBoardController {
             board.getChildren().removeIf( node -> GridPane.getColumnIndex(node).equals(availablePosition[1]) && GridPane.getRowIndex(node).equals(availablePosition[0]));
         }
     }
+
+
 
     /**
      * player chooses position for the card
