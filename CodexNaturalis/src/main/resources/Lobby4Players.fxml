@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.WaitingRoom3PlayersController">
+<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.controllers.For4PlayersLobby">
    <children>
       <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e9e3ce; -fx-border-width: 7;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
-      <VBox alignment="CENTER" layoutX="221.0" layoutY="16.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="231.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="WAITING ROOM" textFill="#6b5339">
                <font>
@@ -22,11 +22,11 @@
                   <Insets bottom="50.0" />
                </VBox.margin>
             </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="226.0" prefWidth="1086.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="75.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
+                        <Button cancelButton="true" mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
                            <graphic>
                               <ImageView fx:id="imgFirstPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -38,7 +38,7 @@
                         </Label>
                      </children>
                      <HBox.margin>
-                        <Insets right="170.0" />
+                        <Insets right="50.0" />
                      </HBox.margin>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="67.0">
@@ -55,12 +55,12 @@
                         </Label>
                      </children>
                      <HBox.margin>
-                        <Insets right="170.0" />
+                        <Insets right="50.0" />
                      </HBox.margin>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="67.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="187.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
+                        <Button mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
                            <graphic>
                               <ImageView fx:id="imgThirdPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -71,11 +71,25 @@
                            </font>
                         </Label>
                      </children>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="67.0">
+                     <children>
+                        <Button mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fx:id="imgFourthPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Label fx:id="nickFourthPlayer" text="Player" textFill="#6b5339">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
                   </VBox>
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
             </HBox>
          </children>
       </VBox>
