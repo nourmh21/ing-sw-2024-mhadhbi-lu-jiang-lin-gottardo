@@ -170,7 +170,9 @@ public class GameSceneController {
     private boolean goldD2Selected = false;
     private boolean goldDSelected = false;
 
-    private LocationType loc;
+    LocationType loc = null;
+
+    Integer id;
     private List<PlayerBoardController> playerBoardControllers;
 
 
@@ -357,35 +359,101 @@ public class GameSceneController {
     /**
      * it makes image picked bloom and get card url (from desk and hand card)
      */
-    /*public void pickDeskCard() {
-        String url;
+    public void pickDeskCard() {
+        String url = null;
 
-       resourceD1.setOnAction(event -> {
-           url = resourceCard1.getImage().getUrl();
-           loc =
-       });
+       resourceD1.setOnMouseClicked(event -> {
+           if(event.getClickCount()==2){
+           resourceD1Selected = true;
+           resourceD2Selected = false;
+           resourceDSelected = false;
+           goldD1Selected = false;
+           goldD2Selected = false;
+           goldDSelected = false;
+       }});
 
-    }*/
+       resourceD2.setOnMouseClicked(event->{
+           if (event.getClickCount()==2){
+           resourceD1Selected = false;
+           resourceD2Selected = true;
+           resourceDSelected = false;
+           goldD1Selected = false;
+           goldD2Selected = false;
+           goldDSelected = false;
+       }});
 
-    //pickCard 会获取你选择的卡片的url
-    //print id 会获取你选择的卡片的id (从url获取)
+       resourceD.setOnMouseClicked(event->{
+           if (event.getClickCount() == 2) {
+               resourceD1Selected = false;
+               resourceD2Selected = false;
+               resourceDSelected = true;
+               goldD1Selected = false;
+               goldD2Selected = false;
+               goldDSelected = false;
+           }});
+
+       goldD1.setOnMouseClicked(event ->{
+           if (event.getClickCount()==2) {
+               resourceD1Selected = true;
+               resourceD2Selected = false;
+               resourceDSelected = false;
+               goldD1Selected = true;
+               goldD2Selected = false;
+               goldDSelected = false;
+           }});
+
+       goldD2.setOnMouseClicked(event ->{
+           if (event.getClickCount()==2) {
+               resourceD1Selected = false;
+               resourceD2Selected = false;
+               resourceDSelected = false;
+               goldD1Selected = false;
+               goldD2Selected = true;
+               goldDSelected = false;
+           }});
+
+       goldD.setOnMouseClicked(event->{
+           if (event.getClickCount()==2) {
+               resourceD1Selected = false;
+               resourceD2Selected = false;
+               resourceDSelected = false;
+               goldD1Selected = false;
+               goldD2Selected = false;
+               goldDSelected = true;
+           }});
+
+    }
+
 
     /**
-     * from image url get image id
-     * @param url it is url of selected image
-     * @return id of selected image
+     * it takes id of selected card
+     * @param displayGCard it contains id of display gold card
+     * @param displayRCard it contains id of display resource card
      */
-    public Integer printId(String url){
-        Integer id;
-
-        String regEx = "[^0-9]";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(url);
-        String result = m.replaceAll("").trim();
-        id = Integer.parseInt(result);
-
-        return id;
-        ////
+    public void printId(List<Integer> displayGCard, List<Integer> displayRCard){
+       if (resourceD1Selected || resourceD2Selected){
+           loc = LocationType.DISPLAYED_RESOURCE_LIST;
+           if ((resourceD1Selected)){
+               id = displayRCard.get(0);
+               resourceCard1.setImage(null);
+           } else if (resourceD2Selected) {
+               id = displayRCard.get(1);
+               resourceCard2.setImage(null);
+           }
+       } else if (goldD1Selected || goldD2Selected) {
+           loc = LocationType.DISPLAYED_GOLD_LIST;
+           if (goldD1Selected){
+               id = displayGCard.get(0);
+               goldCard1.setImage(null);
+           } else if (goldD2Selected) {
+               id = displayGCard.get(1);
+               goldCard2.setImage(null);
+           }
+       } else if (goldDSelected) {
+           loc = LocationType.GOLD_CARD_DECK;
+       } else if (resourceDSelected) {
+           loc = LocationType.RESOURCE_CARD_DECK;
+       }
     }
 
 

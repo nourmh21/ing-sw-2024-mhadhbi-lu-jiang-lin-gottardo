@@ -94,7 +94,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ImageView fx:id="commonGoal1" fitHeight="98.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                              <ImageView fx:id="commonGoal1" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                  <cursor>
                                     <Cursor fx:constant="CLOSED_HAND" />
                                  </cursor>
@@ -106,7 +106,7 @@
                               </ImageView>
                               <Button fx:id="resourceD1" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="68.0" prefWidth="99.0" GridPane.rowIndex="1">
                                  <graphic>
-                                    <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <cursor>
                                           <Cursor fx:constant="CLOSED_HAND" />
                                        </cursor>
@@ -124,7 +124,7 @@
                               </Button>
                               <Button fx:id="goldD1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="69.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <graphic>
-                                    <ImageView fx:id="goldCard1" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="goldCard1" fitHeight="67.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <cursor>
                                           <Cursor fx:constant="CLOSED_HAND" />
                                        </cursor>
@@ -140,9 +140,9 @@
                                     <Insets left="8.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="resourceD2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="66.0" prefWidth="101.0" GridPane.rowIndex="2">
+                              <Button fx:id="resourceD2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="68.0" prefWidth="102.0" GridPane.rowIndex="2">
                                  <graphic>
-                                    <ImageView fx:id="resourceCard2" fitHeight="76.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="resourceCard2" fitHeight="78.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <cursor>
                                           <Cursor fx:constant="CLOSED_HAND" />
                                        </cursor>
@@ -157,7 +157,7 @@
                               </Button>
                               <Button fx:id="goldD2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="68.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <graphic>
-                                    <ImageView fx:id="goldCard2" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="goldCard2" fitHeight="70.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
                                        <cursor>
                                           <Cursor fx:constant="CLOSED_HAND" />
                                        </cursor>
@@ -172,7 +172,7 @@
                               </Button>
                               <Button fx:id="resourceD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="69.0" prefWidth="100.0" GridPane.rowIndex="3">
                                  <graphic>
-                                    <ImageView fx:id="resourceDeck" fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="resourceDeck" fitHeight="77.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
                                        <cursor>
                                           <Cursor fx:constant="CLOSED_HAND" />
                                        </cursor>
@@ -187,7 +187,7 @@
                               </Button>
                               <Button fx:id="goldD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="66.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <graphic>
-                                    <ImageView fx:id="goldDeck" fitHeight="98.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="goldDeck" fitHeight="77.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <cursor>
                                           <Cursor fx:constant="CLOSED_HAND" />
                                        </cursor>
@@ -222,17 +222,17 @@
                         </ImageView>
                         <HBox fx:id="handCards" alignment="CENTER" prefHeight="66.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
-                              <ImageView fx:id="handCard1" fitHeight="67.0" fitWidth="109.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="handCard1" fitHeight="67.0" fitWidth="109.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                                  <HBox.margin>
                                     <Insets bottom="14.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <ImageView fx:id="handCard2" fitHeight="67.0" fitWidth="109.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="handCard2" fitHeight="67.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
                                  <HBox.margin>
                                     <Insets bottom="14.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <ImageView fx:id="handCard3" fitHeight="67.0" fitWidth="109.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="handCard3" fitHeight="67.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
                                  <HBox.margin>
                                     <Insets bottom="14.0" />
                                  </HBox.margin>
