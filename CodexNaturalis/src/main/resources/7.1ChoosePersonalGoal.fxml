@@ -23,27 +23,27 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-background-radius: 5; -fx-border-radius: 5;">
+                  <Button fx:id="personalGoal1" mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-background-radius: 5; -fx-border-radius: 5;">
                      <graphic>
-                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="personal1" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                      <HBox.margin>
                         <Insets right="50.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #6b5339;">
+                  <Button fx:id="personalGoal2" mnemonicParsing="false" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #6b5339;">
                      <graphic>
-                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="personal2" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </Button>
                </children>
             </HBox>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="551.0" textFill="RED">
+            <Label fx:id="errorPersonalGoalLabel" alignment="CENTER" prefHeight="17.0" prefWidth="551.0" textFill="RED">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <Button mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-background-radius: 5; -fx-border-radius: 5;" text="CONTINUE" textFill="#6b5339">
+            <Button fx:id="SELECT" mnemonicParsing="false" onAction="#switchToPlayerBoard" style="-fx-border-color: #6b5339; -fx-background-radius: 5; -fx-border-radius: 5;" text="SELECT" textFill="#6b5339">
                <font>
                   <Font name="Arial Black" size="18.0" />
                </font>

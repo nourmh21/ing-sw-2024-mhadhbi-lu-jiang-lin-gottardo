@@ -2,9 +2,9 @@ package it.polimi.ingsw.view.GUI;
 
 import it.polimi.ingsw.model.Player;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ public class WaitingRoom3PlayersController {
     private ImageView imgThirdPlayer;
 
     @FXML
-    private Text nickFirstPlayer;
+    private Label nickFirstPlayer;
     @FXML
-    private Text nickSecondPlayer;
+    private Label nickSecondPlayer;
     @FXML
-    private Text nickThirdPlayer;
+    private Label nickThirdPlayer;
 
     public void setImages(List<Player> playersInGame){
         Image[] playersImages = new Image[playersInGame.size()];

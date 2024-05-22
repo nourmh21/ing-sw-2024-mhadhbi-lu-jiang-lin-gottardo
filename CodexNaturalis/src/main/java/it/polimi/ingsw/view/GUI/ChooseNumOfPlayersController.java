@@ -90,7 +90,7 @@ public class ChooseNumOfPlayersController {
         }
         else if(four.isSelected()){
             errorNLabel.setText("");
-            root = FXMLLoader.load(getClass().getResource("/6.2WaintingRoom4Players.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/6.2WaitingRoom4Players.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
             Image background = new Image(getClass().getResourceAsStream("/img/utils/background.png"));

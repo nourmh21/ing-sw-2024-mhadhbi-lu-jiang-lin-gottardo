@@ -22,10 +22,10 @@
                <children>
                   <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label text="1." textFill="#6b5339" />
-                        <Label text="2." textFill="#6b5339" />
-                        <Label text="3." textFill="#6b5339" />
-                        <Label text="4." textFill="#6b5339" />
+                        <Label fx:id="one" alignment="CENTER_RIGHT" textFill="#6b5339" />
+                        <Label fx:id="two" alignment="CENTER_RIGHT" textFill="#6b5339" />
+                        <Label fx:id="three" alignment="CENTER_RIGHT" textFill="#6b5339" />
+                        <Label fx:id="four" alignment="CENTER_RIGHT" textFill="#6b5339" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="125.0" prefWidth="137.0">
@@ -38,10 +38,10 @@
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="17.0" prefWidth="126.0" text="Label" textFill="#6b5339" />
-                        <Label prefHeight="17.0" prefWidth="125.0" text="Label" textFill="#6b5339" />
-                        <Label prefHeight="17.0" prefWidth="125.0" text="Label" textFill="#6b5339" />
-                        <Label prefHeight="17.0" prefWidth="124.0" text="Label" textFill="#6b5339" />
+                        <Label fx:id="firstWinnNick" prefHeight="17.0" prefWidth="126.0" textFill="#6b5339" />
+                        <Label fx:id="secondWinnNick" prefHeight="17.0" prefWidth="125.0" textFill="#6b5339" />
+                        <Label fx:id="thirdWinnNick" prefHeight="17.0" prefWidth="125.0" textFill="#6b5339" />
+                        <Label fx:id="fourthWinnNick" prefHeight="17.0" prefWidth="124.0" textFill="#6b5339" />
                      </children>
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -57,10 +57,10 @@
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Label>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Label" textFill="#6b5339" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="165.0" text="Label" textFill="#6b5339" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="195.0" text="Label" textFill="#6b5339" />
-                        <Label text="Label" textFill="#6b5339" />
+                        <Label fx:id="firstWinnTotScore" alignment="CENTER" prefHeight="17.0" prefWidth="149.0" textFill="#6b5339" />
+                        <Label fx:id="secondWinnTotScore" alignment="CENTER" prefHeight="17.0" prefWidth="165.0" textFill="#6b5339" />
+                        <Label fx:id="thirdWinnTotScore" alignment="CENTER" prefHeight="17.0" prefWidth="195.0" textFill="#6b5339" />
+                        <Label fx:id="fourthWinnTotScore" alignment="CENTER" prefHeight="17.0" prefWidth="203.0" textFill="#6b5339" />
                      </children>
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -68,7 +68,7 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="125.0" prefWidth="184.0">
                      <children>
-                        <Label text="GOAL SCORE" textFill="#6b5339">
+                        <Label alignment="CENTER" text="GOAL SCORE" textFill="#6b5339">
                            <font>
                               <Font name="Arial Black" size="24.0" />
                            </font>
@@ -76,10 +76,10 @@
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="17.0" prefWidth="30.0" text="Label" textFill="#6b5339" />
-                        <Label text="Label" textFill="#6b5339" />
-                        <Label text="Label" />
-                        <Label text="Label" textFill="#6b5339" />
+                        <Label fx:id="firstWinnGoalScore" alignment="CENTER" prefHeight="17.0" prefWidth="30.0" textFill="#6b5339" />
+                        <Label fx:id="secondWinnGoalScore" alignment="CENTER" textFill="#6b5339" />
+                        <Label fx:id="thirdWinnGoalScore" alignment="CENTER" textFill="#6b5339" />
+                        <Label fx:id="fouthWinnGoalScore" alignment="CENTER" textFill="#6b5339" />
                      </children>
                   </VBox>
                </children>
@@ -87,6 +87,14 @@
                   <Insets top="50.0" />
                </VBox.margin>
             </HBox>
+            <Button mnemonicParsing="false" onAction="#switchToStartFromFinalResult" style="-fx-border-color: #6b5339; -fx-border-radius: 5; -fx-background-radius: 5;" text="HOME PAGE" textFill="#6b5339">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Arial Black" size="24.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </children>
