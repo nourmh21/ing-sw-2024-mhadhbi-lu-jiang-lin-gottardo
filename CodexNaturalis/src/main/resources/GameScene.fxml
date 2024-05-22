@@ -215,28 +215,40 @@
                         <ScrollPane fx:id="playerBoard" hvalue="0.5" prefHeight="500.0" prefWidth="614.0" vvalue="0.4">
                          <fx:include source="PlayerBoard.fxml" />
                         </ScrollPane>
-                        <ImageView fx:id="personalGoal" fitHeight="102.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                        <ImageView fx:id="personalGoal" fitHeight="70.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                            <image>
                               <Image url="@img/cards/front/27.png" />
                            </image>
                         </ImageView>
-                        <HBox fx:id="handCards" alignment="CENTER" prefHeight="66.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <HBox fx:id="handCards" alignment="CENTER" prefHeight="66.0" prefWidth="198.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
-                              <ImageView fx:id="handCard1" fitHeight="67.0" fitWidth="109.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets bottom="14.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="handCard2" fitHeight="67.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets bottom="14.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="handCard3" fitHeight="67.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
-                                 <HBox.margin>
-                                    <Insets bottom="14.0" />
-                                 </HBox.margin>
-                              </ImageView>
+                              <Button fx:id="hand1" mnemonicParsing="false" prefHeight="68.0" prefWidth="116.0">
+                                 <graphic>
+                                    <ImageView fx:id="handCard1" fitHeight="67.0" fitWidth="100.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/cards/front/8.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="hand2" mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView fx:id="handCard2" fitHeight="67.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/cards/front/25.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="hand3" mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView fx:id="handCard3" fitHeight="67.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/cards/front/44.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" />

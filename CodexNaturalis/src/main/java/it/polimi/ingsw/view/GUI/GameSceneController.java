@@ -160,6 +160,15 @@ public class GameSceneController {
     @FXML
     private Button goldD2;
 
+    @FXML
+    private Button hand1;
+
+    @FXML
+    private Button hand2;
+
+    @FXML
+    private Button hand3;
+
     private boolean resourceD1Selected = false;
 
     private boolean resourceD2Selected = false;
@@ -169,6 +178,10 @@ public class GameSceneController {
     private boolean goldD1Selected = false;
     private boolean goldD2Selected = false;
     private boolean goldDSelected = false;
+
+    private boolean handCard1Selected = false;
+    private boolean handCard2Selected = false;
+    private boolean handCard3Selected = false;
 
     LocationType loc = null;
 
@@ -422,6 +435,33 @@ public class GameSceneController {
                goldDSelected = true;
            }});
 
+    }
+
+    public void pickHandCard(){
+
+        hand1.setOnMouseClicked(event -> {
+            if(event.getClickCount()==2){
+                handCard1Selected = true;
+                handCard2Selected = false;
+                handCard3Selected = false;
+            }
+        });
+
+        hand2.setOnMouseClicked(event -> {
+            if(event.getClickCount()==2){
+                handCard1Selected = false;
+                handCard2Selected = true;
+                handCard3Selected = false;
+            }
+        });
+
+        hand3.setOnMouseClicked(event -> {
+            if(event.getClickCount()==2){
+                handCard1Selected = false;
+                handCard2Selected = false;
+                handCard3Selected = true;
+            }
+        });
     }
 
 
