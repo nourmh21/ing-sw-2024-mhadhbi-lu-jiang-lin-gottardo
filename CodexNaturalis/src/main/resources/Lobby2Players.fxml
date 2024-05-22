@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.WaitingRoom2PlayersController">
+<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.controllers.For2PlayersLobby">
    <children>
       <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e9e3ce; -fx-border-width: 7;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
-      <VBox alignment="CENTER" layoutX="211.0" layoutY="6.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="WAITING ROOM" textFill="#6b5339">
                <font>
@@ -26,7 +26,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="75.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="185.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
+                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="185.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-radius: 15; -fx-background-color: beige;">
                            <graphic>
                               <ImageView fx:id="imgFirstPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -43,7 +43,7 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="67.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="185.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
+                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="185.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: beige; -fx-background-radius: 15;">
                            <graphic>
                               <ImageView fx:id="imgSecondPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
