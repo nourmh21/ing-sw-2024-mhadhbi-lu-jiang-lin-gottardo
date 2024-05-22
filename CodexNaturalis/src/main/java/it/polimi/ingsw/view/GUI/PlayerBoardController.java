@@ -47,6 +47,9 @@ public class PlayerBoardController {
     private RowConstraints zero;
 
     private int idChosenCard;
+    private boolean backHandCard1 = false;
+    private boolean backHandCard2 = false;
+    private boolean backHandCard3 = false;
 
     /**
      * show personal goals in the pb
@@ -94,31 +97,34 @@ public class PlayerBoardController {
      * player choose side of hand cards (one click front side and two click back side)
      * @param event mouse event
      */
-    public void chooseSide(MouseEvent event) {
+    public void chooseSide(MouseEvent event, Player player, PlayerBoard playerBoard) {
 
         Bloom bloom = new Bloom();
         if (handCard1.getOnMouseClicked().equals(MouseEvent.MOUSE_CLICKED)){
             if (event.getClickCount() == 2){
-                //showBackSide
-                //showPossiblePosition
+                showBackSide(backHandCard1, player.getHandCards().get(0), handCard1);
+                showPossiblePositions(playerBoard.getAvailablePosition());
+                backHandCard1 = true;
             }else if (event.getClickCount() == 1){
-                //showPossiblePosition();
+                showPossiblePositions(playerBoard.getAvailablePosition());
             }
         }
         if (handCard2.getOnMouseClicked().equals(MouseEvent.MOUSE_CLICKED)){
             if (event.getClickCount()==2){
-                //show backside
-                //showPossiblePosition
+                showBackSide(backHandCard2, player.getHandCards().get(1), handCard2);
+                showPossiblePositions(playerBoard.getAvailablePosition());
+                backHandCard1 = true;
             } else if (event.getClickCount() == 1) {
-               // showPossiblePosition();
+                showPossiblePositions(playerBoard.getAvailablePosition());
             }
         }
         if (handCard3.getOnMouseClicked().equals(MouseEvent.MOUSE_CLICKED)){
             if (event.getClickCount() == 2){
-                //showbackside
-                //showPossiblePosition
+                showBackSide(backHandCard3, player.getHandCards().get(2), handCard3);
+                showPossiblePositions(playerBoard.getAvailablePosition());
+                backHandCard3 = true;
             } else if (event.getClickCount() == 1) {
-                //showPossiblePosition();
+                showPossiblePositions(playerBoard.getAvailablePosition());
             }
         }
 
@@ -127,20 +133,21 @@ public class PlayerBoardController {
     /**
      * it shows back side of hand card selected
      */
-    public void showBackSide(boolean back){
-        if (back == true){
-
+    public void showBackSide(boolean back, int cardId, ImageView image){
+        image.setImage(null);
+        if (!back){
+            image.setImage(new Image(getClass().getResourceAsStream("/img/cards/back" + cardId + ".png")));
+        } else {
+            image.setImage(new Image(getClass().getResourceAsStream("/img/cards/front" + cardId + ".png")));
         }
     }
 
     /**
      * it shows the possible position of the hand card clicked
      */
-
-    /* il metodo è da ritestare, risultano errori solo su alcuni terminali */
-    public void showPossiblePositions(ArrayList<Integer[]> availablePositions) {
+    public void showPossiblePositions(ArrayList<int[]> availablePositions) {
         //cells are highlighted
-        for (Integer[] availablePosition : availablePositions) {
+        for (int[] availablePosition : availablePositions) {
             Region r = new Region();
             r.setStyle("-fx-background-color: #b0faac;");
             board.add(r, availablePosition[1], availablePosition[0]);
@@ -155,7 +162,7 @@ public class PlayerBoardController {
         }
 
         //cells' highlight is removed
-        for (Integer[] availablePosition : availablePositions) {
+        for (int[] availablePosition : availablePositions) {
             board.getChildren().removeIf( node -> GridPane.getColumnIndex(node).equals(availablePosition[1]) && GridPane.getRowIndex(node).equals(availablePosition[0]));
         }
     }
