@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.GUI;
 
 
+import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Color;
@@ -79,23 +80,6 @@ public class GameSceneController {
     @FXML
     private ImageView resourceDeck;
 
-    @FXML
-    private GridPane nineteenToTwentyseven;
-
-    @FXML
-    private GridPane tewntyOneToTree;
-
-    @FXML
-    private GridPane treeToFifteen;
-
-    @FXML
-    private GridPane twentyAndTwentynine;
-
-    @FXML
-    private GridPane twentyfourToTwentysix;
-
-    @FXML
-    private GridPane zeroToTwo;
 
     @FXML
     private Label nicknameFour;
@@ -156,6 +140,39 @@ public class GameSceneController {
     @FXML
     private Label thirdScore;
 
+
+    @FXML
+    private Button resourceD;
+
+    @FXML
+    private Button resourceD1;
+
+    @FXML
+    private Button resourceD2;
+
+
+    @FXML
+    private Button goldD;
+
+    @FXML
+    private Button goldD1;
+
+    @FXML
+    private Button goldD2;
+
+    private boolean resourceD1Selected = false;
+
+    private boolean resourceD2Selected = false;
+
+    private boolean resourceDSelected = false;
+
+    private boolean goldD1Selected = false;
+    private boolean goldD2Selected = false;
+    private boolean goldDSelected = false;
+
+    LocationType loc = null;
+
+    Integer id;
     private List<PlayerBoardController> playerBoardControllers;
 
 
@@ -341,49 +358,102 @@ public class GameSceneController {
 
     /**
      * it makes image picked bloom and get card url (from desk and hand card)
-     * @param event mouse click event
      */
-    public void pickCard(MouseEvent event) {
-
-        DropShadow dropShadow = new DropShadow(30, javafx.scene.paint.Color.color(135,206,250));
+    public void pickDeskCard() {
         String url = null;
-        ImageView im;
 
-        im = (ImageView) event.getSource();
+       resourceD1.setOnMouseClicked(event -> {
+           if(event.getClickCount()==2){
+           resourceD1Selected = true;
+           resourceD2Selected = false;
+           resourceDSelected = false;
+           goldD1Selected = false;
+           goldD2Selected = false;
+           goldDSelected = false;
+       }});
 
-        //一旦点击了一次，会亮起来，点击两次等于选择
-        if (im.getEffect() == null){
-            if (event.getClickCount() == 1){
-                im.setEffect(dropShadow);
-            }
-        }
-        if (im.getEffect() != null) {  //点击两次 等于选择了， 卡片会消失
-            if (event.getClickCount() == 2){
-                url = im.getImage().getUrl();
-                im.setImage(null);
-            }
-        }
+       resourceD2.setOnMouseClicked(event->{
+           if (event.getClickCount()==2){
+           resourceD1Selected = false;
+           resourceD2Selected = true;
+           resourceDSelected = false;
+           goldD1Selected = false;
+           goldD2Selected = false;
+           goldDSelected = false;
+       }});
+
+       resourceD.setOnMouseClicked(event->{
+           if (event.getClickCount() == 2) {
+               resourceD1Selected = false;
+               resourceD2Selected = false;
+               resourceDSelected = true;
+               goldD1Selected = false;
+               goldD2Selected = false;
+               goldDSelected = false;
+           }});
+
+       goldD1.setOnMouseClicked(event ->{
+           if (event.getClickCount()==2) {
+               resourceD1Selected = true;
+               resourceD2Selected = false;
+               resourceDSelected = false;
+               goldD1Selected = true;
+               goldD2Selected = false;
+               goldDSelected = false;
+           }});
+
+       goldD2.setOnMouseClicked(event ->{
+           if (event.getClickCount()==2) {
+               resourceD1Selected = false;
+               resourceD2Selected = false;
+               resourceDSelected = false;
+               goldD1Selected = false;
+               goldD2Selected = true;
+               goldDSelected = false;
+           }});
+
+       goldD.setOnMouseClicked(event->{
+           if (event.getClickCount()==2) {
+               resourceD1Selected = false;
+               resourceD2Selected = false;
+               resourceDSelected = false;
+               goldD1Selected = false;
+               goldD2Selected = false;
+               goldDSelected = true;
+           }});
 
     }
 
-    //pickCard 会获取你选择的卡片的url
-    //print id 会获取你选择的卡片的id (从url获取)
 
     /**
-     * from image url get image id
-     * @param url it is url of selected image
-     * @return id of selected image
+     * it takes id of selected card
+     * @param displayGCard it contains id of display gold card
+     * @param displayRCard it contains id of display resource card
      */
-    public Integer printId(String url){
-        Integer id;
-
-        String regEx = "[^0-9]";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(url);
-        String result = m.replaceAll("").trim();
-        id = Integer.parseInt(result);
-
-        return id;
+    public void printId(List<Integer> displayGCard, List<Integer> displayRCard){
+       if (resourceD1Selected || resourceD2Selected){
+           loc = LocationType.DISPLAYED_RESOURCE_LIST;
+           if ((resourceD1Selected)){
+               id = displayRCard.get(0);
+               resourceCard1.setImage(null);
+           } else if (resourceD2Selected) {
+               id = displayRCard.get(1);
+               resourceCard2.setImage(null);
+           }
+       } else if (goldD1Selected || goldD2Selected) {
+           loc = LocationType.DISPLAYED_GOLD_LIST;
+           if (goldD1Selected){
+               id = displayGCard.get(0);
+               goldCard1.setImage(null);
+           } else if (goldD2Selected) {
+               id = displayGCard.get(1);
+               goldCard2.setImage(null);
+           }
+       } else if (goldDSelected) {
+           loc = LocationType.GOLD_CARD_DECK;
+       } else if (resourceDSelected) {
+           loc = LocationType.RESOURCE_CARD_DECK;
+       }
     }
 
 
@@ -391,7 +461,7 @@ public class GameSceneController {
      * show personal goals in the pb
      * @param id is the id of the personal card chosed
      */
-    public void showPersonalGoal(Integer id){
+    public void showPersonalGoal(int id){
         Image im = new Image(getClass().getResourceAsStream("/img/cards/front/" + id + ".png"));
         personalGoal.setImage(im);
     }
@@ -432,7 +502,7 @@ public class GameSceneController {
      * it prints player color in the button
      * @param players is the player in the game
      */
-    public void printPlayerColor(List<Player> players){
+    public void printPlayerColorImage(List<Player> players){
 
         int i=0;
         Color c = null;
@@ -560,8 +630,6 @@ public class GameSceneController {
     }
 
     public void updateScore(Player players){
-        String name;
-        name = players.getNickname();
 
         if (players.getNickname() == name1.getText()){
             firstScore.setText(String.valueOf(players.getPoint()));
@@ -572,7 +640,7 @@ public class GameSceneController {
         } else if (players.getNickname() == name4.getText()) {
             fourthScore.setText(String.valueOf(players.getPoint()));
         }
-//test
+
     }
 
 

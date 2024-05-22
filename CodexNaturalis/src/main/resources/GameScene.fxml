@@ -11,232 +11,294 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="785.0" minWidth="1115.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.unhandle.GameSceneController">
+<AnchorPane minHeight="785.0" minWidth="1115.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.GameSceneController">
    <children>
-      <AnchorPane layoutX="272.0" layoutY="203.0" style="-fx-background-color: beige;" AnchorPane.topAnchor="203.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ScrollPane fx:id="playerBoard" hvalue="0.5" layoutX="5.0" prefHeight="500.0" prefWidth="600.0" vvalue="0.4">
-             <fx:include source="PlayerBoard.fxml" />
-            </ScrollPane>
-            <ImageView fx:id="personalGoal" fitHeight="102.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
-               <image>
-                  <Image url="@img/cards/front/27.png" />
-               </image>
-            </ImageView>
-            <HBox fx:id="handCards" alignment="CENTER" prefHeight="66.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="handCard1" fitHeight="67.0" fitWidth="109.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="112.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/utils/logo.png" />
+                     </image>
                      <HBox.margin>
-                        <Insets bottom="14.0" />
+                        <Insets right="50.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="handCard2" fitHeight="67.0" fitWidth="109.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets bottom="14.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <ImageView fx:id="handCard3" fitHeight="67.0" fitWidth="109.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets bottom="14.0" />
-                     </HBox.margin>
-                  </ImageView>
+                  <AnchorPane prefHeight="107.0" prefWidth="793.0" style="-fx-background-color: #e1e6df;">
+                     <children>
+                        <Button fx:id="playerOne" layoutX="31.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard1" prefHeight="66.0" prefWidth="65.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p1" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/utils/icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="playerTwo" layoutX="139.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard2" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p2" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/utils/icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="playerTree" layoutX="254.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard3" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p3" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/utils/icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="playerFour" layoutX="369.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard4" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p4" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/utils/icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label fx:id="nicknameOne" layoutX="53.0" layoutY="80.0" text="Label" />
+                        <Label fx:id="nicknameTwo" layoutX="165.0" layoutY="81.0" text="Label" />
+                        <Label fx:id="nicknameTree" layoutX="280.0" layoutY="80.0" text="Label" />
+                        <Label fx:id="nicknameFour" layoutX="395.0" layoutY="80.0" text="Label" />
+                     </children>
+                  </AnchorPane>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="474.0" prefWidth="1091.0">
+               <children>
+                  <AnchorPane>
+                     <children>
+                        <GridPane fx:id="desk" layoutX="-29.0" prefHeight="500.0" prefWidth="238.0" style="-fx-border-color: black;">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ImageView fx:id="commonGoal1" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                                 <cursor>
+                                    <Cursor fx:constant="CLOSED_HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="commonGoal2" fitHeight="80.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                                 <cursor>
+                                    <Cursor fx:constant="CLOSED_HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <Button fx:id="resourceD1" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="68.0" prefWidth="99.0" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@img/cards/back/5.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="9.0" />
+                                 </GridPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="CLOSED_HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="goldD1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="69.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fx:id="goldCard1" fitHeight="67.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@img/cards/back/22.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="6.0" />
+                                 </padding>
+                                 <GridPane.margin>
+                                    <Insets left="8.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button fx:id="resourceD2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="68.0" prefWidth="102.0" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fx:id="resourceCard2" fitHeight="78.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@img/cards/back/31.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="9.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button fx:id="goldD2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="68.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fx:id="goldCard2" fitHeight="70.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@img/cards/back/15.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="8.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button fx:id="resourceD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="69.0" prefWidth="100.0" GridPane.rowIndex="3">
+                                 <graphic>
+                                    <ImageView fx:id="resourceDeck" fitHeight="77.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@img/cards/back/31.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="9.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button fx:id="goldD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pickDeskCard" prefHeight="66.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <graphic>
+                                    <ImageView fx:id="goldDeck" fitHeight="77.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <cursor>
+                                          <Cursor fx:constant="CLOSED_HAND" />
+                                       </cursor>
+                                       <image>
+                                          <Image url="@img/cards/back/5.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="7.0" />
+                                 </GridPane.margin>
+                              </Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="S_RESIZE" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets right="6.0" />
+                     </HBox.margin>
+                  </AnchorPane>
+                  <AnchorPane style="-fx-background-color: beige;">
+                     <children>
+                        <ScrollPane fx:id="playerBoard" hvalue="0.5" prefHeight="500.0" prefWidth="614.0" vvalue="0.4">
+                         <fx:include source="PlayerBoard.fxml" />
+                        </ScrollPane>
+                        <ImageView fx:id="personalGoal" fitHeight="102.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                           <image>
+                              <Image url="@img/cards/front/27.png" />
+                           </image>
+                        </ImageView>
+                        <HBox fx:id="handCards" alignment="CENTER" prefHeight="66.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <children>
+                              <ImageView fx:id="handCard1" fitHeight="67.0" fitWidth="109.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="14.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="handCard2" fitHeight="67.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="14.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="handCard3" fitHeight="67.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets bottom="14.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="184.0" text="SCORE BOARD" />
+                        <ImageView fitHeight="338.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/utils/plateau.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Pane prefHeight="138.0" prefWidth="170.0" style="-fx-border-color: green;">
+                           <children>
+                              <GridPane layoutX="4.0" layoutY="8.0" prefHeight="102.0" prefWidth="176.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="97.5999755859375" minWidth="10.0" prefWidth="90.39996337890625" />
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="102.4000244140625" minWidth="10.0" prefWidth="93.60003662109375" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="18.0" minHeight="23.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="23.0" minHeight="23.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="23.0" minHeight="23.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="23.0" minHeight="23.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="23.0" minHeight="23.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="109.0" text="NICKNAME" textFill="#230303">
+                                       <GridPane.margin>
+                                          <Insets left="5.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="92.0" text="SCORE" textAlignment="CENTER" GridPane.columnIndex="1" />
+                                    <Label fx:id="name2" prefHeight="18.0" prefWidth="52.0" GridPane.rowIndex="2" />
+                                    <Label fx:id="name3" prefHeight="18.0" prefWidth="51.0" GridPane.rowIndex="3" />
+                                    <Label fx:id="name4" prefHeight="18.0" prefWidth="50.0" GridPane.rowIndex="4" />
+                                    <Label fx:id="firstScore" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="secondScore" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="thirdScore" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label fx:id="fourthScore" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="name1" prefHeight="18.0" prefWidth="52.0" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </Pane>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
          </children>
-      </AnchorPane>
-      <AnchorPane layoutX="58.0" layoutY="67.0" prefHeight="104.0" prefWidth="174.0">
-         <children>
-            <ImageView fitHeight="112.0" fitWidth="163.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/utils/logo.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="27.0" layoutY="196.0">
-         <children>
-            <GridPane fx:id="desk" layoutY="7.0" prefHeight="500.0" prefWidth="238.0" style="-fx-border-color: black;">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fx:id="commonGoal1" fitHeight="98.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="commonGoal2" fitHeight="98.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="98.0" fitWidth="103.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="resourceCard2" fitHeight="98.0" fitWidth="103.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="resourceDeck" fitHeight="98.0" fitWidth="103.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="goldCard1" fitHeight="98.0" fitWidth="103.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="goldCard2" fitHeight="98.0" fitWidth="103.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <ImageView fx:id="goldDeck" fitHeight="98.0" fitWidth="103.0" onMouseClicked="#pickCard" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </GridPane>
-         </children>
-         <cursor>
-            <Cursor fx:constant="S_RESIZE" />
-         </cursor>
-      </AnchorPane>
-      <AnchorPane layoutX="277.0" layoutY="59.0" prefHeight="107.0" prefWidth="818.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e6df" height="107.0" layoutX="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" width="819.0" />
-            <Button fx:id="playerOne" layoutX="31.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard1" prefHeight="66.0" prefWidth="72.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
-               <graphic>
-                  <ImageView fx:id="im_p1" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/utils/icon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="playerTwo" layoutX="139.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard2" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
-               <graphic>
-                  <ImageView fx:id="im_p2" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/utils/icon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="playerTree" layoutX="254.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard3" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
-               <graphic>
-                  <ImageView fx:id="im_p3" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/utils/icon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="playerFour" layoutX="369.0" layoutY="11.0" mnemonicParsing="false" onAction="#choosePlayerBoard4" prefHeight="66.0" prefWidth="79.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
-               <graphic>
-                  <ImageView fx:id="im_p4" fitHeight="58.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/utils/icon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Text fx:id="nicknameOne" layoutX="55.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="81.0" />
-            <Text fx:id="nicknameFour" layoutX="397.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="81.0" />
-            <Text fx:id="nicknameTree" layoutX="282.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="81.0" />
-            <Text fx:id="nicknameTwo" layoutX="167.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.topAnchor="81.0" />
-         </children>
-      </AnchorPane>
-      <Label alignment="CENTER" layoutX="887.0" layoutY="203.0" prefHeight="18.0" prefWidth="184.0" text="SCORE BOARD" />
-      <AnchorPane layoutX="887.0" layoutY="229.0" prefHeight="368.0">
-         <children>
-            <ImageView fitHeight="395.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/utils/plateau.png" />
-               </image>
-            </ImageView>
-            <GridPane fx:id="zeroToTwo" layoutX="30.0" layoutY="325.0" prefHeight="37.0" prefWidth="126.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="78.5999755859375" minWidth="10.0" prefWidth="43.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.199987792968756" minWidth="10.0" prefWidth="43.80001220703126" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.999975585937506" minWidth="10.0" prefWidth="50.199987792968756" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <GridPane fx:id="treeToFifteen" layoutX="6.0" layoutY="168.0" prefHeight="154.0" prefWidth="174.0">
-              <columnConstraints>
-                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="63.4000244140625" minWidth="10.0" prefWidth="43.79998779296875" />
-                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="57.79998779296875" minWidth="10.0" prefWidth="45.800048828125" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.60003662109375" minWidth="10.0" prefWidth="42.39997558593748" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.20001220703124" minWidth="10.0" prefWidth="46.4000244140625" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="36.000006103515624" minHeight="10.0" prefHeight="33.6" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="49.60001220703125" minHeight="10.0" prefHeight="40.20001220703124" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="50.99998779296875" minHeight="10.0" prefHeight="39.20000610351562" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="40.79999389648438" minHeight="10.0" prefHeight="40.79999389648438" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <GridPane fx:id="tewntyOneToTree" layoutX="8.0" layoutY="44.0" prefHeight="120.0" prefWidth="35.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <GridPane fx:id="nineteenToTwentyseven" layoutX="141.0" layoutY="49.0" prefHeight="112.0" prefWidth="35.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <GridPane fx:id="twentyfourToTwentysix" layoutX="30.0" layoutY="9.0" prefHeight="43.0" prefWidth="126.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.2666015625" minWidth="10.0" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="45.06668701171874" minWidth="10.0" prefWidth="36.5" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="78.79998779296875" minWidth="10.0" prefWidth="50.53326416015625" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <GridPane fx:id="twentyAndTwentynine" layoutX="71.0" layoutY="57.0" prefHeight="90.0" prefWidth="43.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="46.66667785644531" minHeight="10.0" prefHeight="44.000003051757815" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="61.066656494140624" minHeight="10.0" prefHeight="49.59999694824218" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-         </children>
-      </AnchorPane>
-      <VBox alignment="CENTER" disable="true" minHeight="100.0" minWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      </VBox>
    </children>
 </AnchorPane>
