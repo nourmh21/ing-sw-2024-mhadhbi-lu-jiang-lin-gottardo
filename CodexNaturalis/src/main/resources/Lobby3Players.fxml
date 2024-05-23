@@ -10,37 +10,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.controllers.For3PlayersLobby">
+<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.For3PlayersLobby">
    <children>
-      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e9e3ce; -fx-border-width: 7;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
-      <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="6.0">
+      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #695138; -fx-border-width: 1;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
             <Image url="@img/utils/Plant.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
             <Image url="@img/utils/Animal.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="6.0">
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
          <image>
             <Image url="@img/utils/Fungi.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0">
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8" AnchorPane.rightAnchor="0.0">
          <image>
             <Image url="@img/utils/Insect.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="221.0" layoutY="16.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="221.0" layoutY="16.0" maxHeight="750.0" maxWidth="1100.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="WAITING ROOM" textFill="#6b5339">
                <font>
-                  <Font name="Arial Black" size="48.0" />
+                  <Font name="Algerian" size="48.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="50.0" />
+                  <Insets bottom="75.0" />
                </VBox.margin>
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -54,8 +54,11 @@
                         </Button>
                         <Label fx:id="nickFirstPlayer" text="Player" textFill="#6b5339">
                            <font>
-                              <Font name="Arial" size="13.0" />
+                              <Font name="Arial" size="16.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
                      <HBox.margin>
@@ -71,8 +74,11 @@
                         </Button>
                         <Label fx:id="nickSecondPlayer" text="Player" textFill="#6b5339">
                            <font>
-                              <Font name="Arial" size="13.0" />
+                              <Font name="Arial" size="16.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
                      <HBox.margin>
@@ -88,14 +94,17 @@
                         </Button>
                         <Label fx:id="nickThirdPlayer" text="Player" textFill="#6b5339">
                            <font>
-                              <Font name="Arial" size="13.0" />
+                              <Font name="Arial" size="16.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
                         </Label>
                      </children>
                   </VBox>
                </children>
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="70.0" />
                </VBox.margin>
             </HBox>
          </children>
