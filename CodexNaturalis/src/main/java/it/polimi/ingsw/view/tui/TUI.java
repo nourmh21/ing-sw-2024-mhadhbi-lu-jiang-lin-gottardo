@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.TUI;
+package it.polimi.ingsw.view.tui;
 
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.controller.server.ImmutableLobby;
@@ -88,7 +88,6 @@ public class TUI implements UserInterface, Runnable{
         choice = in.nextLine();
         if (choice.equals("1")){
             Client.trySocketConnection(ip);
-
         }else if(choice.equals("2")){
             //
         }else {

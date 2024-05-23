@@ -1,8 +1,8 @@
-package it.polimi.ingsw.view.GUI.controllers;
+package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
-import it.polimi.ingsw.view.GUI.GUI;
-import it.polimi.ingsw.view.GUI.enums.SceneType;
+import it.polimi.ingsw.view.gui.GUI;
+import it.polimi.ingsw.view.gui.enums.SceneType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

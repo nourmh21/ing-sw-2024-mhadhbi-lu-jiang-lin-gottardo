@@ -1,7 +1,7 @@
-package it.polimi.ingsw.view.GUI.enums;
+package it.polimi.ingsw.view.gui.enums;
 
 public enum SceneType {
-    CONNECTION(""),
+    CONNECTION("/Connection.fxml"),
     LOGIN("/Login.fxml"),
     REGISTRATION("/Registration.fxml"),
     HOME("/Home.fxml"),
@@ -9,6 +9,8 @@ public enum SceneType {
     LOBBY_2("/Lobby2Players.fxml"),
     LOBBY_3("/Lobby3Players.fxml"),
     LOBBY_4("/Lobby4Players.fxml"),
+    INIT_CARD_CHOOSE("/ChooseInitialCard.fxml"),
+    PERSONAL_GOAL_CHOOSE("/ChoosePersonalGoal.fxml"),
     GAME(""),
     ENDGAME("");
 
