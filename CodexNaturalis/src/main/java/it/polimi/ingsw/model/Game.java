@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -301,12 +302,17 @@ public class Game extends Observable{
 
 
     /**
+     * it randoms color
      * @return the color get by random
      */
     public Color randomColor(){
+        ArrayList<Color> colors =  new ArrayList<>(List.of((Color.values())));
         Random random = new Random();
-        return Color.values()[random.nextInt(Color.values().length)];
-    }
+        int randomIndex = random.nextInt(colors.size());
+        Color randomColor = colors.get(randomIndex);
+        colors.remove(randomIndex);
 
+        return randomColor;
+    }
 
 }
