@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
+import it.polimi.ingsw.view.gui.GUIApplication;
 import it.polimi.ingsw.view.gui.enums.SceneType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -68,15 +69,10 @@ public class ForRegistration {
 
     @FXML
     void switchToLogin(ActionEvent event) throws IOException {
-        ((GUI) ClientController.getInstance().getView()).getGuiApplication().switchScene(SceneType.LOGIN);
+        ((GUIApplication) ClientController.getInstance().getView()).switchScene(SceneType.LOGIN);
     }
 
 
-    /**
-     * try registering for the game
-     * @param event
-     * @throws IOException
-     */
     @FXML
     void tryRegistration(ActionEvent event) throws IOException {
         nickname = nicknameField.getText();
@@ -103,7 +99,6 @@ public class ForRegistration {
         }
     }
 
-
     @FXML
     void tryNickname(ActionEvent event) {
         nickname = nicknameField.getText();
@@ -124,10 +119,6 @@ public class ForRegistration {
         return (!nickname.matches(".*\\s+.*") && nickname.matches(".*[a-zA-Z].*"));
     }
 
-    /**
-     * verify confirmed password
-     * @return
-     */
     private boolean checkPwdCoincidence(){
         return pwd2.equals(pwd1);
     }

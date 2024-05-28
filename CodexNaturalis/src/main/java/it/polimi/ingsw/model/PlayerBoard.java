@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model;
+
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.IllegalCoordinateInsertionException;
 import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
@@ -20,7 +21,7 @@ public class PlayerBoard {
     final private List<Integer>  x;
     final private List<Integer> y;
     final private int[] symbolsList;
-    final private ArrayList<int[]> availablePosition;
+    private List<int[]> availablePosition;
     final private ArrayList<int[]> forbiddenPosition;
 
     private boolean isInitCardPlaced;
@@ -258,7 +259,7 @@ public class PlayerBoard {
      *
      * @return list of AvailablePosition
      */
-    public ArrayList<int[]> getAvailablePosition() {
+    public List<int[]> getAvailablePosition() {
 
         return availablePosition;
     }
@@ -321,6 +322,7 @@ public class PlayerBoard {
                 }
                 break;
         }
+
         return x;
     }
 
@@ -523,10 +525,28 @@ public class PlayerBoard {
      * @param yy refers to y position
      */
     private void addAvailablePosition(int xx ,int yy){
-        availablePosition.add(new int[]{xx-1, yy+1});
-        availablePosition.add(new int[]{xx+1, yy+1});
-        availablePosition.add(new int[]{xx+1, yy-1});
-        availablePosition.add(new int[]{xx-1, yy-1});
+        boolean is1 = false;
+        boolean is2 = false;
+        boolean is3 = false;
+        boolean is4 = false;
+        for (int[] position: availablePosition ){
+            if (Arrays.equals(position,new int[]{xx-1, yy+1}))
+                is1 = true;
+            if (Arrays.equals(position,new int[]{xx+1, yy+1}))
+                is2 = true;
+            if (Arrays.equals(position,new int[]{xx+1, yy-1}))
+                is3 = true;
+            if (Arrays.equals(position,new int[]{xx-1, yy-1}))
+                is4 = true;
+        }
+        if (!is1)
+            availablePosition.add(new int[]{xx-1, yy+1});
+        if (!is2)
+            availablePosition.add(new int[]{xx+1, yy+1});
+        if (!is3)
+            availablePosition.add(new int[]{xx+1, yy-1});
+        if (!is4)
+            availablePosition.add(new int[]{xx-1, yy-1});
     }
 
 
