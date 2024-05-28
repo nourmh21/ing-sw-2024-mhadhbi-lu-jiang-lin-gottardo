@@ -1,17 +1,14 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enums.Color;
-import it.polimi.ingsw.observer.Observable;
-import it.polimi.ingsw.observer.Observer;
-import it.polimi.ingsw.model.enums.CardType;
-import it.polimi.ingsw.model.exceptions.EmptyDeckException;
-import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
 import it.polimi.ingsw.model.enums.GameState;
+import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
+import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.Observer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -118,7 +115,7 @@ public class Game extends Observable{
      * @throws InvalidNumOfConnectedPlayer when only one player is connected
      */
     public void addPlayers(String nickname) {
-        players.add(new Player(nickname, this));
+        players.add(new Player(nickname, this, randomColor()));
         numOfConnectedPlayers++;
 
         if (players.size() == numOfPlayer){

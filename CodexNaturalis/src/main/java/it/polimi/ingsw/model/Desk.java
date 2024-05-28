@@ -1,14 +1,13 @@
 package it.polimi.ingsw.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import it.polimi.ingsw.observer.Observable;
-import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
+import it.polimi.ingsw.observer.Observable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Desk is a class that contains:
@@ -175,7 +174,7 @@ public class Desk extends Observable{
      */
     public Integer pickOneDisplayedRCard(int idCard){
         Integer c = null;
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < displayedResourceCards.size(); i++){
             if(idCard == displayedResourceCards.get(i)){
                 c = displayedResourceCards.get(i);
                 displayedResourceCards.remove(i);
