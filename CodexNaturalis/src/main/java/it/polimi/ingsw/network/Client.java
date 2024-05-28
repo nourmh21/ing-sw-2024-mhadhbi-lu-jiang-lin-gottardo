@@ -5,7 +5,8 @@ import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.controller.client.SocketAction;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.network.socket.SendHeartbeat;
-import it.polimi.ingsw.view.TUI.TUI;
+import it.polimi.ingsw.view.gui.GUIApplication;
+import it.polimi.ingsw.view.tui.TUI;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,8 +16,6 @@ import java.net.SocketException;
 
 public class Client
 {
-
-
     public static void main( String[] args ) {
         boolean isTUI = false;
         for (String arg : args) {
@@ -27,22 +26,24 @@ public class Client
         }
 
         //for test
-        isTUI = true;
+        isTUI = false;
 
-        if (isTUI){
-
-            try {
+        try {
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c");
+            Process process = builder.start();
+            if (isTUI){
                 TUI tui = new TUI();
                 ClientController.getInstance().setView(tui);
                 new Thread(tui).start();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            }else {
+                GUIApplication gui = new GUIApplication();
+                ClientController.getInstance().setView(gui);
+                gui.launch();
             }
 
-        } else
-            ;
-
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -50,7 +51,7 @@ public class Client
     public static void trySocketConnection(String ip){
 
         try {
-            Socket socket = new Socket(ip, 49251);
+            Socket socket = new Socket(ip, 49257);
             OutputStream output = socket.getOutputStream();
             InputStream input = socket.getInputStream();
 
@@ -60,19 +61,22 @@ public class Client
             new SendHeartbeat(oos).start();
             ClientController.getInstance().setClientAction(new SocketAction(oos));
 
-            while (true){
+            new Thread(()-> {
                 try {
-                    Message message = (Message) ois.readUnshared();
-                    ClientController.getInstance().messageHandler(message);
+                    while (true){
+                        Message message = (Message) ois.readUnshared();
+                        ClientController.getInstance().messageHandler(message);
+                    }
                 }catch (SocketException e){
                     ClientController.getInstance().getView().showServerOffline();
                 }catch (IOException |ClassNotFoundException e){
                     e.printStackTrace();
                 }
-            }
+            }).start();
+
 
         } catch (SocketException e){
-            ClientController.getInstance().getView().showServerOffline();
+            //ClientController.getInstance().getView().showServerOffline();
         } catch (IOException e) {
             e.printStackTrace();
         }

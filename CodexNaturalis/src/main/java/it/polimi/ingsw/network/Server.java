@@ -1,18 +1,17 @@
 package it.polimi.ingsw.network;
 
 
-import it.polimi.ingsw.model.CardList;
+
 import it.polimi.ingsw.network.socket.ClientHandler;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private static final int port = 49251;
+    //如果抛不出来说明端口被占了
+    private static final int port = 49257;
     public static void main(String[] args){
-
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
