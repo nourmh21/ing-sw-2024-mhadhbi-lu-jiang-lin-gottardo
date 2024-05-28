@@ -559,4 +559,11 @@ public class PlayerBoard {
         }
     }
 
+    public boolean checkGoldCardCondition(GoldCard card){
+        return card.getCondition()[0] <= symbolsList[0]
+                & card.getCondition()[1] <= symbolsList[1]
+                & card.getCondition()[2] <= symbolsList[2]
+                & card.getCondition()[3] <= symbolsList[3];
+    }
+
 }
