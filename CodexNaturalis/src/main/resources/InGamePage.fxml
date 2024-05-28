@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="785.0" minWidth="1115.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForInGame">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="115.0" prefWidth="1115.0">
+               <children>
+                  <ImageView fitHeight="112.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/utils/logo.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="59.0" right="48.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <AnchorPane prefHeight="115.0" prefWidth="844.0" style="-fx-background-color: #e1e6df;">
+                     <children>
+                        <Button fx:id="playerOne" layoutX="36.0" layoutY="17.0" mnemonicParsing="false" onAction="#showPlayerBoard1" onMouseClicked="#showPlayerBoard1" prefHeight="73.0" prefWidth="64.0" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p1" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="playerTwo" layoutX="139.0" layoutY="11.0" mnemonicParsing="false" onAction="#showPlayerBoard2" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p2" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="playerTree" layoutX="254.0" layoutY="11.0" mnemonicParsing="false" onAction="#showPlayerBoard3" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p3" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="playerFour" layoutX="369.0" layoutY="11.0" mnemonicParsing="false" onAction="#showPlayerBoard4" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                           <graphic>
+                              <ImageView fx:id="im_p4" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Label fx:id="nicknameOne" alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="88.0" prefHeight="15.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <Label fx:id="nicknameTwo" alignment="CENTER" layoutX="147.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <Label fx:id="nicknameThree" alignment="CENTER" layoutX="262.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <Label fx:id="nicknameFour" alignment="CENTER" layoutX="377.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <ImageView fx:id="personalGoal" fitHeight="76.66" fitWidth="115.0" layoutX="490.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </AnchorPane>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="474.0" prefWidth="1091.0">
+               <children>
+                  <GridPane fx:id="desk" prefHeight="560.0" prefWidth="260.0" style="-fx-border-color: white">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="169.5" minHeight="10.0" prefHeight="117.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="246.0" minHeight="10.0" prefHeight="157.5" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="218.5" minHeight="10.0" prefHeight="132.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="164.0" minHeight="10.0" prefHeight="151.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="commonGoal1" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets top="15.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                        <ImageView fx:id="commonGoal2" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets top="15.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                        <Button fx:id="resourceC1" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <graphic>
+                              <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="resourceC2" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <graphic>
+                              <ImageView fx:id="resourceCard2" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <rotationAxis>
+                                    <Point3D />
+                                 </rotationAxis>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="goldC1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <graphic>
+                              <ImageView fx:id="goldCard1" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="goldC2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fx:id="goldCard2" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="CLOSED_HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="rDeck" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <graphic>
+                              <ImageView fx:id="resourceDeck" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="CLOSED_HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="gDeck" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <graphic>
+                              <ImageView fx:id="goldDeck" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="CLOSED_HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </GridPane>
+                  <AnchorPane prefHeight="560.0" prefWidth="650.0">
+                     <children>
+                        <ScrollPane fx:id="playerBoard" hvalue="0.5" prefHeight="560.0" prefWidth="650.0" vvalue="0.4" />
+                        <ImageView fx:id="personalGoal1" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="22.0" />
+                        <HBox fx:id="handCards" alignment="CENTER" prefHeight="66.0" prefWidth="198.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <children>
+                              <Button fx:id="hand1" mnemonicParsing="false" prefHeight="68.0" prefWidth="116.0">
+                                 <graphic>
+                                    <ImageView fx:id="handCard1" fitHeight="76.66" fitWidth="115.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="hand2" mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView fx:id="handCard2" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="hand3" mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView fx:id="handCard3" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </AnchorPane>
+                  <VBox alignment="CENTER" prefHeight="560.0" prefWidth="174.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="184.0" text="SCORE BOARD">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding></Label>
+                        <ImageView fitHeight="349.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/utils/plateau.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Pane prefHeight="177.0" prefWidth="171.0" style="-fx-border-color: green;">
+                           <children>
+                              <GridPane layoutX="-2.0" layoutY="8.0" prefHeight="160.0" prefWidth="182.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="98.0" minWidth="10.0" prefWidth="88.0" />
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="102.4000244140625" minWidth="10.0" prefWidth="88.5" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="37.0" minHeight="23.0" prefHeight="27.5" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="23.0" minHeight="9.0" prefHeight="18.5" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="23.0" minHeight="23.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="23.0" minHeight="23.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="23.0" minHeight="23.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="109.0" text="NICKNAME" textFill="#230303" GridPane.halignment="CENTER">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="92.0" text="SCORE" textAlignment="CENTER" GridPane.columnIndex="1" />
+                                    <Label fx:id="name2" prefHeight="18.0" prefWidth="70.0" GridPane.rowIndex="2" />
+                                    <Label fx:id="name3" prefHeight="18.0" prefWidth="51.0" GridPane.rowIndex="3" />
+                                    <Label fx:id="name4" prefHeight="18.0" prefWidth="50.0" GridPane.rowIndex="4" />
+                                    <Label fx:id="firstScore" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="secondScore" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="thirdScore" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label fx:id="fourthScore" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="name1" prefHeight="18.0" prefWidth="70.0" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </Pane>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="9.0" right="3.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets right="7.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
