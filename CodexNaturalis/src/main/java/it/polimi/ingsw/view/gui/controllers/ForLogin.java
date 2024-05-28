@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
-import it.polimi.ingsw.view.gui.GUI;
+import it.polimi.ingsw.view.gui.GUIApplication;
 import it.polimi.ingsw.view.gui.enums.SceneType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -68,7 +68,7 @@ public class ForLogin {
 
     @FXML
     void switchToRegister(ActionEvent event) throws IOException {
-        ((GUI)ClientController.getInstance().getView()).getGuiApplication().switchScene(SceneType.REGISTRATION);
+        ((GUIApplication)ClientController.getInstance().getView()).switchScene(SceneType.REGISTRATION);
     }
 
 
@@ -77,6 +77,7 @@ public class ForLogin {
         nickname = nicknameField.getText();
         pwd = pwdField.getText();
         if(checkNickname() && checkPwd()){
+            ((GUIApplication)(ClientController.getInstance().getView())).setTryNickname(nickname);
             ClientController.getInstance().getClientAction().access(nickname, pwd, true);
         } else{
             if (!checkPwd()){
