@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
-import it.polimi.ingsw.view.gui.GUI;
+import it.polimi.ingsw.view.gui.GUIApplication;
 import it.polimi.ingsw.view.gui.enums.SceneType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -69,7 +69,7 @@ public class ForRegistration {
 
     @FXML
     void switchToLogin(ActionEvent event) throws IOException {
-        ((GUI) ClientController.getInstance().getView()).getGuiApplication().switchScene(SceneType.LOGIN);
+        ((GUIApplication) ClientController.getInstance().getView()).switchScene(SceneType.LOGIN);
     }
 
 
