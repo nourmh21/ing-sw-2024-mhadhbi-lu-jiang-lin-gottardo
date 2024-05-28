@@ -1,7 +1,5 @@
 package it.polimi.ingsw.controller.client;
 
-import it.polimi.ingsw.controller.client.ClientAction;
-import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.general.*;
 

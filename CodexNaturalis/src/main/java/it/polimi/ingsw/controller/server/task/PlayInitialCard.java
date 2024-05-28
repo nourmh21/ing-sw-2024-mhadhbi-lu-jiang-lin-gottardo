@@ -27,7 +27,7 @@ public class PlayInitialCard implements Runnable{
                 if (p.getNickname().equals(nickname)){
                     if (!p.getBoard().getIsInitCardPlaced() &&
                             p.getInitialCard().equals(initialCard.getIdCard()))
-                        p.getBoard().placeInitCard(initialCard, isBackside);
+                        p.updatePoint(p.getBoard().placeInitCard(initialCard, isBackside));
                     break;
                 }
             }
