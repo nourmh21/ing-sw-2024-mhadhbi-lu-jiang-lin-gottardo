@@ -23,6 +23,10 @@ public class For2PlayersLobby {
 
     Image playerIcon = new Image(getClass().getResourceAsStream("/img/utils/playersIcon.png"));
 
+    /**
+     * update lobby status
+     * @param newStatus
+     */
     public void updateStatus(List<String> newStatus){
         players = newStatus;
         if (players.size() == 1){

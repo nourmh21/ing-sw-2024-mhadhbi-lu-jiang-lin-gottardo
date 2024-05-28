@@ -11,6 +11,11 @@ public class ForHome {
     @FXML
     private Button play;
 
+    /**
+     * try to play a match
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void playGame(ActionEvent event) throws IOException {
         ClientController.getInstance().getClientAction().joinGame();

@@ -34,13 +34,20 @@ public class ForPersonalGoal {
         personal2.setImage(im2);
     }
 
-
+    /**
+     * try to choose the first personal goal
+     * @param event on mouse click
+     */
     @FXML
     void tryGoal1(MouseEvent event) {
         ((GUIApplication)ClientController.getInstance().getView()).setPersonalGoal(goals[0]);
         ClientController.getInstance().getClientAction().choosePersonalGoal(goals[0]);
     }
 
+    /**
+     * try to choose the second personal goal
+     * @param event on mouse click
+     */
     @FXML
     void tryGoal2(MouseEvent event) {
         ((GUIApplication)ClientController.getInstance().getView()).setPersonalGoal(goals[1]);

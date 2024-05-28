@@ -26,6 +26,10 @@ public class For3PlayersLobby {
     private List<String> players;
     Image playerIcon = new Image(getClass().getResourceAsStream("/img/utils/playersIcon.png"));
 
+    /**
+     * update lobby status
+     * @param newStatus
+     */
     public void updateStatus(List<String> newStatus){
         if (players == null){
             players = newStatus;

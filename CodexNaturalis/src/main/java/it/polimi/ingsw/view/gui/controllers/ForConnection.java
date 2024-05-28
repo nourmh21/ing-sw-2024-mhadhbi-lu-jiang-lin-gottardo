@@ -33,6 +33,7 @@ public class ForConnection {
     @FXML
     private TextField ip;
 
+
     @FXML
     void getRMI(ActionEvent event) {
         if(rmi.isSelected() && ip_address.isEmpty()){
@@ -58,6 +59,11 @@ public class ForConnection {
         }
     }
 
+    /**
+     * try to connect to server with rmi or socket
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void trySubmit(ActionEvent event) throws IOException {
         ip_address = ip.getText();

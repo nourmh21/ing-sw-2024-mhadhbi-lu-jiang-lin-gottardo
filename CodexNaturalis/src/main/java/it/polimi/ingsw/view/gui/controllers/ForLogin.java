@@ -72,6 +72,11 @@ public class ForLogin {
     }
 
 
+    /**
+     * try login in game
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void tryLogin(ActionEvent event) throws IOException {
         nickname = nicknameField.getText();
@@ -90,8 +95,6 @@ public class ForLogin {
             }
         }
     }
-
-
 
     private boolean checkPwd(){
         return pwd.length() >= 6;

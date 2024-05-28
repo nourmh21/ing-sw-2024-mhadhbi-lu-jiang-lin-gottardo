@@ -47,6 +47,11 @@ public class ForChooseNumOfPlayers {
         create.requestFocus();
     }
 
+    /**
+     * try to inform server about players' number for new game
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void submit(ActionEvent event) throws IOException {
         if(two.isSelected()){

@@ -38,11 +38,19 @@ public class ForInitialCard {
         initialBack1.setImage(im2);
     }
 
+    /**
+     * try to choose back side of initial card
+     * @param event on mouse click
+     */
     @FXML
     void SelectBackSide(MouseEvent event) {
         ClientController.getInstance().getClientAction().playInitCard(idCard,true);
     }
 
+    /**
+     * try to choose front side of initial card
+     * @param event on mouse click
+     */
     @FXML
     void SelectFrontSide(MouseEvent event) {
         ClientController.getInstance().getClientAction().playInitCard(idCard,false);
