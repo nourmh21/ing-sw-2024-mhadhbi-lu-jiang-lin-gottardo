@@ -34,20 +34,22 @@ public class Player extends Observable {
     private Integer[] initialPossibleGoals;
 
     private boolean isConnected;
+
+    private boolean isPersonalGoalChosen;
     private PlayerBoard board;
     private List<Integer> handCards;
 
     private Integer initialCard;
 
 
-    public Player(String nickname, Game game){
+    public Player(String nickname, Game game, Color color){
         this.nickname = nickname;
-        //this.position = position;
+        isPersonalGoalChosen = false;
         handCards = new ArrayList<>();
         point = 0;
         goalPoint = 0;
         personalGoal = null;
-        //playerColor = color;
+        playerColor = color;
         isConnected = true;
         board = new PlayerBoard();
         initialPossibleGoals = new Integer[2];
@@ -76,8 +78,18 @@ public class Player extends Observable {
 
     public void setPersonalGoal(Integer idCard){
         personalGoal = idCard;
+        setPersonalGoalChosen();
     }
 
+    public void setPersonalGoalChosen() {
+        isPersonalGoalChosen = true;
+        notify_player_status(new ImmutablePlayer(this, this.getBoard()));
+    }
+
+
+    public boolean isPersonalGoalChosen() {
+        return isPersonalGoalChosen;
+    }
 
     public void setInitialPossibleGoals(Integer[] goals){
         initialPossibleGoals = goals;
@@ -211,6 +223,7 @@ public class Player extends Observable {
     public void removeHandCard(Integer idCard){
         handCards.remove(idCard);
         //
+        notify_hand_cards(this);
         notify_player_status(new ImmutablePlayer(this,this.board));
     }
 

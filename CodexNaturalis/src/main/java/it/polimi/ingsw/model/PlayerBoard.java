@@ -15,6 +15,8 @@ public class PlayerBoard {
     final private List<Symbol> bottomLeftAngle;
     final private List<Symbol> bottomRightAngle;
     final private List<Symbol> cardKingdom;
+
+    List<Boolean> cardSide;
     final private List<Integer>  x;
     final private List<Integer> y;
     final private int[] symbolsList;
@@ -51,6 +53,7 @@ public class PlayerBoard {
         topRightAngle = new ArrayList<>();
         bottomLeftAngle = new ArrayList<>();
         bottomRightAngle = new ArrayList<>();
+        cardSide = new ArrayList<>();
         cardKingdom = new ArrayList<>();
         symbolsList = new int[7];
         availablePosition = new ArrayList<>();
@@ -58,6 +61,9 @@ public class PlayerBoard {
         isInitCardPlaced = false;
     }
 
+    public List<Boolean> getCardSide() {
+        return cardSide;
+    }
 
     public boolean getIsInitCardPlaced() {
         return isInitCardPlaced;
@@ -76,6 +82,7 @@ public class PlayerBoard {
         int idCard = card.getIdCard();
         if (idCard>80||idCard<1) {throw new InvalidIdCardException();}
         boardCards.add(idCard);
+        cardSide.add(isBackSide);
         removeAvailablePosition(new int[]{xx,yy});
         addAvailablePosition(xx,yy);
         cardKingdom.add(card.getKingdom());
@@ -95,7 +102,7 @@ public class PlayerBoard {
      * @param isBackSide if the card is used on the back side
      *@throws InvalidIdCardException when id is not for initial card
      */
-    public void placeInitCard(InitialCard initialCard,boolean isBackSide)  throws InvalidIdCardException {
+    public int placeInitCard(InitialCard initialCard,boolean isBackSide)  throws InvalidIdCardException {
         int idCard = initialCard.getIdCard();
         if (idCard > 102 || idCard < 97) {
             throw new InvalidIdCardException();
@@ -103,6 +110,7 @@ public class PlayerBoard {
 
         boardCards.add(idCard);
         cardKingdom.add(initialCard.getKingdom());
+        cardSide.add(isBackSide);
         x.add(0);
         y.add(0);
         addAvailablePosition(0,0);
@@ -139,6 +147,7 @@ public class PlayerBoard {
             symbolsList[5] = 0;
             symbolsList[6] = 0;
             isInitCardPlaced = true;
+            return 0;
 
     }
 
