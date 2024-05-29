@@ -43,6 +43,8 @@ public class Desk extends Observable{
         objectiveCardDeck = new ArrayList<>(16);
         displayedResourceCards = new ArrayList<>(2);
         displayedGoldCards = new ArrayList<>(2);
+        nextGoldCard = null;
+        nextResourceCard = null;
 
         for (int i = 1; i <= 40; i++){
             resourceCardDeck.add(i);
@@ -129,11 +131,8 @@ public class Desk extends Observable{
      * Fill the list of displayed resource card with resource card
      */
     public void updateDisplayedRCard(){
-        while (displayedResourceCards.size() < 2){
-            if (nextResourceCard != null){
-                displayedResourceCards.add(pickNextRCard());
-                updateNextRCard();
-            }
+        if (nextResourceCard != null){
+            displayedResourceCards.add(pickNextRCard());
         }
     }
 
@@ -142,11 +141,8 @@ public class Desk extends Observable{
      * Fill the list of displayed gold card with gold card
      */
     public void updateDisplayedGCard(){
-        while(displayedGoldCards.size() < 2){
-            if (nextGoldCard != null){
-                displayedGoldCards.add(pickNextGCard());
-                updateNextGCard();
-            }
+        if (nextGoldCard != null){
+            displayedGoldCards.add(pickNextGCard());
         }
     }
 

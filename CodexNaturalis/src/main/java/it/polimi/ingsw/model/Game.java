@@ -26,6 +26,7 @@ public class Game extends Observable{
     private Player currentPlayer; //indicates the current player of the game
     public Player firstPlayer;
     private int round;
+    ArrayList<Color> colors;
 
 
     /***
@@ -43,6 +44,7 @@ public class Game extends Observable{
         idGame = random.nextInt(1000000);
         gameState = GameState.SETUP_PHASE_1;
         isLastRound =false;
+        colors = new ArrayList<>(List.of((Color.values())));
         //
 
     }
@@ -303,7 +305,6 @@ public class Game extends Observable{
      * @return the color get by random
      */
     public Color randomColor(){
-        ArrayList<Color> colors =  new ArrayList<>(List.of((Color.values())));
         Random random = new Random();
         int randomIndex = random.nextInt(colors.size());
         Color randomColor = colors.get(randomIndex);

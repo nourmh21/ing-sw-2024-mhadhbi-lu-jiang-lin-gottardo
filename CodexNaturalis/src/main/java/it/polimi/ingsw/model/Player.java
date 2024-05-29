@@ -153,6 +153,7 @@ public class Player extends Observable {
      */
     public void addGoalPoint(int goalPoint) {
         this.goalPoint += goalPoint;
+        updatePoint(goalPoint);
     }
 
 
