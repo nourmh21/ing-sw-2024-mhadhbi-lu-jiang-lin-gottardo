@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
@@ -13,33 +14,42 @@
    <children>
       <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="450.0" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="649.0" text="Choose your personal goal card:" textFill="#6b5339">
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="489.0" style="-fx-background-color: #e9e3ce; -fx-background-radius: 10;" text="Choose your personal goal card:" textFill="#6b5339">
                <font>
-                  <Font name="Verdana" size="24.0" />
+                  <Font name="Candara Bold" size="24.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="30.0" />
+                  <Insets bottom="65.0" />
                </VBox.margin>
             </Label>
             <HBox alignment="CENTER">
                <children>
                   <Button fx:id="personalGoal1" mnemonicParsing="false" onMouseClicked="#tryGoal1" style="-fx-border-color: #6b5339; -fx-background-radius: 5; -fx-border-radius: 5;">
                      <graphic>
-                        <ImageView fx:id="personal1" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="personal1" fitHeight="111.33333" fitWidth="167.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                      <HBox.margin>
-                        <Insets right="50.0" />
+                        <Insets right="40.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="personalGoal2" mnemonicParsing="false" onMouseClicked="#tryGoal2" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #6b5339;">
                      <graphic>
-                        <ImageView fx:id="personal2" fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="personal2" fitHeight="111.33333" fitWidth="167.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
-               <padding>
-                  <Insets bottom="30.0" />
-               </padding>
+               <VBox.margin>
+                  <Insets bottom="35.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>
