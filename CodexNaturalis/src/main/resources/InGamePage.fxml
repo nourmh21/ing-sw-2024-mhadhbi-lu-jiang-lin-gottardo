@@ -33,9 +33,9 @@
                   </ImageView>
                   <AnchorPane prefHeight="115.0" prefWidth="844.0" style="-fx-background-color: #e1e6df;">
                      <children>
-                        <Button fx:id="playerOne" layoutX="36.0" layoutY="17.0" mnemonicParsing="false" onAction="#showPlayerBoard1" onMouseClicked="#showPlayerBoard1" prefHeight="73.0" prefWidth="64.0" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                        <Button fx:id="playerOne" layoutX="36.0" layoutY="17.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="64.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
                            <graphic>
-                              <ImageView fx:id="im_p1" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="im_p1" fitHeight="69.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -44,26 +44,41 @@
                                  </viewport>
                               </ImageView>
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
                         </Button>
-                        <Button fx:id="playerTwo" layoutX="139.0" layoutY="11.0" mnemonicParsing="false" onAction="#showPlayerBoard2" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                        <Button fx:id="playerTwo" layoutX="139.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
                            <graphic>
-                              <ImageView fx:id="im_p2" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="im_p2" fitHeight="69.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor></ImageView>
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
                         </Button>
-                        <Button fx:id="playerTree" layoutX="254.0" layoutY="11.0" mnemonicParsing="false" onAction="#showPlayerBoard3" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                        <Button fx:id="playerThree" layoutX="254.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
                            <graphic>
-                              <ImageView fx:id="im_p3" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="im_p3" fitHeight="69.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
                         </Button>
-                        <Button fx:id="playerFour" layoutX="369.0" layoutY="11.0" mnemonicParsing="false" onAction="#showPlayerBoard4" style="-fx-background-color: white;" AnchorPane.topAnchor="17.0">
+                        <Button fx:id="playerFour" layoutX="369.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;" AnchorPane.topAnchor="17.0">
                            <graphic>
-                              <ImageView fx:id="im_p4" fitHeight="65.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="im_p4" fitHeight="69.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
                         </Button>
-                        <Label fx:id="nicknameOne" alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="88.0" prefHeight="15.0" prefWidth="60.0" textAlignment="CENTER" />
-                        <Label fx:id="nicknameTwo" alignment="CENTER" layoutX="147.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
-                        <Label fx:id="nicknameThree" alignment="CENTER" layoutX="262.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
-                        <Label fx:id="nicknameFour" alignment="CENTER" layoutX="377.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <Label fx:id="nicknameOne" alignment="CENTER" contentDisplay="CENTER" layoutX="47.0" layoutY="88.0" prefHeight="15.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <Label fx:id="nicknameTwo" alignment="CENTER" layoutX="150.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <Label fx:id="nicknameThree" alignment="CENTER" layoutX="265.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
+                        <Label fx:id="nicknameFour" alignment="CENTER" layoutX="380.0" layoutY="88.0" prefWidth="60.0" textAlignment="CENTER" />
                         <ImageView fx:id="personalGoal" fitHeight="76.66" fitWidth="115.0" layoutX="490.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                      <HBox.margin>
@@ -99,7 +114,7 @@
                               <Insets top="15.0" />
                            </GridPane.margin>
                         </ImageView>
-                        <Button fx:id="resourceC1" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Button fx:id="resourceC1" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: transparent;" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <graphic>
                               <ImageView fx:id="resourceCard1" accessibleRole="BUTTON" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
@@ -114,7 +129,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="resourceC2" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Button fx:id="resourceC2" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <graphic>
                               <ImageView fx:id="resourceCard2" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
@@ -135,7 +150,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="goldC1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button fx:id="goldC1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: transparent;" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <graphic>
                               <ImageView fx:id="goldCard1" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
@@ -150,7 +165,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="goldC2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button fx:id="goldC2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -165,7 +180,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="rDeck" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Button fx:id="rDeck" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: transparent;" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <graphic>
                               <ImageView fx:id="resourceDeck" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
@@ -180,7 +195,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="gDeck" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Button fx:id="gDeck" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#activateDeskClick" prefHeight="76.66" prefWidth="115.0" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <graphic>
                               <ImageView fx:id="goldDeck" fitHeight="76.66" fitWidth="115.0" pickOnBounds="true" preserveRatio="true">
                                  <cursor>
