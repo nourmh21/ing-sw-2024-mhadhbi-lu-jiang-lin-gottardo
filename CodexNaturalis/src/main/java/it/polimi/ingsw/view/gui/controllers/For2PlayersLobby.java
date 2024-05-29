@@ -21,7 +21,7 @@ public class For2PlayersLobby {
 
     private List<String> players;
 
-    Image playerIcon = new Image(getClass().getResourceAsStream("/img/utils/playersIcon.png"));
+    Image playerIcon = new Image(getClass().getResourceAsStream("/img/playerIcon/beige.png"));
 
     /**
      * update lobby status
