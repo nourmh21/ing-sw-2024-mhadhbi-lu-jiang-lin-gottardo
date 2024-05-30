@@ -83,7 +83,7 @@ public class SocketAction implements ClientAction {
     @Override
     public void drawCard(LocationType location, Integer idCard) {
         try {
-            oos.reset();
+            //oos.reset();
             if (idCard != null)
                 oos.writeObject(new DrawCardMessage(location,idCard));
             else
@@ -91,7 +91,7 @@ public class SocketAction implements ClientAction {
         }catch (SocketException exception){
             ClientController.getInstance().getView().showServerOffline();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+           e.printStackTrace();
         }
     }
 

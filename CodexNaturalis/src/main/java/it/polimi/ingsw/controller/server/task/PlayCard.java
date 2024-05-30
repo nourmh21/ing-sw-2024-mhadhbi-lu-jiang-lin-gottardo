@@ -75,7 +75,7 @@ public class PlayCard implements Runnable{
 
 
     private boolean isCardConditionFulfilled(PlayerBoard board){
-        if (card.getType() == CardType.GOLD){
+        if (card.getType() == CardType.GOLD && !isBackSide){
             GoldCard goldCard = (GoldCard) card;
             return board.checkGoldCardCondition(goldCard);
         }
