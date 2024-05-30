@@ -93,7 +93,10 @@ public class PlayerBoard {
         y.add(yy);
         addSymbolsList(card,isBackSide,xx,yy);
         updateAvailablePosition();
-        return calculatePoint(card , index);
+        if (isBackSide)
+            return 0;
+        else
+            return calculatePoint(card , index);
     }
 
 
