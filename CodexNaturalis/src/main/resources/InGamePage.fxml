@@ -282,7 +282,7 @@
                            <children>
                               <Button fx:id="hand1" mnemonicParsing="false" prefHeight="68.0" prefWidth="116.0">
                                  <graphic>
-                                    <ImageView fx:id="handCard1" fitHeight="80.0" fitWidth="120.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="handCard1" fitHeight="80.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
                               </Button>
                               <Button fx:id="hand2" mnemonicParsing="false">
