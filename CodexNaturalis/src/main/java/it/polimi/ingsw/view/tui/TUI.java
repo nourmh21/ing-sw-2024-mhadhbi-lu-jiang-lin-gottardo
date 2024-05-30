@@ -1,11 +1,12 @@
 package it.polimi.ingsw.view.tui;
 
 import it.polimi.ingsw.controller.client.ClientController;
-import it.polimi.ingsw.controller.server.ImmutableLobby;
 import it.polimi.ingsw.message.enums.LocationType;
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
+import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.view.UserInterface;
@@ -34,6 +35,8 @@ public class TUI implements UserInterface, Runnable{
 
     private Optional<Integer> myPersonalGoal;
 
+    private Optional<HashMap<ChatMessage, Boolean>> chatMessages;
+
 
 
     public TUI() throws IOException {
@@ -49,6 +52,7 @@ public class TUI implements UserInterface, Runnable{
         possiblePersonalGoals = Optional.empty();
         myNumOfPlayerChoose = Optional.empty();
         myPersonalGoal = Optional.empty();
+        chatMessages = Optional.empty();
     }
 
     @Override
@@ -97,7 +101,7 @@ public class TUI implements UserInterface, Runnable{
 
     }
 
-
+    @Override
     public void connectionSuccess(){
         out.println();
         out.println("[Connection successful]");
@@ -202,6 +206,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
+    @Override
     public void loginSuccess(){
         out.println();
         out.println("[Login Success]");
@@ -210,7 +215,7 @@ public class TUI implements UserInterface, Runnable{
         home();
     }
 
-
+    @Override
     public void loginFailed(int type){
         out.println();
         if (type == 1){
@@ -223,8 +228,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-
-
+    @Override
     public void registrationFailed(){
         out.println("[Nickname already exists]");
         registration();
@@ -273,6 +277,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
+    @Override
     public void askNumOfPlayer(){
         out.println();
         out.println("[No waiting room available in this moment, you're creating one]");
@@ -303,6 +308,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
+    @Override
     public void setLobbyStatus(ImmutableLobby lobby){
         if (myNumOfPlayerChoose.isPresent() && this.lobby.isEmpty())
             if (myNumOfPlayerChoose.get() != lobby.getNumOfPlayer()){
@@ -321,7 +327,6 @@ public class TUI implements UserInterface, Runnable{
 
 
     public void showLobbyStatus(){
-
         if (lobby.isPresent()){
             out.println("WAITING ROOM ["+ lobby.get().getNumOfPlayer()+"]");
             for (String player: lobby.get().getPlayers())
@@ -333,6 +338,7 @@ public class TUI implements UserInterface, Runnable{
 
 
     //this will call showInitGameStatus() in specific condition
+    @Override
     public void setPlayerStatus(ImmutablePlayer player){
 
         if (players.isEmpty())
@@ -363,15 +369,16 @@ public class TUI implements UserInterface, Runnable{
 
 
     private void updatePlayerStatus(ImmutablePlayer newStatus){
+        ImmutablePlayer old = null;
         for (ImmutablePlayer oldStatus: players.get()) {
             if (oldStatus.getNickname().equals(newStatus.getNickname())){
-                players.get().remove(oldStatus);
-                players.get().add(newStatus);
-                if (newStatus.getNickname().equals(myNickname)){
-                    me = Optional.of(newStatus);
-                }
+                old = oldStatus;
                 break;
             }
+        }
+        players.get().set(players.get().indexOf(old),newStatus);
+        if (newStatus.getNickname().equals(myNickname)){
+            me = Optional.of(newStatus);
         }
     }
 
@@ -414,7 +421,7 @@ public class TUI implements UserInterface, Runnable{
         }
     }
 
-
+    @Override
     public void setGameStatus(ImmutableGame newStatus){
         /*used for CmdLaunchTest:
         out.println();
@@ -422,6 +429,9 @@ public class TUI implements UserInterface, Runnable{
          */
         //the oldStatus state
         ImmutableGame oldStatus = null;
+
+        if (chatMessages.isEmpty())
+            chatMessages = Optional.of(new HashMap<>());
 
         if (game.isPresent()) {
             oldStatus = game.get();
@@ -506,15 +516,20 @@ public class TUI implements UserInterface, Runnable{
 
         if (newStatus.getGameState() == GameState.FINISHED){
             out.println("[GAME ENDED]");
-            game = Optional.empty();
-            lobby = Optional.empty();
-            players = Optional.empty();
-            handCards = Optional.empty();
-            me = Optional.empty();
-            myNumOfPlayerChoose = Optional.empty();
-            myPersonalGoal = Optional.empty();
+            removeLastGameInfo();
             home();
         }
+    }
+
+    private void removeLastGameInfo(){
+        game = Optional.empty();
+        lobby = Optional.empty();
+        players = Optional.empty();
+        handCards = Optional.empty();
+        me = Optional.empty();
+        myNumOfPlayerChoose = Optional.empty();
+        myPersonalGoal = Optional.empty();
+        chatMessages = Optional.empty();
     }
 
 
@@ -555,6 +570,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
+    @Override
     public void setPossiblePersonalGoals(Integer[] possiblePersonalGoals) {
         this.possiblePersonalGoals = Optional.of(possiblePersonalGoals);
         askPersonalGoalChoose();
@@ -580,12 +596,7 @@ public class TUI implements UserInterface, Runnable{
         }
     }
 
-    public void personalGoalChooseFailed(){
-        out.println("[Action failed: invalid goal]");
-        askPersonalGoalChoose();
-    }
-
-
+    @Override
     public void setHandCards(List<Integer> newHandCardsStatus) {
         if (handCards.isEmpty()){
             handCards = Optional.of(newHandCardsStatus);
@@ -646,11 +657,14 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
+    @Override
     public void playCardFailed(){
-        out.println("[Action failed: invalid position]");
+        out.println("[Action failed: gold card's condition not fulfilled]");
         askPlayHandCard();
     }
 
+
+    @Override
     public void drawCardFailed(){
         out.println();
         out.println("[Action failed: invalid card id]");
@@ -797,6 +811,8 @@ public class TUI implements UserInterface, Runnable{
 
     }
 
+
+    @Override
     public void showFinalResult(ImmutableEndGameInfo info){
         out.println();
         out.println("FINAL SCORE BOARD:");
@@ -810,6 +826,7 @@ public class TUI implements UserInterface, Runnable{
 
     }
 
+
     public void showWinTitle(){
         out.println("\u001B[38;4;230m");
         out.println("\u001B[38;5;78m ██   ██  ███████  ██   ██     ██     ██     ██  ██  ████    ██   ");
@@ -820,7 +837,113 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
+    public void showChatService(){
+        out.println("CHAT SERVICE:");
+        out.println("1- Send a public message");
+        out.println("2- Send a private message");
+        out.println("3- View read messages");
+        out.println("4- View unread messages");
+        out.println("5- EXIT from chat");
+        String choice = in.nextLine();
+        switch (choice){
+            case "1":
+                sendPublicMessage();
+                break;
+            case "2":
+                sendPrivateMessage();
+                break;
+            case "3":
+                viewReadChatMessages();
+                break;
+            case "4":
+                viewUnReadChatMessages();
+                break;
+            case "5":
+                break;
+            default:
+                invalidChoice();
+                showChatService();
+                break;
+        }
+    }
 
+    public void addNewMessage(ChatMessage message){
+        chatMessages.ifPresent(chatMessageBooleanHashMap -> chatMessageBooleanHashMap.put(message, false));
+    }
+
+    private void sendPublicMessage(){
+        out.print("Please enter the message content: ");
+        String message = in.nextLine();
+        //
+
+        showChatService();
+    }
+
+    private void sendPrivateMessage(){
+        out.println("Who do you want to send the message to?");
+        List<String> nicknames = new ArrayList<>(players.get().stream()
+                .map(ImmutablePlayer::getNickname).toList());
+        nicknames.remove(myNickname);
+        for (int i = 0; i < nicknames.size(); i++) {
+            out.println((i+1) + "- " + nicknames.get(i));
+        }
+        out.println((nicknames.size()+1) + "- back to chat service");
+        String choice = in.nextLine();
+        try {
+            int intChoice = Integer.parseInt(choice);
+            if (intChoice > 0 && intChoice <= nicknames.size()-1){
+                out.print("Please enter the message content: ");
+                String message = in.nextLine();
+                //
+
+                showChatService();
+            }else if (intChoice == nicknames.size()){
+                showChatService();
+            }else {
+                invalidChoice();
+                sendPrivateMessage();
+            }
+        }catch (NumberFormatException e){
+            invalidChoice();
+            sendPrivateMessage();
+        }
+    }
+
+
+    public void viewUnReadChatMessages(){
+        Iterator<ChatMessage> iterator = chatMessages.get().keySet().iterator();
+        if (!iterator.hasNext()){
+            out.println("You haven't received any new messages");
+            showChatService();
+        }else {
+            while (iterator.hasNext()){
+                ChatMessage message = iterator.next();
+                if (!chatMessages.get().get(message)){
+                    out.println(message.getSender() + ": " + message.getContent());
+                    chatMessages.get().replace(message,true);
+                }
+            }
+            showChatService();
+        }
+
+    }
+
+    public void viewReadChatMessages(){
+        Iterator<ChatMessage> iterator = chatMessages.get().keySet().iterator();
+        if (!iterator.hasNext()){
+            out.println("You never received any messages");
+            showChatService();
+        }else {
+            while (iterator.hasNext()){
+                ChatMessage message = iterator.next();
+                if (chatMessages.get().get(message)){
+                    out.println(message.getSender() + ": " + message.getContent());
+                }
+            }
+            showChatService();
+        }
+
+    }
 
 
 
@@ -868,9 +991,14 @@ public class TUI implements UserInterface, Runnable{
         out.println("4- Send a message");
     }
 
-    public void askTurnOptions(){
+    public void askTurnOptions_1(){
         out.println("5- Play a card");
     }
+
+    public void askTurnOptions_2(){
+        out.println("5- Draw a card from desk");
+    }
+
 
     public void askWhichPlayerBoard(){
         out.println("Whose board do you want to see?");
@@ -900,18 +1028,21 @@ public class TUI implements UserInterface, Runnable{
         out.println("Invalid choice");
     }
 
+    @Override
     public void showServerOffline(){
+        removeLastGameInfo();
+        myNickname = null;
+        tryNickname = null;
         out.println();
         out.println("[Server offline, please try reconnection]");
         out.println();
         askServerIP();
     }
 
-
     public void showPersonalGoal(){
         if (myPersonalGoal.isPresent()){
             out.println();
-            out.println("My personal goal: "+myPersonalGoal.get());
+            out.println("My personal goal: " + myPersonalGoal.get());
         }
     }
 }

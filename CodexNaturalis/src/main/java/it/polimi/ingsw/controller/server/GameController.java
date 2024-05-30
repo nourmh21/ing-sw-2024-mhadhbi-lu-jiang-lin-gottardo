@@ -11,6 +11,7 @@ import it.polimi.ingsw.message.general.*;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.CardList;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Lobby;
 import it.polimi.ingsw.observer.SocketObserver;
 
 import java.io.IOException;

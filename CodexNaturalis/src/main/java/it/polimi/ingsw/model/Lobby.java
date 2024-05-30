@@ -1,8 +1,8 @@
-package it.polimi.ingsw.controller.server;
+package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.server.GameController;
-import it.polimi.ingsw.controller.server.ImmutableLobby;
-import it.polimi.ingsw.model.Game;
+
+import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.observer;
 
-import it.polimi.ingsw.controller.server.ImmutableLobby;
 import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.notify.NotifyMessage;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
+import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 
 import java.io.IOException;

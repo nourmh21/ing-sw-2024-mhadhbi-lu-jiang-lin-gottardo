@@ -1,12 +1,12 @@
 package it.polimi.ingsw.controller.client;
 
-import it.polimi.ingsw.controller.server.ImmutableLobby;
 import it.polimi.ingsw.message.Message;
 
 import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.notify.NotifyMessage;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
+import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.view.UserInterface;
 
@@ -46,14 +46,11 @@ public class ClientController {
                     case NICKNAME_ALREADY_EXIST:
                         view.registrationFailed();
                         break;
-                    case INVALID_POSITION:
-                        view.playCardFailed();
-                        break;
                     case INVALID_CARD_ID:
                         view.drawCardFailed();
                         break;
-                    case INVALID_PERSONAL_GOAL:
-                        view.personalGoalChooseFailed();
+                    case GOLD_CARD_CONDITION_NOT_RESPECTED:
+                        view.playCardFailed();
                         break;
                     default:
                         break;
