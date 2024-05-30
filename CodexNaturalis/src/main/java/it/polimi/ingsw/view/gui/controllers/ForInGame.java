@@ -279,17 +279,14 @@ public class ForInGame {
 
 
     public void changeFirstStartPlayerIcon(String nickname){
-
         if (nicknameOne.getText().equals(nickname))
-            playerOne.setStyle("-fx-border-color: #505050; -fx-border-radius: 10; -fx-background-radius: 10");
-            //im_p1.setImage(blackPlayerICon);
+            playerOne.setStyle(getButtonBorderStyle());
         else if (nicknameTwo.getText().equals(nickname))
-            playerTwo.setStyle("-fx-border-color: #505050; -fx-border-radius: 10; -fx-background-radius: 10");
-            //im_p2.setImage(blackPlayerICon);
+            playerTwo.setStyle(getButtonBorderStyle());
         else if (nicknameThree.getText() != null && nicknameThree.getText().equals(nickname))
-            im_p3.setImage(blackPlayerICon);
+            playerThree.setStyle(getButtonBorderStyle());
         else if (nicknameFour.getText() != null && nicknameFour.getText().equals(nickname))
-            im_p4.setImage(blackPlayerICon);
+            playerFour.setStyle(getButtonBorderStyle());
     }
 
 
