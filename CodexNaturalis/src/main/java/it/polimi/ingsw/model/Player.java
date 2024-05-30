@@ -22,10 +22,6 @@ import java.util.List;
  */
 public class Player extends Observable {
     private final String nickname;
-
-    @Deprecated
-    private int position;
-
     private int point;
     private int goalPoint;
     private Color playerColor;
@@ -63,13 +59,6 @@ public class Player extends Observable {
         notify_player_status(new ImmutablePlayer(this,this.board));
     }
 
-
-    /*
-    public void setInitialCard(Integer initialCard) {
-        this.initialCard = initialCard;
-        //
-        notifyStatus();
-    }*/
 
     public Integer getInitialCard(){
         return initialCard;
@@ -110,13 +99,6 @@ public class Player extends Observable {
         return nickname;
     }
 
-    @Deprecated
-    /**
-     * @return player's turn
-     */
-    public int getPosition(){
-        return position;
-    }
 
 
     /**

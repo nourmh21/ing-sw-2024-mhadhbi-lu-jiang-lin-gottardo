@@ -50,9 +50,6 @@ public class Game extends Observable{
     }
 
 
-
-
-
     public void setGameObservers(List<Observer> observers){
         this.observers = observers;
         //
@@ -74,18 +71,8 @@ public class Game extends Observable{
     }
 
 
-    /*
-    public void setInitialCard() throws EmptyDeckException{
-        for (Player p:players) {
-            p.setInitialCard(desk.pickOneCard(CardType.INITIAL));
-        }
-    }
-
-     */
-
-
     /**
-    *@return the unique code of game generated random
+    * @return the unique code of game generated random
     * */
     public int getIdGame() {
         return idGame;
@@ -101,8 +88,8 @@ public class Game extends Observable{
 
 
     /**
-     *sets game state
-     *@param gameState indicate the present state of the game
+     * sets game state
+     * @param gameState indicate the present state of the game
      */
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
@@ -222,11 +209,6 @@ public class Game extends Observable{
             winners = possibleWinners;
         //
         notify_final_result(new ImmutableEndGameInfo(this));
-    }
-
-
-    public int getNumOfPossibleWinner(){
-        return possibleWinners.size();
     }
 
 
