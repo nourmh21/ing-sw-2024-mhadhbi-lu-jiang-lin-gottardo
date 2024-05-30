@@ -82,6 +82,7 @@ public class ForRegistration {
         if(checkNickname() && checkPwd(pwd1) && checkPwd(pwd2)
                 && checkPwdCoincidence()){
             ClientController.getInstance().getClientAction().access(nickname, pwd1, false);
+            ((GUIApplication)(ClientController.getInstance().getView())).setTryNickname(nickname);
         } else{
             if (!checkPwdCoincidence()) {
                 showPwdCoincidenceError();
