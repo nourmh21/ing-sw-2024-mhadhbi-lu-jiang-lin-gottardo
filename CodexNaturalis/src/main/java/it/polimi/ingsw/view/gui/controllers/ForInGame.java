@@ -203,6 +203,8 @@ public class ForInGame {
     ForPlayerBoard boardPlayer4Controller;
     ForPlayerBoard myBoardController;
     private String current = (((GUIApplication)ClientController.getInstance().getView()).getMyNickname());
+    String buttonBorderStyle = "-fx-border-color: #D2D2D2; -fx-border-radius: 10; -fx-background-radius: 10";
+    String buttonFirstBorderStyle = "-fx-border-color: #505050; -fx-border-radius: 10; -fx-background-radius: 10";
 
 
     public void setDeskBackground() {
@@ -215,7 +217,7 @@ public class ForInGame {
 
     public void initPlayer1(ImmutablePlayer player) {
         im_p1.setImage(getImageByColor(player.getColor()));
-        playerOne.setStyle(getButtonBorderStyle());
+        playerOne.setStyle(buttonBorderStyle);
         nicknameOne.setText(player.getNickname());
         name1.setText(player.getNickname());
         firstScore.setText(String.valueOf(player.getPoint()));
@@ -231,7 +233,7 @@ public class ForInGame {
 
     public void initPlayer2(ImmutablePlayer player) {
         im_p2.setImage(getImageByColor(player.getColor()));
-        playerTwo.setStyle(getButtonBorderStyle());
+        playerTwo.setStyle(buttonBorderStyle);
         nicknameTwo.setText(player.getNickname());
         name2.setText(player.getNickname());
         secondScore.setText(String.valueOf(player.getPoint()));
@@ -247,7 +249,7 @@ public class ForInGame {
 
     public void initPlayer3(ImmutablePlayer player) {
         im_p3.setImage(getImageByColor(player.getColor()));
-        playerThree.setStyle(getButtonBorderStyle());
+        playerThree.setStyle(buttonBorderStyle);
         nicknameThree.setText(player.getNickname());
         name3.setText(player.getNickname());
         thirdScore.setText(String.valueOf(player.getPoint()));
@@ -263,7 +265,7 @@ public class ForInGame {
 
     public void initPlayer4(ImmutablePlayer player) {
         im_p4.setImage(getImageByColor(player.getColor()));
-        playerFour.setStyle(getButtonBorderStyle());
+        playerFour.setStyle(buttonBorderStyle);
         nicknameFour.setText(player.getNickname());
         name4.setText(player.getNickname());
         fourthScore.setText(String.valueOf(player.getPoint()));
@@ -280,19 +282,16 @@ public class ForInGame {
 
     public void changeFirstStartPlayerIcon(String nickname){
         if (nicknameOne.getText().equals(nickname))
-            playerOne.setStyle(getButtonBorderStyle());
+            playerOne.setStyle(buttonFirstBorderStyle);
         else if (nicknameTwo.getText().equals(nickname))
-            playerTwo.setStyle(getButtonBorderStyle());
+            playerTwo.setStyle(buttonFirstBorderStyle);
         else if (nicknameThree.getText() != null && nicknameThree.getText().equals(nickname))
-            playerThree.setStyle(getButtonBorderStyle());
+            playerThree.setStyle(buttonFirstBorderStyle);
         else if (nicknameFour.getText() != null && nicknameFour.getText().equals(nickname))
-            playerFour.setStyle(getButtonBorderStyle());
+            playerFour.setStyle(buttonFirstBorderStyle);
     }
 
 
-    private String getButtonBorderStyle(){
-        return "-fx-border-color: #D2D2D2; -fx-border-radius: 10; -fx-background-radius: 10";
-    }
 
 
     private Image getImageByColor(Color color) {
