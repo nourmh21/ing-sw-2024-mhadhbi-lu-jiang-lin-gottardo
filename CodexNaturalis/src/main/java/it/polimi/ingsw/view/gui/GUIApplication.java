@@ -137,7 +137,7 @@ public class GUIApplication extends Application implements UserInterface {
                     stage.getScene().setRoot(root);
 
                     switch (type){
-                        case HOME:
+                        case CONNECTION, HOME:
                             stage.setMaximized(false);
                             break;
                         case LOBBY_2:
@@ -541,12 +541,16 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void showServerOffline() {
-        showGameInformation("Server offline, please try to reconnect");
-        tryNickname = null;
-        myNickname = null;
-        removeAllLastGameInfo();
-        stage.setMaximized(false);
-        switchPage(CONNECTION);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                showGameInformation("Server offline, please try to reconnect");
+                tryNickname = null;
+                myNickname = null;
+                removeAllLastGameInfo();
+                switchPage(CONNECTION);
+            }
+        });
     }
 
 
