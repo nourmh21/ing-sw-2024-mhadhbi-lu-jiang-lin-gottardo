@@ -10,6 +10,7 @@ public enum MessageType {
     PLAY_INITIAL_CARD,
     PLAY_CARD,
     DRAW_CARD,
+    CHAT,
     ERROR,
     NOTIFY
 }
