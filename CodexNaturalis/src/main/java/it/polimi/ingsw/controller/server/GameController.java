@@ -45,12 +45,11 @@ public class GameController {
     }
 
 
-
     public void messageHandler(Message message, ObjectOutputStream oos){
         switch (message.getType()){
             case ACCESS:
                 AccessMessage accessMessage = (AccessMessage) message;
-                if (loggedInUsers.containsValue(accessMessage.getNickname())){
+                if (accessMessage.isRegistered() && loggedInUsers.containsValue(accessMessage.getNickname())){
                     try {
                         oos.reset();
                         oos.writeObject(new ErrorMessage(ErrorType.ACCOUNT_ALREADY_LOGGED));

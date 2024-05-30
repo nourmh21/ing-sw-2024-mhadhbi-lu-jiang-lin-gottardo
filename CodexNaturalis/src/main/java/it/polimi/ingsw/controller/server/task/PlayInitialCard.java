@@ -21,31 +21,38 @@ public class PlayInitialCard implements Runnable{
 
     @Override
     public void run() {
+        //basic check
         if (game.getGameState() == GameState.SETUP_PHASE_1){
+
             int i = 0;
+
             for (Player p: game.getPlayers()) {
                 if (p.getNickname().equals(nickname)){
+                    //specific check
                     if (!p.getBoard().getIsInitCardPlaced() &&
                             p.getInitialCard().equals(initialCard.getIdCard()))
                         p.updatePoint(p.getBoard().placeInitCard(initialCard, isBackside));
+                    //otherwise this action will be considered illegal and will be ignored
                     break;
                 }
             }
 
+            //count player who has already played his initial card
             for (Player p: game.getPlayers()) {
                 if (p.getBoard().getIsInitCardPlaced())
                     i++;
             }
 
+            //if all players have already played their initial cards
             if (i == game.getNumOfPlayer()){
-                //draw players hand card
+                //draw three hand cards for each player in the game
                 Desk desk = game.getDesk();
                 for (Player p: game.getPlayers()) {
                     p.addCardToHandCards(desk.pickNextRCard());
                     p.addCardToHandCards(desk.pickNextRCard());
                     p.addCardToHandCards(desk.pickNextGCard());
                 }
-                //change to next state
+                //switch game state to next state
                 game.setGameState(GameState.SETUP_PHASE_2);
                 GameController.getInstance().executeTask(new DrawGoals(game));
             }

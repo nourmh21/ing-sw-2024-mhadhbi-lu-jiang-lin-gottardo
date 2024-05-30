@@ -21,17 +21,20 @@ public class DrawGoals implements Runnable{
     public void run() {
 
         Desk desk = game.getDesk();
+
         try {
+            //draw common game's common goals
             game.setCommonGoals(desk.pickOneCard(CardType.OBJECTIVE));
             game.setCommonGoals(desk.pickOneCard(CardType.OBJECTIVE));
 
+            //draw two personal goals for each player
             for (Player p: game.getPlayers()){
                 Integer[] personalGoals = {game.getDesk().pickOneCard(CardType.OBJECTIVE),
                         game.getDesk().pickOneCard(CardType.OBJECTIVE)};
                 p.setInitialPossibleGoals(personalGoals);
             }
         } catch (EmptyDeckException e) {
-            //In theory, it wouldn't happen
+            //Ignored, because it won't happen at this point of game
         }
     }
 }

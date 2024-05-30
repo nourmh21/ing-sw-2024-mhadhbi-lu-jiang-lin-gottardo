@@ -18,16 +18,19 @@ public class EndGame implements Runnable{
 
         if (game.getGameState() == GameState.ENDING){
 
+            //Calculate goal points for each player
             for (Player p: game.getPlayers()) {
                 p.addGoalPoint(p.getBoard().calculateGoalPoint((ObjectiveCard)GameController.getInstance().getCard(game.getCommonGoals().get(0))));
                 p.addGoalPoint(p.getBoard().calculateGoalPoint((ObjectiveCard)GameController.getInstance().getCard(game.getCommonGoals().get(1))));
                 p.addGoalPoint(p.getBoard().calculateGoalPoint((ObjectiveCard)GameController.getInstance().getCard(p.getPersonalGoal())));
             }
 
+            //find winner/winners of this game
             game.checkMaxPoint();
 
             game.setGameState(GameState.FINISHED);
 
+            //remove from hashmap that contains users whose currently playing a match
             for (Player p: game.getPlayers()) {
                 GameController.getInstance().removeUserInGame(p.getNickname());
             }

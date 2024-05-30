@@ -1,19 +1,19 @@
 package it.polimi.ingsw.controller.server.task;
 
 import it.polimi.ingsw.message.error.ErrorMessage;
-import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GoldCard;
 import it.polimi.ingsw.model.PlayerBoard;
+import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.GameState;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import static it.polimi.ingsw.message.enums.ErrorType.INVALID_POSITION;
+import static it.polimi.ingsw.message.enums.ErrorType.GOLD_CARD_CONDITION_NOT_RESPECTED;
 
 public class PlayCard implements Runnable{
 
@@ -34,37 +34,30 @@ public class PlayCard implements Runnable{
         this.oos = oos;
     }
 
-    /*
-    public PlayCard(Game game, String nickname, int x, int y, boolean isBackSide, Card card){
-        this.game = game;
-        this.nickname = nickname;
-        this.x = x;
-        this.y = y;
-        this.isBackSide = isBackSide;
-        this.card = card;
-    }*/
-
-
     @Override
     public void run() {
+        //basic check
         if (checkPlayCondition()){
             PlayerBoard board = game.getCurrentPlayer().getBoard();
-
-            if (!isPositionValid(board.getAvailablePosition(),position)){
-                try {
-                    oos.writeObject(new ErrorMessage(INVALID_POSITION));
-                } catch (IOException e) {
-                    e.printStackTrace();
+            try {
+                //play position check
+                if (isPositionValid(board.getAvailablePosition(),position)){
+                    //if card is gold card, check that card play condition is fulfilled
+                    if (!isCardConditionFulfilled(board)){
+                        oos.writeObject(new ErrorMessage(GOLD_CARD_CONDITION_NOT_RESPECTED));
+                    }else {
+                        game.getCurrentPlayer().removeHandCard(card.getIdCard());
+                        game.getCurrentPlayer().updatePoint(board.placeCard(card, isBackSide, position[0], position[1]));
+                        game.setGameState(GameState.DRAW_CARD);
+                    }
                 }
-
-            }else {
-                game.getCurrentPlayer().removeHandCard(card.getIdCard());
-                game.getCurrentPlayer().updatePoint(board.placeCard(card, isBackSide, position[0], position[1]));
-                game.setGameState(GameState.DRAW_CARD);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
     }
+
 
     private boolean checkPlayCondition(){
         return game.getGameState() == GameState.PLAY_CARD &&
@@ -78,5 +71,14 @@ public class PlayCard implements Runnable{
                 return true;
         }
         return false;
+    }
+
+
+    private boolean isCardConditionFulfilled(PlayerBoard board){
+        if (card.getType() == CardType.GOLD){
+            GoldCard goldCard = (GoldCard) card;
+            return board.checkGoldCardCondition(goldCard);
+        }
+        return true;
     }
 }

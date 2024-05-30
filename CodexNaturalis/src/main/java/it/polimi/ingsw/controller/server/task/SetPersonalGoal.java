@@ -1,17 +1,12 @@
 package it.polimi.ingsw.controller.server.task;
 
 import it.polimi.ingsw.controller.server.GameController;
-import it.polimi.ingsw.message.error.ErrorMessage;
-import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
-
-import static it.polimi.ingsw.message.enums.ErrorType.INVALID_PERSONAL_GOAL;
 
 public class SetPersonalGoal implements Runnable{
     Game game;
@@ -34,32 +29,25 @@ public class SetPersonalGoal implements Runnable{
             for (Player p: game.getPlayers()) {
                 //find the right player
                 if (p.getNickname().equals(nickname)){
-                    //if that player don't already have a personal goal
+                    //if that player has not selected a personal goal yet
                     if (p.getPersonalGoal() == null){
                         if (checkValidity(p))
                             p.setPersonalGoal(idCard);
-                        else{
-                            //
-                            Message message = new ErrorMessage(INVALID_PERSONAL_GOAL);
-                            try {
-                                oos.writeObject(message);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
                     }
-                    //otherwise this illegal new set will be ignored
+                    //otherwise this action will be considered illegal and will be ignored
+                    break;
                 }
-                //count player who already has a personal goal
+
             }
 
+            //count player who has already selected a personal goal
             for (Player p: game.getPlayers()) {
                 if (p.getPersonalGoal() != null){
                     i++;
                 }
             }
 
-            //if all players has already set their goal;
+            //if all players have already set their goal;
             if (i == game.getNumOfPlayer())
                 GameController.getInstance().executeTask(new Start(game));
         }
