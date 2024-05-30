@@ -137,7 +137,7 @@ public class GUIApplication extends Application implements UserInterface {
                     stage.getScene().setRoot(root);
 
                     switch (type){
-                        case CONNECTION, HOME:
+                        case HOME:
                             stage.setMaximized(false);
                             break;
                         case LOBBY_2:
@@ -551,6 +551,7 @@ public class GUIApplication extends Application implements UserInterface {
                 switchPage(CONNECTION);
             }
         });
+        stage.setMaximized(false);
     }
 
 
