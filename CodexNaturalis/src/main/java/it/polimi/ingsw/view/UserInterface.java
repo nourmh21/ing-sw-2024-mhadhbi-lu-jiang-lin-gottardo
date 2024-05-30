@@ -1,8 +1,8 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.controller.server.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
+import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 
 import java.util.List;
@@ -19,8 +19,6 @@ public interface UserInterface {
     public void askNumOfPlayer();
 
     public void setPossiblePersonalGoals(Integer[] possiblePersonalGoals);
-
-    public void personalGoalChooseFailed();
 
     public void setLobbyStatus(ImmutableLobby lobby);
 
