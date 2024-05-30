@@ -112,7 +112,7 @@ public class ForFinalResult {
     @FXML
     void goToHomePage(MouseEvent event) {
         GUIApplication gui = ((GUIApplication)ClientController.getInstance().getView());
-        gui.switchScene(SceneType.HOME);
+        gui.switchPage(SceneType.HOME);
         gui.removeAllLastGameInfo();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.close();

@@ -68,7 +68,7 @@ public class ForLogin {
 
     @FXML
     void switchToRegister(ActionEvent event) throws IOException {
-        ((GUIApplication)ClientController.getInstance().getView()).switchScene(SceneType.REGISTRATION);
+        ((GUIApplication)ClientController.getInstance().getView()).switchPage(SceneType.REGISTRATION);
     }
 
 
