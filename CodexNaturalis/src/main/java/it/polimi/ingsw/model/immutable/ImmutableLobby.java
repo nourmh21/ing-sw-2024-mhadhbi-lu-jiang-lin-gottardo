@@ -1,4 +1,6 @@
-package it.polimi.ingsw.controller.server;
+package it.polimi.ingsw.model.immutable;
+
+import it.polimi.ingsw.controller.server.Lobby;
 
 import java.io.Serializable;
 import java.util.List;
