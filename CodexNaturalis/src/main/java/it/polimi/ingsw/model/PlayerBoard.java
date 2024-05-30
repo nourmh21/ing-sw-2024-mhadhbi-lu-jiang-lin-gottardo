@@ -117,31 +117,31 @@ public class PlayerBoard {
         addAvailablePosition(0,0);
 
         if (isBackSide) {
-                symbolsList[0] = 1;
-                symbolsList[1] = 1;
-                symbolsList[2] = 1;
-                symbolsList[3] = 1;
-                topLeftAngle.add(initialCard.getTopLeftAngle());
-                topRightAngle.add(initialCard.getTopRightAngle());
-                bottomLeftAngle.add(initialCard.getBottomLeftAngle());
-                bottomRightAngle.add(initialCard.getBottomRightAngle());
+            symbolsList[0] = initialCard.getCenterResource()[0];
+            symbolsList[1] = initialCard.getCenterResource()[1];
+            symbolsList[2] = initialCard.getCenterResource()[2];
+            symbolsList[3] = initialCard.getCenterResource()[3];
+            topLeftAngle.add(initialCard.getTopLeftAngleFront());
+            topRightAngle.add(initialCard.getTopRightAngleFront());
+            bottomLeftAngle.add(initialCard.getBottomLeftAngleFront());
+            bottomRightAngle.add(initialCard.getBottomRightAngleFront());
+            if(initialCard.getBottomLeftAngleFront()==HIDDEN){
+                removeAvailablePosition(new int[]{-1, -1});
+                removeAvailablePosition(new int[]{1, -1});
+                forbiddenPosition.add(new int[]{-1, -1});
+                forbiddenPosition.add(new int[]{1, -1});
+            }
+
 
         } else {
-
-                symbolsList[0] = initialCard.getCenterResource()[0];
-                symbolsList[1] = initialCard.getCenterResource()[1];
-                symbolsList[2] = initialCard.getCenterResource()[2];
-                symbolsList[3] = initialCard.getCenterResource()[3];
-                topLeftAngle.add(initialCard.getTopLeftAngleFront());
-                topRightAngle.add(initialCard.getTopRightAngleFront());
-                bottomLeftAngle.add(initialCard.getBottomLeftAngleFront());
-                bottomRightAngle.add(initialCard.getBottomRightAngleFront());
-                if(initialCard.getBottomLeftAngleFront()==HIDDEN){
-                    removeAvailablePosition(new int[]{-1, -1});
-                    removeAvailablePosition(new int[]{1, -1});
-                    forbiddenPosition.add(new int[]{-1, -1});
-                    forbiddenPosition.add(new int[]{1, -1});
-                }
+            symbolsList[0] = 1;
+            symbolsList[1] = 1;
+            symbolsList[2] = 1;
+            symbolsList[3] = 1;
+            topLeftAngle.add(initialCard.getTopLeftAngle());
+            topRightAngle.add(initialCard.getTopRightAngle());
+            bottomLeftAngle.add(initialCard.getBottomLeftAngle());
+            bottomRightAngle.add(initialCard.getBottomRightAngle());
 
             }
             symbolsList[4] = 0;
