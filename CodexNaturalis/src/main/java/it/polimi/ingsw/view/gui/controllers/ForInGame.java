@@ -699,89 +699,99 @@ public class ForInGame {
 
 
     public void activateDeskClick() {
-        resourceC1.setCursor(Cursor.HAND);
-        resourceC2.setCursor(Cursor.HAND);
-        rDeck.setCursor(Cursor.HAND);
-        goldC1.setCursor(Cursor.HAND);
-        goldC2.setCursor(Cursor.HAND);
-        gDeck.setCursor(Cursor.HAND);
+        if(resourceCard1.getImage() != null){
+            resourceC1.setCursor(Cursor.HAND);
+            resourceC1.setOnMouseClicked(event -> {
+                resourceC1Selected = true;
+                resourceC2Selected = false;
+                resourceDeckSelected = false;
+                goldC1Selected = false;
+                goldC2Selected = false;
+                goldDeckSelected = false;
+                if(event.getClickCount()==2){
+                    Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedRCards().get(0));
+                    ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_RESOURCE_LIST,id);
+                    deactivateDeskClick();
+                }});
+        }
 
-        resourceC1.setOnMouseClicked(event -> {
-            resourceC1Selected = true;
-            resourceC2Selected = false;
-            resourceDeckSelected = false;
-            goldC1Selected = false;
-            goldC2Selected = false;
-            goldDeckSelected = false;
-            if(event.getClickCount()==2){
-                Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedRCards().get(0));
-                ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_RESOURCE_LIST,id);
-                deactivateDeskClick();
-            }});
+        if (resourceCard2.getImage() != null){
+            resourceC2.setCursor(Cursor.HAND);
+            resourceC2.setOnMouseClicked(event->{
+                resourceC1Selected = false;
+                resourceC2Selected = true;
+                resourceDeckSelected = false;
+                goldC1Selected = false;
+                goldC2Selected = false;
+                goldDeckSelected = false;
+                if (event.getClickCount()==2){
+                    Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedRCards().get(1));
+                    ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_RESOURCE_LIST,id);
+                    deactivateDeskClick();
+                }});
+        }
 
-        resourceC2.setOnMouseClicked(event->{
-            resourceC1Selected = false;
-            resourceC2Selected = true;
-            resourceDeckSelected = false;
-            goldC1Selected = false;
-            goldC2Selected = false;
-            goldDeckSelected = false;
-            if (event.getClickCount()==2){
-                Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedRCards().get(1));
-                ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_RESOURCE_LIST,id);
-                deactivateDeskClick();
-            }});
+        if (resourceDeck.getImage() != null){
+            rDeck.setCursor(Cursor.HAND);
+            rDeck.setOnMouseClicked(event->{
+                resourceC1Selected = false;
+                resourceC2Selected = false;
+                resourceDeckSelected = true;
+                goldC1Selected = false;
+                goldC2Selected = false;
+                goldDeckSelected = false;
+                if (event.getClickCount() == 2) {
+                    ClientController.getInstance().getClientAction().drawCard(LocationType.RESOURCE_CARD_DECK,null);
+                    deactivateDeskClick();
+                }});
+        }
 
-        rDeck.setOnMouseClicked(event->{
-            resourceC1Selected = false;
-            resourceC2Selected = false;
-            resourceDeckSelected = true;
-            goldC1Selected = false;
-            goldC2Selected = false;
-            goldDeckSelected = false;
-            if (event.getClickCount() == 2) {
-                ClientController.getInstance().getClientAction().drawCard(LocationType.RESOURCE_CARD_DECK,null);
-                deactivateDeskClick();
-            }});
+        if (goldCard1.getImage() != null){
+            goldC1.setCursor(Cursor.HAND);
+            goldC1.setOnMouseClicked(event ->{
+                resourceC1Selected = true;
+                resourceC2Selected = false;
+                resourceDeckSelected = false;
+                goldC1Selected = true;
+                goldC2Selected = false;
+                goldDeckSelected = false;
+                if (event.getClickCount()==2) {
+                    Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedGCards().get(0));
+                    ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_GOLD_LIST,id);
+                    deactivateDeskClick();
+                }});
+        }
 
-        goldC1.setOnMouseClicked(event ->{
-            resourceC1Selected = true;
-            resourceC2Selected = false;
-            resourceDeckSelected = false;
-            goldC1Selected = true;
-            goldC2Selected = false;
-            goldDeckSelected = false;
-            if (event.getClickCount()==2) {
-                Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedGCards().get(0));
-                ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_GOLD_LIST,id);
-                deactivateDeskClick();
-            }});
+        if (goldCard2.getImage() != null){
+            goldC2.setCursor(Cursor.HAND);
+            goldC2.setOnMouseClicked(event ->{
+                resourceC1Selected = false;
+                resourceC2Selected = false;
+                resourceDeckSelected = false;
+                goldC1Selected = false;
+                goldC2Selected = true;
+                goldDeckSelected = false;
+                if (event.getClickCount()==2) {
+                    Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedGCards().get(1));
+                    ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_GOLD_LIST,id);
+                    deactivateDeskClick();
+                }});
+        }
 
-        goldC2.setOnMouseClicked(event ->{
-            resourceC1Selected = false;
-            resourceC2Selected = false;
-            resourceDeckSelected = false;
-            goldC1Selected = false;
-            goldC2Selected = true;
-            goldDeckSelected = false;
-            if (event.getClickCount()==2) {
-                Integer id = (((GUIApplication)ClientController.getInstance().getView()).getGame().getDisplayedGCards().get(1));
-                ClientController.getInstance().getClientAction().drawCard(LocationType.DISPLAYED_GOLD_LIST,id);
-                deactivateDeskClick();
-            }});
-
-        gDeck.setOnMouseClicked(event->{
-            resourceC1Selected = false;
-            resourceC2Selected = false;
-            resourceDeckSelected = false;
-            goldC1Selected = false;
-            goldC2Selected = false;
-            goldDeckSelected = true;
-            if (event.getClickCount()==2) {
-                ClientController.getInstance().getClientAction().drawCard(LocationType.GOLD_CARD_DECK,null);
-                deactivateDeskClick();
-            }});
-
+        if (goldDeck.getImage() != null){
+            gDeck.setCursor(Cursor.HAND);
+            gDeck.setOnMouseClicked(event->{
+                resourceC1Selected = false;
+                resourceC2Selected = false;
+                resourceDeckSelected = false;
+                goldC1Selected = false;
+                goldC2Selected = false;
+                goldDeckSelected = true;
+                if (event.getClickCount()==2) {
+                    ClientController.getInstance().getClientAction().drawCard(LocationType.GOLD_CARD_DECK,null);
+                    deactivateDeskClick();
+                }});
+        }
     }
 
 
