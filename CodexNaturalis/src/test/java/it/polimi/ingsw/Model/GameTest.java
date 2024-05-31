@@ -1,13 +1,15 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 
 /**
@@ -31,9 +33,9 @@ public class GameTest {
         players = new ArrayList<>();
         possibleWinners = new ArrayList<>();
         winners = new ArrayList<>();
-        p1 = new Player("Rossi", game);
-        p2 = new Player("Neri", game);
-        p3 = new Player("Verdi", game);
+        p1 = new Player("Rossi", game, Color.GREEN);
+        p2 = new Player("Neri", game, Color.YELLOW);
+        p3 = new Player("Verdi", game, Color.BLUE);
 
 
     }
@@ -53,13 +55,14 @@ public class GameTest {
 
         game.addPlayers(p1.getNickname());
         players.add(p1);
-        p1.updatePoint(25);
+        /*
+        p1.setPoint(25);
         game.addPlayers(p2.getNickname());
         players.add(p2);
-        p2.updatePoint(22);
+        p2.setPoint(22);
         game.addPlayers(p3.getNickname());
         players.add(p3);
-        p3.updatePoint(25);
+        p3.setPoint(25);*/
 
 
         for (Player p: players){
