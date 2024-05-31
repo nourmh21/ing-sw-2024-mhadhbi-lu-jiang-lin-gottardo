@@ -536,15 +536,24 @@ public class PlayerBoard {
      * remove forbidden position from available position list
      */
     private void updateAvailablePosition(){
-        for (int[] elementToControlled : forbiddenPosition) {
-                for (int j = 0; j < availablePosition.size(); j++) {
-                    int[] arrayAvailablePosition = availablePosition.get(j);
-                    if (Arrays.equals(elementToControlled, arrayAvailablePosition)) {
-                        availablePosition.remove(j);
-                        j--;
-                    }
+        update(forbiddenPosition);
+        List<int[]> placedPositions = new ArrayList<>();
+        for (int i = 0; i < x.size(); i++) {
+            placedPositions.add(new int[]{x.get(i), y.get(i)});
+        }
+        update(placedPositions);
+    }
+
+    private void update(List<int[]> list){
+        for (int[] elementToControlled : list) {
+            for (int j = 0; j < availablePosition.size(); j++) {
+                int[] arrayAvailablePosition = availablePosition.get(j);
+                if (Arrays.equals(elementToControlled, arrayAvailablePosition)) {
+                    availablePosition.remove(j);
+                    break;
                 }
             }
+        }
     }
 
 
