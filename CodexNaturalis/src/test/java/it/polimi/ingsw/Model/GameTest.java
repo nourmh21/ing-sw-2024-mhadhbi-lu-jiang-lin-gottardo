@@ -33,7 +33,7 @@ public class GameTest {
         players = new ArrayList<>();
         possibleWinners = new ArrayList<>();
         winners = new ArrayList<>();
-        p1 = new Player("Rossi", game, Color.GREEN);
+        p1 = new Player("Rossi", game, Color.BLUE);
         p2 = new Player("Neri", game, Color.YELLOW);
         p3 = new Player("Verdi", game, Color.BLUE);
 
