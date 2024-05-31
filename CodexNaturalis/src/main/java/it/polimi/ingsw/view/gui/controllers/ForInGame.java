@@ -448,17 +448,21 @@ public class ForInGame {
 
 
     private Image getGCardBackImage(Symbol symbol){
-        switch (symbol){
-            case INSECT:
-                return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GInsect.png"));
-            case ANIMAL:
-                return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GAnimal.png"));
-            case FUNGI:
-                return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GFungi.png"));
-            case PLANT:
-                return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GPlant.png"));
-            default:
-                return null;
+        if (symbol != null){
+            switch (symbol){
+                case INSECT:
+                    return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GInsect.png"));
+                case ANIMAL:
+                    return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GAnimal.png"));
+                case FUNGI:
+                    return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GFungi.png"));
+                case PLANT:
+                    return new Image(getClass().getResourceAsStream("/img/cards/kingdom/GPlant.png"));
+                default:
+                    return null;
+            }
+        }else {
+            return null;
         }
     }
 
