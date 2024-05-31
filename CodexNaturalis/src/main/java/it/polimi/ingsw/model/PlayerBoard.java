@@ -450,7 +450,6 @@ public class PlayerBoard {
         }
     }
 
-
     /**
      * calculates positional goal card points
      * @param symbol1 indicates the color of the first card
