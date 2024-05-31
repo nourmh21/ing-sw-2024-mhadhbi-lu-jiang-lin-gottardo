@@ -133,6 +133,8 @@ public class Desk extends Observable{
     public void updateDisplayedRCard(){
         if (nextResourceCard != null){
             displayedResourceCards.add(pickNextRCard());
+        }else if (nextGoldCard != null){
+            displayedResourceCards.add(pickNextGCard());
         }
     }
 
@@ -143,6 +145,8 @@ public class Desk extends Observable{
     public void updateDisplayedGCard(){
         if (nextGoldCard != null){
             displayedGoldCards.add(pickNextGCard());
+        }else if (nextResourceCard != null){
+            displayedGoldCards.add(pickNextRCard());
         }
     }
 
