@@ -123,16 +123,7 @@ public class PlayerBoard {
         y.add(0);
         addAvailablePosition(0,0);
 
-        if (!isBackSide) {
-            symbolList[0] = 1;
-            symbolList[1] = 1;
-            symbolList[2] = 1;
-            symbolList[3] = 1;
-            topLeftAngle.add(initialCard.getTopLeftAngle());
-            topRightAngle.add(initialCard.getTopRightAngle());
-            bottomLeftAngle.add(initialCard.getBottomLeftAngle());
-            bottomRightAngle.add(initialCard.getBottomRightAngle());
-        } else {
+        if (isBackSide) {
             symbolList[0] = initialCard.getCenterResource()[0];
             symbolList[1] = initialCard.getCenterResource()[1];
             symbolList[2] = initialCard.getCenterResource()[2];
@@ -147,6 +138,17 @@ public class PlayerBoard {
                 forbiddenPosition.add(new int[]{-1, -1});
                 forbiddenPosition.add(new int[]{1, -1});
             }
+
+        } else {
+            symbolList[0] = 1;
+            symbolList[1] = 1;
+            symbolList[2] = 1;
+            symbolList[3] = 1;
+            topLeftAngle.add(initialCard.getTopLeftAngle());
+            topRightAngle.add(initialCard.getTopRightAngle());
+            bottomLeftAngle.add(initialCard.getBottomLeftAngle());
+            bottomRightAngle.add(initialCard.getBottomRightAngle());
+
 
         }
             symbolList[4] = 0;
