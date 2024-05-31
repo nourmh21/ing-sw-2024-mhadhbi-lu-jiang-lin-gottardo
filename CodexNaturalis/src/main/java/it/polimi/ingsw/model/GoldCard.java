@@ -18,7 +18,7 @@ public class GoldCard extends Card{
      * @param n_insect defines the number of insects needed for placing the card
      */
     public GoldCard(int idCard, Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomRightAngle, Symbol bottomLeftAngle, int points,
-                     CardType type, Symbol basicPointCriterion,int n_fungi, int n_plant, int n_animal, int n_insect) {
+                    CardType type, Symbol basicPointCriterion,int n_fungi, int n_plant, int n_animal, int n_insect) {
         super(idCard, kingdom, topLeftAngle, topRightAngle,bottomRightAngle, bottomLeftAngle,  points, type);
         this.basicPointCriterion = basicPointCriterion;
         condition[0] = n_animal;
