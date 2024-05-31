@@ -3,9 +3,12 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.IllegalCoordinateInsertionException;
 import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
-import static it.polimi.ingsw.model.enums.Symbol.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static it.polimi.ingsw.model.enums.Symbol.*;
 
 
 public class PlayerBoard {
@@ -94,7 +97,7 @@ public class PlayerBoard {
         addSymbolsList(card,isBackSide,xx,yy);
         updateAvailablePosition();
         if (isBackSide){
-            calculatePoint(card , index);
+            // if is back side, why calculate point? We changed after tested in gui
             return 0;
         } else
             return calculatePoint(card , index);
