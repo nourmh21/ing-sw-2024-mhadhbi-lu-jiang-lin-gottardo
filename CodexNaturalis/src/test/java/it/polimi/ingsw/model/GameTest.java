@@ -34,8 +34,8 @@ public class GameTest {
         possibleWinners = new ArrayList<>();
         winners = new ArrayList<>();
         p1 = new Player("Rossi", game, Color.BLUE);
-        p2 = new Player("Neri", game, Color.YELLOW);
-        p3 = new Player("Verdi", game, Color.BLUE);
+        p2 = new Player("Neri", game, Color.GREEN);
+        p3 = new Player("Verdi", game, Color.YELLOW);
 
 
     }
@@ -55,14 +55,13 @@ public class GameTest {
 
         game.addPlayers(p1.getNickname());
         players.add(p1);
-        /*
-        p1.setPoint(25);
+        p1.updatePoint(25);
         game.addPlayers(p2.getNickname());
         players.add(p2);
-        p2.setPoint(22);
+        p2.updatePoint(22);
         game.addPlayers(p3.getNickname());
         players.add(p3);
-        p3.setPoint(25);*/
+        p3.updatePoint(25);
 
 
         for (Player p: players){
