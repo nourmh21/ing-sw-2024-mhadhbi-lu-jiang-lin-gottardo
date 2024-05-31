@@ -507,8 +507,8 @@ public class GUIApplication extends Application implements UserInterface {
             handCards = Optional.of(newStatus);
             inGameController.showMineHandCards();
         }else {
+            handCards = Optional.of(newStatus);
             if (inGameController.getCurrent().equals(myNickname)){
-                handCards = Optional.of(newStatus);
                 inGameController.showMineHandCards();
             }
         }
