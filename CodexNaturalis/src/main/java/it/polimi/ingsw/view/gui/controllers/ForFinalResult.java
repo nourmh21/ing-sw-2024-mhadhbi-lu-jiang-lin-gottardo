@@ -65,6 +65,10 @@ public class ForFinalResult {
     @FXML
     private Pane winner4;
 
+    /**
+     * show final results of each player based on the scores in ascending order
+     * @param finalResult
+     */
     public void fillFinalResult(ImmutableEndGameInfo finalResult){
         GUIApplication gui = ((GUIApplication) ClientController.getInstance().getView());
         List<String> players = gui.getPlayers().stream()
@@ -108,7 +112,10 @@ public class ForFinalResult {
 
     }
 
-
+    /**
+     * switch to home page
+     * @param event
+     */
     @FXML
     void goToHomePage(MouseEvent event) {
         GUIApplication gui = ((GUIApplication)ClientController.getInstance().getView());
