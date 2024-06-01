@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.client;
 
+import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.general.*;
 
@@ -9,91 +10,64 @@ import java.net.SocketException;
 
 public class SocketAction implements ClientAction {
     private ObjectOutputStream oos;
+
     public SocketAction(ObjectOutputStream oos){
         this.oos = oos;
     }
 
     @Override
     public void access(String nickname, String pwd, boolean isRegistered) {
-        try {
-            oos.writeObject(new AccessMessage(nickname,pwd,isRegistered));
-        }catch (SocketException exception){
-            ClientController.getInstance().getView().showServerOffline();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        send(new AccessMessage(nickname,pwd,isRegistered));
     }
 
     @Override
-    public void joinGame() {
-        try {
-            oos.writeObject(new JoinGameMessage());
-        }catch (SocketException exception){
-            ClientController.getInstance().getView().showServerOffline();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void reqLobbies() {
+        send(new ReqLobbiesMessage());
+    }
+
+
+    @Override
+    public void joinLobby(Integer idLobby) {
+        send(new JoinLobbyeMessage(idLobby));
     }
 
     @Override
-    public void newGame(int numOfPlayer) {
-        try {
-            oos.writeObject(new NewGameInfoMessage(numOfPlayer));
-        }catch (SocketException exception){
-            ClientController.getInstance().getView().showServerOffline();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void createLobby(int numOfPlayer) {
+        send(new CreateLobbyMessage(numOfPlayer));
     }
 
     @Override
     public void playInitCard(Integer idCard, boolean isBackSide) {
-        try {
-            oos.writeObject(new PlayInitCardMessage(idCard,isBackSide));
-            oos.flush();
-        }catch (SocketException exception){
-            ClientController.getInstance().getView().showServerOffline();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        send(new PlayInitCardMessage(idCard,isBackSide));
     }
 
     @Override
     public void choosePersonalGoal(Integer idCard) {
-        try {
-            oos.writeObject(new PersonalGoalChooseMessage(idCard));
-        }catch (SocketException exception){
-            ClientController.getInstance().getView().showServerOffline();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        send(new PersonalGoalChooseMessage(idCard));
     }
 
     @Override
     public void playCard(Integer idCard, boolean isBackSide, int[] position) {
-        try {
-            oos.writeObject(new PlayCardMessage(idCard,isBackSide,position));
-        }catch (SocketException exception){
-            ClientController.getInstance().getView().showServerOffline();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        send(new PlayCardMessage(idCard,isBackSide,position));
     }
 
     @Override
     public void drawCard(LocationType location, Integer idCard) {
+        if (idCard != null)
+            send(new DrawCardMessage(location,idCard));
+        else
+            send(new DrawCardMessage(location));
+    }
+
+
+    private void send(Message message){
         try {
-            //oos.reset();
-            if (idCard != null)
-                oos.writeObject(new DrawCardMessage(location,idCard));
-            else
-                oos.writeObject(new DrawCardMessage(location));
+            oos.writeObject(message);
         }catch (SocketException exception){
             ClientController.getInstance().getView().showServerOffline();
         } catch (IOException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
-
 
 }

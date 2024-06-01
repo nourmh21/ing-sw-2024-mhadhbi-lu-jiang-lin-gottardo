@@ -31,9 +31,6 @@ public class ClientController {
 
     public void messageHandler(Message message){
         switch (message.getType()) {
-            case REQ_NEW_GAME_INFO:
-                view.askNumOfPlayer();
-                break;
             case ERROR:
                 ErrorMessage errorMessage = (ErrorMessage) message;
                 switch (errorMessage.getError()) {
@@ -45,6 +42,9 @@ public class ClientController {
                         break;
                     case NICKNAME_ALREADY_EXIST:
                         view.registrationFailed();
+                        break;
+                    case LOBBY_ID_NOT_FOUND:
+                        view.lobbyChooseFailed();
                         break;
                     case INVALID_CARD_ID:
                         view.drawCardFailed();
@@ -64,6 +64,9 @@ public class ClientController {
                         break;
                     case LOGIN_SUCCESS:
                         view.loginSuccess();
+                        break;
+                    case LOBBY_LIST:
+                        view.setLobbyList((List<Integer[]>) (notifyMessage.getObject()));
                         break;
                     case LOBBY_STATUS:
                         view.setLobbyStatus((ImmutableLobby) (notifyMessage.getObject()));

@@ -10,12 +10,17 @@ public class RMIAction implements ClientAction{
     }
 
     @Override
-    public void joinGame() {
+    public void reqLobbies() {
 
     }
 
     @Override
-    public void newGame(int numOfPlayer) {
+    public void joinLobby(Integer idLobby) {
+
+    }
+
+    @Override
+    public void createLobby(int numOfPlayer) {
 
     }
 

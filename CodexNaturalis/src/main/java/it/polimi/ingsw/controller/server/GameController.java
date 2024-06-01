@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller.server;
 
-
 import it.polimi.ingsw.controller.server.task.*;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.ErrorType;
@@ -66,12 +65,15 @@ public class GameController {
             if (loggedInUsers.containsKey(oos)){
                 String nickname = loggedInUsers.get(oos);
                 switch (message.getType()){
-                    case JOIN_GAME:
-                        joinGame(loggedInUsers.get(oos), oos);
+                    case REQ_LOBBIES:
+                        giveLobbies(nickname, oos);
                         break;
-                    case NEW_GAME_INFO:
-                        NewGameInfoMessage newGameInfoMessage = (NewGameInfoMessage) message;
-                        createLobby(newGameInfoMessage.getNumOfPlayer(),loggedInUsers.get(oos),oos);
+                    case JOIN_LOBBY:
+                        joinLobby(nickname,oos,((JoinLobbyeMessage)message).getIdLobby());
+                        break;
+                    case CREATE_LOBBY:
+                        CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage) message;
+                        createLobby(createLobbyMessage.getNumOfPlayer(),loggedInUsers.get(oos),oos);
                         break;
                     case PLAY_INITIAL_CARD:
                         PlayInitCardMessage playInitCardMessage = (PlayInitCardMessage) message;
@@ -114,13 +116,9 @@ public class GameController {
     }
 
 
-    public synchronized Optional<Lobby> getCurrentLobby() {
-        return currentLobby;
-    }
-
-
-    public synchronized void removeFromCurrentLobby(){
-        currentLobby = Optional.empty();
+    public synchronized void removeLobby(Lobby lobby){
+        availableLobby.remove(lobby);
+        usedLibbyIds.remove(lobby.getIdLobby());
     }
 
 
@@ -144,18 +142,20 @@ public class GameController {
     }
 
 
-    //to be fixed
-    public synchronized void joinGame(String nickname, ObjectOutputStream oos){
-        List<Integer> lobbies = availableLobby.stream().map(Lobby::getIdLobby).toList();
+    public void giveLobbies(String nickname, ObjectOutputStream oos){
+        List<Integer[]> lobbies = availableLobby.stream()
+                .parallel()
+                .map(lobby -> new Integer[]{lobby.getIdLobby(),lobby.getNumOfPlayer(),lobby.getObservers().size()})
+                .toList();
         try {
             oos.writeObject(new NotifyMessage(NotifyType.LOBBY_LIST, lobbies));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
         }
     }
 
-    //to be fixed
-    public synchronized void joinLobby(String nickname, ObjectOutputStream oos, int idLobby) {
+
+    public synchronized void joinLobby(String nickname, ObjectOutputStream oos, Integer idLobby) {
         boolean find = false;
         for (Lobby lobby: availableLobby) {
             if (lobby.getIdLobby() == idLobby){
@@ -167,11 +167,11 @@ public class GameController {
         }
         if (!find){
             writeErrorMessage(oos,ErrorType.LOBBY_ID_NOT_FOUND);
+            giveLobbies(nickname,oos);
         }
     }
 
 
-    //to be fixed
     public void createLobby(int numOfPlayer, String nickname, ObjectOutputStream oos){
         Lobby lobby = new Lobby(numOfPlayer,getRandomLobbyId());
         availableLobby.add(lobby);
@@ -186,28 +186,42 @@ public class GameController {
         return instance;
     }
 
+
     public Object getCard(Integer idCard){
         return cardList.getCard(idCard);
     }
 
+
     public void socketClientLeave(ObjectOutputStream oos){
         if (loggedInUsers.containsKey(oos)){
             String nickname = loggedInUsers.get(oos);
-            if (currentLobby.isPresent()){
-                if (currentLobby.get().getPlayers().contains(nickname))
-                    currentLobby.get().removePlayer(nickname);
-            }
-            //
+            removePlayerFromLobby(nickname);
             usersInGame.remove(nickname);
             loggedInUsers.remove(oos);
         }
-
     }
 
+
+    private void removePlayerFromLobby(String nickname){
+        boolean find = false;
+        for (Lobby lobby:availableLobby) {
+            for (String playerNickname: lobby.getPlayers()) {
+                if (playerNickname.equals(nickname)){
+                    lobby.removePlayer(nickname);
+                    find = true;
+                    break;
+                }
+            }
+            if (find)
+                break;
+        }
+    }
+
+
     public int getRandomLobbyId(){
-        int n = random.nextInt(1000);
+        int n = random.nextInt(2000);
         while (usedLibbyIds.contains(n)){
-            n = random.nextInt(1000);
+            n = random.nextInt(2000);
         }
         usedLibbyIds.add(n);
         return n;
