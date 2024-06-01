@@ -1,14 +1,12 @@
 package it.polimi.ingsw.controller.server.task;
 
 import it.polimi.ingsw.controller.server.GameController;
-import it.polimi.ingsw.message.enums.NotifyType;
-import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.notify.NotifyMessage;
 
 import java.io.*;
 import java.util.Scanner;
-
 
 import static it.polimi.ingsw.message.enums.ErrorType.CREDENTIAL_WRONG;
 import static it.polimi.ingsw.message.enums.ErrorType.NICKNAME_ALREADY_EXIST;
@@ -44,13 +42,7 @@ public class Access implements Runnable{
                 //
                 sendLoginSuccess();
             } else{
-                //
-                Message message = new ErrorMessage(CREDENTIAL_WRONG);
-                try {
-                    oos.writeObject(message);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                GameController.writeErrorMessage(oos, CREDENTIAL_WRONG);
             }
         }else{
             try {
@@ -69,13 +61,7 @@ public class Access implements Runnable{
                     //
                     sendLoginSuccess();
                 }else {
-                    //
-                    Message message = new ErrorMessage(NICKNAME_ALREADY_EXIST);
-                    try {
-                        oos.writeObject(message);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    GameController.writeErrorMessage(oos, NICKNAME_ALREADY_EXIST);
                 }
             } catch (FileNotFoundException e) {
                 System.out.println("Invalid file path");

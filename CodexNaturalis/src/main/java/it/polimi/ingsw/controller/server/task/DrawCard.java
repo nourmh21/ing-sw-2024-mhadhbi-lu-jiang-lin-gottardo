@@ -1,15 +1,13 @@
 package it.polimi.ingsw.controller.server.task;
 
 import it.polimi.ingsw.controller.server.GameController;
-import it.polimi.ingsw.message.enums.LocationType;
-import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.enums.ErrorType;
+import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.model.Desk;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class DrawCard  implements Runnable {
@@ -55,12 +53,7 @@ public class DrawCard  implements Runnable {
                         p.addCardToHandCards(desk.pickOneDisplayedRCard(idCard));
                         desk.updateDisplayedRCard();
                     }else{
-                        //
-                        try {
-                            oos.writeObject(new ErrorMessage(ErrorType.INVALID_CARD_ID));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        GameController.writeErrorMessage(oos, ErrorType.INVALID_CARD_ID);
                     }
                     break;
                 case DISPLAYED_GOLD_LIST:
@@ -68,15 +61,9 @@ public class DrawCard  implements Runnable {
                         p.addCardToHandCards(desk.pickOneDisplayedGCard(idCard));
                         desk.updateDisplayedGCard();
                     }else{
-                        //
-                        try {
-                            oos.writeObject(new ErrorMessage(ErrorType.INVALID_CARD_ID));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        GameController.writeErrorMessage(oos,ErrorType.INVALID_CARD_ID);
                     }
                     break;
-                //or maybe we can decide to give that one player a card from deck
             }
 
             //decide who will play in the next turn

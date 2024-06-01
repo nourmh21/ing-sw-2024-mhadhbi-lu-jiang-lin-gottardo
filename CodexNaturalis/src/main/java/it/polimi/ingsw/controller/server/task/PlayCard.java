@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.server.task;
 
-import it.polimi.ingsw.message.error.ErrorMessage;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GoldCard;
@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.PlayerBoard;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.GameState;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -39,20 +38,16 @@ public class PlayCard implements Runnable{
         //basic check
         if (checkPlayCondition()){
             PlayerBoard board = game.getCurrentPlayer().getBoard();
-            try {
-                //play position check
-                if (isPositionValid(board.getAvailablePosition(),position)){
-                    //if card is gold card, check that card play condition is fulfilled
-                    if (!isCardConditionFulfilled(board)){
-                        oos.writeObject(new ErrorMessage(GOLD_CARD_CONDITION_NOT_RESPECTED));
-                    }else {
-                        game.getCurrentPlayer().removeHandCard(card.getIdCard());
-                        game.getCurrentPlayer().updatePoint(board.placeCard(card, isBackSide, position[0], position[1]));
-                        game.setGameState(GameState.DRAW_CARD);
-                    }
+            //play position check
+            if (isPositionValid(board.getAvailablePosition(),position)){
+                //if card is gold card, check that card play condition is fulfilled
+                if (!isCardConditionFulfilled(board)){
+                    GameController.writeErrorMessage(oos, GOLD_CARD_CONDITION_NOT_RESPECTED);
+                }else {
+                    game.getCurrentPlayer().removeHandCard(card.getIdCard());
+                    game.getCurrentPlayer().updatePoint(board.placeCard(card, isBackSide, position[0], position[1]));
+                    game.setGameState(GameState.DRAW_CARD);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
 

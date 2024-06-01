@@ -5,9 +5,11 @@ import it.polimi.ingsw.controller.server.task.*;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.ErrorType;
 import it.polimi.ingsw.message.enums.LocationType;
+import it.polimi.ingsw.message.enums.MessageType;
+import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.general.*;
-
+import it.polimi.ingsw.message.notify.NotifyMessage;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.CardList;
 import it.polimi.ingsw.model.Game;
@@ -16,7 +18,7 @@ import it.polimi.ingsw.observer.SocketObserver;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,7 +30,7 @@ public class GameController {
     private final CardList cardList;
 
     private Optional<Lobby> currentLobby;
-
+    private List<Lobby> availableLobby;
 
     private ConcurrentHashMap<ObjectOutputStream, String> loggedInUsers;
 
@@ -36,77 +38,79 @@ public class GameController {
 
     private ExecutorService executor;
 
+    private Set<Integer> usedLibbyIds;
+    private Random random;
+
+
     public GameController(){
         cardList = new CardList();
         currentLobby = Optional.empty();
-        //loggedInUsers = new ArrayList<>();
         loggedInUsers = new ConcurrentHashMap<>();
         usersInGame = new ConcurrentHashMap<>();
+        availableLobby = new ArrayList<>();
         executor = Executors.newCachedThreadPool();
+        usedLibbyIds = new HashSet<>();
+        random = new Random();
     }
 
 
     public void messageHandler(Message message, ObjectOutputStream oos){
-        switch (message.getType()){
-            case ACCESS:
-                AccessMessage accessMessage = (AccessMessage) message;
-                if (accessMessage.isRegistered() && loggedInUsers.containsValue(accessMessage.getNickname())){
-                    try {
-                        oos.reset();
-                        oos.writeObject(new ErrorMessage(ErrorType.ACCOUNT_ALREADY_LOGGED));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    executor.execute(new Access(accessMessage.getNickname(),accessMessage.getPwd(),accessMessage.isRegistered(),oos));
+        if(message.getType() == MessageType.ACCESS){
+            AccessMessage accessMessage = (AccessMessage) message;
+            if (accessMessage.isRegistered() && loggedInUsers.containsValue(accessMessage.getNickname())){
+                writeErrorMessage(oos,ErrorType.ACCOUNT_ALREADY_LOGGED);
+            }else{
+                executor.execute(new Access(accessMessage.getNickname(),accessMessage.getPwd(),accessMessage.isRegistered(),oos));
+            }
+        }else {
+            if (loggedInUsers.containsKey(oos)){
+                String nickname = loggedInUsers.get(oos);
+                switch (message.getType()){
+                    case JOIN_GAME:
+                        joinGame(loggedInUsers.get(oos), oos);
+                        break;
+                    case NEW_GAME_INFO:
+                        NewGameInfoMessage newGameInfoMessage = (NewGameInfoMessage) message;
+                        createLobby(newGameInfoMessage.getNumOfPlayer(),loggedInUsers.get(oos),oos);
+                        break;
+                    case PLAY_INITIAL_CARD:
+                        PlayInitCardMessage playInitCardMessage = (PlayInitCardMessage) message;
+                        executor.execute(new PlayInitialCard(usersInGame.get(nickname),nickname,
+                                (Card) getCard(playInitCardMessage.getIdCard()),playInitCardMessage.isBackSide()));
+                        break;
+                    case PERSONAL_GOAL_CHOOSE:
+                        String name  = loggedInUsers.get(oos);
+                        executor.execute(new SetPersonalGoal(usersInGame.get(nickname),nickname,((PersonalGoalChooseMessage)message).getIdCard(),oos));
+                        break;
+                    case PLAY_CARD:
+                        PlayCardMessage playCardMessage = (PlayCardMessage) message;
+                        executor.execute(new PlayCard(usersInGame.get(nickname),nickname,
+                                playCardMessage.getPosition(), playCardMessage.isBackSide(), (Card)getCard(playCardMessage.getIdCard()),oos));
+                        break;
+                    case DRAW_CARD:
+                        DrawCardMessage drawCardMessage = (DrawCardMessage) message;
+                        LocationType location = drawCardMessage.getLocation();
+                        if ((location == LocationType.DISPLAYED_RESOURCE_LIST) || (location == LocationType.DISPLAYED_GOLD_LIST))
+                            executor.execute(new DrawCard(usersInGame.get(nickname),nickname,location,
+                                    drawCardMessage.getIdCard(),oos));
+                        else
+                            executor.execute(new DrawCard(usersInGame.get(nickname),nickname,location,oos));
+                        break;
+                    default:
+                        break;
                 }
-                break;
-            case JOIN_GAME:
-                if (loggedInUsers.containsKey(oos))
-                    joinGame(loggedInUsers.get(oos), oos);
-                break;
-            case NEW_GAME_INFO:
-                if (loggedInUsers.containsKey(oos)){
-                    NewGameInfoMessage newGameInfoMessage = (NewGameInfoMessage) message;
-                    createLobby(newGameInfoMessage.getNumOfPlayer(),loggedInUsers.get(oos),oos);
-                }
-                break;
-            case PLAY_INITIAL_CARD:
-                if (loggedInUsers.containsKey(oos)){
-                    PlayInitCardMessage playInitCardMessage = (PlayInitCardMessage) message;
-                    String nickname = loggedInUsers.get(oos);
-                    executor.execute(new PlayInitialCard(usersInGame.get(nickname),nickname,
-                            (Card) getCard(playInitCardMessage.getIdCard()),playInitCardMessage.isBackSide()));
-                }
-                break;
-            case PERSONAL_GOAL_CHOOSE:
-                if (loggedInUsers.containsKey(oos)){
-                    String nickname = loggedInUsers.get(oos);
-                    executor.execute(new SetPersonalGoal(usersInGame.get(nickname),nickname,((PersonalGoalChooseMessage)message).getIdCard(),oos));
-                }
-                break;
-            case PLAY_CARD:
-                if (loggedInUsers.containsKey(oos)){
-                    String nickname = loggedInUsers.get(oos);
-                    PlayCardMessage playCardMessage = (PlayCardMessage) message;
-                    executor.execute(new PlayCard(usersInGame.get(nickname),nickname,
-                            playCardMessage.getPosition(), playCardMessage.isBackSide(), (Card)getCard(playCardMessage.getIdCard()),oos));
-                }
-                break;
-            case DRAW_CARD:
-                if (loggedInUsers.containsKey(oos)) {
-                    String nickname = loggedInUsers.get(oos);
-                    DrawCardMessage drawCardMessage = (DrawCardMessage) message;
-                    LocationType location = drawCardMessage.getLocation();
-                    if ((location == LocationType.DISPLAYED_RESOURCE_LIST) || (location == LocationType.DISPLAYED_GOLD_LIST))
-                        executor.execute(new DrawCard(usersInGame.get(nickname),nickname,location,
-                                drawCardMessage.getIdCard(),oos));
-                    else
-                        executor.execute(new DrawCard(usersInGame.get(nickname),nickname,location,oos));
-                }
-                break;
-            default:
-                break;
+            }
+        }
+
+    }
+
+
+    public static void writeErrorMessage(ObjectOutputStream oos, ErrorType type){
+        try {
+            oos.reset();
+            oos.writeObject(new ErrorMessage(type));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -136,47 +140,41 @@ public class GameController {
     }
 
 
-    public void removeUserLoggedIn(ObjectOutputStream oos){
-        loggedInUsers.remove(oos);
-    }
-
-
     public void executeTask(Runnable task){
         executor.execute(task);
     }
 
 
-    public synchronized void joinGame(String nickname, ObjectOutputStream oos) {
-        if (currentLobby.isPresent()){
-            currentLobby.get().addObserver(new SocketObserver(nickname, oos));
-            currentLobby.get().addNewPlayer(nickname);
+    public synchronized void joinGame(String nickname, ObjectOutputStream oos){
+        List<Integer> lobbies = availableLobby.stream().map(Lobby::getIdLobby).toList();
+        try {
+            oos.writeObject(new NotifyMessage(NotifyType.LOBBY_LIST, lobbies));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-        }else{
-            Message message = new ReqNewGameInfoMessage();
-            try {
-                oos.writeObject(message);
-            } catch (IOException e) {
-                e.printStackTrace();
+    public synchronized void joinLobby(String nickname, ObjectOutputStream oos, int idLobby) {
+        boolean find = false;
+        for (Lobby lobby: availableLobby) {
+            if (lobby.getIdLobby() == idLobby){
+                lobby.addObserver(new SocketObserver(nickname,oos));
+                lobby.addNewPlayer(nickname);
+                find = true;
+                break;
             }
+        }
+        if (!find){
+            writeErrorMessage(oos,ErrorType.LOBBY_ID_NOT_FOUND);
         }
     }
 
 
-    public synchronized void createLobby(int numOfPlayer, String nickname, ObjectOutputStream oos){
-        if (currentLobby.isEmpty()){
-            currentLobby = Optional.of(new Lobby(numOfPlayer));
-            //
-            currentLobby.get().addObserver(new SocketObserver(nickname, oos));
-            currentLobby.get().addNewPlayer(nickname);
-        }else {
-            currentLobby.get().addObserver(new SocketObserver(nickname, oos));
-            currentLobby.get().addNewPlayer(nickname);
-            //notify someone before he created a lobby a moment ago
-        }
-        //synchronize problem should be resolved
-        //if another user founds himself in the same situation,
-        //and choose the number of player before this one,
-        //it will create some problems
+    public void createLobby(int numOfPlayer, String nickname, ObjectOutputStream oos){
+        Lobby lobby = new Lobby(numOfPlayer,getRandomLobbyId());
+        availableLobby.add(lobby);
+        lobby.addObserver(new SocketObserver(nickname,oos));
+        lobby.addNewPlayer(nickname);
     }
 
 
@@ -202,6 +200,15 @@ public class GameController {
             loggedInUsers.remove(oos);
         }
 
+    }
+
+    public int getRandomLobbyId(){
+        int n = random.nextInt(1000);
+        while (usedLibbyIds.contains(n)){
+            n = random.nextInt(1000);
+        }
+        usedLibbyIds.add(n);
+        return n;
     }
 }
 
