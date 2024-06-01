@@ -11,10 +11,12 @@ import java.util.List;
 
 
 public class Lobby extends Observable {
+    int idLobby;
     int numOfPlayer;
     private List<String> players;
 
-    public Lobby(int numOfPlayer){
+    public Lobby(int numOfPlayer, int idLobby){
+        this.idLobby = idLobby;
         this.numOfPlayer = numOfPlayer;
         players = new ArrayList<>();
     }
@@ -70,5 +72,9 @@ public class Lobby extends Observable {
 
     public int getNumOfPlayer(){
         return numOfPlayer;
+    }
+
+    public int getIdLobby(){
+        return idLobby;
     }
 }
