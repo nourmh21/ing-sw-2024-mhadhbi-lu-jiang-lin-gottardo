@@ -90,7 +90,6 @@ public class GUIApplication extends Application implements UserInterface {
                         stage.setTitle("Codex Naturalis");
                         stage.setScene(scene);
                         stage.setOnCloseRequest(event -> {stop();});
-                        stage.setResizable(true);
                         stage.show();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -151,10 +150,12 @@ public class GUIApplication extends Application implements UserInterface {
                             lobby4Controller = loader.getController();
                             break;
                         case GAME:
+                            stage.setResizable(true);
                             inGameController = loader.getController();
                             ((GUIApplication) ClientController.getInstance().getView()).setInGameController(inGameController);
                             inGameController.setDeskBackground();
                             stage.setMaximized(true);
+                            stage.setResizable(false);
                             break;
 
                     }
