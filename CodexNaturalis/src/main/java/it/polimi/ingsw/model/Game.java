@@ -136,19 +136,11 @@ public class Game extends Observable{
     public void disconnect(Player p) throws InvalidNumOfConnectedPlayer {
         p.setDisconnected();
         numOfConnectedPlayers -= 1;
-        if (numOfConnectedPlayers == 1)
+        if (numOfConnectedPlayers == 1) {
             throw new InvalidNumOfConnectedPlayer();
+        }
     }
 
-
-    /**
-     * @param p indicates the player who reconnects
-     */
-    public void reconnect(Player p){
-        p.setConnected();
-        numOfConnectedPlayers += 1;
-
-    }
 
 
     /**
@@ -216,7 +208,7 @@ public class Game extends Observable{
      * find final winner in the game
      * @return the final winners list
      */
-    private void checkExtraPoint(){
+    public void checkExtraPoint(){
         int maxExtraPoint=0;
         for (Player p:possibleWinners){
             if (p.getPoint() >= maxExtraPoint)
@@ -244,19 +236,6 @@ public class Game extends Observable{
 
 
     /**
-     * @return the first player of the game
-     */
-    public Player getFirstPlayer(){
-        return firstPlayer;
-    }
-
-
-    public void setFirstPlayer(Player player){
-        firstPlayer = player;
-    }
-
-
-    /**
      * @return the number of players that is connected
      */
     public int getNumOfConnectedPlayers(){
@@ -274,11 +253,6 @@ public class Game extends Observable{
 
     public Desk getDesk() {
         return desk;
-    }
-
-
-    public void updateRound(){
-        round++;
     }
 
 

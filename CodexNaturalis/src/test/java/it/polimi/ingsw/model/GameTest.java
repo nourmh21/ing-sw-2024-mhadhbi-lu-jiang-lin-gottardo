@@ -8,8 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 
 /**
@@ -22,20 +21,14 @@ public class GameTest {
     private Player p1;
     private Player p2;
     private Player p3;
-    private List<Player> players;
-    private List<Player> possibleWinners;
-    private List<Player> winners;
 
 
     @Before
     public void setGame(){
         game = new Game(3);
-        players = new ArrayList<>();
-        possibleWinners = new ArrayList<>();
-        winners = new ArrayList<>();
-        p1 = new Player("Rossi", game, Color.BLUE);
-        p2 = new Player("Neri", game, Color.GREEN);
-        p3 = new Player("Verdi", game, Color.YELLOW);
+        game.addPlayers("Rossi");
+        game.addPlayers("Verdi");
+        game.addPlayers("Neri");
 
 
     }
@@ -48,86 +41,72 @@ public class GameTest {
     }
 
 
+
     @Test
     public void checkMaxPoint_GetMaxPointOfPlayers_ShouldReturnPossibleWinners(){
-        int max=20;
+        p1 = game.getPlayers().get(0);
+        p1.updatePoint(21);
+        p1.isConnected();
 
+        p2 = game.getPlayers().get(1);
+        p2.updatePoint(25);
+        p2.isConnected();
 
-        game.addPlayers(p1.getNickname());
-        players.add(p1);
-        p1.updatePoint(25);
-        game.addPlayers(p2.getNickname());
-        players.add(p2);
-        p2.updatePoint(22);
-        game.addPlayers(p3.getNickname());
-        players.add(p3);
+        p3 = game.getPlayers().get(2);
         p3.updatePoint(25);
+        p3.isConnected();
+
+        game.checkMaxPoint();
+
+        assertEquals(2, game.possibleWinners.size());
+    }
 
 
-        for (Player p: players){
-            if (p.getPoint() >= max) {
-                max = p.getPoint();
-            }
-        }
+    @Test
+    public void checkMaxPoint_GetMaxPointofPlayer_ShouldReturnOnePlayer(){
+        p1 = game.getPlayers().get(0);
+        p1.updatePoint(21);
+        p1.isConnected();
 
+        p2 = game.getPlayers().get(1);
+        p2.updatePoint(21);
+        p2.isConnected();
 
-        for (Player p:players){
-            if (p.getPoint() == max)
-                possibleWinners.add(p);
-        }
+        p3 = game.getPlayers().get(2);
+        p3.updatePoint(25);
+        p3.isConnected();
 
-        assertEquals(possibleWinners.size(), 2);
-        assertEquals(possibleWinners.get(0).getNickname(), "Rossi");
-        assertEquals(possibleWinners.get(1).getNickname(), "Verdi");
+        game.checkMaxPoint();
 
+        assertEquals(1, game.getWinners().size());
     }
 
 
     @Test
     public void checkExtraPoint_GetMaxExtraPoint_ShouldReturnFinalWinners(){
-        game.addPlayers(p1.getNickname());
-        possibleWinners.add(p1);
+
+        p1 = game.getPlayers().get(0);
         p1.addGoalPoint(6);
-
-        game.addPlayers(p3.getNickname());
-        possibleWinners.add(p3);
-        p3.addGoalPoint(6);
+        game.possibleWinners.add(p1);
 
 
-        int maxExtra=0;
-        for (Player p: possibleWinners){
-            if (p.getGoalPoint() >= maxExtra) {
-                maxExtra = p.getGoalPoint();
-            }
-        }
+        p2 = game.getPlayers().get(1);
+        p2.addGoalPoint(6);
+        game.possibleWinners.add(p2);
 
-        for (Player p:possibleWinners){
-            if (p.getGoalPoint() == maxExtra)
-                winners.add(p);
-        }
+        game.checkExtraPoint();
 
-        assertEquals(winners.size(), 2);
-        assertEquals(winners.get(0).getNickname(), "Rossi");
-        assertEquals(winners.get(1).getNickname(), "Verdi");
-
+        assertEquals(game.getWinners().size(), 2);
 
     }
+
 
     @Test (expected = InvalidNumOfConnectedPlayer.class)
     public void disconnect_InvalidNumOfPlayer_throwInvalidNumOfConnectedPlayer() throws InvalidNumOfConnectedPlayer {
-        game.addPlayers(p1.getNickname());
-        game.addPlayers(p2.getNickname());
-        game.addPlayers(p3.getNickname());
-        game.disconnect(p1);
-        game.disconnect(p2);
+        game.disconnect(game.getPlayers().get(0));
+        game.disconnect(game.getPlayers().get(1));
     }
-
-    @Test
-    public void reconnect_ForJoinAgainGame(){
-        game.addPlayers(p1.getNickname());
-        assertEquals(game.getNumOfConnectedPlayers(), game.getPlayersSize());
-    }
-
+    
 
 
 }
