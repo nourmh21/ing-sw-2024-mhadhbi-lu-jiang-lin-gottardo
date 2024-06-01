@@ -3,12 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.IllegalCoordinateInsertionException;
 import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static it.polimi.ingsw.model.enums.Symbol.*;
+
+import java.util.*;
 
 
 public class PlayerBoard {
@@ -97,7 +94,7 @@ public class PlayerBoard {
         addSymbolsList(card,isBackSide,xx,yy);
         updateAvailablePosition();
         if (isBackSide){
-            // if is back side, why calculate point? We changed after tested in gui
+            calculatePoint(card , index);
             return 0;
         } else
             return calculatePoint(card , index);
@@ -537,24 +534,15 @@ public class PlayerBoard {
      * remove forbidden position from available position list
      */
     private void updateAvailablePosition(){
-        update(forbiddenPosition);
-        List<int[]> placedPositions = new ArrayList<>();
-        for (int i = 0; i < x.size(); i++) {
-            placedPositions.add(new int[]{x.get(i), y.get(i)});
-        }
-        update(placedPositions);
-    }
-
-    private void update(List<int[]> list){
-        for (int[] elementToControlled : list) {
-            for (int j = 0; j < availablePosition.size(); j++) {
-                int[] arrayAvailablePosition = availablePosition.get(j);
-                if (Arrays.equals(elementToControlled, arrayAvailablePosition)) {
-                    availablePosition.remove(j);
-                    break;
+        for (int[] elementToControlled : forbiddenPosition) {
+                for (int j = 0; j < availablePosition.size(); j++) {
+                    int[] arrayAvailablePosition = availablePosition.get(j);
+                    if (Arrays.equals(elementToControlled, arrayAvailablePosition)) {
+                        availablePosition.remove(j);
+                        j--;
+                    }
                 }
             }
-        }
     }
 
 
