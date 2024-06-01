@@ -90,6 +90,7 @@ public class GUIApplication extends Application implements UserInterface {
                         stage.setTitle("Codex Naturalis");
                         stage.setScene(scene);
                         stage.setOnCloseRequest(event -> {stop();});
+                        stage.setResizable(true);
                         stage.show();
                     } catch (IOException e) {
                         e.printStackTrace();
