@@ -79,7 +79,6 @@ public class GameController {
                                 (Card) getCard(playInitCardMessage.getIdCard()),playInitCardMessage.isBackSide()));
                         break;
                     case PERSONAL_GOAL_CHOOSE:
-                        String name  = loggedInUsers.get(oos);
                         executor.execute(new SetPersonalGoal(usersInGame.get(nickname),nickname,((PersonalGoalChooseMessage)message).getIdCard(),oos));
                         break;
                     case PLAY_CARD:
@@ -145,6 +144,7 @@ public class GameController {
     }
 
 
+    //to be fixed
     public synchronized void joinGame(String nickname, ObjectOutputStream oos){
         List<Integer> lobbies = availableLobby.stream().map(Lobby::getIdLobby).toList();
         try {
@@ -154,6 +154,7 @@ public class GameController {
         }
     }
 
+    //to be fixed
     public synchronized void joinLobby(String nickname, ObjectOutputStream oos, int idLobby) {
         boolean find = false;
         for (Lobby lobby: availableLobby) {
@@ -170,6 +171,7 @@ public class GameController {
     }
 
 
+    //to be fixed
     public void createLobby(int numOfPlayer, String nickname, ObjectOutputStream oos){
         Lobby lobby = new Lobby(numOfPlayer,getRandomLobbyId());
         availableLobby.add(lobby);
