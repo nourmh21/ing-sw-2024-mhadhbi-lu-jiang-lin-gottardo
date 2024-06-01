@@ -197,6 +197,13 @@ public class GUIApplication extends Application implements UserInterface {
         showGameInformation("Nickname already exists, please try another one");
     }
 
+    @Override
+    public void setLobbyList(List<Integer[]> lobbyList) {
+    }
+
+    @Override
+    public void lobbyChooseFailed() {
+    }
 
     @Override
     public void askNumOfPlayer() {

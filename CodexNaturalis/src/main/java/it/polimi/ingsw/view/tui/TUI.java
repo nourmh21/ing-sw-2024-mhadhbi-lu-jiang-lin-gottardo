@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 
-public class TUI implements UserInterface, Runnable{
+public class TUI extends Thread implements UserInterface{
     private final Scanner in;
     private final PrintStream out;
 
@@ -30,8 +30,6 @@ public class TUI implements UserInterface, Runnable{
     private Optional<Integer[]> possiblePersonalGoals;
 
     private Optional<ImmutablePlayer> me;
-
-    private Optional<Integer> myNumOfPlayerChoose;
 
     private Optional<Integer> myPersonalGoal;
 
@@ -50,7 +48,6 @@ public class TUI implements UserInterface, Runnable{
         handCards = Optional.empty();
         me = Optional.empty();
         possiblePersonalGoals = Optional.empty();
-        myNumOfPlayerChoose = Optional.empty();
         myPersonalGoal = Optional.empty();
         chatMessages = Optional.empty();
     }
@@ -58,10 +55,9 @@ public class TUI implements UserInterface, Runnable{
     @Override
     public void run() {
         askServerIP();
-        while (true){}
+        while (!this.isInterrupted()){}
 
     }
-
 
 
     public void askServerIP(){
@@ -140,8 +136,6 @@ public class TUI implements UserInterface, Runnable{
         out.println("2- go back");
         String choice = in.nextLine();
         if(choice.equals("1")){
-            ///
-            //out.println("data checking ...");
             ClientController.getInstance().getClientAction().access(tryNickname,password,true);
         }else if(choice.equals("2")){
             askAccessMode();
@@ -235,7 +229,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public void showGameNameTitle() {
+    private void showGameNameTitle() {
         System.out.println("\u001B[38;4;230m");
         System.out.println("\u001B[38;5;78m ██████╗ █████╗ ██████╗ ███████╗██╗   ██╗");
         System.out.println("\u001B[38;5;78m██╔════╝██╔══██║██╔══██║██╔════╝ ██║ ██╔╝");
@@ -254,7 +248,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public void home() {
+    private void home() {
         out.println();
         out.println("HOME");
         out.println("1- Play a match");
@@ -272,15 +266,62 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public void playGame(){
-        ClientController.getInstance().getClientAction().joinGame();
+    private void playGame(){
+        out.println();
+        out.println("Make your choice:");
+        out.println("1- JOIN an existing waiting room");
+        out.println("2- CREATE one waiting room yourself");
+        String choice = in.nextLine();
+        if (choice.equals("1")){
+            ClientController.getInstance().getClientAction().reqLobbies();
+        }else if (choice.equals("2")) {
+            askNumOfPlayer();
+        } else {
+            invalidChoice();
+            playGame();
+        }
+    }
+
+    @Override
+    public void setLobbyList(List<Integer[]> lobbyList) {
+        out.println();
+        out.println("EXISTING WAITING ROOMS:");
+        if (lobbyList.isEmpty())
+            out.println("[No waiting room exists]");
+        for (int i = 0; i < lobbyList.size(); i++) {
+            out.println((i+1) + "- "+ lobbyList.get(i)[0] + " [" + lobbyList.get(i)[1] + "] currently in: " + lobbyList.get(i)[2]);
+        }
+        out.println((lobbyList.size()+1) + "- REFRESH");
+        out.println((lobbyList.size()+2) + "- go back");
+        String choice = in.nextLine();
+        try {
+            int intChoice = Integer.parseInt(choice);
+            if (intChoice > 0 && intChoice <= lobbyList.size()){
+                ClientController.getInstance().getClientAction().joinLobby(lobbyList.get(intChoice-1)[0]);
+            }else if (intChoice == (lobbyList.size()+1)) {
+                ClientController.getInstance().getClientAction().reqLobbies();
+            }else if (intChoice == (lobbyList.size()+2)){
+                playGame();
+            }else {
+                invalidChoice();
+                setLobbyList(lobbyList);
+            }
+        }catch (NumberFormatException e){
+            invalidChoice();
+            setLobbyList(lobbyList);
+        }
+    }
+
+    @Override
+    public void lobbyChooseFailed() {
+        out.println();
+        out.println("[The room you selected is already full, probably someone joined before you]");
     }
 
 
     @Override
     public void askNumOfPlayer(){
         out.println();
-        out.println("[No waiting room available in this moment, you're creating one]");
         boolean isValid = false;
         do {
             out.println("How many players do you want in the match?");
@@ -289,16 +330,13 @@ public class TUI implements UserInterface, Runnable{
             out.println("3- Four");
             String choice = in.nextLine();
             if (choice.equals("1")){
-                myNumOfPlayerChoose = Optional.of(2);
-                ClientController.getInstance().getClientAction().newGame(2);
+                ClientController.getInstance().getClientAction().createLobby(2);
                 isValid = true;
             }else if (choice.equals("2")){
-                myNumOfPlayerChoose = Optional.of(3);
-                ClientController.getInstance().getClientAction().newGame(3);
+                ClientController.getInstance().getClientAction().createLobby(3);
                 isValid = true;
             }else if (choice.equals("3")){
-                myNumOfPlayerChoose = Optional.of(4);
-                ClientController.getInstance().getClientAction().newGame(4);
+                ClientController.getInstance().getClientAction().createLobby(4);
                 isValid = true;
             }else {
                 invalidChoice();
@@ -310,11 +348,6 @@ public class TUI implements UserInterface, Runnable{
 
     @Override
     public void setLobbyStatus(ImmutableLobby lobby){
-        if (myNumOfPlayerChoose.isPresent() && this.lobby.isEmpty())
-            if (myNumOfPlayerChoose.get() != lobby.getNumOfPlayer()){
-                out.println();
-                out.println("[Someone created a waiting room faster than you, you entered in that one]");
-            }
         out.println();
         this.lobby = Optional.of(lobby);
         showLobbyStatus();
@@ -326,7 +359,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public void showLobbyStatus(){
+    private void showLobbyStatus(){
         if (lobby.isPresent()){
             out.println("WAITING ROOM ["+ lobby.get().getNumOfPlayer()+"]");
             for (String player: lobby.get().getPlayers())
@@ -527,13 +560,12 @@ public class TUI implements UserInterface, Runnable{
         players = Optional.empty();
         handCards = Optional.empty();
         me = Optional.empty();
-        myNumOfPlayerChoose = Optional.empty();
         myPersonalGoal = Optional.empty();
         chatMessages = Optional.empty();
     }
 
 
-    public void showCommonGoals(){
+    private void showCommonGoals(){
         out.println();
         out.println("The two common goals of this game are: " + game.get().getCommonGoals());
     }
@@ -543,14 +575,14 @@ public class TUI implements UserInterface, Runnable{
         out.println("[Waiting all players take that action...]");
     }
 
-    public void askInitCardPlace(){
+    private void askInitCardPlace(){
         out.println();
         out.println("Your initial card: " + me.get().getInitialCard());
         askInitialCardSide(me.get().getInitialCard());
         showWaitingComment();
     }
 
-    public void askInitialCardSide(Integer id){
+    private void askInitialCardSide(Integer id){
         askSide();
         String choice = in.nextLine();
         if (choice.equals("1"))
@@ -576,7 +608,7 @@ public class TUI implements UserInterface, Runnable{
         askPersonalGoalChoose();
     }
 
-    public void askPersonalGoalChoose(){
+    private void askPersonalGoalChoose(){
         out.println();
         out.println("Choose your personal goal: ");
         out.println("1- "+possiblePersonalGoals.get()[0]);
@@ -607,13 +639,13 @@ public class TUI implements UserInterface, Runnable{
 
     }
 
-    public void showHandCards(){
+    private void showHandCards(){
         out.println();
         out.println("Your hand card: " + handCards);
     }
 
 
-    public void askPlayHandCard(){
+    private void askPlayHandCard(){
         if (handCards.isPresent()) {
             showHandCards();
             out.println("Which one do you want to play?");
@@ -643,7 +675,7 @@ public class TUI implements UserInterface, Runnable{
         }
     }
 
-    public void askCardSide(Integer id, int[] position){
+    private void askCardSide(Integer id, int[] position){
         askSide();
         String choice = in.nextLine();
         if (choice.equals("1"))
@@ -671,7 +703,7 @@ public class TUI implements UserInterface, Runnable{
         askDrawCard();
     }
 
-    public void askPosition(Integer idCard){
+    private void askPosition(Integer idCard){
         //position that can be chosen
         List<int[]> admittedPositions = me.get().getPermissiblePosition();
 
@@ -708,7 +740,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public List<String> showDeskStatus(){
+    private List<String> showDeskStatus(){
         List<String> validChoices = new ArrayList<>();
         out.println("DESK: ");
         if (game.isPresent()){
@@ -772,7 +804,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public void askDrawCard(){
+    private void askDrawCard(){
         out.println();
         out.println("Which card do you want to draw?");
         List<String> validChoices = showDeskStatus();
@@ -827,7 +859,7 @@ public class TUI implements UserInterface, Runnable{
     }
 
 
-    public void showWinTitle(){
+    private void showWinTitle(){
         out.println("\u001B[38;4;230m");
         out.println("\u001B[38;5;78m ██   ██  ███████  ██   ██     ██     ██     ██  ██  ████    ██   ");
         out.println("\u001B[38;5;78m ██   ██  ██   ██  ██   ██      ██   ████   ██   ██  ██ ██   ██   ");

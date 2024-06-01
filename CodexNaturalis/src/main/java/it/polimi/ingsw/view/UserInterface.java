@@ -16,6 +16,10 @@ public interface UserInterface {
 
     public void connectionSuccess();
 
+    public void setLobbyList(List<Integer[]> lobbies);
+
+    public void lobbyChooseFailed();
+
     public void askNumOfPlayer();
 
     public void setPossiblePersonalGoals(Integer[] possiblePersonalGoals);
