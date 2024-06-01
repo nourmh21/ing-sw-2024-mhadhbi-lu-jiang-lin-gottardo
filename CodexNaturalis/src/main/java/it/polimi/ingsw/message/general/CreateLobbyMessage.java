@@ -3,19 +3,17 @@ package it.polimi.ingsw.message.general;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 
-import java.util.Map;
-
-public class NewGameInfoMessage implements Message {
+public class CreateLobbyMessage implements Message {
 
     int numOfPlayer;
-    public NewGameInfoMessage(int numOfPlayer){
+    public CreateLobbyMessage(int numOfPlayer){
         this.numOfPlayer = numOfPlayer;
     }
 
 
     @Override
     public MessageType getType() {
-        return MessageType.NEW_GAME_INFO;
+        return MessageType.CREATE_LOBBY;
     }
 
     public int getNumOfPlayer() {
