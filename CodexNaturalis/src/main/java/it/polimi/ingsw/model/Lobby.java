@@ -31,7 +31,7 @@ public class Lobby extends Observable {
 
         if (players.size() == numOfPlayer){
             //remove that lobby from controller
-            GameController.getInstance().removeFromCurrentLobby();
+            GameController.getInstance().removeLobby(this);
             //create the game
             Game game = new Game(numOfPlayer);
             //add all players in the new game and in the list of player in game
@@ -61,7 +61,7 @@ public class Lobby extends Observable {
             notify_lobby_status(new ImmutableLobby(this));
         }
         if (players.isEmpty())
-            GameController.getInstance().removeFromCurrentLobby();
+            GameController.getInstance().removeLobby(this);
     }
 
 
