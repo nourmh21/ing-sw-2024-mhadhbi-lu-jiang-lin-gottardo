@@ -52,7 +52,7 @@ public class ClientHandler extends Thread{
                         //
                         GameController.getInstance().messageHandler(message,oos);
 
-                }catch (SocketException e){
+                }catch (SocketException|EOFException e) {
                     System.out.println("Client disconnected");
                     close();
                 }catch (IOException e){
