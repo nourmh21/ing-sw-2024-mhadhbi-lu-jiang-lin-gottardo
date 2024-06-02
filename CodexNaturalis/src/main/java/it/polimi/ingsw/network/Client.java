@@ -29,18 +29,15 @@ public class Client
         isTUI = false;
 
         try {
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe","/c");
-            Process process = builder.start();
             if (isTUI){
                 TUI tui = new TUI();
                 ClientController.getInstance().setView(tui);
-                new Thread(tui).start();
+                tui.start();
             }else {
                 GUIApplication gui = new GUIApplication();
                 ClientController.getInstance().setView(gui);
                 gui.launch();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
