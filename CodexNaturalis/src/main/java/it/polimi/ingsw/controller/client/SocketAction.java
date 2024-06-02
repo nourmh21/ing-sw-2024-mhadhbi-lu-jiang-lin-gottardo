@@ -64,7 +64,7 @@ public class SocketAction implements ClientAction {
         try {
             oos.writeObject(message);
         }catch (SocketException exception){
-            ClientController.getInstance().getView().showConnectionOffline();
+            ClientController.getInstance().getView().showConnectionError();
         } catch (IOException e) {
             e.printStackTrace();
         }

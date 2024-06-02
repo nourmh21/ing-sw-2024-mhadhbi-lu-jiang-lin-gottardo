@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket;
 
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.enums.MessageType;
 import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.notify.NotifyMessage;
 
@@ -12,8 +13,6 @@ import java.net.SocketException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import static it.polimi.ingsw.message.enums.MessageType.HEARTBEAT;
 
 public class ClientHandler extends Thread{
 
@@ -25,20 +24,19 @@ public class ClientHandler extends Thread{
 
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private long lastHeartbeatTime;
+    private long lastReceivedTime;
 
 
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
-        lastHeartbeatTime = System.currentTimeMillis();
+        lastReceivedTime = System.currentTimeMillis();
         scheduler = Executors.newScheduledThreadPool(1);
     }
 
 
     @Override
     public void run() {
-
 
         try {
             input = clientSocket.getInputStream();
@@ -47,22 +45,15 @@ public class ClientHandler extends Thread{
             ois = new ObjectInputStream(input);
             oos = new ObjectOutputStream(output);
 
-            Message response = new NotifyMessage(NotifyType.CONNECTED);
-            oos.writeObject(response);
+            oos.writeObject(new NotifyMessage(NotifyType.CONNECTED));
 
             scheduler.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
                     long currentTime = System.currentTimeMillis();
-                    long heartbeatInterval = currentTime - lastHeartbeatTime;
-
-                    if (heartbeatInterval > 8 * 1000) {
-                        try {
-                            close();
-                        } catch (IOException e) {
-                           e.printStackTrace();
-                        }
-                    }
+                    long timeInterval = currentTime - lastReceivedTime;
+                    if (timeInterval > 10 * 1000)
+                        close();
                 }
             }, 5, 5, TimeUnit.SECONDS);
 
@@ -70,36 +61,32 @@ public class ClientHandler extends Thread{
             while (!this.isInterrupted()){
                 try {
                     Message message = (Message) ois.readObject();
-                    if (message.getType() == HEARTBEAT)
-                        lastHeartbeatTime = System.currentTimeMillis();
-                    else
+                    lastReceivedTime = System.currentTimeMillis();
+                    if (message.getType() != MessageType.HEARTBEAT)
                         GameController.getInstance().messageHandler(message,oos);
                 }catch (SocketException|EOFException e) {
                     System.out.println("Client disconnected");
                     close();
-                }catch (IOException e){
-                    e.printStackTrace();
                 }
             }
 
         }catch (SocketException e){
-            //System.out.println("Client disconnected");
-
-        }catch (IOException e) {
+            close();
+        }catch (IOException|ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println(" ");
         }
 
     }
 
-    private void close() throws IOException {
+    private void close(){
         //In theory fixed
         GameController.getInstance().socketClientLeave(oos);
-        ois.close();
-        oos.close();
-        input.close();
-        output.close();
+        try {
+            ois.close();
+            oos.close();
+            input.close();
+            output.close();
+        } catch (IOException ignored) {}
         this.interrupt();
     }
 
