@@ -9,5 +9,6 @@ public enum NotifyType {
     PLAYER_STATUS,
     HAND_CARDS,
     PERSONAL_GOALS,
-    END_GAME_INFO
+    END_GAME_INFO,
+    PLAYER_DISCONNECTED
 }

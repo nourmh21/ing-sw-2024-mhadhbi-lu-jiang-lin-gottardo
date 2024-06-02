@@ -91,7 +91,7 @@ public class Game extends Observable{
      * sets game state
      * @param gameState indicate the present state of the game
      */
-    public void setGameState(GameState gameState) {
+    public synchronized void setGameState(GameState gameState) {
         this.gameState = gameState;
         //
         notify_game_status(new ImmutableGame(this));

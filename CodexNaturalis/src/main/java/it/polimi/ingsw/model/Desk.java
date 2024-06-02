@@ -269,7 +269,8 @@ public class Desk extends Observable{
     }
 
     public boolean isEmptyBothRGDeck(){
-        return resourceCardDeck.isEmpty() && goldCardDeck.isEmpty();
+        return resourceCardDeck.isEmpty() && goldCardDeck.isEmpty() &&
+                nextResourceCard == null && nextGoldCard == null;
     }
 
 
