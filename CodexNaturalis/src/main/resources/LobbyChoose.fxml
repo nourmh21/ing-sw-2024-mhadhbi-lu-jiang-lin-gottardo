@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForLobbyChoose">
+    <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #695138; -fx-border-width: 1;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
+    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8">
+        <Image url="@img/utils/Insect.png" />
+    </ImageView>
+    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
+        <Image url="@img/utils/Fungi.png" />
+    </ImageView>
+    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.8" AnchorPane.topAnchor="9.3">
+        <Image url="@img/utils/Animal.png" />
+    </ImageView>
+    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.8" AnchorPane.topAnchor="9.3">
+        <Image url="@img/utils/Plant.png" />
+    </ImageView>
+    <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label alignment="TOP_CENTER" prefHeight="58.0" text="WAITING ROOMS" textFill="#6b5339">
+            <font>
+                <Font name="Algerian" size="48.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="25.0" />
+            </VBox.margin>
+        </Label>
+        <HBox alignment="CENTER" prefWidth="700.0" spacing="30">
+            <VBox alignment="TOP_CENTER" prefHeight="441.0" prefWidth="500.0" spacing="30.0" style="-fx-padding: 10;">
+                <ListView fx:id="lobbyList" prefHeight="270.0" prefWidth="450.0" />
+                <HBox alignment="CENTER" prefHeight="75.0" prefWidth="480.0">
+                    <children>
+                        <Label prefHeight="38.0" text="ID:" textFill="#6b5339">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets right="20.0" />
+                            </HBox.margin>
+                        </Label>
+                        <TextField fx:id="idLobby" onAction="#tryInsert" onKeyPressed="#removeRedBorder" onKeyReleased="#removeRedBorder" onKeyTyped="#removeRedBorder" prefWidth="100.0">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </TextField>
+                        <Button fx:id="submit" onMouseClicked="#trySubmit" text="Enter" textFill="#6b5339">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="20.0" right="20.0" />
+                            </HBox.margin>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button fx:id="tryRefresh" mnemonicParsing="false" onMouseClicked="#tryRefresh" style="-fx-padding: 5;">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/utils/refresh.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children>
+                </HBox>
+                <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                  <Button fx:id="toHome" mnemonicParsing="false" onMouseClicked="#switchToHome" style="-fx-background-color: transparent; -fx-padding: 0;" text="◀ home" textFill="#6b5339">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                        <Line endX="-100.0" endY="20.0" startX="-100.0" stroke="#6b5339" />
+                  <Button fx:id="toCreate" mnemonicParsing="false" onMouseClicked="#switchToCreateLobby" style="-fx-background-color: transparent; -fx-padding: 0;" text="create lobby ▶" textFill="#6b5339">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets bottom="7.0" />
+                    </padding>
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+
+</AnchorPane>

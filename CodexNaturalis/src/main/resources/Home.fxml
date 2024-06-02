@@ -5,9 +5,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" style="-fx-border-color: black; -fx-border-width: 1.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForHome">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" style="-fx-border-color: black; -fx-border-width: 0.7; -fx-background-color: #FFFBE3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForHome">
    <children>
       <AnchorPane prefHeight="362.0" prefWidth="1094.0">
          <children>
@@ -16,31 +17,38 @@
                   <Image url="@img/utils/Angle_1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="382.0" fitWidth="420.0" layoutX="718.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="382.0" fitWidth="420.0" layoutX="718.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/utils/Angle_2.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="197.0" fitWidth="730.0" layoutX="194.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="197.0" fitWidth="730.0" layoutX="187.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="225.0">
                <image>
                   <Image url="@img/utils/title.png" />
                </image>
             </ImageView>
+            <ImageView fitHeight="68.0" fitWidth="146.0" layoutX="479.0">
+               <image>
+                  <Image url="@img/utils/owl.png" />
+               </image>
+            </ImageView>
+            <Line endX="40.0" endY="-158.0" layoutX="378.0" layoutY="158.0" startX="-330.0" startY="214.0" stroke="#402513" strokeWidth="1.2" />
+            <Line endX="34.0" endY="124.0" layoutX="1015.0" layoutY="246.0" startX="-336.0" startY="-246.0" stroke="#412613" strokeWidth="1.2" />
          </children>
       </AnchorPane>
       <AnchorPane layoutY="462.0" prefHeight="288.0" prefWidth="1100.0">
          <children>
-            <ImageView fitHeight="383.0" fitWidth="379.0" layoutX="-5.0" layoutY="-91.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="383.0" fitWidth="379.0" layoutX="-5.0" layoutY="-91.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="-91.0">
                <image>
                   <Image url="@img/utils/Angle_3.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="387.0" fitWidth="384.0" layoutX="719.0" layoutY="-92.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="383.0" fitWidth="384.0" layoutX="719.0" layoutY="-93.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/utils/Angle_4.png" />
                </image>
             </ImageView>
-            <Button fx:id="play" layoutX="427.0" layoutY="-13.5" mnemonicParsing="false" onAction="#playGame" prefHeight="80.0" prefWidth="250.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: #938b16; -fx-border-width: 1; -fx-background-radius: 15;" text="PLAY" textFill="#dcdcdc">
+            <Button fx:id="play" layoutX="426.0" layoutY="6.0" mnemonicParsing="false" onAction="#playGame" prefHeight="80.0" prefWidth="250.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: #938b16; -fx-border-width: 1.2; -fx-background-radius: 15;" text="PLAY" textFill="WHITE" AnchorPane.topAnchor="4.0">
                <font>
                   <Font name="Times New Roman" size="40.0" />
                </font>
@@ -48,6 +56,8 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Line endX="34.0" endY="124.0" layoutX="388.0" layoutY="166.0" startX="-340.70709228515625" startY="-255.29290771484375" stroke="#412613" strokeWidth="1.2" />
+            <Line endX="40.0" endY="-158.0" layoutX="1008.0" layoutY="67.0" startX="-340.0" startY="225.0" stroke="#412613" strokeWidth="1.2" />
          </children>
       </AnchorPane>
    </children>

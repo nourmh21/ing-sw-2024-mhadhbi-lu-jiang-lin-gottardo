@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForJoinMode">
+   <children>
+      <HBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="300.0" prefWidth="500.0">
+         <children>
+            <Button fx:id="button1" mnemonicParsing="false" onMouseClicked="#askLobbies" prefHeight="260.0" prefWidth="220.0" style="-fx-background-color: beige; -fx-border-color: #402513; -fx-border-radius: 15; -fx-background-radius: 15;" text="JOIN AN EXISTING WAITING ROOM" textAlignment="CENTER" textFill="#402513" wrapText="true">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Candara" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="button2" mnemonicParsing="false" onMouseClicked="#switchToLobbyCreation" prefHeight="260.0" prefWidth="220.0" style="-fx-background-color: beige; -fx-border-color: #402513; -fx-background-radius: 15; -fx-border-radius: 15;" text="CREATE ONE WAITING ROOM" textAlignment="CENTER" textFill="#402513" wrapText="true">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Candara" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
