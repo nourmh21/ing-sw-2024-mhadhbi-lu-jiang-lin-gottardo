@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.socket;
 
+import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.message.general.HeartbeatMessage;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class SendHeartbeat extends Thread{
             }
 
         } catch (SocketException e){
-            //
+            ClientController.getInstance().getView().showConnectionOffline();
         }catch (InterruptedException e) {
             throw new RuntimeException(e);
         }catch (IOException e){
