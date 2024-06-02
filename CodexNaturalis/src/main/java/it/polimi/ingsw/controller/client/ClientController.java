@@ -86,6 +86,9 @@ public class ClientController {
                     case END_GAME_INFO:
                         view.showFinalResult((ImmutableEndGameInfo) (notifyMessage.getObject()));
                         break;
+                    case PLAYER_DISCONNECTED:
+                        view.gameInterrupted((String) notifyMessage.getObject());
+                        break;
                     default:
                         break;
                 }

@@ -196,7 +196,9 @@ public class GameController {
         if (loggedInUsers.containsKey(oos)){
             String nickname = loggedInUsers.get(oos);
             removePlayerFromLobby(nickname);
-            usersInGame.remove(nickname);
+            if (usersInGame.containsKey(nickname)){
+                executeTask(new PlayerDisconnect(nickname, usersInGame.get(nickname), oos));
+            }
             loggedInUsers.remove(oos);
         }
     }

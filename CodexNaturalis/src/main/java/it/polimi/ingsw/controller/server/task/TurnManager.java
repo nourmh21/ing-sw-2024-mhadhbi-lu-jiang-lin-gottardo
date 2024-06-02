@@ -27,17 +27,10 @@ public class TurnManager implements Runnable{
     public void run() {
         if (game.getGameState() == GameState.TURN_MANAGE){
 
-            //to be fixed because more probably we don't do resilience to connection
             for (int i = 0; i < numOfPlayer; i++) {
                 if (players.get(i) == lastPlayedPlayer){
-                    //记得告诉做view的人让他们如果收到points更新到20让他们标出来(TUI)or改个颜色(GUI)
-                    //我这边只有一个倒数最后一个round结束了才会去改成现为最后一个round
                     //check if is end of round
-                    if (i == numOfPlayer - 1 ||
-                            ((numOfPlayer >= 3) && (i == numOfPlayer - 2) && (!players.get(i + 1).isConnected())) ||
-                            ((numOfPlayer == 4) && (i == numOfPlayer - 3) && (!players.get(i + 1).isConnected())
-                                    && (!players.get(i + 2).isConnected()))
-                    ) {
+                    if (i == numOfPlayer - 1) {
                         //if game is in the last round
                         if (game.getIsLastRound()) {
                             game.setGameState(GameState.ENDING);
@@ -45,7 +38,6 @@ public class TurnManager implements Runnable{
                             //check if the next round will be the last one
                             if (checkEndTrigger(players))
                                 game.setIsLastRound();
-                            //game.updateRound();
                         }
                     }
 
@@ -60,33 +52,15 @@ public class TurnManager implements Runnable{
                 }
             }
         }
-
-
-
     }
-
 
     private void updateTurn(int j){
-        Player last = game.getCurrentPlayer();
-        while (last == game.getCurrentPlayer()){
-            if ( j < numOfPlayer-1){
-                if (players.get(j++).isConnected()){
-                    game.setCurrentPlayer(players.get(j++));
-                }else {
-                    j++;
-                }
-            }else if (j == numOfPlayer-1){
-                j = 0;
-                if (players.get(j).isConnected()){
-                    game.setCurrentPlayer(players.get(j));
-                }else {
-                    j++;
-                }
-            }
-
+        if ( j < numOfPlayer-1){
+            game.setCurrentPlayer(players.get(j+1));
+        }else if (j == numOfPlayer-1){
+            game.setCurrentPlayer(players.get(0));
         }
     }
-
 
     private boolean checkEndTrigger(List<Player> playerList){
         return ((playerList.stream()
