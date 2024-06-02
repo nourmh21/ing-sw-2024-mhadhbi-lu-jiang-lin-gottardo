@@ -1,17 +1,19 @@
 package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
+import it.polimi.ingsw.view.gui.GUIApplication;
+import it.polimi.ingsw.view.gui.enums.SceneType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class ForChooseNumOfPlayers {
+public class ForLobbyCreation {
 
 
     @FXML
@@ -56,19 +58,31 @@ public class ForChooseNumOfPlayers {
     void submit(ActionEvent event) throws IOException {
         if(two.isSelected()){
             error.setText("");
-            ClientController.getInstance().getClientAction().newGame(2);
+            ClientController.getInstance().getClientAction().createLobby(2);
 
         } else if(three.isSelected()){
             error.setText("");
-            ClientController.getInstance().getClientAction().newGame(3);
+            ClientController.getInstance().getClientAction().createLobby(3);
 
         } else if(four.isSelected()){
             error.setText("");
-            ClientController.getInstance().getClientAction().newGame(4);
+            ClientController.getInstance().getClientAction().createLobby(4);
 
         } else{
             error.setText("Select the number of players!");
         }
     }
+
+    @FXML
+    void switchToHome(MouseEvent event) {
+        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(SceneType.HOME);
+    }
+
+    @FXML
+    void switchToLobbyChoose(MouseEvent event) {
+        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(SceneType.LOBBY_CHOOSE);
+        ClientController.getInstance().getClientAction().reqLobbies();
+    }
+
 
 }

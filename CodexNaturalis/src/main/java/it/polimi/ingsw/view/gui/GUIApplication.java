@@ -39,10 +39,12 @@ public class GUIApplication extends Application implements UserInterface {
     For3PlayersLobby lobby3Controller;
     For4PlayersLobby lobby4Controller;
     ForInGame inGameController;
+    ForLobbyChoose lobbyChooseController;
     String myNickname;
     String tryNickname;
     Stage initCardAskStage;
     Stage goalAskStage;
+    Stage joinModeStage;
     Stage endGameInfoStage;
     Optional<ImmutableLobby> lobby = Optional.empty();
     Optional<ImmutableGame> game = Optional.empty();
@@ -157,6 +159,9 @@ public class GUIApplication extends Application implements UserInterface {
                             stage.setMaximized(true);
                             stage.setResizable(false);
                             break;
+                        case LOBBY_CHOOSE:
+                            lobbyChooseController = loader.getController();
+                            break;
 
                     }
 
@@ -199,15 +204,33 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void setLobbyList(List<Integer[]> lobbyList) {
+        if (joinModeStage.isShowing()) {
+            switchPage(LOBBY_CHOOSE);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    joinModeStage.close();
+                }
+            });
+        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                lobbyChooseController.showLobbies(lobbyList);
+            }
+        });
+
     }
 
     @Override
     public void lobbyChooseFailed() {
+        showGameInformation("selected room already full, probably someone/s joined before you");
+        lobbyChooseController.reactivateMouseClick();
     }
 
     @Override
     public void askNumOfPlayer() {
-        switchPage(SceneType.ASK_NUM_OF_PLAYER);
+        switchPage(SceneType.LOBBY_CREATION);
     }
 
 
@@ -649,7 +672,7 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
-    private void showUsefulStage(SceneType type, Integer idCard, Integer[] goals, ImmutableEndGameInfo info){
+    public void showUsefulStage(SceneType type, Integer idCard, Integer[] goals, ImmutableEndGameInfo info){
         Platform.runLater(new Runnable() {
             double initX;
             double initY;
@@ -683,6 +706,8 @@ public class GUIApplication extends Application implements UserInterface {
                         endGameInfoStage = newStage;
                         root.setOnMouseReleased(event -> root.setCursor(Cursor.DEFAULT));
                         ((ForFinalResult)loader.getController()).fillFinalResult(info);
+                    }else if (type == JOIN_MODE){
+                        joinModeStage = newStage;
                     }
 
                     newStage.setAlwaysOnTop(true);
