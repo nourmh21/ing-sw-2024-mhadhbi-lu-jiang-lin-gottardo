@@ -23,7 +23,7 @@ public class ForHome {
     @FXML
     void playGame(ActionEvent event){
         ((GUIApplication) (ClientController.getInstance().getView())).showUsefulStage(SceneType.JOIN_MODE,null,null,null);
-        play.setOnMouseClicked(event1 -> {});
+        play.setOnAction(event1 -> {});
         play.setCursor(Cursor.DEFAULT);
     }
 

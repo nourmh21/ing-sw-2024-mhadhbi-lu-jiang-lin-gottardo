@@ -589,7 +589,7 @@ public class GUIApplication extends Application implements UserInterface {
 
 
     @Override
-    public void showConnectionOffline() {
+    public void showConnectionError() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

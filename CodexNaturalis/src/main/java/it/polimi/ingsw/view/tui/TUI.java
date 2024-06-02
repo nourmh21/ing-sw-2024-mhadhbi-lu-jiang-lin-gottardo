@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.view.UserInterface;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -37,7 +36,7 @@ public class TUI extends Thread implements UserInterface{
 
 
 
-    public TUI() throws IOException {
+    public TUI() {
         in = new Scanner(System.in);
         out = new PrintStream(System.out, true);
         myNickname = null;
@@ -1070,12 +1069,12 @@ public class TUI extends Thread implements UserInterface{
     }
 
     @Override
-    public void showConnectionOffline(){
+    public void showConnectionError(){
         removeLastGameInfo();
         myNickname = null;
         tryNickname = null;
         out.println();
-        out.println("[Connection lost, please try reconnection]");
+        out.println("[CONNECTION LOST, please try reconnection]");
         out.println();
         askServerIP();
     }

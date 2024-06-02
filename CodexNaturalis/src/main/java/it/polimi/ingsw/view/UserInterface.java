@@ -40,6 +40,6 @@ public interface UserInterface {
 
     public void gameInterrupted(String nickname);
 
-    public void showConnectionOffline();
+    public void showConnectionError();
 
 }
