@@ -80,6 +80,7 @@ public class ForLobbyChoose {
 
 
     public void showLobbies(List<Integer[]> newLobbiesStatus){
+        lobbyList.requestFocus();
         if (newLobbiesStatus.isEmpty()){
             ObservableList<String> list = FXCollections.observableList(Collections.singletonList("No room was created"));
             lobbyList.setItems(list);
@@ -124,6 +125,10 @@ public class ForLobbyChoose {
 
     private void changeCursorInHand(Button button){
         button.setCursor(Cursor.HAND);
+    }
+
+    public void setLobbyListStyle(){
+        lobbyList.setStyle("-fx-font-size: 16");
     }
 
 

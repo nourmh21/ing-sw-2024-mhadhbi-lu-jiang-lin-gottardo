@@ -161,6 +161,7 @@ public class GUIApplication extends Application implements UserInterface {
                             break;
                         case LOBBY_CHOOSE:
                             lobbyChooseController = loader.getController();
+                            lobbyChooseController.setLobbyListStyle();
                             break;
 
                     }
