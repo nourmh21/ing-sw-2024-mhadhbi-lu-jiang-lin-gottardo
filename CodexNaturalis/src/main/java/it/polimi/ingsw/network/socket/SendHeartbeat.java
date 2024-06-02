@@ -21,24 +21,24 @@ public class SendHeartbeat extends Thread{
 
     @Override
     public void run() {
-        try {
-            while (true){
-                //there are decisions to be made here
+
+        while (true){
+            //there are decisions to be made here
+            try {
                 Thread.sleep(1*1000);
                 if ((System.currentTimeMillis() - lastSendTime) >= 5*1000){
                     oos.writeObject(new HeartbeatMessage());
                     lastSendTime = System.currentTimeMillis();
                 }
-
+            } catch (SocketException e){
+                ClientController.getInstance().getView().showConnectionOffline();
+            }catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }catch (IOException e){
+                e.printStackTrace();
             }
-
-        } catch (SocketException e){
-            ClientController.getInstance().getView().showConnectionOffline();
-        }catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }catch (IOException e){
-            e.printStackTrace();
         }
+
     }
 
 
