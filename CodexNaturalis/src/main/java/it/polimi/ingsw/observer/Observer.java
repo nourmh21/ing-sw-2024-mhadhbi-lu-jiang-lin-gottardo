@@ -16,5 +16,6 @@ public interface Observer {
     public void send_two_personal_goal(Integer[] personalGoals);
     public void send_player_handCard(List<Integer> handCards);
     public void send_end_game_info(ImmutableEndGameInfo endGameInfo);
+    public void send_player_disconnected(String nickname);
 
 }

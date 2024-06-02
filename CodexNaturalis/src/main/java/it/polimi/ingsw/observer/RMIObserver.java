@@ -43,4 +43,9 @@ public class RMIObserver implements Observer{
     public void send_end_game_info(ImmutableEndGameInfo endGameInfo) {
 
     }
+
+    @Override
+    public void send_player_disconnected(String nickname) {
+
+    }
 }

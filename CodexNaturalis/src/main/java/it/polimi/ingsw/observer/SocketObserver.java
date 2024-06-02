@@ -100,6 +100,17 @@ public class SocketObserver implements Observer{
         }
     }
 
+    @Override
+    public void send_player_disconnected(String nickname) {
+        try {
+            oos.writeObject(new NotifyMessage(NotifyType.PLAYER_DISCONNECTED,nickname));
+        }catch (SocketException exception){
+            //
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ObjectOutputStream getOos() {
         return oos;
     }

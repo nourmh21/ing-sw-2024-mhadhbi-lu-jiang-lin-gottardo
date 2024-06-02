@@ -69,6 +69,12 @@ public abstract class Observable {
         }
     }
 
+    public void notify_game_interrupted(String nickname){
+        for (Observer o: observers){
+            if (!o.getNickname().equals(nickname))
+                o.send_player_disconnected(nickname);
+        }
+    }
 
 
     public List<Observer> getObservers(){
