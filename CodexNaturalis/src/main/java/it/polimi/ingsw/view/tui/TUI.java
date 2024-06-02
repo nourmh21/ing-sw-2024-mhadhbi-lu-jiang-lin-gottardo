@@ -1070,12 +1070,12 @@ public class TUI extends Thread implements UserInterface{
     }
 
     @Override
-    public void showServerOffline(){
+    public void showConnectionOffline(){
         removeLastGameInfo();
         myNickname = null;
         tryNickname = null;
         out.println();
-        out.println("[Server offline, please try reconnection]");
+        out.println("[Connection lost, please try reconnection]");
         out.println();
         askServerIP();
     }

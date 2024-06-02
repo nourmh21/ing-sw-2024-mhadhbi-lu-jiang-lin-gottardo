@@ -24,7 +24,7 @@ public class SendHeartbeat extends Thread{
             while (true){
                 //there are decisions to be made here
                 Thread.sleep(1*1000);
-                if ((System.currentTimeMillis() - lastSendTime) >= 3*1000){
+                if ((System.currentTimeMillis() - lastSendTime) >= 15*1000){
                     oos.writeObject(new HeartbeatMessage());
                     lastSendTime = System.currentTimeMillis();
                 }

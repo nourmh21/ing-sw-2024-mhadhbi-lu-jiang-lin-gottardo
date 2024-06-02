@@ -589,11 +589,11 @@ public class GUIApplication extends Application implements UserInterface {
 
 
     @Override
-    public void showServerOffline() {
+    public void showConnectionOffline() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                showGameInformation("Server offline, please try to reconnect");
+                showGameInformation("CONNECTION LOST\nPlease try to reconnect");
                 tryNickname = null;
                 myNickname = null;
                 removeAllLastGameInfo();

@@ -65,7 +65,7 @@ public class Client
                         ClientController.getInstance().messageHandler(message);
                     }
                 }catch (SocketException e){
-                    ClientController.getInstance().getView().showServerOffline();
+                    ClientController.getInstance().getView().showConnectionOffline();
                 }catch (IOException |ClassNotFoundException e){
                     e.printStackTrace();
                 }
