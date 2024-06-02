@@ -38,6 +38,8 @@ public interface UserInterface {
 
     public void showFinalResult(ImmutableEndGameInfo info);
 
+    public void gameInterrupted(String nickname);
+
     public void showServerOffline();
 
 }

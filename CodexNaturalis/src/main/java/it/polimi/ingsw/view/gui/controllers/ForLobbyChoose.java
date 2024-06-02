@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -81,6 +82,7 @@ public class ForLobbyChoose {
 
     public void showLobbies(List<Integer[]> newLobbiesStatus){
         lobbyList.requestFocus();
+        lobbies = new ArrayList<>();
         if (newLobbiesStatus.isEmpty()){
             ObservableList<String> list = FXCollections.observableList(Collections.singletonList("No room was created"));
             lobbyList.setItems(list);

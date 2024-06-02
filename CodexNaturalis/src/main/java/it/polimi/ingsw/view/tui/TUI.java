@@ -858,6 +858,15 @@ public class TUI extends Thread implements UserInterface{
 
     }
 
+    @Override
+    public void gameInterrupted(String nickname) {
+        out.println();
+        out.println("[Player " + nickname + " leave the game]");
+        out.println("GAME INTERRUPTED");
+        removeLastGameInfo();
+        home();
+    }
+
 
     private void showWinTitle(){
         out.println("\u001B[38;4;230m");

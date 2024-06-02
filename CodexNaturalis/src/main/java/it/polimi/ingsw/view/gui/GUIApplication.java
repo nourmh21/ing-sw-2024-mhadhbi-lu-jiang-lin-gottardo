@@ -85,13 +85,13 @@ public class GUIApplication extends Application implements UserInterface {
                         AnchorPane root = FXMLLoader.load(getClass().getResource(CONNECTION.getValue()));
                         Scene scene = new Scene(root);
                         setBackgroundImage(root);
-                        //stage.setMinWidth(1115);
-                        //stage.setMinHeight(785);
-                        stage.setResizable(false);
+                        stage.setMinWidth(1115);
+                        stage.setMinHeight(785);
                         stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/utils/icon.png")));
                         stage.setTitle("Codex Naturalis");
                         stage.setScene(scene);
                         stage.setOnCloseRequest(event -> {stop();});
+                        stage.setResizable(false);
                         stage.show();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -132,15 +132,18 @@ public class GUIApplication extends Application implements UserInterface {
                 try {
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(type.getValue()));
-
                     AnchorPane root = loader.load();
                     setBackgroundImage(root);
-                    //switch the root and not the scene
-                    stage.getScene().setRoot(root);
 
+                    //switch the root and not the scene
                     switch (type){
                         case HOME, CONNECTION:
+                            stage.setMinWidth(1115);
+                            stage.setMinHeight(785);
+                            stage.setWidth(1115);
+                            stage.setHeight(785);
                             stage.setMaximized(false);
+                            stage.setResizable(false);
                             break;
                         case LOBBY_2:
                             lobby2Controller = loader.getController();
@@ -153,11 +156,12 @@ public class GUIApplication extends Application implements UserInterface {
                             break;
                         case GAME:
                             stage.setResizable(true);
+                            stage.setMaximized(true);
+                            stage.setMinWidth(1300);
+                            stage.setMinHeight(850);
                             inGameController = loader.getController();
                             ((GUIApplication) ClientController.getInstance().getView()).setInGameController(inGameController);
                             inGameController.setDeskBackground();
-                            stage.setMaximized(true);
-                            stage.setResizable(false);
                             break;
                         case LOBBY_CHOOSE:
                             lobbyChooseController = loader.getController();
@@ -165,6 +169,7 @@ public class GUIApplication extends Application implements UserInterface {
                             break;
 
                     }
+                    stage.getScene().setRoot(root);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -569,6 +574,17 @@ public class GUIApplication extends Application implements UserInterface {
     @Override
     public void showFinalResult(ImmutableEndGameInfo info) {
         showUsefulStage(ENDGAME,null,null, info);
+    }
+
+    @Override
+    public void gameInterrupted(String nickname) {
+        showGameInformation("Player " + nickname + " leave the game \n GAME INTERRUPTED");
+        if (initCardAskStage != null && initCardAskStage.isShowing())
+            closeInitCardAskStage();
+        if (goalAskStage != null && goalAskStage.isShowing())
+            closePersonalGoalAskStage();
+        removeAllLastGameInfo();
+        switchPage(HOME);
     }
 
 
