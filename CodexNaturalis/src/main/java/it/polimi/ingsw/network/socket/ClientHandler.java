@@ -56,7 +56,7 @@ public class ClientHandler extends Thread{
                     long currentTime = System.currentTimeMillis();
                     long heartbeatInterval = currentTime - lastHeartbeatTime;
 
-                    if (heartbeatInterval > 10 * 1000) {
+                    if (heartbeatInterval > 8 * 1000) {
                         try {
                             close();
                         } catch (IOException e) {
@@ -64,7 +64,7 @@ public class ClientHandler extends Thread{
                         }
                     }
                 }
-            }, 10, 10, TimeUnit.SECONDS);
+            }, 5, 5, TimeUnit.SECONDS);
 
 
             while (!this.isInterrupted()){
