@@ -17,31 +17,19 @@ public class ForPlayerBoard extends Node{
     @FXML
     private GridPane board;
 
-    @FXML
-    private ImageView handCard1;
-
-    @FXML
-    private ImageView handCard2;
-
-    @FXML
-    private ImageView handCard3;
-
-
-    @FXML
-    private AnchorPane pb;
-
-    @FXML
-    private ColumnConstraints eleven;
-
-    @FXML
-    private RowConstraints zero;
-
     List<int[]> lastVersion;
     int[] lastChoice;
 
     HashMap<Region,int[]> relations = new HashMap<>();
 
 
+    /**
+     * it places the card
+     * @param id is id of the card
+     * @param isBackSide indicates if player chose the back side
+     * @param x coordinate for place the card
+     * @param y coorfinate for player the card
+     */
     public void placeCard(Integer id, Boolean isBackSide, Integer x, Integer y){
         Platform.runLater(new Runnable() {
             @Override
@@ -61,7 +49,10 @@ public class ForPlayerBoard extends Node{
 
     }
 
-
+    /**
+     * it shows on the player board the possible position
+     * @param availablePositions list of available position
+     */
     public void showPossiblePositions(List<int[]> availablePositions) {
         lastVersion = availablePositions;
         for (int[] position : availablePositions) {
@@ -77,6 +68,10 @@ public class ForPlayerBoard extends Node{
     }
 
 
+    /**
+     * try place the card
+     * @param position indicate possible position for the card
+     */
     private void tryPlace(int[] position){
         GUIApplication gui = ((GUIApplication) ClientController.getInstance().getView());
         ForInGame inGameController = gui.getInGameController();

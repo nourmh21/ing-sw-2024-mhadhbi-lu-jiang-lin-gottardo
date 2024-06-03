@@ -215,6 +215,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it sets public information of the player
+     * @param player is one of players
+     */
     public void initPlayer1(ImmutablePlayer player) {
         im_p1.setImage(getImageByColor(player.getColor()));
         playerOne.setStyle(buttonBorderStyle);
@@ -231,6 +235,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it sets public information of the player
+     * @param player is one of players
+     */
     public void initPlayer2(ImmutablePlayer player) {
         im_p2.setImage(getImageByColor(player.getColor()));
         playerTwo.setStyle(buttonBorderStyle);
@@ -247,6 +255,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it sets public information of the player
+     * @param player is one of players
+     */
     public void initPlayer3(ImmutablePlayer player) {
         im_p3.setImage(getImageByColor(player.getColor()));
         playerThree.setStyle(buttonBorderStyle);
@@ -263,6 +275,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it sets public information of the player
+     * @param player is one of players
+     */
     public void initPlayer4(ImmutablePlayer player) {
         im_p4.setImage(getImageByColor(player.getColor()));
         playerFour.setStyle(buttonBorderStyle);
@@ -280,6 +296,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it sets the first player icon
+     * @param nickname is the nickname of the first player
+     */
     public void changeFirstStartPlayerIcon(String nickname){
         if (nicknameOne.getText().equals(nickname))
             playerOne.setStyle(buttonFirstBorderStyle);
@@ -292,8 +312,11 @@ public class ForInGame {
     }
 
 
-
-
+    /**
+     * it sets player's icon by their color
+     * @param color
+     * @return
+     */
     private Image getImageByColor(Color color) {
         switch (color) {
             case RED:
@@ -310,6 +333,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it initializes player's board
+     * @param i indicate the position of player
+     */
     private void initBoard(int i) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/PlayerBoard.fxml"));
@@ -336,6 +363,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows the player board of first player
+     */
     public void showPlayerBoard1() {
         playerBoard.setContent(boardPlayer1);
         if (!checkNickname(nicknameOne.getText())){
@@ -347,6 +377,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows the player board of second player
+     */
     public void showPlayerBoard2() {
         playerBoard.setContent(boardPlayer2);
         if (!checkNickname(nicknameTwo.getText())){
@@ -358,6 +391,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows the player board of third player
+     */
     public void showPlayerBoard3() {
         playerBoard.setContent(boardPlayer3);
         if (!checkNickname(nicknameThree.getText())) {
@@ -369,6 +405,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows the player board of fourth player
+     */
     public void showPlayerBoard4() {
         playerBoard.setContent(boardPlayer4);
         if (!checkNickname(nicknameFour.getText())) {
@@ -387,6 +426,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows mine hand cards
+     */
     public void showMineHandCards(){
         current = ((GUIApplication) (ClientController.getInstance().getView())).getMyNickname();
         List<Integer> cards = ((GUIApplication) (ClientController.getInstance().getView())).getHandCards();
@@ -423,6 +465,11 @@ public class ForInGame {
     }
 
 
+    /**
+     * it gets the back image of resource card
+     * @param symbol is the symbol of the card
+     * @return image of the resource card
+     */
     private Image getRCardBackImage(Symbol symbol){
         if (symbol != null)
             switch (symbol){
@@ -447,6 +494,11 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows the back image of gold card
+     * @param symbol is the symbol of the card
+     * @return image of the gold card
+     */
     private Image getGCardBackImage(Symbol symbol){
         if (symbol != null){
             switch (symbol){
@@ -467,6 +519,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows resource cards displayed
+     * @param displayRCard is a list of resource card displayed
+     */
     public void showDisplayRCard(List<Integer> displayRCard){
         Image im1 = null;
         Image im2 = null;
@@ -480,6 +536,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows gold cards displayed
+     * @param displayGCard is a list of gold card displayed
+     */
     public void showDisplayGCard(List<Integer> displayGCard){
         Image im1 = null;
         Image im2 = null;
@@ -493,12 +553,20 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows personal goal card
+     * @param id is the id of the personal card
+     */
     public void showPersonalGoal(Integer id){
         Image im = new Image(getClass().getResourceAsStream("/img/cards/front/" + id + ".png"));
         personalGoal.setImage(im);
     }
 
 
+    /**
+     * it shows common goals cards
+     * @param goals is the list of common goals card's id
+     */
     public void showCommonGoals(List<Integer> goals){
         Image im_goal1 = new Image(getClass().getResourceAsStream("/img/cards/front/" + goals.get(0) + ".png"));
         Image im_goal2 = new Image(getClass().getResourceAsStream("/img/cards/front/" + goals.get(1) + ".png"));
@@ -507,6 +575,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it updates the first card in the hand
+     * @param idCard is the card's id
+     */
     public void updateHandCard1(Integer idCard){
         Image im = null;
         if (idCard != null)
@@ -515,6 +587,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it updates the second card in the hand
+     * @param idCard is the card's id
+     */
     public void updateHandCard2(Integer idCard){
         Image im = null;
         if (idCard != null)
@@ -523,6 +599,10 @@ public class ForInGame {
     }
 
 
+    /**
+     * it updates the third card in the hand
+     * @param idCard is the card's id
+     */
     public void updateHandCard3(Integer idCard){
         Image im = null;
         if (idCard != null)
@@ -531,6 +611,11 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows back side of the other players' hand card
+     * @param cardTypes indicates type of the card
+     * @param cardKingdoms indicates the kingdom of the card
+     */
     public void showOthersHandCard( List<CardType> cardTypes, List<Symbol> cardKingdoms){
         Image im_1 = null;
         Image im_2 = null;
@@ -549,6 +634,12 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows image by card type
+     * @param type indicates the type of card
+     * @param symbol is the symbol of card
+     * @return image
+     */
     private Image getImageByCardType(CardType type, Symbol symbol){
         if (type == CardType.RESOURCE)
             return getRCardBackImage(symbol);
@@ -577,6 +668,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it shows possible position in the board
+     */
     public void askPlayHandCard(){
         ImmutablePlayer me = null;
         for (ImmutablePlayer p: ((GUIApplication)(ClientController.getInstance().getView())).getPlayers()) {
@@ -589,6 +683,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it deactivates hand cards click
+     */
     public void deactivateHandCardsClick(){
         hand1.setCursor(Cursor.DEFAULT);
         hand2.setCursor(Cursor.DEFAULT);
@@ -599,6 +696,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it activates hand cards click
+     */
     public void activateHandCardsClick(){
         hand1.setCursor(Cursor.HAND);
         hand2.setCursor(Cursor.HAND);
@@ -678,6 +778,11 @@ public class ForInGame {
     }
 
 
+    /**
+     * it updates table score
+     * @param i indicates the players
+     * @param newPoint indicates the new point get by player
+     */
     public void updateScore(int i, int newPoint){
         Platform.runLater(new Runnable() {
             @Override
@@ -702,6 +807,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it activates desk click
+     */
     public void activateDeskClick() {
         if(resourceCard1.getImage() != null){
             resourceC1.setCursor(Cursor.HAND);
@@ -799,6 +907,9 @@ public class ForInGame {
     }
 
 
+    /**
+     * it deactivates desk click
+     */
     public void deactivateDeskClick(){
         resourceC1Selected = false;
         resourceC2Selected = false;
