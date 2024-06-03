@@ -35,8 +35,7 @@ public class GameTest {
 
 
     @Test
-    public void AddPlayers_NoPlayers_ReallyAdded(){
-        game.addPlayers("Rossi");
+    public void AddPlayers_checkPlayers_ReallyAdded(){
         assertNotEquals(0, game.getPlayersSize());
     }
 
@@ -63,7 +62,7 @@ public class GameTest {
 
 
     @Test
-    public void checkMaxPoint_GetMaxPointofPlayer_ShouldReturnOnePlayer(){
+    public void checkMaxPoint_GetMaxPoint_ShouldReturnOnePlayer(){
         p1 = game.getPlayers().get(0);
         p1.updatePoint(21);
         p1.isConnected();
@@ -89,7 +88,6 @@ public class GameTest {
         p1.addGoalPoint(6);
         game.possibleWinners.add(p1);
 
-
         p2 = game.getPlayers().get(1);
         p2.addGoalPoint(6);
         game.possibleWinners.add(p2);
@@ -106,7 +104,7 @@ public class GameTest {
         game.disconnect(game.getPlayers().get(0));
         game.disconnect(game.getPlayers().get(1));
     }
-    
+
 
 
 }
