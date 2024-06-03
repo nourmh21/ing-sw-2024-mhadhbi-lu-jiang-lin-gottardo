@@ -24,8 +24,6 @@ public class Game extends Observable{
     private boolean isLastRound;
     private int numOfConnectedPlayers;   //num of player connect in the game
     private Player currentPlayer; //indicates the current player of the game
-    public Player firstPlayer;
-    private int round;
     ArrayList<Color> colors;
 
 
@@ -232,14 +230,6 @@ public class Game extends Observable{
      */
     public List<Integer> getCommonGoals() {
         return commonGoals;
-    }
-
-
-    /**
-     * @return the number of players that is connected
-     */
-    public int getNumOfConnectedPlayers(){
-        return numOfConnectedPlayers;
     }
 
 
