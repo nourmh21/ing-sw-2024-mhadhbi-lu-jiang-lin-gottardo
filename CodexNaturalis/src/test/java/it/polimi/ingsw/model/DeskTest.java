@@ -2,9 +2,11 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
+import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -44,7 +46,7 @@ public class DeskTest {
 
 
     @Test(expected = EmptyDeckException.class)
-    public void pickOneCard_EmptyGoalCardDeck_throwsNullPointerException() throws EmptyDeckException {
+    public void pickOneCard_EmptyObjectiveDeck_throwsNullPointerException() throws EmptyDeckException {
         for (int i = 0; i < 16; i++){
             desk.pickOneCard(CardType.OBJECTIVE);
         }
@@ -103,7 +105,6 @@ public class DeskTest {
     @Test
     public void updateNextRCard_PickTwoTimes_ShouldNotBeTheSame() throws EmptyDeckException {
         int card1 = desk.pickNextRCard();
-        desk.updateNextRCard();
         int card2 = desk.pickNextRCard();
         assertNotEquals(card1, card2);
     }
@@ -112,24 +113,29 @@ public class DeskTest {
     @Test
     public void updateNextGCard_PickTwoTimes_ShouldNotBeTheSame() throws EmptyDeckException {
         int card1 = desk.pickNextGCard();
-        desk.updateNextGCard();
         int card2 = desk.pickNextGCard();
         assertNotEquals(card1, card2);
     }
 
 
     @Test
-    public void pickNextRCard_PickCardWithoutUpdate_ShouldGiveUsNull(){
-        desk.pickNextRCard();
+    public void pickNextRCard_PickCardWithoutUpdate_throwException() throws EmptyDeckException{
+        while (desk.getNextResourceCard()!=null){
+            desk.pickNextRCard();
+        }
         assertNull(desk.pickNextRCard());
+
     }
 
 
     @Test
-    public void pickNextGCard_PickCardWithoutUpdate_ShouldGiveUsNull(){
-        desk.pickNextGCard();
+    public void pickNextGCard_PickCardWithDeckEmpty_throwException() throws EmptyDeckException{
+        while (desk.getNextGoldCard()!=null){
+            desk.pickNextGCard();
+        }
         assertNull(desk.pickNextGCard());
     }
+
 
     @Test
     public void pickOneCard_CalledByUpdatingMethodWhenTheDeckIsEmpty_throwsNullPointerException() throws EmptyDeckException {
