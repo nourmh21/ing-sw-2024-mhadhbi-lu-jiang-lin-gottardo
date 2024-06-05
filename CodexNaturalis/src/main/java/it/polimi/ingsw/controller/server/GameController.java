@@ -35,7 +35,7 @@ public class GameController {
 
     private ConcurrentHashMap<String, Game> usersInGame;
 
-    public ExecutorService executor;
+    private ExecutorService executor;
 
     private Set<Integer> usedLibbyIds;
     private Random random;
