@@ -35,7 +35,7 @@ public class GameController {
 
     private ConcurrentHashMap<String, Game> usersInGame;
 
-    private ExecutorService executor;
+    public ExecutorService executor;
 
     private Set<Integer> usedLibbyIds;
     private Random random;
@@ -204,7 +204,7 @@ public class GameController {
     }
 
 
-    private void removePlayerFromLobby(String nickname){
+    public void removePlayerFromLobby(String nickname){
         boolean find = false;
         for (Lobby lobby:availableLobby) {
             for (String playerNickname: lobby.getPlayers()) {
@@ -228,5 +228,34 @@ public class GameController {
         usedLibbyIds.add(n);
         return n;
     }
+
+
+    /**
+     * @visible for test
+     * @return usersInGame
+     */
+    public ConcurrentHashMap<String, Game> getUsersInGame(){
+        return usersInGame;
+    }
+
+
+    /**
+     * @visible for test
+     * @return loggedInUsers
+     */
+    public ConcurrentHashMap<ObjectOutputStream, String> getLoggedInUsers(){
+        return loggedInUsers;
+    }
+
+
+    /**
+     * @visible for test
+     * @return availableLobby
+     */
+    public List<Lobby> getAvailableLobby(){
+        return availableLobby;
+    }
+
+
 }
 
