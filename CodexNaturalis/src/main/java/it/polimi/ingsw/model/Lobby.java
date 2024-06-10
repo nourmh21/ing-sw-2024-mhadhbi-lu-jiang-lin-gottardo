@@ -41,7 +41,6 @@ public class Lobby extends Observable {
                 GameController.getInstance().addNewUserInGame(name, game);
             }
 
-
         }
 
     }
@@ -59,9 +58,9 @@ public class Lobby extends Observable {
         players.remove(nickname);
         if(!getObservers().isEmpty()){
             notify_lobby_status(new ImmutableLobby(this));
-        }
-        if (players.isEmpty())
+        }else {
             GameController.getInstance().removeLobby(this);
+        }
     }
 
 

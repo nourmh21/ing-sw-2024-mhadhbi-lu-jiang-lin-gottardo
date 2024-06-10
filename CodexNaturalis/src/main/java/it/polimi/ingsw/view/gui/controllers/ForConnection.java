@@ -1,13 +1,9 @@
 package it.polimi.ingsw.view.gui.controllers;
 
-import it.polimi.ingsw.network.Client;
+import it.polimi.ingsw.main.ClientApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 
@@ -50,7 +46,7 @@ public class ForConnection {
 
     @FXML
     void getIP(ActionEvent event) {
-        if(Client.checkIPValidity(ip.getText())){
+        if(ClientApp.checkIPValidity(ip.getText())){
             error.setText("");
             submit.requestFocus();
         }else{
@@ -67,12 +63,12 @@ public class ForConnection {
     @FXML
     void trySubmit(ActionEvent event) throws IOException {
         ip_address = ip.getText();
-        if ((rmi.isSelected() || socket.isSelected()) && Client.checkIPValidity(ip.getText())){
+        if ((rmi.isSelected() || socket.isSelected()) && ClientApp.checkIPValidity(ip.getText())){
 
             if (socket.isSelected()) {
-                Client.trySocketConnection(ip_address);
+                ClientApp.trySocketConnection(ip_address);
             } else if (rmi.isSelected())
-                Client.tryRMIConnection(ip_address);
+                ClientApp.tryRMIConnection(ip_address);
         } else{
             error.setText("Invalid IP or connection type unselected!");
         }

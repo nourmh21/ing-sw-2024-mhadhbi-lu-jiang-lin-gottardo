@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.tui;
 
 import it.polimi.ingsw.controller.client.ClientController;
+import it.polimi.ingsw.main.ClientApp;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.enums.GameState;
@@ -8,7 +9,6 @@ import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
 import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
-import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.view.UserInterface;
 
 import java.io.PrintStream;
@@ -63,12 +63,12 @@ public class TUI extends Thread implements UserInterface{
         String serverIP;
         do {
             serverIP = ipRequest();
-            if (Client.checkIPValidity(serverIP))
+            if (ClientApp.checkIPValidity(serverIP))
                 askConnectionType(serverIP);
             else{
                 System.out.println("Invalid IP address, a correct IPv4 address has format x.x.x.x  [x ranges from 0 to 255]");
             }
-        }while (!Client.checkIPValidity(serverIP));
+        }while (!ClientApp.checkIPValidity(serverIP));
     }
 
 
@@ -86,7 +86,7 @@ public class TUI extends Thread implements UserInterface{
         out.println("2- RMI");
         choice = in.nextLine();
         if (choice.equals("1")){
-            Client.trySocketConnection(ip);
+            ClientApp.trySocketConnection(ip);
         }else if(choice.equals("2")){
             //
         }else {
