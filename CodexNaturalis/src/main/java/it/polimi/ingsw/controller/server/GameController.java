@@ -1,22 +1,14 @@
 package it.polimi.ingsw.controller.server;
 
+import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.controller.server.task.*;
-import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.ErrorType;
 import it.polimi.ingsw.message.enums.LocationType;
-import it.polimi.ingsw.message.enums.MessageType;
-import it.polimi.ingsw.message.enums.NotifyType;
-import it.polimi.ingsw.message.error.ErrorMessage;
-import it.polimi.ingsw.message.general.*;
-import it.polimi.ingsw.message.notify.NotifyMessage;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.CardList;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Lobby;
-import it.polimi.ingsw.observer.SocketObserver;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -26,99 +18,123 @@ import java.util.concurrent.Executors;
 public class GameController {
 
     private static GameController instance;
-    private final CardList cardList;
-
-    private Optional<Lobby> currentLobby;
-    private List<Lobby> availableLobby;
-
-    private ConcurrentHashMap<ObjectOutputStream, String> loggedInUsers;
-
+    private ClientManager clientManager;
+    private final List<Lobby> availableLobby;
+    private final Set<String> loggedInUsers;
     private ConcurrentHashMap<String, Game> usersInGame;
-
     private ExecutorService executor;
-
-    private Set<Integer> usedLibbyIds;
+    private Set<Integer> usedLobbyIds;
     private Random random;
+    private final CardList cardList;
 
 
     public GameController(){
-        cardList = new CardList();
-        currentLobby = Optional.empty();
-        loggedInUsers = new ConcurrentHashMap<>();
+        clientManager = new ClientManager();
+        loggedInUsers = new HashSet<>();
         usersInGame = new ConcurrentHashMap<>();
         availableLobby = new ArrayList<>();
         executor = Executors.newCachedThreadPool();
-        usedLibbyIds = new HashSet<>();
+        usedLobbyIds = new HashSet<>();
         random = new Random();
+        cardList = new CardList();
     }
 
 
-    public void messageHandler(Message message, ObjectOutputStream oos){
-        if(message.getType() == MessageType.ACCESS){
-            AccessMessage accessMessage = (AccessMessage) message;
-            if (accessMessage.isRegistered() && loggedInUsers.containsValue(accessMessage.getNickname())){
-                writeErrorMessage(oos,ErrorType.ACCOUNT_ALREADY_LOGGED);
-            }else{
-                executor.execute(new Access(accessMessage.getNickname(),accessMessage.getPwd(),accessMessage.isRegistered(),oos));
-            }
-        }else {
-            if (loggedInUsers.containsKey(oos)){
-                String nickname = loggedInUsers.get(oos);
-                switch (message.getType()){
-                    case REQ_LOBBIES:
-                        giveLobbies(nickname, oos);
-                        break;
-                    case JOIN_LOBBY:
-                        joinLobby(nickname,oos,((JoinLobbyeMessage)message).getIdLobby());
-                        break;
-                    case CREATE_LOBBY:
-                        CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage) message;
-                        createLobby(createLobbyMessage.getNumOfPlayer(),loggedInUsers.get(oos),oos);
-                        break;
-                    case PLAY_INITIAL_CARD:
-                        PlayInitCardMessage playInitCardMessage = (PlayInitCardMessage) message;
-                        executor.execute(new PlayInitialCard(usersInGame.get(nickname),nickname,
-                                (Card) getCard(playInitCardMessage.getIdCard()),playInitCardMessage.isBackSide()));
-                        break;
-                    case PERSONAL_GOAL_CHOOSE:
-                        executor.execute(new SetPersonalGoal(usersInGame.get(nickname),nickname,((PersonalGoalChooseMessage)message).getIdCard(),oos));
-                        break;
-                    case PLAY_CARD:
-                        PlayCardMessage playCardMessage = (PlayCardMessage) message;
-                        executor.execute(new PlayCard(usersInGame.get(nickname),nickname,
-                                playCardMessage.getPosition(), playCardMessage.isBackSide(), (Card)getCard(playCardMessage.getIdCard()),oos));
-                        break;
-                    case DRAW_CARD:
-                        DrawCardMessage drawCardMessage = (DrawCardMessage) message;
-                        LocationType location = drawCardMessage.getLocation();
-                        if ((location == LocationType.DISPLAYED_RESOURCE_LIST) || (location == LocationType.DISPLAYED_GOLD_LIST))
-                            executor.execute(new DrawCard(usersInGame.get(nickname),nickname,location,
-                                    drawCardMessage.getIdCard(),oos));
-                        else
-                            executor.execute(new DrawCard(usersInGame.get(nickname),nickname,location,oos));
-                        break;
-                    default:
-                        break;
+    public void access(Client client, String nickname, String pwd, boolean isRegistered){
+        executor.execute(new Access(client, nickname, pwd, isRegistered));
+    }
+
+
+    public void giveLobbies(Client client){
+        if (isLoggedIn(client.getNickname())){
+            List<Integer[]> lobbies = availableLobby.stream()
+                    .parallel()
+                    .map(lobby -> new Integer[]{lobby.getIdLobby(),lobby.getNumOfPlayer(),lobby.getObservers().size()})
+                    .toList();
+            client.informLobbyList(lobbies);
+        }
+    }
+
+
+    public void joinLobby(Client client, Integer idLobby) {
+        if (isLoggedIn(client.getNickname())){
+            boolean find = false;
+            for (Lobby lobby: availableLobby) {
+                if (lobby.getIdLobby() == idLobby){
+                    lobby.addObserver(client.getObserver());
+                    lobby.addNewPlayer(client.getNickname());
+                    find = true;
+                    break;
                 }
             }
-        }
-
-    }
-
-
-    public static void writeErrorMessage(ObjectOutputStream oos, ErrorType type){
-        try {
-            oos.reset();
-            oos.writeObject(new ErrorMessage(type));
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (!find){
+                client.informError(ErrorType.LOBBY_ID_NOT_FOUND);
+                giveLobbies(client);
+            }
         }
     }
 
 
-    public synchronized void removeLobby(Lobby lobby){
+    public void createLobby(Client client, int numOfPlayer){
+        if (isLoggedIn(client.getNickname())){
+            Lobby lobby = new Lobby(numOfPlayer,getRandomLobbyId());
+            availableLobby.add(lobby);
+            lobby.addObserver(client.getObserver());
+            lobby.addNewPlayer(client.getNickname());
+        }
+    }
+
+
+    public void playInitCard(Client client, Integer idCard, boolean isBackSide){
+        if (isInGame(client.getNickname()))
+            executor.execute(new PlayInitialCard(client, usersInGame.get(client.getNickname()),
+                (Card) getCard(idCard), isBackSide));
+    }
+
+
+    public void setPersonalGoal(Client client, Integer idCard){
+        if (isInGame(client.getNickname()))
+            executor.execute(new SetPersonalGoal(client, usersInGame.get(client.getNickname()), idCard));
+    }
+
+
+    public void playCard(Client client, Integer idCard, int[] position, boolean isBackSide){
+        if (isInGame(client.getNickname()))
+            executor.execute(new PlayCard(client, usersInGame.get(client.getNickname()), (Card)getCard(idCard), position,
+                isBackSide));
+    }
+
+
+    public void drawCard(Client client, LocationType location, Integer idCard){
+        if (isInGame(client.getNickname())){
+            if ((location == LocationType.DISPLAYED_RESOURCE_LIST) || (location == LocationType.DISPLAYED_GOLD_LIST))
+                executor.execute(new DrawCard(client, usersInGame.get(client.getNickname()),location,
+                        idCard));
+            else
+                executor.execute(new DrawCard(client, usersInGame.get(client.getNickname()), location));
+        }
+    }
+
+
+    public void disconnectPlayer(Client client){
+        if (isInGame(client.getNickname()))
+            executor.execute(new PlayerDisconnect(client, usersInGame.get(client.getNickname())));
+    }
+
+
+    public boolean isLoggedIn(String nickname){
+        return loggedInUsers.contains(nickname);
+    }
+
+
+    public boolean isInGame(String nickname){
+        return usersInGame.containsKey(nickname);
+    }
+
+
+    public void removeLobby(Lobby lobby){
         availableLobby.remove(lobby);
-        usedLibbyIds.remove(lobby.getIdLobby());
+        usedLobbyIds.remove(lobby.getIdLobby());
     }
 
 
@@ -132,58 +148,18 @@ public class GameController {
     }
 
 
-    public void addNewUserLoggedIn(ObjectOutputStream oos, String nickname){
-        loggedInUsers.put(oos, nickname);
+    public void addNewUserLoggedIn(String nickname){
+        loggedInUsers.add(nickname);
     }
 
 
-    public void executeTask(Runnable task){
-        executor.execute(task);
+    public void removeLoggedInUser(String nickname){
+        loggedInUsers.remove(nickname);
     }
 
 
-    public void giveLobbies(String nickname, ObjectOutputStream oos){
-        List<Integer[]> lobbies = availableLobby.stream()
-                .parallel()
-                .map(lobby -> new Integer[]{lobby.getIdLobby(),lobby.getNumOfPlayer(),lobby.getObservers().size()})
-                .toList();
-        try {
-            oos.writeObject(new NotifyMessage(NotifyType.LOBBY_LIST, lobbies));
-        } catch (IOException e) {
-
-        }
-    }
-
-
-    public synchronized void joinLobby(String nickname, ObjectOutputStream oos, Integer idLobby) {
-        boolean find = false;
-        for (Lobby lobby: availableLobby) {
-            if (lobby.getIdLobby() == idLobby){
-                lobby.addObserver(new SocketObserver(nickname,oos));
-                lobby.addNewPlayer(nickname);
-                find = true;
-                break;
-            }
-        }
-        if (!find){
-            writeErrorMessage(oos,ErrorType.LOBBY_ID_NOT_FOUND);
-            giveLobbies(nickname,oos);
-        }
-    }
-
-
-    public void createLobby(int numOfPlayer, String nickname, ObjectOutputStream oos){
-        Lobby lobby = new Lobby(numOfPlayer,getRandomLobbyId());
-        availableLobby.add(lobby);
-        lobby.addObserver(new SocketObserver(nickname,oos));
-        lobby.addNewPlayer(nickname);
-    }
-
-
-    public synchronized static GameController getInstance(){
-        if (instance == null)
-            instance = new GameController();
-        return instance;
+    public void executeTask(Runnable runnable){
+        executor.execute(runnable);
     }
 
 
@@ -192,19 +168,18 @@ public class GameController {
     }
 
 
-    public void socketClientLeave(ObjectOutputStream oos){
-        if (loggedInUsers.containsKey(oos)){
-            String nickname = loggedInUsers.get(oos);
+    public void socketClientLeave(Client client){
+        clientManager.removeClient(client);
+        if (client.getNickname() != null){
+            String nickname = client.getNickname();
+            removeLoggedInUser(client.getNickname());
             removePlayerFromLobby(nickname);
-            if (usersInGame.containsKey(nickname)){
-                executeTask(new PlayerDisconnect(nickname, usersInGame.get(nickname), oos));
-            }
-            loggedInUsers.remove(oos);
+            disconnectPlayer(client);
         }
     }
 
 
-    public void removePlayerFromLobby(String nickname){
+    private void removePlayerFromLobby(String nickname){
         boolean find = false;
         for (Lobby lobby:availableLobby) {
             for (String playerNickname: lobby.getPlayers()) {
@@ -222,40 +197,22 @@ public class GameController {
 
     public int getRandomLobbyId(){
         int n = random.nextInt(2000);
-        while (usedLibbyIds.contains(n)){
+        while (usedLobbyIds.contains(n)){
             n = random.nextInt(2000);
         }
-        usedLibbyIds.add(n);
+        usedLobbyIds.add(n);
         return n;
     }
 
-
-    /**
-     * @visible for test
-     * @return usersInGame
-     */
-    public ConcurrentHashMap<String, Game> getUsersInGame(){
-        return usersInGame;
+    public ClientManager getClientManager(){
+        return clientManager;
     }
 
-
-    /**
-     * @visible for test
-     * @return loggedInUsers
-     */
-    public ConcurrentHashMap<ObjectOutputStream, String> getLoggedInUsers(){
-        return loggedInUsers;
+    public synchronized static GameController getInstance(){
+        if (instance == null)
+            instance = new GameController();
+        return instance;
     }
-
-
-    /**
-     * @visible for test
-     * @return availableLobby
-     */
-    public List<Lobby> getAvailableLobby(){
-        return availableLobby;
-    }
-
 
 }
 
