@@ -1,11 +1,13 @@
 package it.polimi.ingsw.network.socket;
 
 
+import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.message.Message;
+import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.enums.MessageType;
 import it.polimi.ingsw.message.enums.NotifyType;
-import it.polimi.ingsw.message.notify.NotifyMessage;
+import it.polimi.ingsw.message.general.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,43 +19,40 @@ import java.util.concurrent.TimeUnit;
 public class ClientHandler extends Thread{
 
     private final Socket clientSocket;
-
-    private OutputStream output;
-    private InputStream input;
-    private ScheduledExecutorService scheduler;
-
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
+    private final Client thisClient;
+    private final ScheduledExecutorService scheduler;
+    private final ObjectInputStream ois;
+    private final ObjectOutputStream oos;
     private long lastReceivedTime;
+    private boolean isCallToClose;
 
 
-
-    public ClientHandler(Socket clientSocket) {
+    public ClientHandler(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
         lastReceivedTime = System.currentTimeMillis();
         scheduler = Executors.newScheduledThreadPool(1);
+        ois = new ObjectInputStream(clientSocket.getInputStream());
+        oos = new ObjectOutputStream(clientSocket.getOutputStream());
+        thisClient = new SocketClient(oos);
+        isCallToClose = false;
     }
 
 
     @Override
     public void run() {
-
         try {
-            input = clientSocket.getInputStream();
-            output = clientSocket.getOutputStream();
-
-            ois = new ObjectInputStream(input);
-            oos = new ObjectOutputStream(output);
-
-            oos.writeObject(new NotifyMessage(NotifyType.CONNECTED));
-
+            GameController.getInstance().getClientManager().addClient(thisClient);
+            thisClient.informActionResult(NotifyType.CONNECTED);
             scheduler.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
                     long currentTime = System.currentTimeMillis();
                     long timeInterval = currentTime - lastReceivedTime;
-                    if (timeInterval > 10 * 1000)
+                    if (timeInterval > 10 * 1000) {
+                        //scheduler.close();
+                        scheduler.shutdownNow();
                         close();
+                    }
                 }
             }, 5, 5, TimeUnit.SECONDS);
 
@@ -63,7 +62,7 @@ public class ClientHandler extends Thread{
                     Message message = (Message) ois.readObject();
                     lastReceivedTime = System.currentTimeMillis();
                     if (message.getType() != MessageType.HEARTBEAT)
-                        GameController.getInstance().messageHandler(message,oos);
+                        messageHandler(message);
                 }catch (SocketException|EOFException e) {
                     System.out.println("Client disconnected");
                     close();
@@ -78,16 +77,56 @@ public class ClientHandler extends Thread{
 
     }
 
+    private void messageHandler(Message message){
+        switch (message.getType()){
+            case ACCESS:
+                AccessMessage accessMessage = (AccessMessage) message;
+                GameController.getInstance().access(thisClient, accessMessage.getNickname(),accessMessage.getPwd(),accessMessage.isRegistered());
+                break;
+            case REQ_LOBBIES:
+                GameController.getInstance().giveLobbies(thisClient);
+                break;
+            case JOIN_LOBBY:
+                GameController.getInstance().joinLobby(thisClient, ((JoinLobbyeMessage)message).getIdLobby());
+                break;
+            case CREATE_LOBBY:
+                GameController.getInstance().createLobby(thisClient, ((CreateLobbyMessage) message).getNumOfPlayer());
+                break;
+            case PLAY_INITIAL_CARD:
+                PlayInitCardMessage playInitCardMessage = (PlayInitCardMessage) message;
+                GameController.getInstance().playInitCard(thisClient, playInitCardMessage.getIdCard(), playInitCardMessage.isBackSide());
+                break;
+            case PERSONAL_GOAL_CHOOSE:
+                GameController.getInstance().setPersonalGoal(thisClient, ((PersonalGoalChooseMessage)message).getIdCard());
+                break;
+            case PLAY_CARD:
+                PlayCardMessage playCardMessage = (PlayCardMessage) message;
+                GameController.getInstance().playCard(thisClient, playCardMessage.getIdCard(), playCardMessage.getPosition(),
+                        playCardMessage.isBackSide());
+                break;
+            case DRAW_CARD:
+                DrawCardMessage drawCardMessage = (DrawCardMessage) message;
+                LocationType location = drawCardMessage.getLocation();
+                GameController.getInstance().drawCard(thisClient, drawCardMessage.getLocation(), drawCardMessage.getIdCard());
+            default:
+                break;
+        }
+
+
+    }
+
     private void close(){
-        //In theory fixed
-        GameController.getInstance().socketClientLeave(oos);
-        try {
-            ois.close();
-            oos.close();
-            input.close();
-            output.close();
-        } catch (IOException ignored) {}
-        this.interrupt();
+        if (!isCallToClose){
+            isCallToClose = true;
+            GameController.getInstance().socketClientLeave(thisClient);
+            try {
+                ois.close();
+                oos.close();
+                clientSocket.close();
+            } catch (IOException ignored) {}
+            this.interrupt();
+        }
+
     }
 
 
