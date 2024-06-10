@@ -24,7 +24,7 @@ public class ForPlayerBoard extends Node{
 
 
     /**
-     * it places the card
+     * show the new card placed on the board
      * @param id is id of the card
      * @param isBackSide indicates if player chose the back side
      * @param x coordinate for place the card
@@ -50,7 +50,7 @@ public class ForPlayerBoard extends Node{
     }
 
     /**
-     * it shows on the player board the possible position
+     * shows on the client board the possible positions
      * @param availablePositions list of available position
      */
     public void showPossiblePositions(List<int[]> availablePositions) {
@@ -69,7 +69,7 @@ public class ForPlayerBoard extends Node{
 
 
     /**
-     * try place the card
+     * tries to place a card
      * @param position indicate possible position for the card
      */
     private void tryPlace(int[] position){

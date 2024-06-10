@@ -31,7 +31,6 @@ public class ForInGame {
     @FXML
     private ImageView commonGoal2;
 
-
     @FXML
     private ImageView goldCard1;
 
@@ -53,7 +52,6 @@ public class ForInGame {
     @FXML
     private ImageView im_p4;
 
-
     @FXML
     private Button playerFour;
 
@@ -74,7 +72,6 @@ public class ForInGame {
 
     @FXML
     private ImageView resourceDeck;
-
 
     @FXML
     private Label nicknameFour;
@@ -216,7 +213,7 @@ public class ForInGame {
 
 
     /**
-     * it sets public information of the player
+     * initializes all information about player 1
      * @param player is one of players
      */
     public void initPlayer1(ImmutablePlayer player) {
@@ -236,7 +233,7 @@ public class ForInGame {
 
 
     /**
-     * it sets public information of the player
+     * initializes all information about player 2
      * @param player is one of players
      */
     public void initPlayer2(ImmutablePlayer player) {
@@ -256,7 +253,7 @@ public class ForInGame {
 
 
     /**
-     * it sets public information of the player
+     * initializes all information about player 3
      * @param player is one of players
      */
     public void initPlayer3(ImmutablePlayer player) {
@@ -276,7 +273,7 @@ public class ForInGame {
 
 
     /**
-     * it sets public information of the player
+     * initializes all information about player 4
      * @param player is one of players
      */
     public void initPlayer4(ImmutablePlayer player) {
@@ -297,7 +294,7 @@ public class ForInGame {
 
 
     /**
-     * it sets the first player icon
+     * sets the border of the player who starts playing first
      * @param nickname is the nickname of the first player
      */
     public void changeFirstStartPlayerIcon(String nickname){
@@ -313,7 +310,7 @@ public class ForInGame {
 
 
     /**
-     * it sets player's icon by their color
+     * sets player's icon by their color
      * @param color
      * @return
      */
@@ -334,7 +331,7 @@ public class ForInGame {
 
 
     /**
-     * it initializes player's board
+     * initializes player's board
      * @param i indicate the position of player
      */
     private void initBoard(int i) {
@@ -364,7 +361,7 @@ public class ForInGame {
 
 
     /**
-     * it shows the player board of first player
+     * shows board of the player 1
      */
     public void showPlayerBoard1() {
         playerBoard.setContent(boardPlayer1);
@@ -378,7 +375,7 @@ public class ForInGame {
 
 
     /**
-     * it shows the player board of second player
+     * shows board of the player 2
      */
     public void showPlayerBoard2() {
         playerBoard.setContent(boardPlayer2);
@@ -392,7 +389,7 @@ public class ForInGame {
 
 
     /**
-     * it shows the player board of third player
+     * shows board of player 3
      */
     public void showPlayerBoard3() {
         playerBoard.setContent(boardPlayer3);
@@ -406,7 +403,7 @@ public class ForInGame {
 
 
     /**
-     * it shows the player board of fourth player
+     * shows board of player 4
      */
     public void showPlayerBoard4() {
         playerBoard.setContent(boardPlayer4);
@@ -427,7 +424,7 @@ public class ForInGame {
 
 
     /**
-     * it shows mine hand cards
+     * shows hand cards this client
      */
     public void showMineHandCards(){
         current = ((GUIApplication) (ClientController.getInstance().getView())).getMyNickname();
@@ -466,7 +463,7 @@ public class ForInGame {
 
 
     /**
-     * it gets the back image of resource card
+     * gets the back image of resource card
      * @param symbol is the symbol of the card
      * @return image of the resource card
      */
@@ -495,7 +492,7 @@ public class ForInGame {
 
 
     /**
-     * it shows the back image of gold card
+     * gets the back image of gold card
      * @param symbol is the symbol of the card
      * @return image of the gold card
      */
@@ -520,7 +517,7 @@ public class ForInGame {
 
 
     /**
-     * it shows resource cards displayed
+     * shows resource cards displayed
      * @param displayRCard is a list of resource card displayed
      */
     public void showDisplayRCard(List<Integer> displayRCard){
@@ -537,7 +534,7 @@ public class ForInGame {
 
 
     /**
-     * it shows gold cards displayed
+     * shows gold cards displayed
      * @param displayGCard is a list of gold card displayed
      */
     public void showDisplayGCard(List<Integer> displayGCard){
@@ -554,7 +551,7 @@ public class ForInGame {
 
 
     /**
-     * it shows personal goal card
+     * shows personal goal card
      * @param id is the id of the personal card
      */
     public void showPersonalGoal(Integer id){
@@ -564,7 +561,7 @@ public class ForInGame {
 
 
     /**
-     * it shows common goals cards
+     * shows common goals cards
      * @param goals is the list of common goals card's id
      */
     public void showCommonGoals(List<Integer> goals){
@@ -576,7 +573,7 @@ public class ForInGame {
 
 
     /**
-     * it updates the first card in the hand
+     * updates the first card in the hand
      * @param idCard is the card's id
      */
     public void updateHandCard1(Integer idCard){
@@ -588,7 +585,7 @@ public class ForInGame {
 
 
     /**
-     * it updates the second card in the hand
+     * updates the second card in the hand
      * @param idCard is the card's id
      */
     public void updateHandCard2(Integer idCard){
@@ -600,7 +597,7 @@ public class ForInGame {
 
 
     /**
-     * it updates the third card in the hand
+     * updates the third card in the hand
      * @param idCard is the card's id
      */
     public void updateHandCard3(Integer idCard){
@@ -612,7 +609,7 @@ public class ForInGame {
 
 
     /**
-     * it shows back side of the other players' hand card
+     * shows back side of the other players' hand card
      * @param cardTypes indicates type of the card
      * @param cardKingdoms indicates the kingdom of the card
      */
@@ -635,7 +632,7 @@ public class ForInGame {
 
 
     /**
-     * it shows image by card type
+     * get back card image by card type and symbol
      * @param type indicates the type of card
      * @param symbol is the symbol of card
      * @return image
@@ -669,7 +666,7 @@ public class ForInGame {
 
 
     /**
-     * it shows possible position in the board
+     * shows positions that can be placed in the client board
      */
     public void askPlayHandCard(){
         ImmutablePlayer me = null;
@@ -684,7 +681,7 @@ public class ForInGame {
 
 
     /**
-     * it deactivates hand cards click
+     * deactivates hand cards click
      */
     public void deactivateHandCardsClick(){
         hand1.setCursor(Cursor.DEFAULT);
@@ -697,7 +694,7 @@ public class ForInGame {
 
 
     /**
-     * it activates hand cards click
+     * activates hand cards click
      */
     public void activateHandCardsClick(){
         hand1.setCursor(Cursor.HAND);
@@ -779,7 +776,7 @@ public class ForInGame {
 
 
     /**
-     * it updates table score
+     * updates a player's score
      * @param i indicates the players
      * @param newPoint indicates the new point get by player
      */
@@ -808,7 +805,7 @@ public class ForInGame {
 
 
     /**
-     * it activates desk click
+     * activates desk click
      */
     public void activateDeskClick() {
         if(resourceCard1.getImage() != null){
@@ -908,7 +905,7 @@ public class ForInGame {
 
 
     /**
-     * it deactivates desk click
+     * deactivates desk click
      */
     public void deactivateDeskClick(){
         resourceC1Selected = false;
