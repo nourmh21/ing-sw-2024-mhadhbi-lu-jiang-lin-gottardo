@@ -1,24 +1,22 @@
 package it.polimi.ingsw.controller.server.task;
 
+import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
 
-import java.io.ObjectOutputStream;
 import java.util.Objects;
 
 public class SetPersonalGoal implements Runnable{
+    Client client;
     Game game;
-    String nickname;
     Integer idCard;
-    ObjectOutputStream oos;
 
-    public SetPersonalGoal(Game game, String nickname, Integer idCard, ObjectOutputStream oos){
+    public SetPersonalGoal(Client client, Game game, Integer idCard){
+        this.client = client;
         this.game = game;
-        this.nickname = nickname;
         this.idCard = idCard;
-        this.oos = oos;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class SetPersonalGoal implements Runnable{
             int i = 0;
             for (Player p: game.getPlayers()) {
                 //find the right player
-                if (p.getNickname().equals(nickname)){
+                if (p.getNickname().equals(client.getNickname())){
                     //if that player has not selected a personal goal yet
                     if (p.getPersonalGoal() == null){
                         if (checkValidity(p))

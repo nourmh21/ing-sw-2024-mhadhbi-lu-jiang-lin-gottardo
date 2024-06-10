@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.server.task;
 
-import it.polimi.ingsw.controller.server.GameController;
+import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GoldCard;
@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.PlayerBoard;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.GameState;
 
-import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,21 +15,19 @@ import static it.polimi.ingsw.message.enums.ErrorType.GOLD_CARD_CONDITION_NOT_RE
 
 public class PlayCard implements Runnable{
 
+    private Client client;
     private Game game;
-    private String nickname;
     private int[] position;
-
     private boolean isBackSide;
     private Card card;
-    private ObjectOutputStream oos;
 
-    public PlayCard(Game game, String nickname, int[] position, boolean isBackSide, Card card, ObjectOutputStream oos){
+
+    public PlayCard(Client client, Game game, Card card, int[] position, boolean isBackSide){
+        this.client = client;
         this.game = game;
-        this.nickname = nickname;
         this.position = position;
         this.isBackSide = isBackSide;
         this.card = card;
-        this.oos = oos;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class PlayCard implements Runnable{
             if (isPositionValid(board.getAvailablePosition(),position)){
                 //if card is gold card, check that card play condition is fulfilled
                 if (!isCardConditionFulfilled(board)){
-                    GameController.writeErrorMessage(oos, GOLD_CARD_CONDITION_NOT_RESPECTED);
+                    client.informError(GOLD_CARD_CONDITION_NOT_RESPECTED);
                 }else {
                     game.getCurrentPlayer().removeHandCard(card.getIdCard());
                     game.getCurrentPlayer().updatePoint(board.placeCard(card, isBackSide, position[0], position[1]));
@@ -56,7 +53,7 @@ public class PlayCard implements Runnable{
 
     private boolean checkPlayCondition(){
         return game.getGameState() == GameState.PLAY_CARD &&
-                game.getCurrentPlayer().getNickname().equals(nickname);
+                game.getCurrentPlayer().getNickname().equals(client.getNickname());
     }
 
 

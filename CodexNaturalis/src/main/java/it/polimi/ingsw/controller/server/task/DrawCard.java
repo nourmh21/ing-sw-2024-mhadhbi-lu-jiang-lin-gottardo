@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.server.task;
 
+import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.message.enums.ErrorType;
 import it.polimi.ingsw.message.enums.LocationType;
@@ -8,29 +9,23 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
 
-import java.io.ObjectOutputStream;
-
 public class DrawCard  implements Runnable {
-
+    private Client client;
     private Game game;
-    private String nickname;
     private LocationType locationType;
     private int idCard;
-    private ObjectOutputStream oos;
 
     
-    public DrawCard( Game game,String nickname, LocationType locationType, ObjectOutputStream oos){
+    public DrawCard(Client client, Game game, LocationType locationType){
+        this.client = client;
         this.game = game;
         this.locationType = locationType;
-        this.nickname = nickname;
-        this.oos = oos;
     }
-    public DrawCard(Game game, String nickname, LocationType locationType, Integer idCard, ObjectOutputStream oos){
+    public DrawCard(Client client, Game game, LocationType locationType, Integer idCard){
+        this.client = client;
         this.game = game;
         this.locationType = locationType;
-        this.nickname = nickname;
         this.idCard = idCard;
-        this.oos = oos;
     }
     
     @Override
@@ -53,7 +48,7 @@ public class DrawCard  implements Runnable {
                         p.addCardToHandCards(desk.pickOneDisplayedRCard(idCard));
                         desk.updateDisplayedRCard();
                     }else{
-                        GameController.writeErrorMessage(oos, ErrorType.INVALID_CARD_ID);
+                        client.informError(ErrorType.INVALID_CARD_ID);
                     }
                     break;
                 case DISPLAYED_GOLD_LIST:
@@ -61,7 +56,7 @@ public class DrawCard  implements Runnable {
                         p.addCardToHandCards(desk.pickOneDisplayedGCard(idCard));
                         desk.updateDisplayedGCard();
                     }else{
-                        GameController.writeErrorMessage(oos,ErrorType.INVALID_CARD_ID);
+                        client.informError(ErrorType.INVALID_CARD_ID);
                     }
                     break;
             }
@@ -75,7 +70,7 @@ public class DrawCard  implements Runnable {
     }
     private boolean checkDrawCondition(){
         return game.getGameState() == GameState.DRAW_CARD &&
-                game.getCurrentPlayer().getNickname().equals(nickname);
+                game.getCurrentPlayer().getNickname().equals(client.getNickname());
     }
 
 }

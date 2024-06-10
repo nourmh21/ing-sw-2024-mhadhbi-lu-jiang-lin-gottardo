@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.server.task;
 
+import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.enums.GameState;
@@ -7,13 +8,12 @@ import it.polimi.ingsw.model.enums.GameState;
 public class PlayInitialCard implements Runnable{
 
     Game game;
-    String nickname;
-
+    Client client;
     InitialCard initialCard;
     boolean isBackside;
 
-    public PlayInitialCard(Game game, String nickname, Card card, boolean isBackSide){
-        this.nickname = nickname;
+    public PlayInitialCard(Client client, Game game, Card card, boolean isBackSide){
+        this.client = client;
         this.game = game;
         initialCard = (InitialCard) card;
         this.isBackside = isBackSide;
@@ -27,7 +27,7 @@ public class PlayInitialCard implements Runnable{
             int i = 0;
 
             for (Player p: game.getPlayers()) {
-                if (p.getNickname().equals(nickname)){
+                if (p.getNickname().equals(client.getNickname())){
                     //specific check
                     if (!p.getBoard().getIsInitCardPlaced() &&
                             p.getInitialCard().equals(initialCard.getIdCard()))

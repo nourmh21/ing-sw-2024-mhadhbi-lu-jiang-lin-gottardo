@@ -33,7 +33,7 @@ public class DrawGoals implements Runnable{
                         game.getDesk().pickOneCard(CardType.OBJECTIVE)};
                 p.setInitialPossibleGoals(personalGoals);
             }
-        } catch (EmptyDeckException e) {
+        } catch (EmptyDeckException ignored) {
             //Ignored, because it won't happen at this point of game
         }
     }
