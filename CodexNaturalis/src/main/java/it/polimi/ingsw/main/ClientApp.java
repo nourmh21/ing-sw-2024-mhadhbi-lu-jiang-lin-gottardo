@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network;
+package it.polimi.ingsw.main;
 
 
 import it.polimi.ingsw.controller.client.ClientController;
@@ -12,7 +12,7 @@ import java.io.*;
 import java.net.Socket;
 
 
-public class Client
+public class ClientApp
 {
     public static void main( String[] args ) {
         boolean isTUI = false;
@@ -22,9 +22,6 @@ public class Client
                 break;
             }
         }
-
-        //for test
-        isTUI = false;
 
         if (isTUI){
             TUI tui = new TUI();
@@ -39,7 +36,6 @@ public class Client
 
     }
 
-
     public static void trySocketConnection(String ip){
         try {
             Socket socket = new Socket(ip, 49257);
@@ -52,8 +48,9 @@ public class Client
             new HeartbeatSender(oos, socket).start();
             ClientController.getInstance().setClientAction(new SocketAction(oos));
             new MessageReader(ois, socket).start();
-
-        }catch (IOException ignored) {}
+        }catch (IOException e) {
+            ClientController.getInstance().getView().showConnectionError();
+        }
     }
 
 
@@ -64,7 +61,7 @@ public class Client
 
 
     public static boolean checkIPValidity(String ip){
-        if (ip.isEmpty()) {
+        if (ip.isEmpty() || ip == null) {
             return false;
         }
         String[] parts = ip.split("\\.");
@@ -72,8 +69,12 @@ public class Client
             return false;
         }
         for (String eachPart:parts) {
-            if ((Integer.parseInt(eachPart)<0)||(Integer.parseInt(eachPart)>255))
+            try {
+                if ((Integer.parseInt(eachPart)<0)||(Integer.parseInt(eachPart)>255))
+                    return false;
+            }catch (NumberFormatException e){
                 return false;
+            }
         }
         return true;
     }

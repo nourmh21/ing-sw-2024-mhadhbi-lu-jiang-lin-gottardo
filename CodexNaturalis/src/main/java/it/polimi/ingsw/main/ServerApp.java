@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network;
+package it.polimi.ingsw.main;
 
 
 
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server {
+public class ServerApp {
     //如果抛不出来说明端口被占了
     private static final int port = 49257;
     public static void main(String[] args){
@@ -19,8 +19,7 @@ public class Server {
                     Socket socket = serverSocket.accept();
                     new ClientHandler(socket).start();
                     System.out.println("Client connected");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (IOException ignored) {
                 }
             }
         } catch (IOException e) {
