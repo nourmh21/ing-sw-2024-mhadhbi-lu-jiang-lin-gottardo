@@ -172,14 +172,6 @@ public class Player extends Observable {
 
 
     /**
-     * Set player connected to the game
-     */
-    public void setConnected(){
-        isConnected = true;
-    }
-
-
-    /**
      * @return list of Hand cards
      */
     public List<Integer> getHandCards() {
