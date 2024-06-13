@@ -46,7 +46,7 @@ public class GameController {
     }
 
 
-    public void giveLobbies(Client client){
+    public synchronized void giveLobbies(Client client){
         if (isLoggedIn(client.getNickname())){
             List<Integer[]> lobbies = availableLobby.stream()
                     .parallel()
@@ -57,7 +57,7 @@ public class GameController {
     }
 
 
-    public void joinLobby(Client client, Integer idLobby) {
+    public synchronized void joinLobby(Client client, Integer idLobby) {
         if (isLoggedIn(client.getNickname())){
             boolean find = false;
             for (Lobby lobby: availableLobby) {
@@ -76,7 +76,7 @@ public class GameController {
     }
 
 
-    public void createLobby(Client client, int numOfPlayer){
+    public synchronized void createLobby(Client client, int numOfPlayer){
         if (isLoggedIn(client.getNickname())){
             Lobby lobby = new Lobby(numOfPlayer,getRandomLobbyId());
             availableLobby.add(lobby);
@@ -138,7 +138,7 @@ public class GameController {
     }
 
 
-    public void removeLobby(Lobby lobby){
+    public synchronized void removeLobby(Lobby lobby){
         availableLobby.remove(lobby);
         usedLobbyIds.remove(lobby.getIdLobby());
     }
@@ -185,7 +185,7 @@ public class GameController {
     }
 
 
-    private void removePlayerFromLobby(String nickname){
+    private synchronized void removePlayerFromLobby(String nickname){
         boolean find = false;
         for (Lobby lobby:availableLobby) {
             for (String playerNickname: lobby.getPlayers()) {
