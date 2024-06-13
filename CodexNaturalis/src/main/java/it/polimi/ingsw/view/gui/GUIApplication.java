@@ -22,7 +22,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -52,8 +51,6 @@ public class GUIApplication extends Application implements UserInterface {
     List<ImmutablePlayer> players;
     List<Integer> handCards;
     Integer personalGoal;
-
-    Font algerian48 = Font.loadFont(getClass().getResourceAsStream("/img/utils/game_icon_square.png"),48);
 
 
     public void launch() {

@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.view.gui.GUIApplication;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -190,7 +191,6 @@ public class ForInGame {
     Image redPlayerIcon = new Image(getClass().getResourceAsStream("/img/playerIcon/red.png"));
     Image yellowPlayerIcon = new Image(getClass().getResourceAsStream("/img/playerIcon/yellow.png"));
     Image greenPlayerIcon = new Image(getClass().getResourceAsStream("/img/playerIcon/green.png"));
-    Image blackPlayerICon = new Image(getClass().getResourceAsStream("/img/playerIcon/black.png"));
 
     AnchorPane boardPlayer1;
     AnchorPane boardPlayer2;
@@ -331,21 +331,31 @@ public class ForInGame {
      */
     private void initBoard(int i) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/PlayerBoard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(PageType.BOARD.getValue()));
             if (i == 1) {
                 boardPlayer1 = loader.load();
                 boardPlayer1Controller = (ForPlayerBoard) loader.getController();
+                setBoardScale(boardPlayer1);
             } else if (i == 2) {
                 boardPlayer2 = loader.load();
                 boardPlayer2Controller = (ForPlayerBoard) loader.getController();
+                setBoardScale(boardPlayer2);
             } else if (i == 3) {
                 boardPlayer3 = loader.load();
                 boardPlayer3Controller = (ForPlayerBoard) loader.getController();
+                setBoardScale(boardPlayer3);
             } else if (i == 4) {
                 boardPlayer4 = loader.load();
                 boardPlayer4Controller = (ForPlayerBoard) loader.getController();
+                setBoardScale(boardPlayer4);
             }
         } catch (IOException ignored) {}
+    }
+
+
+    private void setBoardScale(AnchorPane board){
+        board.setScaleX(1.02);
+        board.setScaleY(1.02);
     }
 
 

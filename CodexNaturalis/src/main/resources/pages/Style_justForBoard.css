@@ -1,0 +1,13 @@
+
+#boardBg{
+    -fx-background-color: #FFFDF3;
+    -fx-grid-lines-visible: true;
+}
+
+#boardBg Line{
+    -fx-stroke: #E3E3DF;
+}
+
+
+
+

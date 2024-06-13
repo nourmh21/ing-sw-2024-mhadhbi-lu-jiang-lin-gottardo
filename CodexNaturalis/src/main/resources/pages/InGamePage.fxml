@@ -34,7 +34,7 @@
                         <Insets left="58.0" right="82.0" />
                      </HBox.margin>
                   </ImageView>
-                  <AnchorPane prefHeight="117.0" prefWidth="935.0" style="-fx-background-color: #e1e6df; -fx-border-width: 0.3; -fx-border-color: #6b5339;">
+                  <AnchorPane prefHeight="117.0" prefWidth="933.5" style="-fx-background-color: #e1e6df; -fx-border-width: 0.3; -fx-border-color: #6b5339;">
                      <children>
                         <Button fx:id="playerOne" layoutX="36.0" layoutY="17.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-padding: 0;" AnchorPane.rightAnchor="833.0" AnchorPane.topAnchor="19.5">
                            <graphic>
@@ -157,7 +157,7 @@
                         <Pane fx:id="chatCover" prefHeight="88.0" prefWidth="305.0" style="-fx-background-color: grey; -fx-opacity: 0.2;" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="20.0" />
                      </children>
                      <HBox.margin>
-                        <Insets />
+                        <Insets right="1.5" />
                      </HBox.margin>
                   </AnchorPane>
                </children>

@@ -14,6 +14,7 @@ public enum PageType {
     INIT_CARD_CHOOSE("/pages/InitialCardPlay.fxml"),
     PERSONAL_GOAL_CHOOSE("/pages/PersonalGoalChoose.fxml"),
     GAME("/pages/InGamePage.fxml"),
+    BOARD("/pages/PlayerBoard.fxml"),
     ENDGAME("/pages/FinalResults.fxml");
 
     private final String value;
