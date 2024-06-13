@@ -1,6 +1,7 @@
 
 package it.polimi.ingsw.observer;
 
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
@@ -76,12 +77,27 @@ public abstract class Observable {
         }
     }
 
+    public void notify_private_chat(ChatMessage message){
+        for (Observer o: observers){
+            if (o.getNickname().equals(message.getRecipient())){
+                o.send_chat(message);
+                break;
+            }
+        }
+    }
+
+    public void notify_public_chat(ChatMessage message){
+        for (Observer o: observers){
+            if (!o.getNickname().equals(message.getSender())){
+                o.send_chat(message);
+            }
+        }
+    }
+
 
     public List<Observer> getObservers(){
         return observers;
     }
-
-
 
 
 }

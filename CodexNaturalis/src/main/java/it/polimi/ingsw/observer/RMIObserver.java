@@ -1,5 +1,6 @@
 package it.polimi.ingsw.observer;
 
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
 import it.polimi.ingsw.model.immutable.ImmutableLobby;
@@ -46,6 +47,11 @@ public class RMIObserver implements Observer{
 
     @Override
     public void send_player_disconnected(String nickname) {
+
+    }
+
+    @Override
+    public void send_chat(ChatMessage message) {
 
     }
 }

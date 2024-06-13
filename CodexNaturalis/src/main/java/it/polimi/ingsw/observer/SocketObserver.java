@@ -1,6 +1,7 @@
 package it.polimi.ingsw.observer;
 
 import it.polimi.ingsw.message.enums.NotifyType;
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.message.notify.NotifyMessage;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
@@ -104,6 +105,17 @@ public class SocketObserver implements Observer{
     public void send_player_disconnected(String nickname) {
         try {
             oos.writeObject(new NotifyMessage(NotifyType.PLAYER_DISCONNECTED,nickname));
+        }catch (SocketException exception){
+            //
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void send_chat(ChatMessage message) {
+        try {
+            oos.writeObject(message);
         }catch (SocketException exception){
             //
         } catch (IOException e) {
