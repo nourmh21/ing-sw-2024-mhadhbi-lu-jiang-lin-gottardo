@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
@@ -24,6 +25,7 @@ public class Game extends Observable{
     private boolean isLastRound;
     private int numOfConnectedPlayers;   //num of player connect in the game
     private Player currentPlayer; //indicates the current player of the game
+    private ChatHistory chatHistory;
     ArrayList<Color> colors;
 
 
@@ -43,15 +45,16 @@ public class Game extends Observable{
         gameState = GameState.SETUP_PHASE_1;
         isLastRound =false;
         colors = new ArrayList<>(List.of((Color.values())));
-        //
-
+        chatHistory = new ChatHistory();
     }
 
 
     public void setGameObservers(List<Observer> observers){
         this.observers = observers;
-        //
         notify_game_status(new ImmutableGame(this));
+        for (Observer o:observers) {
+            chatHistory.addObserver(o);
+        }
     }
 
 
@@ -104,7 +107,6 @@ public class Game extends Observable{
     public void addPlayers(String nickname) {
         players.add(new Player(nickname, this, randomColor()));
         numOfConnectedPlayers++;
-
         if (players.size() == numOfPlayer){
             notify_game_status(new ImmutableGame(this));
         }
@@ -257,6 +259,10 @@ public class Game extends Observable{
         colors.remove(randomIndex);
 
         return randomColor;
+    }
+
+    public void addNewChat(ChatMessage message){
+        chatHistory.addNewMessage(message);
     }
 
 }

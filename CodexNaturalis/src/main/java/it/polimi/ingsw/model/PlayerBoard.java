@@ -123,7 +123,7 @@ public class PlayerBoard {
         y.add(0);
         addAvailablePosition(0,0);
 
-        if (isBackSide) {
+        if (!isBackSide) {
             symbolList[0] = 1;
             symbolList[1] = 1;
             symbolList[2] = 1;
@@ -132,7 +132,6 @@ public class PlayerBoard {
             topRightAngle.add(initialCard.getTopRightAngle());
             bottomLeftAngle.add(initialCard.getBottomLeftAngle());
             bottomRightAngle.add(initialCard.getBottomRightAngle());
-
         } else {
             symbolList[0] = initialCard.getCenterResource()[0];
             symbolList[1] = initialCard.getCenterResource()[1];
