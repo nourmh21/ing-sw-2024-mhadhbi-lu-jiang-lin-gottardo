@@ -8,12 +8,14 @@ import it.polimi.ingsw.network.socket.MessageReader;
 import it.polimi.ingsw.view.gui.GUIApplication;
 import it.polimi.ingsw.view.tui.TUI;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 
-public class ClientApp
-{
+public class ClientApp {
+
     public static void main( String[] args ) {
         boolean isTUI = false;
         for (String arg : args) {
@@ -22,31 +24,25 @@ public class ClientApp
                 break;
             }
         }
-
         if (isTUI){
             TUI tui = new TUI();
             ClientController.getInstance().setView(tui);
-            tui.start();
+            tui.askServerIP();
         }else {
             GUIApplication gui = new GUIApplication();
             ClientController.getInstance().setView(gui);
             gui.launch();
         }
-
-
     }
+
 
     public static void trySocketConnection(String ip){
         try {
             Socket socket = new Socket(ip, 49257);
-
-            OutputStream output = socket.getOutputStream();
-            InputStream input = socket.getInputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(output);
-            ObjectInputStream ois = new ObjectInputStream(input);
-
-            new HeartbeatSender(oos, socket).start();
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             ClientController.getInstance().setClientAction(new SocketAction(oos));
+            new HeartbeatSender(oos, socket).start();
             new MessageReader(ois, socket).start();
         }catch (IOException e) {
             ClientController.getInstance().getView().showConnectionError();
@@ -61,7 +57,7 @@ public class ClientApp
 
 
     public static boolean checkIPValidity(String ip){
-        if (ip.isEmpty() || ip == null) {
+        if (ip.isEmpty()) {
             return false;
         }
         String[] parts = ip.split("\\.");
@@ -78,6 +74,5 @@ public class ClientApp
         }
         return true;
     }
-
 
 }
