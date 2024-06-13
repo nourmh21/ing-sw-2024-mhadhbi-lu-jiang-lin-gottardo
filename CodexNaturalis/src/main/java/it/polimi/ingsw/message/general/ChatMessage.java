@@ -4,19 +4,32 @@ import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 
 public class ChatMessage implements Message {
-    private final String sender;
-    private final String recipient;
-    private final String content;
+    boolean isPublic;
+    String sender;
+    String recipient;
+    String content;
 
     public ChatMessage(String sender, String recipient, String content){
+        isPublic = false;
         this.sender = sender;
         this.recipient = recipient;
+        this.content = content;
+    }
+
+    public ChatMessage(String sender, String content){
+        isPublic = true;
+        recipient = null;
+        this.sender = sender;
         this.content = content;
     }
 
     @Override
     public MessageType getType() {
         return MessageType.CHAT;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
     }
 
     public String getSender() {
@@ -30,4 +43,5 @@ public class ChatMessage implements Message {
     public String getContent() {
         return content;
     }
+
 }
