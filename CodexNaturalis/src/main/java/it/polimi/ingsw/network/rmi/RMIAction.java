@@ -1,10 +1,11 @@
-package it.polimi.ingsw.controller.client;
+package it.polimi.ingsw.network.rmi;
 
+import it.polimi.ingsw.controller.client.ClientAction;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.general.ChatMessage;
 
 //to be completed by Nourhane
-public class RMIAction implements ClientAction{
+public class RMIAction implements ClientAction {
     @Override
     public void access(String nickname, String pwd, boolean isRegistered) {
 

@@ -1,5 +1,6 @@
-package it.polimi.ingsw.controller.client;
+package it.polimi.ingsw.network.socket;
 
+import it.polimi.ingsw.controller.client.ClientAction;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.general.*;
