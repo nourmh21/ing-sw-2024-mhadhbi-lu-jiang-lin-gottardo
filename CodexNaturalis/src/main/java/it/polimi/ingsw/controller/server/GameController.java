@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.server;
 
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.controller.server.task.*;
 import it.polimi.ingsw.message.enums.ErrorType;
@@ -121,6 +122,11 @@ public class GameController {
             executor.execute(new PlayerDisconnect(client, usersInGame.get(client.getNickname())));
     }
 
+    public void chatManage(ChatMessage message){
+        if (isInGame(message.getSender()))
+            executor.execute(new ChatManager(usersInGame.get(message.getSender()),message));
+    }
+
 
     public boolean isLoggedIn(String nickname){
         return loggedInUsers.contains(nickname);
@@ -204,9 +210,11 @@ public class GameController {
         return n;
     }
 
+
     public ClientManager getClientManager(){
         return clientManager;
     }
+
 
     public synchronized static GameController getInstance(){
         if (instance == null)

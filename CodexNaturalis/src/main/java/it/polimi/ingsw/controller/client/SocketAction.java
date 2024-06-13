@@ -6,7 +6,6 @@ import it.polimi.ingsw.message.general.*;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.SocketException;
 
 public class SocketAction implements ClientAction {
     private ObjectOutputStream oos;
@@ -24,7 +23,6 @@ public class SocketAction implements ClientAction {
     public void reqLobbies() {
         send(new ReqLobbiesMessage());
     }
-
 
     @Override
     public void joinLobby(Integer idLobby) {
@@ -59,15 +57,15 @@ public class SocketAction implements ClientAction {
             send(new DrawCardMessage(location));
     }
 
+    @Override
+    public void chat(ChatMessage message) {
+        send(message);
+    }
 
     private void send(Message message){
         try {
             oos.writeObject(message);
-        }catch (SocketException exception){
-            ClientController.getInstance().getView().showConnectionError();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }catch (IOException ignored) {}
     }
 
 }
