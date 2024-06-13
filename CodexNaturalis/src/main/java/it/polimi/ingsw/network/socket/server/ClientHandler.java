@@ -120,7 +120,7 @@ public class ClientHandler extends Thread{
     private void close(){
         if (!isCallToClose){
             isCallToClose = true;
-            GameController.getInstance().socketClientLeave(thisClient);
+            GameController.getInstance().clientLeave(thisClient);
             try {
                 ois.close();
                 oos.close();

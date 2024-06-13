@@ -174,7 +174,7 @@ public class GameController {
     }
 
 
-    public void socketClientLeave(Client client){
+    public void clientLeave(Client client){
         clientManager.removeClient(client);
         if (client.getNickname() != null){
             String nickname = client.getNickname();
