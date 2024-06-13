@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.socket;
+package it.polimi.ingsw.network.socket.client;
 
 import it.polimi.ingsw.message.general.HeartbeatMessage;
 

@@ -2,9 +2,9 @@ package it.polimi.ingsw.main;
 
 
 import it.polimi.ingsw.controller.client.ClientController;
-import it.polimi.ingsw.network.socket.SocketAction;
-import it.polimi.ingsw.network.socket.HeartbeatSender;
-import it.polimi.ingsw.network.socket.MessageReader;
+import it.polimi.ingsw.network.socket.client.SocketAction;
+import it.polimi.ingsw.network.socket.client.HeartbeatSender;
+import it.polimi.ingsw.network.socket.client.MessageReader;
 import it.polimi.ingsw.view.gui.GUIApplication;
 import it.polimi.ingsw.view.tui.TUI;
 

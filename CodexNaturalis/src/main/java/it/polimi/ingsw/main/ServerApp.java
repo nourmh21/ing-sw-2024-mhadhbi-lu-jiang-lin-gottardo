@@ -2,7 +2,7 @@ package it.polimi.ingsw.main;
 
 
 
-import it.polimi.ingsw.network.socket.ClientHandler;
+import it.polimi.ingsw.network.socket.server.ClientHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;

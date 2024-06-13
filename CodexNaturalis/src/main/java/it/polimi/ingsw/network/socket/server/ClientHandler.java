@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.socket;
+package it.polimi.ingsw.network.socket.server;
 
 
 import it.polimi.ingsw.controller.server.GameController;
