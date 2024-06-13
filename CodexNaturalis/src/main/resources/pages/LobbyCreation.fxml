@@ -20,33 +20,33 @@
       <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #695138; -fx-border-width: 1;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8">
          <image>
-            <Image url="@img/utils/Insect.png" />
+            <Image url="@../img/utils/circle_insect.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
          <image>
-            <Image url="@img/utils/Fungi.png" />
+            <Image url="@../img/utils/circle_fungi.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Animal.png" />
+            <Image url="@../img/utils/circle_animal.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Plant.png" />
+            <Image url="@../img/utils/circle_plant.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER" layoutX="378.0" layoutY="43.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="118.0" prefWidth="1100.0">
+            <AnchorPane prefHeight="118.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-color: #695138; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 1; -fx-background-color: transparent;" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="250.0">
+                  <Button alignment="CENTER" mnemonicParsing="false" style="-fx-border-color: #695138; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 1; -fx-background-color: white;" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="250.0">
                      <graphic>
                         <Text fill="#6b5339" strokeType="OUTSIDE" strokeWidth="0.0" text="No waiting is present. You're creating one. Choose the number of players:" wrappingWidth="500.0">
                            <font>
-                              <Font name="Yu Gothic UI Semibold" size="24.0" />
+                              <Font name="Times New Roman" size="26.0" />
                            </font>
                         </Text>
                      </graphic>
@@ -54,29 +54,31 @@
                         <Insets bottom="30.0" left="75.0" right="30.0" top="30.0" />
                      </padding>
                   </Button>
-                  <HBox alignment="CENTER_LEFT" prefHeight="134.0" prefWidth="939.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="134.0" prefWidth="939.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="-4.0">
                      <children>
                         <ImageView fitHeight="94.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@img/utils/cicle.png" />
+                              <Image url="@../img/utils/game_icon_circle.png" />
                            </image>
                            <HBox.margin>
-                              <Insets left="3.0" />
+                              <Insets bottom="5.0" left="13.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
+                     <padding>
+                        <Insets left="11.0" />
+                     </padding>
                   </HBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="40.0" />
+                  <Insets bottom="30.0" />
                </VBox.margin>
             </AnchorPane>
             <HBox alignment="CENTER" prefHeight="101.0" prefWidth="1100.0">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                   <VBox prefHeight="102.0" prefWidth="125.0">
                      <children>
-                        <RadioButton fx:id="two" mnemonicParsing="false" onAction="#getTwo" text="Two" textFill="#6b5339">
+                        <RadioButton fx:id="two" mnemonicParsing="false" onAction="#getTwo" prefHeight="35.0" prefWidth="123.0" text=" Two" textFill="#6b5339">
                            <font>
                               <Font name="Yu Gothic UI Semibold" size="24.0" />
                            </font>
@@ -90,7 +92,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </RadioButton>
-                        <RadioButton fx:id="three" mnemonicParsing="false" onAction="#getThree" text="Three" textFill="#6b5339" toggleGroup="$numOfPlayers">
+                        <RadioButton fx:id="three" mnemonicParsing="false" onAction="#getThree" text=" Three" textFill="#6b5339" toggleGroup="$numOfPlayers">
                            <font>
                               <Font name="Yu Gothic UI Semibold" size="24.0" />
                            </font>
@@ -101,7 +103,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </RadioButton>
-                        <RadioButton fx:id="four" mnemonicParsing="false" onAction="#getFour" text="Four" textFill="#6b5339" toggleGroup="$numOfPlayers">
+                        <RadioButton fx:id="four" mnemonicParsing="false" onAction="#getFour" text=" Four" textFill="#6b5339" toggleGroup="$numOfPlayers">
                            <font>
                               <Font name="Yu Gothic UI Semibold" size="24.0" />
                            </font>
@@ -111,23 +113,25 @@
                         </RadioButton>
                      </children>
                   </VBox>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                </children>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
             </HBox>
-            <Label fx:id="error" prefHeight="17.0" prefWidth="364.0" textFill="RED">
+            <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="364.0" textFill="#b50b0b">
                <font>
                   <Font name="Arial" size="12.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="10.0" top="40.0" />
+                  <Insets bottom="15.0" top="15.0" />
                </VBox.margin>
             </Label>
-            <Button fx:id="create" mnemonicParsing="false" onAction="#submit" prefHeight="60.0" prefWidth="150.0" style="-fx-border-color: #6b5339; -fx-border-width: 1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Create" textFill="#6b5339">
+            <Button fx:id="create" mnemonicParsing="false" onAction="#submit" prefHeight="61.0" prefWidth="165.0" style="-fx-border-color: #6b5339; -fx-border-width: 1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Create" textFill="#6b5339">
                <font>
                   <Font name="Arial Black" size="24.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="25.0" />
+                  <Insets bottom="45.0" />
                </VBox.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />

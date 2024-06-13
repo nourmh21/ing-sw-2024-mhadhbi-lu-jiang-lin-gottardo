@@ -11,37 +11,37 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" style="-fx-border-color: black; -fx-border-width: 0.7; -fx-background-color: #FFFBE3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForHome">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" style="-fx-border-color: black; -fx-border-width: 0.7;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForHome">
    <children>
       <HBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <ImageView fitHeight="68.0" fitWidth="146.0">
+            <ImageView fitHeight="68.0" fitWidth="146.0" visible="false">
                <image>
-                  <Image url="@img/utils/owl.png" />
+                  <Image url="@../img/utils/owl.png" />
                </image>
             </ImageView>
          </children>
       </HBox>
       <ImageView fitHeight="380.0" fitWidth="391.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-3.0" AnchorPane.topAnchor="-3.0">
          <image>
-            <Image url="@img/utils/Angle_1.png" />
+            <Image url="@../img/utils/angle_green.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="382.0" fitWidth="420.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="-3.0">
          <image>
-            <Image url="@img/utils/Angle_2.png" />
+            <Image url="@../img/utils/angle_blue.png" />
          </image>
       </ImageView>
       <Line endX="40.0" endY="-159.0" startX="-330.0" startY="214.0" stroke="#402513" strokeWidth="1.2" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="-1.0" />
       <Line endX="34.0" endY="124.5" startX="-336.0" startY="-246.0" stroke="#412613" strokeWidth="1.2" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="-1.0" />
       <ImageView fitHeight="383.0" fitWidth="379.0" pickOnBounds="true" preserveRatio="true" rotate="-0.3" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="-2.5">
          <image>
-            <Image url="@img/utils/Angle_3.png" />
+            <Image url="@../img/utils/angle_purple.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="385.0" fitWidth="387.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-3.0" AnchorPane.rightAnchor="-3.0">
          <image>
-            <Image url="@img/utils/Angle_4.png" />
+            <Image url="@../img/utils/angle_red.png" />
          </image>
       </ImageView>
       <Line endX="34.0" endY="124.0" startX="-340.70709228515625" startY="-255.29290771484375" stroke="#412613" strokeWidth="1.2" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="55.0" />
@@ -52,10 +52,10 @@
                <children>
                   <ImageView fitHeight="197.0" fitWidth="730.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/utils/title.png" />
+                        <Image url="@../img/utils/title_2.png" />
                      </image>
                      <VBox.margin>
-                        <Insets bottom="35.0" />
+                        <Insets bottom="50.0" />
                      </VBox.margin>
                   </ImageView>
                   <Button fx:id="play" mnemonicParsing="false" onAction="#playGame" prefHeight="80.0" prefWidth="250.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: #938b16; -fx-border-width: 1.2; -fx-background-radius: 15;" text="PLAY" textFill="WHITE">
@@ -66,7 +66,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <VBox.margin>
-                        <Insets bottom="8.0" />
+                        <Insets bottom="5.0" top="11.0" />
                      </VBox.margin>
                   </Button>
                </children>

@@ -10,32 +10,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.For2PlayersLobby">
+<AnchorPane prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.For3PlayersLobby">
    <children>
       <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #695138; -fx-border-width: 1;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8">
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Insect.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
-         <image>
-            <Image url="@img/utils/Fungi.png" />
+            <Image url="@../img/utils/circle_plant.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Animal.png" />
+            <Image url="@../img/utils/circle_animal.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.8" AnchorPane.topAnchor="9.3">
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
          <image>
-            <Image url="@img/utils/Plant.png" />
+            <Image url="@../img/utils/circle_fungi.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8" AnchorPane.rightAnchor="0.0">
+         <image>
+            <Image url="@../img/utils/circle_insect.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="221.0" layoutY="16.0" maxHeight="750.0" maxWidth="1100.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="WAITING ROOM" textFill="#6b5339">
+            <Label fx:id="title" text="WAITING ROOM" textFill="#6b5339">
                <font>
                   <Font name="Algerian" size="48.0" />
                </font>
@@ -47,7 +47,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="75.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="185.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-radius: 15; -fx-background-color: beige;">
+                        <Button mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
                            <graphic>
                               <ImageView fx:id="imgFirstPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -62,17 +62,37 @@
                         </Label>
                      </children>
                      <HBox.margin>
-                        <Insets right="180.0" />
+                        <Insets right="170.0" />
                      </HBox.margin>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="100.0" prefWidth="67.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="185.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: beige; -fx-background-radius: 15;">
+                        <Button mnemonicParsing="false" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
                            <graphic>
                               <ImageView fx:id="imgSecondPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
                         <Label fx:id="nickSecondPlayer" text="Player" textFill="#6b5339">
+                           <font>
+                              <Font name="Arial" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="170.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="67.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="187.0" style="-fx-border-color: #6b5339; -fx-border-radius: 15; -fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fx:id="imgThirdPlayer" fitHeight="200.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Label fx:id="nickThirdPlayer" text="Player" textFill="#6b5339">
                            <font>
                               <Font name="Arial" size="16.0" />
                            </font>

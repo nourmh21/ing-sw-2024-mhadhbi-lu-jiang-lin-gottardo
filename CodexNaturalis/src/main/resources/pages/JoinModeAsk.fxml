@@ -14,38 +14,41 @@
       <Button layoutX="30.0" layoutY="30.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #695138; -fx-border-width: 1;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="5.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.81" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Plant.png" />
+            <Image url="@../img/utils/circle_plant.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="551.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Animal.png" />
+            <Image url="@../img/utils/circle_animal.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="5.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8">
          <image>
-            <Image url="@img/utils/Insect.png" />
+            <Image url="@../img/utils/circle_insect.png" />
          </image>
       </ImageView>
       <HBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="300.0" prefWidth="500.0">
          <children>
-            <Button fx:id="button1" mnemonicParsing="false" onMouseClicked="#askLobbies" prefHeight="230.0" prefWidth="200.0" style="-fx-border-color: #695138; -fx-background-image: url(/img/utils/background.png); -fx-border-width: 1.5;" text="JOIN AN EXISTING WAITING ROOM" textAlignment="CENTER" textFill="#402513" wrapText="true">
+            <Button fx:id="button1" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#askLobbies" prefHeight="240.0" prefWidth="220.0" style="-fx-border-color: #695138; -fx-border-width: 1; -fx-background-color: white;" text="JOIN AN EXISTING WAITING ROOM" textAlignment="CENTER" wrapText="true">
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets right="-0.5" />
                </HBox.margin>
                <font>
-                  <Font name="Candara" size="30.0" />
+                  <Font name="Times New Roman" size="30.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </Button>
-            <Button fx:id="button2" mnemonicParsing="false" onMouseClicked="#switchToLobbyCreation" prefHeight="230.0" prefWidth="200.0" style="-fx-border-color: #695138; -fx-background-image: url(/img/utils/background.png); -fx-border-width: 1.5;" text="CREATE ONE WAITING ROOM" textAlignment="CENTER" textFill="#402513" wrapText="true">
+            <Button fx:id="button2" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#switchToLobbyCreation" prefHeight="240.0" prefWidth="220.0" style="-fx-border-color: #695138; -fx-border-width: 1; -fx-background-color: white;" text="CREATE ONE WAITING ROOM" textAlignment="CENTER" wrapText="true">
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="-0.5" />
                </HBox.margin>
                <font>
-                  <Font name="Candara" size="30.0" />
+                  <Font name="Times New Roman" size="30.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -55,7 +58,7 @@
       </HBox>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="551.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
          <image>
-            <Image url="@img/utils/Fungi.png" />
+            <Image url="@../img/utils/circle_fungi.png" />
          </image>
       </ImageView>
    </children>

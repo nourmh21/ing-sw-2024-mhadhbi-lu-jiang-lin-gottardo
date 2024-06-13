@@ -19,29 +19,29 @@
       <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #695138; -fx-border-width: 1;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8">
          <image>
-            <Image url="@img/utils/Insect.png" />
+            <Image url="@../img/utils/circle_insect.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
          <image>
-            <Image url="@img/utils/Fungi.png" />
+            <Image url="@../img/utils/circle_fungi.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Animal.png" />
+            <Image url="@../img/utils/circle_animal.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.8" AnchorPane.topAnchor="9.3">
          <image>
-            <Image url="@img/utils/Plant.png" />
+            <Image url="@../img/utils/circle_plant.png" />
          </image>
       </ImageView>
         <VBox alignment="CENTER" fillWidth="false" layoutX="-14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" depthTest="DISABLE" prefHeight="63.0" prefWidth="586.0" text="Choose the connection type:" textAlignment="CENTER" textFill="#695138" textOverrun="CLIP">
+                <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" depthTest="DISABLE" prefHeight="63.0" prefWidth="586.0" text="Choose the connection type:" textAlignment="CENTER" textFill="#695138" textOverrun="CLIP">
                     <font>
-                        <Font name="Algerian" size="40.0" />
+                        <Font size="40.0" />
                     </font>
                     <opaqueInsets>
                         <Insets />

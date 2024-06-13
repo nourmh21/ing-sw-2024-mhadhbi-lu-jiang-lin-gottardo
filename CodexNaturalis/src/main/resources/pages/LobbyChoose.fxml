@@ -17,19 +17,19 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ForLobbyChoose">
     <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #695138; -fx-border-width: 1;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.leftAnchor="6.8">
-        <Image url="@img/utils/Insect.png" />
+        <Image url="@../img/utils/circle_insect.png" />
     </ImageView>
     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.3" AnchorPane.rightAnchor="6.8">
-        <Image url="@img/utils/Fungi.png" />
+        <Image url="@../img/utils/circle_fungi.png" />
     </ImageView>
     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="6.8" AnchorPane.topAnchor="9.3">
-        <Image url="@img/utils/Animal.png" />
+        <Image url="@../img/utils/circle_animal.png" />
     </ImageView>
     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.8" AnchorPane.topAnchor="9.3">
-        <Image url="@img/utils/Plant.png" />
+        <Image url="@../img/utils/circle_plant.png" />
     </ImageView>
     <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Label alignment="TOP_CENTER" prefHeight="58.0" text="WAITING ROOMS" textFill="#6b5339">
+        <Label fx:id="title" alignment="TOP_CENTER" prefHeight="58.0" text="WAITING ROOMS" textFill="#6b5339">
             <font>
                 <Font name="Algerian" size="48.0" />
             </font>
@@ -76,7 +76,7 @@
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@img/utils/refresh.png" />
+                                        <Image url="@../img/utils/refresh.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
