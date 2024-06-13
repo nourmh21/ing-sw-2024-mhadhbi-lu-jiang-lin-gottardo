@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.socket;
 
-import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.message.general.HeartbeatMessage;
 
 import java.io.IOException;
@@ -23,16 +22,15 @@ public class HeartbeatSender extends Thread{
 
     @Override
     public void run() {
-        while (!this.isInterrupted()){
+        while (!this.isInterrupted() && !socket.isClosed()){
             if ((System.currentTimeMillis() - lastSendTime) >= 5*1000){
                 try {
                     try {
                         oos.writeObject(new HeartbeatMessage());
                         lastSendTime = System.currentTimeMillis();
                     }catch (SocketException e){
-                        ClientController.getInstance().getView().showConnectionError();
-                        this.interrupt();
                         socket.close();
+                        this.interrupt();
                     }
                 }catch (IOException ignored){}
             }

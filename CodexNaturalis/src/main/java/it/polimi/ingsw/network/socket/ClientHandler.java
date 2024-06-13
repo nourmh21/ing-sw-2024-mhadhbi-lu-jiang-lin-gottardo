@@ -1,13 +1,12 @@
 package it.polimi.ingsw.network.socket;
 
 
-import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.message.Message;
-import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.enums.MessageType;
 import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.general.*;
+import it.polimi.ingsw.network.Client;
 
 import java.io.*;
 import java.net.Socket;
@@ -106,8 +105,11 @@ public class ClientHandler extends Thread{
                 break;
             case DRAW_CARD:
                 DrawCardMessage drawCardMessage = (DrawCardMessage) message;
-                LocationType location = drawCardMessage.getLocation();
                 GameController.getInstance().drawCard(thisClient, drawCardMessage.getLocation(), drawCardMessage.getIdCard());
+                break;
+            case CHAT:
+                GameController.getInstance().chatManage((ChatMessage) message);
+                break;
             default:
                 break;
         }
