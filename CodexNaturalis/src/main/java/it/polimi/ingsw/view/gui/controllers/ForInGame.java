@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.message.enums.LocationType;
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
@@ -22,23 +23,6 @@ import java.util.List;
 
 
 public class ForInGame {
-    @FXML
-    private ScrollPane playerBoard;
-
-    @FXML
-    private ImageView commonGoal1;
-
-    @FXML
-    private ImageView commonGoal2;
-
-    @FXML
-    private ImageView goldCard1;
-
-    @FXML
-    private ImageView goldCard2;
-
-    @FXML
-    private ImageView goldDeck;
 
     @FXML
     private ImageView im_p1;
@@ -53,40 +37,37 @@ public class ForInGame {
     private ImageView im_p4;
 
     @FXML
-    private Button playerFour;
-
-    @FXML
     private Button playerOne;
-
-    @FXML
-    private Button playerThree;
 
     @FXML
     private Button playerTwo;
 
     @FXML
-    private ImageView resourceCard1;
+    private Button playerThree;
 
     @FXML
-    private ImageView resourceCard2;
-
-    @FXML
-    private ImageView resourceDeck;
-
-    @FXML
-    private Label nicknameFour;
+    private Button playerFour;
 
     @FXML
     private Label nicknameOne;
 
     @FXML
-    private Label nicknameThree;
-
-    @FXML
     private Label nicknameTwo;
 
     @FXML
-    private GridPane desk;
+    private Label nicknameThree;
+
+    @FXML
+    private Label nicknameFour;
+
+    @FXML
+    private ImageView personalGoal;
+
+    @FXML
+    private ScrollPane playerBoard;
+
+    @FXML
+    private HBox handCards;
 
     @FXML
     private ImageView handCard1;
@@ -98,21 +79,13 @@ public class ForInGame {
     private ImageView handCard3;
 
     @FXML
-    private HBox handCards;
-
-
-    @FXML
-    private ImageView personalGoal;
-
+    private Button hand1;
 
     @FXML
-    private Label firstScore;
+    private Button hand2;
 
     @FXML
-    private Label fourthName;
-
-    @FXML
-    private Label fourthScore;
+    private Button hand3;
 
     @FXML
     private Label name1;
@@ -127,11 +100,43 @@ public class ForInGame {
     private Label name4;
 
     @FXML
+    private Label firstScore;
+
+    @FXML
     private Label secondScore;
 
     @FXML
     private Label thirdScore;
 
+    @FXML
+    private Label fourthScore;
+
+    @FXML
+    private GridPane desk;
+
+    @FXML
+    private ImageView commonGoal1;
+
+    @FXML
+    private ImageView commonGoal2;
+
+    @FXML
+    private ImageView resourceCard1;
+
+    @FXML
+    private ImageView resourceCard2;
+
+    @FXML
+    private ImageView resourceDeck;
+
+    @FXML
+    private ImageView goldCard1;
+
+    @FXML
+    private ImageView goldCard2;
+
+    @FXML
+    private ImageView goldDeck;
 
     @FXML
     private Button rDeck;
@@ -141,7 +146,6 @@ public class ForInGame {
 
     @FXML
     private Button resourceC2;
-
 
     @FXML
     private Button gDeck;
@@ -153,20 +157,19 @@ public class ForInGame {
     private Button goldC2;
 
     @FXML
-    private Button hand1;
+    private TextArea chatBox;
 
     @FXML
-    private Button hand2;
-
-    @FXML
-    private Button hand3;
+    private ChoiceBox<String> chatOption;
 
     @FXML
     private TextField messageToSend;
 
     @FXML
-    private ChoiceBox<?> sendMessageTo;
+    private Button sendButton;
 
+    @FXML
+    private Pane chatCover;
 
     private boolean resourceC1Selected = false;
 
@@ -200,16 +203,8 @@ public class ForInGame {
     ForPlayerBoard boardPlayer4Controller;
     ForPlayerBoard myBoardController;
     private String current = (((GUIApplication)ClientController.getInstance().getView()).getMyNickname());
-    String buttonBorderStyle = "-fx-border-color: #D2D2D2; -fx-border-radius: 10; -fx-background-radius: 10";
-    String buttonFirstBorderStyle = "-fx-border-color: #505050; -fx-border-radius: 10; -fx-background-radius: 10";
-
-
-    public void setDeskBackground() {
-        Image background = new Image(getClass().getResourceAsStream("/img/utils/desk.jpg"));
-        BackgroundImage backgroundImage = new BackgroundImage(
-                background, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-        desk.setBackground(new Background(backgroundImage));
-    }
+    String buttonBorderStyle = "-fx-border-color: white; -fx-border-radius: 7; -fx-border-width: 2; -fx-padding: 0; -fx-background-color: transparent";
+    String buttonFirstBorderStyle = "-fx-border-color: #2d2d2a; -fx-border-radius: 7; -fx-border-width: 2; -fx-padding: 0; -fx-background-color: transparent";
 
 
     /**
@@ -325,7 +320,7 @@ public class ForInGame {
             case GREEN:
                 return greenPlayerIcon;
             default:
-                return (new Image(getClass().getResourceAsStream("/img/utils/playersIcon.png")));
+                return (new Image(getClass().getResourceAsStream("/img/playerIcon/basic.png")));
         }
     }
 
@@ -336,7 +331,7 @@ public class ForInGame {
      */
     private void initBoard(int i) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PlayerBoard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/PlayerBoard.fxml"));
             if (i == 1) {
                 boardPlayer1 = loader.load();
                 boardPlayer1Controller = (ForPlayerBoard) loader.getController();
@@ -350,8 +345,7 @@ public class ForInGame {
                 boardPlayer4 = loader.load();
                 boardPlayer4Controller = (ForPlayerBoard) loader.getController();
             }
-        } catch (IOException e) {
-        }
+        } catch (IOException ignored) {}
     }
 
 
@@ -938,6 +932,45 @@ public class ForInGame {
 
     public ForPlayerBoard getMyBoardController(){
         return myBoardController;
+    }
+
+
+    public void insertNewChat(ChatMessage message){
+        if (message.isPublic())
+            chatBox.setText(chatBox.getText() + "[public]  " + message.getSender() + ": " + message.getContent() + "\n");
+        else
+            chatBox.setText(chatBox.getText() + "[private] " + message.getSender() + ": " + message.getContent() + "\n");
+        chatBox.requestFocus();
+    }
+
+
+    public void initializeChat(List<String> players){
+        chatOption.getItems().add("All players");
+        for (String name: players) {
+            chatOption.getItems().add(name);
+        }
+        chatCover.setVisible(false);
+        chatBox.setText("");
+        sendButton.setOnMouseClicked(event -> {
+            if (chatOption.getValue() != null && !messageToSend.getText().isEmpty()){
+                ChatMessage message;
+                if (chatOption.getValue().equals("All players"))
+                     message = new ChatMessage((((GUIApplication)ClientController.getInstance().getView()).getMyNickname()),
+                            messageToSend.getText());
+                else
+                    message = new ChatMessage((((GUIApplication)ClientController.getInstance().getView()).getMyNickname()),
+                            chatOption.getValue(),
+                            messageToSend.getText());
+                ClientController.getInstance().getClientAction().chat(message);
+                insertNewChat(message);
+                messageToSend.setText("");
+            }else {
+                if (chatOption.getValue() == null)
+                    chatOption.requestFocus();
+                if (messageToSend.getText().isEmpty())
+                    messageToSend.requestFocus();
+            }
+        });
     }
 
 }

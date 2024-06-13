@@ -2,23 +2,28 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.view.gui.GUIApplication;
-import it.polimi.ingsw.view.gui.enums.SceneType;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ForLobbyChoose {
+
+    @FXML
+    private Label title;
 
     @FXML
     private TextField idLobby;
@@ -41,13 +46,19 @@ public class ForLobbyChoose {
     private Button toHome;
 
     @FXML
+    void initialize(){
+        Font algerian48 = Font.loadFont(getClass().getResourceAsStream("/font/Alger.ttf"),48);
+        title.setFont(algerian48);
+    }
+
+    @FXML
     void switchToCreateLobby(MouseEvent event) {
-        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(SceneType.LOBBY_CREATION);
+        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(PageType.LOBBY_CREATION);
     }
 
     @FXML
     void switchToHome(MouseEvent event) {
-        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(SceneType.HOME);
+        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(PageType.HOME);
     }
 
     @FXML

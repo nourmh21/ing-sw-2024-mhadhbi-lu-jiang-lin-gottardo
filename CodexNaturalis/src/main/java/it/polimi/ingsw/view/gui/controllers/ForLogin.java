@@ -2,16 +2,15 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.view.gui.GUIApplication;
-import it.polimi.ingsw.view.gui.enums.SceneType;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -19,7 +18,8 @@ public class ForLogin {
     String nickname;
     String pwd;
 
-    private AnchorPane root;
+    @FXML
+    private Label title;
 
     @FXML
     private Text nicknameError;
@@ -36,8 +36,12 @@ public class ForLogin {
     @FXML
     private TextField nicknameField;
 
-    private Stage stage;
-    private Scene scene;
+
+    @FXML
+    void initialize(){
+        Font algerian48 = Font.loadFont(getClass().getResourceAsStream("/font/Alger.ttf"),48);
+        title.setFont(algerian48);
+    }
 
 
     @FXML
@@ -68,7 +72,7 @@ public class ForLogin {
 
     @FXML
     void switchToRegister(ActionEvent event) throws IOException {
-        ((GUIApplication)ClientController.getInstance().getView()).switchPage(SceneType.REGISTRATION);
+        ((GUIApplication)ClientController.getInstance().getView()).switchPage(PageType.REGISTRATION);
     }
 
 

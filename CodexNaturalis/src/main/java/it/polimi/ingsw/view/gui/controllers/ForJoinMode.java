@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.view.gui.GUIApplication;
-import it.polimi.ingsw.view.gui.enums.SceneType;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -26,7 +26,7 @@ public class ForJoinMode {
 
     @FXML
     void switchToLobbyCreation(MouseEvent event) {
-        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(SceneType.LOBBY_CREATION);
+        ((GUIApplication) (ClientController.getInstance().getView())).switchPage(PageType.LOBBY_CREATION);
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 

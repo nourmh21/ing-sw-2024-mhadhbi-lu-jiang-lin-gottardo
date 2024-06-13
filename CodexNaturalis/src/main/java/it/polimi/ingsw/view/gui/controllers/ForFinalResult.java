@@ -4,18 +4,22 @@ import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.view.gui.GUIApplication;
-import it.polimi.ingsw.view.gui.enums.SceneType;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class ForFinalResult {
+
+    @FXML
+    private Label title;
 
     @FXML
     private Label goalScore1;
@@ -64,6 +68,13 @@ public class ForFinalResult {
 
     @FXML
     private Pane winner4;
+
+
+    @FXML
+    void initialize(){
+        Font algerian48 = Font.loadFont(getClass().getResourceAsStream("/font/Alger.ttf"),48);
+        title.setFont(algerian48);
+    }
 
     /**
      * show final results of each player based on the scores in ascending order
@@ -119,7 +130,7 @@ public class ForFinalResult {
     @FXML
     void goToHomePage(MouseEvent event) {
         GUIApplication gui = ((GUIApplication)ClientController.getInstance().getView());
-        gui.switchPage(SceneType.HOME);
+        gui.switchPage(PageType.HOME);
         gui.removeAllLastGameInfo();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.close();

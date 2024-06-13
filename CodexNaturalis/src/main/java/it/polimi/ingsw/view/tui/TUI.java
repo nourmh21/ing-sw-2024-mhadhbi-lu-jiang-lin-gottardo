@@ -14,26 +14,19 @@ import it.polimi.ingsw.view.UserInterface;
 import java.io.PrintStream;
 import java.util.*;
 
-public class TUI extends Thread implements UserInterface{
+public class TUI implements UserInterface{
     private final Scanner in;
     private final PrintStream out;
-
     private String myNickname;
     private String tryNickname;
-    private Optional<ImmutableLobby> lobby;
-    private Optional<ImmutableGame>  game;
-    private Optional<List<ImmutablePlayer>> players;
-
-    private Optional<List<Integer>> handCards;
-
-    private Optional<Integer[]> possiblePersonalGoals;
-
-    private Optional<ImmutablePlayer> me;
-
-    private Optional<Integer> myPersonalGoal;
-
-    private Optional<HashMap<ChatMessage, Boolean>> chatMessages;
-
+    private ImmutableLobby lobby;
+    private ImmutableGame game;
+    private List<ImmutablePlayer> players;
+    private List<Integer> handCards;
+    private Integer[] possiblePersonalGoals;
+    private ImmutablePlayer me;
+    private Integer myPersonalGoal;
+    private HashMap<ChatMessage, Boolean> chatMessages;
 
 
     public TUI() {
@@ -41,21 +34,14 @@ public class TUI extends Thread implements UserInterface{
         out = new PrintStream(System.out, true);
         myNickname = null;
         tryNickname = null;
-        lobby = Optional.empty();
-        game = Optional.empty();
-        players = Optional.empty();
-        handCards = Optional.empty();
-        me = Optional.empty();
-        possiblePersonalGoals = Optional.empty();
-        myPersonalGoal = Optional.empty();
-        chatMessages = Optional.empty();
-    }
-
-    @Override
-    public void run() {
-        askServerIP();
-        while (!this.isInterrupted()){}
-
+        lobby = null;
+        game = null;
+        players = null;
+        handCards = null;
+        me = null;
+        possiblePersonalGoals = null;
+        myPersonalGoal = null;
+        chatMessages = null;
     }
 
 
@@ -97,20 +83,22 @@ public class TUI extends Thread implements UserInterface{
     }
 
     @Override
-    public void connectionSuccess(){
+    public synchronized void connectionSuccess(){
         out.println();
         out.println("[Connection successful]");
+        ClientController.getInstance().setConnected();
         askAccessMode();
     }
 
-
-    public void askAccessMode(){
+    private void askAccessMode(){
         String choice;
         out.println();
         out.println("ACCESS MODE ");
         out.println("1- Login");
         out.println("2- Registration");
         choice = in.nextLine();
+        if (!ClientController.getInstance().isConnected())
+            return;
         if(choice.equals("1")){
             login();
         }else if(choice.equals("2")){
@@ -121,8 +109,7 @@ public class TUI extends Thread implements UserInterface{
         }
     }
 
-
-    public void login(){
+    private void login(){
         out.println();
         String password;
         out.println("LOGIN");
@@ -130,7 +117,6 @@ public class TUI extends Thread implements UserInterface{
         tryNickname = nicknameRequest();
         out.print("Please enter password: ");
         password = pwdRequest();
-
         out.println("1- login");
         out.println("2- go back");
         String choice = in.nextLine();
@@ -146,7 +132,7 @@ public class TUI extends Thread implements UserInterface{
     }
 
 
-    public void registration() {
+    private void registration() {
         out.println();
         String pwd1, pwd2;
         out.println("REGISTRATION");
@@ -200,7 +186,7 @@ public class TUI extends Thread implements UserInterface{
 
 
     @Override
-    public void loginSuccess(){
+    public synchronized void loginSuccess(){
         out.println();
         out.println("[Login Success]");
         myNickname = tryNickname;
@@ -209,7 +195,7 @@ public class TUI extends Thread implements UserInterface{
     }
 
     @Override
-    public void loginFailed(int type){
+     public synchronized void loginFailed(int type){
         out.println();
         if (type == 1){
             out.println("[Credential errors]");
@@ -222,7 +208,7 @@ public class TUI extends Thread implements UserInterface{
 
 
     @Override
-    public void registrationFailed(){
+    public synchronized void registrationFailed(){
         out.println("[Nickname already exists]");
         registration();
     }
@@ -253,6 +239,8 @@ public class TUI extends Thread implements UserInterface{
         out.println("1- Play a match");
         out.println("2- Exit from game");
         String choice = in.nextLine();
+        if (!ClientController.getInstance().isConnected())
+            return;
         if (choice.equals("1"))
             playGame();
         else if (choice.equals("2"))
@@ -271,6 +259,8 @@ public class TUI extends Thread implements UserInterface{
         out.println("1- JOIN an existing waiting room");
         out.println("2- CREATE one waiting room yourself");
         String choice = in.nextLine();
+        if (!ClientController.getInstance().isConnected())
+            return;
         if (choice.equals("1")){
             ClientController.getInstance().getClientAction().reqLobbies();
         }else if (choice.equals("2")) {
@@ -281,8 +271,9 @@ public class TUI extends Thread implements UserInterface{
         }
     }
 
+
     @Override
-    public void setLobbyList(List<Integer[]> lobbyList) {
+    public synchronized void setLobbyList(List<Integer[]> lobbyList) {
         out.println();
         out.println("EXISTING WAITING ROOMS:");
         if (lobbyList.isEmpty())
@@ -311,15 +302,16 @@ public class TUI extends Thread implements UserInterface{
         }
     }
 
+
     @Override
-    public void lobbyChooseFailed() {
+    public synchronized void lobbyChooseFailed() {
         out.println();
         out.println("[The room you selected is already full, probably someone joined before you]");
     }
 
 
     @Override
-    public void askNumOfPlayer(){
+    public synchronized void askNumOfPlayer(){
         out.println();
         boolean isValid = false;
         do {
@@ -346,9 +338,9 @@ public class TUI extends Thread implements UserInterface{
 
 
     @Override
-    public void setLobbyStatus(ImmutableLobby lobby){
+    public synchronized void setLobbyStatus(ImmutableLobby lobby){
         out.println();
-        this.lobby = Optional.of(lobby);
+        this.lobby = lobby;
         showLobbyStatus();
         if (lobby.getPlayers().size() == lobby.getNumOfPlayer())
             out.println("[All players gathered, game is preparing...]");
@@ -359,67 +351,58 @@ public class TUI extends Thread implements UserInterface{
 
 
     private void showLobbyStatus(){
-        if (lobby.isPresent()){
-            out.println("WAITING ROOM ["+ lobby.get().getNumOfPlayer()+"]");
-            for (String player: lobby.get().getPlayers())
-                out.println(player);
-        }else{
-            out.println("You're not in a waiting room");
-        }
+        if (lobby == null)
+            return;
+        out.println("WAITING ROOM ["+ lobby.getNumOfPlayer()+"]");
+        for (String player: lobby.getPlayers())
+            out.println(player);
     }
 
 
-    //this will call showInitGameStatus() in specific condition
     @Override
-    public void setPlayerStatus(ImmutablePlayer player){
+    public synchronized void setPlayerStatus(ImmutablePlayer player){
+        if (players == null)
+            players = new ArrayList<>();
 
-        if (players.isEmpty())
-            players = Optional.of(new ArrayList<>());
-        //I doubt the correctness of this method
-        if (players.get().size() < game.get().getNumOfPlayer()){
+        if (players.size() < game.getNumOfPlayer()){
             addPlayerStatus(player);
+            if (player.getNickname().equals(myNickname)){
+                showInitGameStatus();
+            }
         }else {
             updatePlayerStatus(player);
         }
-
-
-        if (player.getNickname().equals(myNickname) &&
-                game.get().getGameState() == GameState.SETUP_PHASE_1 && me.get().getBoardCards().isEmpty()){
-            showInitGameStatus();
-        }
-
-
 
     }
 
 
     private void addPlayerStatus(ImmutablePlayer player){
         if (player.getNickname().equals(myNickname))
-            me = Optional.of(player);
-        players.get().add(player);
+            me = player;
+        players.add(player);
     }
 
 
     private void updatePlayerStatus(ImmutablePlayer newStatus){
         ImmutablePlayer old = null;
-        for (ImmutablePlayer oldStatus: players.get()) {
+        for (ImmutablePlayer oldStatus: players) {
             if (oldStatus.getNickname().equals(newStatus.getNickname())){
                 old = oldStatus;
                 break;
             }
         }
-        players.get().set(players.get().indexOf(old),newStatus);
+        players.set(players.indexOf(old),newStatus);
         if (newStatus.getNickname().equals(myNickname)){
-            me = Optional.of(newStatus);
+            me = newStatus;
         }
     }
 
 
     public void showPlayerStatus(ImmutablePlayer player){
-        out.println("player: " + player.getNickname());
-        out.println("initial card: " + player.getInitialCard());
-        out.println("kingdoms of the back side of hand cards: " + player.getHandCardKingdoms());
-        out.print("board: ");
+        out.println();
+        out.println("Player: " + player.getNickname());
+        out.println("Kingdoms of the back side of hand cards: " + player.getHandCardKingdoms());
+        out.print("Board: ");
         if (!player.getBoardCards().isEmpty()){
             for (int i = 0; i < player.getBoardCards().size(); i++) {
                 out.print(player.getBoardCards().get(i) + "[" + player.getX().get(i) + ", " + player.getY().get(i) + "]");
@@ -432,48 +415,41 @@ public class TUI extends Thread implements UserInterface{
 
 
     public void showScoreBoard(){
-        if (players.isPresent()){
-            out.println();
-            out.println("SCORE BOARD:");
-            for (ImmutablePlayer player:players.get()) {
-                out.println(player.getNickname()+"["+player.getColor()+"]: "+ player.getPoint());
-            }
+        if (players == null)
+            return;
+        out.println();
+        out.println("SCORE BOARD:");
+        for (ImmutablePlayer player:players) {
+            out.println(player.getNickname()+"["+player.getColor()+"]: "+ player.getPoint());
         }
     }
 
 
     public void showInitGameStatus(){
-        if (game.isPresent()){
-            out.println();
-            out.println("[GAME SETUP]");
-            out.println();
-            //showScoreBoard();
-            showDeskStatus();
-            askInitCardPlace();
-        }
+        if (game == null)
+            return;
+        out.println();
+        out.println("[GAME SETUP]");
+        out.println();
+        //showScoreBoard();
+        showDeskStatus();
+        askInitCardPlace();
     }
 
     @Override
-    public void setGameStatus(ImmutableGame newStatus){
-        /*used for CmdLaunchTest:
-        out.println();
-        out.println(newStatus);
-         */
+    public synchronized void setGameStatus(ImmutableGame newStatus){
         //the oldStatus state
         ImmutableGame oldStatus = null;
 
-        if (chatMessages.isEmpty())
-            chatMessages = Optional.of(new HashMap<>());
+        if (chatMessages == null)
+            chatMessages = new LinkedHashMap<>();
 
-        if (game.isPresent()) {
-            oldStatus = game.get();
+        if (game != null) {
+            oldStatus = game;
         }
 
-
         //update to the new state
-        game = Optional.of(newStatus);
-
-
+        game = newStatus;
 
         //realize all players are added to current match
         if (oldStatus != null){
@@ -483,14 +459,12 @@ public class TUI extends Thread implements UserInterface{
                 showCommonGoals();
             }
 
-
             //realize that game is started
             if (oldStatus.getCurrentPlayer() == null && newStatus.getCurrentPlayer() != null){
                 out.println();
                 out.println("[GAME START]");
                 showScoreBoard();
-                for (ImmutablePlayer player: players.get()) {
-                    out.println();
+                for (ImmutablePlayer player: players) {
                     showPlayerStatus(player);
                 }
                 out.println();
@@ -498,7 +472,9 @@ public class TUI extends Thread implements UserInterface{
                 out.println();
                 out.println("[" + newStatus.getCurrentPlayer() + " is playing...]");
                 if (newStatus.getCurrentPlayer().equals(myNickname)){
-                    askPlayHandCard();
+                    askAction();
+                }else {
+                    showChatService();
                 }
             }
 
@@ -517,7 +493,9 @@ public class TUI extends Thread implements UserInterface{
                 out.println("[" + newStatus.getCurrentPlayer() + " is playing...]");
                 //realize it is my turn to play a card
                 if (newStatus.getCurrentPlayer() != null && newStatus.getCurrentPlayer().equals(myNickname)){
-                    askPlayHandCard();
+                    askAction();
+                }else {
+                    showChatService();
                 }
             }
 
@@ -554,32 +532,43 @@ public class TUI extends Thread implements UserInterface{
     }
 
     private void removeLastGameInfo(){
-        game = Optional.empty();
-        lobby = Optional.empty();
-        players = Optional.empty();
-        handCards = Optional.empty();
-        me = Optional.empty();
-        myPersonalGoal = Optional.empty();
-        chatMessages = Optional.empty();
+        game = null;
+        lobby = null;
+        players = null;
+        handCards = null;
+        me = null;
+        myPersonalGoal = null;
+        chatMessages = null;
     }
 
 
     private void showCommonGoals(){
         out.println();
-        out.println("The two common goals of this game are: " + game.get().getCommonGoals());
+        out.println("The two common goals: " + game.getCommonGoals());
     }
+
+
+    private void showPersonalGoal(){
+        if (myPersonalGoal == null)
+            return;
+        out.println();
+        out.println("Your personal goal: " + myPersonalGoal);
+    }
+
 
     private void showWaitingComment(){
         out.println();
         out.println("[Waiting all players take that action...]");
     }
 
+
     private void askInitCardPlace(){
         out.println();
-        out.println("Your initial card: " + me.get().getInitialCard());
-        askInitialCardSide(me.get().getInitialCard());
+        out.println("Your initial card: " + me.getInitialCard());
+        askInitialCardSide(me.getInitialCard());
         showWaitingComment();
     }
+
 
     private void askInitialCardSide(Integer id){
         askSide();
@@ -594,6 +583,7 @@ public class TUI extends Thread implements UserInterface{
         }
     }
 
+
     private void askSide(){
         out.println("Which side of card do you want to play");
         out.println("1- front");
@@ -602,24 +592,24 @@ public class TUI extends Thread implements UserInterface{
 
 
     @Override
-    public void setPossiblePersonalGoals(Integer[] possiblePersonalGoals) {
-        this.possiblePersonalGoals = Optional.of(possiblePersonalGoals);
+    public synchronized void setPossiblePersonalGoals(Integer[] possiblePersonalGoals) {
+        this.possiblePersonalGoals = possiblePersonalGoals;
         askPersonalGoalChoose();
     }
 
     private void askPersonalGoalChoose(){
         out.println();
         out.println("Choose your personal goal: ");
-        out.println("1- "+possiblePersonalGoals.get()[0]);
-        out.println("2- "+possiblePersonalGoals.get()[1]);
+        out.println("1- "+possiblePersonalGoals[0]);
+        out.println("2- "+possiblePersonalGoals[1]);
         String choice = in.nextLine();
         if (choice.equals("1")){
-            ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals.get()[0]);
-            myPersonalGoal = Optional.of(possiblePersonalGoals.get()[0]);
+            ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals[0]);
+            myPersonalGoal = possiblePersonalGoals[0];
             showWaitingComment();
         }else if (choice.equals("2")){
-            ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals.get()[1]);
-            myPersonalGoal = Optional.of(possiblePersonalGoals.get()[1]);
+            ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals[1]);
+            myPersonalGoal = possiblePersonalGoals[1];
             showWaitingComment();
         }else {
             invalidChoice();
@@ -628,12 +618,12 @@ public class TUI extends Thread implements UserInterface{
     }
 
     @Override
-    public void setHandCards(List<Integer> newHandCardsStatus) {
-        if (handCards.isEmpty()){
-            handCards = Optional.of(newHandCardsStatus);
+    public synchronized void setHandCards(List<Integer> newHandCardsStatus) {
+        if (handCards == null){
+            handCards = newHandCardsStatus;
             showHandCards();
         }else {
-            handCards = Optional.of(newHandCardsStatus);
+            handCards = newHandCardsStatus;
         }
 
     }
@@ -645,38 +635,43 @@ public class TUI extends Thread implements UserInterface{
 
 
     private void askPlayHandCard(){
-        if (handCards.isPresent()) {
-            showHandCards();
-            out.println("Which one do you want to play?");
-            for (int i = 0; i < handCards.get().size(); i++) {
-                if (handCards.get().get(i) != null)
-                    out.println((i+1) + "- " + handCards.get().get(i));
-            }
+        if (handCards == null)
+            return;
 
-            try{
-                int choice = Integer.parseInt(in.nextLine());
-                if (choice > 0 && choice <= handCards.get().size()){
-                    for (int i = 0; i < handCards.get().size(); i++) {
-                        if (choice == i+1){
-                            askPosition(handCards.get().get(i));
-                            break;
-                        }
+        showHandCards();
+        out.println("Which one do you want to play?");
+        for (int i = 0; i < handCards.size(); i++) {
+            if (handCards.get(i) != null)
+                out.println((i+1) + "- " + handCards.get(i));
+        }
+
+        try{
+            int choice = Integer.parseInt(in.nextLine());
+            if (!ClientController.getInstance().isConnected())
+                return;
+            if (choice > 0 && choice <= handCards.size()){
+                for (int i = 0; i < handCards.size(); i++) {
+                    if (choice == i+1){
+                        askPosition(handCards.get(i));
+                        break;
                     }
-                } else {
-                    invalidChoice();
-                    askPlayHandCard();
                 }
-            }catch (NumberFormatException e){
+            } else {
                 invalidChoice();
                 askPlayHandCard();
             }
-
+        }catch (NumberFormatException e){
+            invalidChoice();
+            askPlayHandCard();
         }
+
     }
 
     private void askCardSide(Integer id, int[] position){
         askSide();
         String choice = in.nextLine();
+        if (!ClientController.getInstance().isConnected())
+            return;
         if (choice.equals("1"))
             ClientController.getInstance().getClientAction().playCard(id,false,position);
         else if(choice.equals("2"))
@@ -689,22 +684,23 @@ public class TUI extends Thread implements UserInterface{
 
 
     @Override
-    public void playCardFailed(){
+    public synchronized void playCardFailed(){
         out.println("[Action failed: gold card's condition not fulfilled]");
         askPlayHandCard();
     }
 
 
     @Override
-    public void drawCardFailed(){
+    public synchronized void drawCardFailed(){
         out.println();
         out.println("[Action failed: invalid card id]");
         askDrawCard();
     }
 
+
     private void askPosition(Integer idCard){
         //position that can be chosen
-        List<int[]> admittedPositions = me.get().getPermissiblePosition();
+        List<int[]> admittedPositions = me.getPermissiblePosition();
 
         //ask which one
         out.println("Which position do you want to place?");
@@ -716,6 +712,8 @@ public class TUI extends Thread implements UserInterface{
 
         try {
             int choice = Integer.parseInt(in.nextLine());
+            if (!ClientController.getInstance().isConnected())
+                return;
             //analyse client choose
             if (choice > 0 && choice <= admittedPositions.size()+1){
                 if (choice == admittedPositions.size()+1){
@@ -742,62 +740,59 @@ public class TUI extends Thread implements UserInterface{
     private List<String> showDeskStatus(){
         List<String> validChoices = new ArrayList<>();
         out.println("DESK: ");
-        if (game.isPresent()){
-            if (game.get().getDisplayedRCards() != null){
-                if (game.get().getDisplayedRCards().get(0) != null){
-                    out.println("1- card: "+ game.get().getDisplayedRCards().get(0));
-                    validChoices.add("1");
-                }else {
-                    out.println("1- empty");
-                }
-
-                if (game.get().getDisplayedRCards().get(1) != null){
-                    out.println("2- card: "+ game.get().getDisplayedRCards().get(1));
-                    validChoices.add("2");
-                }else {
-                    out.println("2- empty");
-
-                }
-            } else {
+        if (game.getDisplayedRCards() != null){
+            if (game.getDisplayedRCards().get(0) != null){
+                out.println("1- card: "+ game.getDisplayedRCards().get(0));
+                validChoices.add("1");
+            }else {
                 out.println("1- empty");
+            }
+
+            if (game.getDisplayedRCards().get(1) != null){
+                out.println("2- card: "+ game.getDisplayedRCards().get(1));
+                validChoices.add("2");
+            }else {
                 out.println("2- empty");
+
             }
+        } else {
+            out.println("1- empty");
+            out.println("2- empty");
+        }
 
-            if (game.get().getDisplayedGCards() != null){
-                if (game.get().getDisplayedGCards().get(0) != null){
-                    out.println("3- card: "+ game.get().getDisplayedGCards().get(0));
-                    validChoices.add("3");
-                }else {
-                    out.println("3- empty");
-
-                }
-
-                if (game.get().getDisplayedGCards().get(1) != null){
-                    out.println("4- card: "+ game.get().getDisplayedGCards().get(1));
-                    validChoices.add("4");
-                }else {
-                    out.println("4- empty");
-
-                }
-            } else {
+        if (game.getDisplayedGCards() != null){
+            if (game.getDisplayedGCards().get(0) != null){
+                out.println("3- card: "+ game.getDisplayedGCards().get(0));
+                validChoices.add("3");
+            }else {
                 out.println("3- empty");
+
+            }
+
+            if (game.getDisplayedGCards().get(1) != null){
+                out.println("4- card: "+ game.getDisplayedGCards().get(1));
+                validChoices.add("4");
+            }else {
                 out.println("4- empty");
-            }
 
-            if (game.get().getFirstRCardKingdom() != null){
-                out.println("5- resource card deck: the first card kingdom is "+game.get().getFirstRCardKingdom());
-                validChoices.add("5");
-            }else {
-                out.println("5- empty resource card deck");
             }
+        } else {
+            out.println("3- empty");
+            out.println("4- empty");
+        }
 
-            if (game.get().getFirstGCardKingdom() != null){
-                out.println("6- gold card deck: the first card kingdom is "+game.get().getFirstGCardKingdom());
-                validChoices.add("6");
-            }else {
-                out.println("6- empty gold card deck");
-            }
+        if (game.getFirstRCardKingdom() != null){
+            out.println("5- resource card deck: the first card kingdom is "+game.getFirstRCardKingdom());
+            validChoices.add("5");
+        }else {
+            out.println("5- empty resource card deck");
+        }
 
+        if (game.getFirstGCardKingdom() != null){
+            out.println("6- gold card deck: the first card kingdom is "+game.getFirstGCardKingdom());
+            validChoices.add("6");
+        }else {
+            out.println("6- empty gold card deck");
         }
         return validChoices;
     }
@@ -809,22 +804,24 @@ public class TUI extends Thread implements UserInterface{
         List<String> validChoices = showDeskStatus();
         String choice = in.nextLine();
         if (validChoices.contains(choice)){
+            if (!ClientController.getInstance().isConnected())
+                return;
             switch (choice){
                 case "1":
                     ClientController.getInstance().getClientAction().drawCard(
-                            LocationType.DISPLAYED_RESOURCE_LIST,game.get().getDisplayedRCards().get(0));
+                            LocationType.DISPLAYED_RESOURCE_LIST,game.getDisplayedRCards().get(0));
                     break;
                 case "2":
                     ClientController.getInstance().getClientAction().drawCard(
-                            LocationType.DISPLAYED_RESOURCE_LIST,game.get().getDisplayedRCards().get(1));
+                            LocationType.DISPLAYED_RESOURCE_LIST,game.getDisplayedRCards().get(1));
                     break;
                 case "3":
                     ClientController.getInstance().getClientAction().drawCard(
-                            LocationType.DISPLAYED_GOLD_LIST,game.get().getDisplayedGCards().get(0));
+                            LocationType.DISPLAYED_GOLD_LIST,game.getDisplayedGCards().get(0));
                     break;
                 case "4":
                     ClientController.getInstance().getClientAction().drawCard(
-                            LocationType.DISPLAYED_GOLD_LIST,game.get().getDisplayedGCards().get(1));
+                            LocationType.DISPLAYED_GOLD_LIST,game.getDisplayedGCards().get(1));
                     break;
                 case "5":
                     ClientController.getInstance().getClientAction().drawCard(
@@ -844,7 +841,7 @@ public class TUI extends Thread implements UserInterface{
 
 
     @Override
-    public void showFinalResult(ImmutableEndGameInfo info){
+    public synchronized void showFinalResult(ImmutableEndGameInfo info){
         out.println();
         out.println("FINAL SCORE BOARD:");
         for (Map.Entry<String, int[]> entry:info.getFinalResult().entrySet()) {
@@ -858,7 +855,7 @@ public class TUI extends Thread implements UserInterface{
     }
 
     @Override
-    public void gameInterrupted(String nickname) {
+    public synchronized void gameInterrupted(String nickname) {
         out.println();
         out.println("[Player " + nickname + " leave the game]");
         out.println("GAME INTERRUPTED");
@@ -878,14 +875,17 @@ public class TUI extends Thread implements UserInterface{
 
 
     public void showChatService(){
+        out.println();
         out.println("CHAT SERVICE:");
         out.println("1- Send a public message");
         out.println("2- Send a private message");
-        out.println("3- View read messages");
+        out.println("3- View history");
         out.println("4- View unread messages");
         out.println("5- EXIT from chat");
         String choice = in.nextLine();
-        switch (choice){
+        if (!ClientController.getInstance().isConnected())
+            return;
+        switch (choice) {
             case "1":
                 sendPublicMessage();
                 break;
@@ -893,7 +893,7 @@ public class TUI extends Thread implements UserInterface{
                 sendPrivateMessage();
                 break;
             case "3":
-                viewReadChatMessages();
+                viewChatHistory();
                 break;
             case "4":
                 viewUnReadChatMessages();
@@ -905,41 +905,49 @@ public class TUI extends Thread implements UserInterface{
                 showChatService();
                 break;
         }
+
     }
 
-    public void addNewMessage(ChatMessage message){
-        chatMessages.ifPresent(chatMessageBooleanHashMap -> chatMessageBooleanHashMap.put(message, false));
-    }
 
     private void sendPublicMessage(){
         out.print("Please enter the message content: ");
-        String message = in.nextLine();
-        //
-
+        String content = in.nextLine();
+        if (!ClientController.getInstance().isConnected())
+            return;
+        ChatMessage message = new ChatMessage(myNickname,content);
+        ClientController.getInstance().getClientAction().chat(message);
+        chatMessages.put(message,true);
         showChatService();
     }
 
+
     private void sendPrivateMessage(){
         out.println("Who do you want to send the message to?");
-        List<String> nicknames = new ArrayList<>(players.get().stream()
+        List<String> nicknames = new ArrayList<>(
+                players.stream()
                 .map(ImmutablePlayer::getNickname).toList());
         nicknames.remove(myNickname);
+
         for (int i = 0; i < nicknames.size(); i++) {
             out.println((i+1) + "- " + nicknames.get(i));
         }
         out.println((nicknames.size()+1) + "- back to chat service");
+
         String choice = in.nextLine();
         try {
             int intChoice = Integer.parseInt(choice);
-            if (intChoice > 0 && intChoice <= nicknames.size()-1){
+            if (!ClientController.getInstance().isConnected())
+                return;
+            if (intChoice > 0 && intChoice <= nicknames.size()){
                 out.print("Please enter the message content: ");
-                String message = in.nextLine();
-                //
-
+                String content = in.nextLine();
+                ChatMessage message = new ChatMessage(myNickname, nicknames.get(intChoice-1), content);
+                ClientController.getInstance().getClientAction().chat(message);
+                chatMessages.put(message,true);
                 showChatService();
-            }else if (intChoice == nicknames.size()){
+            }else if (intChoice == nicknames.size()+1){
                 showChatService();
-            }else {
+            }else{
                 invalidChoice();
                 sendPrivateMessage();
             }
@@ -950,148 +958,140 @@ public class TUI extends Thread implements UserInterface{
     }
 
 
+    @Override
+    public void addNewChatMessage(ChatMessage message) {
+        if (chatMessages == null)
+            return;
+        chatMessages.put(message,false);
+    }
+
+
     public void viewUnReadChatMessages(){
-        Iterator<ChatMessage> iterator = chatMessages.get().keySet().iterator();
-        if (!iterator.hasNext()){
-            out.println("You haven't received any new messages");
-            showChatService();
-        }else {
-            while (iterator.hasNext()){
-                ChatMessage message = iterator.next();
-                if (!chatMessages.get().get(message)){
-                    out.println(message.getSender() + ": " + message.getContent());
-                    chatMessages.get().replace(message,true);
-                }
+        out.println();
+        boolean exists = false;
+        for (ChatMessage message : chatMessages.keySet()) {
+            if (!chatMessages.get(message)) {
+                showChat(message);
+                chatMessages.replace(message, true);
+                exists = true;
             }
-            showChatService();
         }
-
-    }
-
-    public void viewReadChatMessages(){
-        Iterator<ChatMessage> iterator = chatMessages.get().keySet().iterator();
-        if (!iterator.hasNext()){
-            out.println("You never received any messages");
-            showChatService();
-        }else {
-            while (iterator.hasNext()){
-                ChatMessage message = iterator.next();
-                if (chatMessages.get().get(message)){
-                    out.println(message.getSender() + ": " + message.getContent());
-                }
-            }
-            showChatService();
-        }
-
+        if (!exists)
+            out.println("[No new messages have arrived]");
+        if (!ClientController.getInstance().isConnected())
+            return;
+        showChatService();
     }
 
 
+    private void showChat(ChatMessage message){
+        if (message.isPublic())
+            out.println("[public]  " +message.getSender() + ": " + message.getContent());
+        else
+            out.println("[private] " +message.getSender() + ": " + message.getContent());
+    }
 
 
-    //methods to be fixed
+    private void viewChatHistory(){
+        out.println();
+        boolean exists = false;
+        for (ChatMessage message : chatMessages.keySet()) {
+            if (chatMessages.get(message)) {
+                showChat(message);
+                exists = true;
+            }
+        }
+        if (!exists)
+            out.println("[No history is present. Let's start chatting!]");
+        if (!ClientController.getInstance().isConnected())
+            return;
+        showChatService();
+    }
 
-    /*
-    public void askAction(boolean isMyTurn){
-        askGeneralOptions();
-        if (isMyTurn)
-            askTurnOptions();
+
+    private void askAction(){
+        askActionOptions();
         String choice = in.nextLine();
+        if (!ClientController.getInstance().isConnected())
+            return;
         switch (choice){
             case "1":
                 askWhichPlayerBoard();
+                askAction();
                 break;
             case "2":
-
+                showDeskStatus();
+                askAction();
                 break;
             case "3":
-
+                showCommonGoals();
+                showPersonalGoal();
+                askAction();
                 break;
             case "4":
-
+                showChatService();
+                askAction();
+                break;
+            case "5":
+                askPlayHandCard();
                 break;
             default:
-                if(isMyTurn){
-                    if (choice.equals("5")){
+                invalidChoice();
+                askAction();
+                break;
+        }
 
+    }
+
+
+    private void askActionOptions(){
+        out.println();
+        out.println("PERMITTED ACTIONS:");
+        out.println("1- See a player board");
+        out.println("2- See the desk");
+        out.println("3- See all goals");
+        out.println("4- Use chat service");
+        out.println("5- PLAY YOUR TURN");
+    }
+
+
+    private void askWhichPlayerBoard(){
+        out.println("Whose board do you want to see?");
+        for (int i = 0; i < game.getNumOfPlayer(); i++) {
+            out.println((i+1)+("- ")+players.get(i).getNickname());
+        }
+        String choice = in.nextLine();
+        try {
+            int intChoice = Integer.parseInt(choice);
+            if (intChoice > 0 && intChoice <= game.getNumOfPlayer()){
+                for (int i = 0; i < game.getNumOfPlayer(); i++) {
+                    if ((i+1) == intChoice){
+                        showPlayerStatus(players.get(i));
                         break;
                     }
                 }
-                invalidChoice();
-                askAction(isMyTurn);
-                break;
-        }
-
-    }
-
-    public void askGeneralOptions(){
-        out.println("Permitted actions:");
-        out.println("1- See a player board");
-        out.println("2- See the desk");
-        out.println("3- See common goals");
-        out.println("4- Send a message");
-    }
-
-    public void askTurnOptions_1(){
-        out.println("5- Play a card");
-    }
-
-    public void askTurnOptions_2(){
-        out.println("5- Draw a card from desk");
-    }
-
-
-    public void askWhichPlayerBoard(){
-        out.println("Whose board do you want to see?");
-        for (int i = 0; i < game.get().getNumOfPlayer(); i++) {
-            out.println((i+1)+("- ")+players.get().get(i).getNickname());
-        }
-
-        String choice = in.nextLine();
-
-        int intChoice = Integer.parseInt(choice);
-
-        if (intChoice >= 0 && intChoice <= game.get().getNumOfPlayer()){
-            for (int i = 0; i < game.get().getNumOfPlayer(); i++) {
-                if ((i+1) == intChoice){
-                    showPlayerStatus(players.get().get(i));
-                    break;
-                }
             }
+        }catch (NumberFormatException e){
+            invalidChoice();
+            askWhichPlayerBoard();
         }
     }
 
-     */
 
-
-
-    public void invalidChoice(){
+    private void invalidChoice(){
         out.println("Invalid choice");
     }
 
+
     @Override
-    public void showConnectionError(){
+    public synchronized void showConnectionError(){
         removeLastGameInfo();
         myNickname = null;
         tryNickname = null;
         out.println();
-        out.println("[CONNECTION LOST, please try reconnection]");
+        out.println("[CONNECTION ERROR, please try reconnection]");
         out.println();
         askServerIP();
     }
 
-    public void showPersonalGoal(){
-        if (myPersonalGoal.isPresent()){
-            out.println();
-            out.println("My personal goal: " + myPersonalGoal.get());
-        }
-    }
 }
-
-
-
-
-
-
-
-
-

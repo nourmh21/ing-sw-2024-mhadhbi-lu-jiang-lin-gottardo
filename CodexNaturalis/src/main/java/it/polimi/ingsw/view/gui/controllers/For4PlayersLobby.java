@@ -4,10 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 
 import java.util.List;
 
 public class For4PlayersLobby {
+
+    @FXML
+    private Label title;
 
     @FXML
     private ImageView imgFirstPlayer;
@@ -29,6 +33,14 @@ public class For4PlayersLobby {
 
     private List<String> players;
     Image playerIcon = new Image(getClass().getResourceAsStream("/img/playerIcon/beige.png"));
+
+
+    @FXML
+    void initialize(){
+        Font algerian48 = Font.loadFont(getClass().getResourceAsStream("/font/Alger.ttf"),48);
+        title.setFont(algerian48);
+    }
+
 
     /**
      * update lobby status

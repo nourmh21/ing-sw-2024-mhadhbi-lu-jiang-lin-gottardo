@@ -2,27 +2,34 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.view.gui.GUIApplication;
-import it.polimi.ingsw.view.gui.enums.SceneType;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 
 public class ForRegistration {
 
-    String nickname;
-    String pwd1;
-    String pwd2;
+    @FXML
+    private Label title;
 
     @FXML
-    private Button backToLogin;
+    private TextField nicknameField;
 
     @FXML
     private Text nicknameError;
+
+    @FXML
+    private PasswordField pwd1Field;
+
+    @FXML
+    private PasswordField pwd2Field;
 
     @FXML
     private Text pwd1Error;
@@ -31,19 +38,21 @@ public class ForRegistration {
     private Text pwd2Error;
 
     @FXML
-    private TextField nicknameField;
-
-    @FXML
-    private PasswordField pwd1Field; //password field register confirmed
-
-    @FXML
-    private PasswordField pwd2Field;
-
-    @FXML
     private Button submit;
 
+    @FXML
+    private Button backToLogin;
+
+    String nickname;
+    String pwd1;
+    String pwd2;
 
 
+    @FXML
+    void initialize(){
+        Font algerian48 = Font.loadFont(getClass().getResourceAsStream("/font/Alger.ttf"),48);
+        title.setFont(algerian48);
+    }
 
     @FXML
     void tryConfirmPassword(ActionEvent event) {
@@ -69,7 +78,7 @@ public class ForRegistration {
 
     @FXML
     void switchToLogin(ActionEvent event) throws IOException {
-        ((GUIApplication) ClientController.getInstance().getView()).switchPage(SceneType.LOGIN);
+        ((GUIApplication) ClientController.getInstance().getView()).switchPage(PageType.LOGIN);
     }
 
 

@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.view.gui.GUIApplication;
-import it.polimi.ingsw.view.gui.enums.SceneType;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -22,7 +22,7 @@ public class ForHome {
      */
     @FXML
     void playGame(ActionEvent event){
-        ((GUIApplication) (ClientController.getInstance().getView())).showUsefulStage(SceneType.JOIN_MODE,null,null,null);
+        ((GUIApplication) (ClientController.getInstance().getView())).showAskStage(PageType.JOIN_MODE,null,null,null);
         play.setOnAction(event1 -> {});
         play.setCursor(Cursor.DEFAULT);
     }

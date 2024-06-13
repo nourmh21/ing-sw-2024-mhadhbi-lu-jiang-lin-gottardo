@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.controller.client.ClientController;
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
@@ -8,7 +9,7 @@ import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.view.UserInterface;
 import it.polimi.ingsw.view.gui.controllers.*;
-import it.polimi.ingsw.view.gui.enums.SceneType;
+import it.polimi.ingsw.view.gui.enums.PageType;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -21,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -28,9 +30,8 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static it.polimi.ingsw.view.gui.enums.SceneType.*;
+import static it.polimi.ingsw.view.gui.enums.PageType.*;
 
 public class GUIApplication extends Application implements UserInterface {
 
@@ -46,11 +47,13 @@ public class GUIApplication extends Application implements UserInterface {
     Stage goalAskStage;
     Stage joinModeStage;
     Stage endGameInfoStage;
-    Optional<ImmutableLobby> lobby = Optional.empty();
-    Optional<ImmutableGame> game = Optional.empty();
-    Optional<List<ImmutablePlayer>> players = Optional.empty();
-    Optional<List<Integer>> handCards = Optional.empty();
-    Optional<Integer> personalGoal = Optional.empty();
+    ImmutableLobby lobby;
+    ImmutableGame game;
+    List<ImmutablePlayer> players;
+    List<Integer> handCards;
+    Integer personalGoal;
+
+    Font algerian48 = Font.loadFont(getClass().getResourceAsStream("/img/utils/game_icon_square.png"),48);
 
 
     public void launch() {
@@ -66,7 +69,7 @@ public class GUIApplication extends Application implements UserInterface {
 
         //incon
         Stage initStage = new Stage();
-        Image image = new Image(getClass().getResourceAsStream("/img/utils/icon.png"));
+        Image image = new Image(getClass().getResourceAsStream("/img/utils/game_icon_square.png"));
         ImageView view = new ImageView(image);
         view.setFitHeight(440);
         view.setFitWidth(450);
@@ -87,7 +90,7 @@ public class GUIApplication extends Application implements UserInterface {
                         setBackgroundImage(root);
                         stage.setMinWidth(1115);
                         stage.setMinHeight(785);
-                        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/utils/icon.png")));
+                        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/utils/game_icon_square.png")));
                         stage.setTitle("Codex Naturalis");
                         stage.setScene(scene);
                         stage.setOnCloseRequest(event -> {stop();});
@@ -125,7 +128,7 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
-    public void switchPage(SceneType type){
+    public void switchPage(PageType type){
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -161,7 +164,6 @@ public class GUIApplication extends Application implements UserInterface {
                             stage.setMinHeight(850);
                             inGameController = loader.getController();
                             ((GUIApplication) ClientController.getInstance().getView()).setInGameController(inGameController);
-                            inGameController.setDeskBackground();
                             break;
                         case LOBBY_CHOOSE:
                             lobbyChooseController = loader.getController();
@@ -182,13 +184,14 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void connectionSuccess() {
-        switchPage(SceneType.LOGIN);
+        ClientController.getInstance().setConnected();
+        switchPage(PageType.LOGIN);
     }
 
 
     @Override
     public void loginSuccess() {
-        switchPage(SceneType.HOME);
+        switchPage(PageType.HOME);
         myNickname = tryNickname;
     }
 
@@ -236,27 +239,27 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void askNumOfPlayer() {
-        switchPage(SceneType.LOBBY_CREATION);
+        switchPage(PageType.LOBBY_CREATION);
     }
 
 
     @Override
     public void setLobbyStatus(ImmutableLobby newLobbyStatus) {
         try {
-            if (lobby.isEmpty()) {
+            if (lobby == null) {
                 switch (newLobbyStatus.getNumOfPlayer()) {
                     case 2:
-                        switchPage(SceneType.LOBBY_2);
+                        switchPage(PageType.LOBBY_2);
                         break;
                     case 3:
-                        switchPage(SceneType.LOBBY_3);
+                        switchPage(PageType.LOBBY_3);
                         break;
                     case 4:
-                        switchPage(SceneType.LOBBY_4);
+                        switchPage(PageType.LOBBY_4);
                         break;
                 }
             }
-            lobby = Optional.of(newLobbyStatus);
+            lobby = newLobbyStatus;
             updateLobby(newLobbyStatus.getNumOfPlayer(), newLobbyStatus.getPlayers());
         } catch (IOException e) {
             e.printStackTrace();
@@ -283,18 +286,18 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void setPossiblePersonalGoals(Integer[] possibleGoals) {
-        showUsefulStage(PERSONAL_GOAL_CHOOSE,null,possibleGoals,null);
+        showAskStage(PERSONAL_GOAL_CHOOSE,null,possibleGoals,null);
     }
 
 
     @Override
     public void setGameStatus(ImmutableGame newStatus) {
-        if (game.isEmpty()){
-            switchPage(SceneType.GAME);
-            game = Optional.of(newStatus);
+        if (game == null){
+            switchPage(PageType.GAME);
+            game = newStatus;
             initDesk(newStatus);
         }else {
-            ImmutableGame oldStatus = game.get();
+            ImmutableGame oldStatus = game;
 
             //check if the common goals cards are drawn
             if (oldStatus.getCommonGoals().isEmpty() && !newStatus.getCommonGoals().isEmpty()){
@@ -307,6 +310,7 @@ public class GUIApplication extends Application implements UserInterface {
                         "Round begins with " + newStatus.getCurrentPlayer() + "\n" +
                         newStatus.getCurrentPlayer() + " is playing");
                 inGameController.changeFirstStartPlayerIcon(newStatus.getCurrentPlayer());
+                inGameController.initializeChat(getOtherPlayersNickname());
                 checkMyTurn(newStatus.getCurrentPlayer());
             }
 
@@ -350,8 +354,17 @@ public class GUIApplication extends Application implements UserInterface {
                     inGameController.showGoldDeck(newStatus.getFirstGCardKingdom());
             }
 
-            game = Optional.of(newStatus);
+            game = newStatus;
         }
+    }
+
+    private List<String> getOtherPlayersNickname(){
+        List<String> names = new ArrayList<>(players.stream()
+                .parallel()
+                .map(ImmutablePlayer::getNickname)
+                .toList());
+        names.remove(myNickname);
+        return names;
     }
 
 
@@ -394,11 +407,11 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void setPlayerStatus(ImmutablePlayer player) {
-        if (players.isEmpty()){
-            players = Optional.of(new ArrayList<>());
+        if (players == null){
+            players = new ArrayList<>();
         }
         if (!checkPlayerExistence(player.getNickname())) {
-            switch (players.get().size()){
+            switch (players.size()){
                 case 0:
                     Platform.runLater(new Runnable() {
                         @Override
@@ -433,7 +446,7 @@ public class GUIApplication extends Application implements UserInterface {
                     });
                     break;
             }
-            players.get().add(player);
+            players.add(player);
             if (player.getNickname().equals(myNickname))
                 askInitCardPlace(player.getInitialCard());
         } else{
@@ -444,7 +457,7 @@ public class GUIApplication extends Application implements UserInterface {
 
 
     private boolean checkPlayerExistence(String nickname){
-        return (players.get().stream()
+        return (players.stream()
                 .parallel()
                 .anyMatch(player1 -> player1.getNickname().equals(nickname)));
     }
@@ -453,7 +466,7 @@ public class GUIApplication extends Application implements UserInterface {
     private void update(ImmutablePlayer newStatus) {
         ImmutablePlayer oldStatus = null;
         //find player who needs to be updated
-        for (ImmutablePlayer player: players.get()) {
+        for (ImmutablePlayer player: players) {
             if (player.getNickname().equals(newStatus.getNickname())){
                 oldStatus = player;
                 break;
@@ -464,8 +477,8 @@ public class GUIApplication extends Application implements UserInterface {
         if (checkPlayerBoardChange(oldStatus.getBoardCards(),newStatus.getBoardCards())) {
 
             if (newStatus.getNickname().equals(myNickname) && initCardAskStage.isShowing())
-                closeInitCardAskStage();
-            switch (players.get().indexOf(oldStatus)) {
+                closeAskStage(initCardAskStage);
+            switch (players.indexOf(oldStatus)) {
                 case 0:
                     Platform.runLater(new Runnable() {
                         @Override
@@ -509,8 +522,8 @@ public class GUIApplication extends Application implements UserInterface {
 
         //check if this client personal goal choose is correctly accepted
         if (oldStatus.getNickname().equals(myNickname) && !oldStatus.isPersonalGoalChosen() && newStatus.isPersonalGoalChosen()) {
-            inGameController.showPersonalGoal(personalGoal.get());
-            closePersonalGoalAskStage();
+            inGameController.showPersonalGoal(personalGoal);
+            closeAskStage(goalAskStage);
         }
 
         //check if others hand card change and show changes if this client are looking that one
@@ -521,16 +534,16 @@ public class GUIApplication extends Application implements UserInterface {
 
         //check if that player's score is updated
         if (oldStatus.getPoint() != newStatus.getPoint()){
-            inGameController.updateScore(players.get().indexOf(oldStatus), newStatus.getPoint());
+            inGameController.updateScore(players.indexOf(oldStatus), newStatus.getPoint());
         }
 
-        players.get().set(players.get().indexOf(oldStatus), newStatus);
+        players.set(players.indexOf(oldStatus), newStatus);
 
     }
 
 
     public void askInitCardPlace(Integer idCard){
-        showUsefulStage(INIT_CARD_CHOOSE, idCard, null, null);
+        showAskStage(INIT_CARD_CHOOSE, idCard, null, null);
     }
 
 
@@ -541,11 +554,11 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void setHandCards(List<Integer> newStatus) {
-        if (handCards.isEmpty()) {
-            handCards = Optional.of(newStatus);
+        if (handCards == null) {
+            handCards = newStatus;
             inGameController.showMineHandCards();
         }else {
-            handCards = Optional.of(newStatus);
+            handCards = newStatus;
             if (inGameController.getCurrent().equals(myNickname)){
                 inGameController.showMineHandCards();
             }
@@ -565,7 +578,7 @@ public class GUIApplication extends Application implements UserInterface {
     public void drawCardFailed() {
         showGameInformation("Please click a valid card on the desk");
         //refresh desk situation
-        initDesk(game.get());
+        initDesk(game);
         //reactive click
         inGameController.activateDeskClick();
     }
@@ -573,42 +586,40 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void showFinalResult(ImmutableEndGameInfo info) {
-        showUsefulStage(ENDGAME,null,null, info);
+        showAskStage(ENDGAME,null,null, info);
     }
 
     @Override
     public void gameInterrupted(String nickname) {
         showGameInformation("Player " + nickname + " leave the game \n GAME INTERRUPTED");
-        if (initCardAskStage != null && initCardAskStage.isShowing())
-            closeInitCardAskStage();
-        if (goalAskStage != null && goalAskStage.isShowing())
-            closePersonalGoalAskStage();
+        closeOpenedAskStage();
         removeAllLastGameInfo();
         switchPage(HOME);
     }
 
-
     @Override
-    public void showConnectionError() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                showGameInformation("CONNECTION LOST\nPlease try to reconnect");
-                tryNickname = null;
-                myNickname = null;
-                removeAllLastGameInfo();
-                switchPage(CONNECTION);
-            }
+    public void addNewChatMessage(ChatMessage message) {
+        Platform.runLater(()->{
+            inGameController.insertNewChat(message);
         });
     }
 
+    @Override
+    public void showConnectionError() {
+        showGameInformation("CONNECTION ERROR\nPlease try to reconnect");
+        tryNickname = null;
+        myNickname = null;
+        removeAllLastGameInfo();
+        closeOpenedAskStage();
+        switchPage(CONNECTION);
+    }
 
     public void removeAllLastGameInfo(){
-        lobby = Optional.empty();
-        personalGoal = Optional.empty();
-        handCards = Optional.empty();
-        players = Optional.empty();
-        game = Optional.empty();
+        lobby = null;
+        personalGoal = null;
+        handCards = null;
+        players = null;
+        game = null;
     }
 
 
@@ -628,7 +639,7 @@ public class GUIApplication extends Application implements UserInterface {
 
 
     public void setPersonalGoal(Integer personalGoal) {
-        this.personalGoal = Optional.of(personalGoal);
+        this.personalGoal = personalGoal;
     }
 
 
@@ -638,17 +649,17 @@ public class GUIApplication extends Application implements UserInterface {
 
 
     public List<ImmutablePlayer> getPlayers() {
-        return players.orElse(null);
+        return players;
     }
 
 
     public ImmutableGame getGame() {
-        return game.get();
+        return game;
     }
 
 
     public List<Integer> getHandCards() {
-        return handCards.orElse(null);
+        return handCards;
     }
 
 
@@ -689,7 +700,7 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
-    public void showUsefulStage(SceneType type, Integer idCard, Integer[] goals, ImmutableEndGameInfo info){
+    public void showAskStage(PageType type, Integer idCard, Integer[] goals, ImmutableEndGameInfo info){
         Platform.runLater(new Runnable() {
             double initX;
             double initY;
@@ -746,24 +757,28 @@ public class GUIApplication extends Application implements UserInterface {
 
     }
 
+    private boolean checkIsShowingStage(Stage stage){
+        return (stage != null && stage.isShowing());
+    }
 
-    private void closeInitCardAskStage(){
+    private void closeAskStage(Stage stage){
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                initCardAskStage.close();
+                stage.close();
             }
         });
     }
 
-
-    private void closePersonalGoalAskStage(){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                goalAskStage.close();
-            }
-        });
+    private void closeOpenedAskStage(){
+        if (checkIsShowingStage(initCardAskStage))
+            closeAskStage(initCardAskStage);
+        if (checkIsShowingStage(goalAskStage))
+            closeAskStage(goalAskStage);
+        if (checkIsShowingStage(joinModeStage))
+            closeAskStage(joinModeStage);
+        if (checkIsShowingStage(endGameInfoStage))
+            closeAskStage(endGameInfoStage);
     }
 
 }

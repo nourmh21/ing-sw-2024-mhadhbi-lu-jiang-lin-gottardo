@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
 import it.polimi.ingsw.model.immutable.ImmutableLobby;
@@ -39,6 +40,8 @@ public interface UserInterface {
     public void showFinalResult(ImmutableEndGameInfo info);
 
     public void gameInterrupted(String nickname);
+
+    public void addNewChatMessage(ChatMessage message);
 
     public void showConnectionError();
 
