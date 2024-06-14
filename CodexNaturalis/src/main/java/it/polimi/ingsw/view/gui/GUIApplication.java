@@ -32,6 +32,10 @@ import java.util.List;
 
 import static it.polimi.ingsw.view.gui.enums.PageType.*;
 
+/**
+ * The GUI class represents Graphical User Interface
+ * It implements {@link UserInterface}
+ */
 public class GUIApplication extends Application implements UserInterface {
 
     Stage stage;
@@ -117,6 +121,10 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * Set background image for a root(page)
+     * @param root
+     */
     private void setBackgroundImage(AnchorPane root){
         Image background = new Image(getClass().getResourceAsStream("/img/utils/background.png"));
         BackgroundImage backgroundImage = new BackgroundImage(
@@ -125,6 +133,10 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * Switch the page on the screen
+     * @param type {@link PageType}
+     */
     public void switchPage(PageType type){
         Platform.runLater(new Runnable() {
             @Override
@@ -234,38 +246,33 @@ public class GUIApplication extends Application implements UserInterface {
         lobbyChooseController.reactivateMouseClick();
     }
 
-    @Override
-    public void askNumOfPlayer() {
-        switchPage(PageType.LOBBY_CREATION);
-    }
-
 
     @Override
     public void setLobbyStatus(ImmutableLobby newLobbyStatus) {
-        try {
-            if (lobby == null) {
-                switch (newLobbyStatus.getNumOfPlayer()) {
-                    case 2:
-                        switchPage(PageType.LOBBY_2);
-                        break;
-                    case 3:
-                        switchPage(PageType.LOBBY_3);
-                        break;
-                    case 4:
-                        switchPage(PageType.LOBBY_4);
-                        break;
-                }
+        if (lobby == null) {
+            switch (newLobbyStatus.getNumOfPlayer()) {
+                case 2:
+                    switchPage(PageType.LOBBY_2);
+                    break;
+                case 3:
+                    switchPage(PageType.LOBBY_3);
+                    break;
+                case 4:
+                    switchPage(PageType.LOBBY_4);
+                    break;
             }
-            lobby = newLobbyStatus;
-            updateLobby(newLobbyStatus.getNumOfPlayer(), newLobbyStatus.getPlayers());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
+        lobby = newLobbyStatus;
+        updateLobby(newLobbyStatus.getNumOfPlayer(), newLobbyStatus.getPlayers());
     }
 
 
-    public void updateLobby(int numOfPlayer, List<String> players) throws IOException {
+    /**
+     * Update waiting room page
+     * @param numOfPlayer number of player in lobby
+     * @param players list of nicknames
+     */
+    public void updateLobby(int numOfPlayer, List<String> players){
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -355,6 +362,9 @@ public class GUIApplication extends Application implements UserInterface {
         }
     }
 
+    /**
+     * @return all players nickname except client itself
+     */
     private List<String> getOtherPlayersNickname(){
         List<String> names = new ArrayList<>(players.stream()
                 .parallel()
@@ -365,6 +375,11 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * @param oldStatus old list of card ids
+     * @param newStatus new list of card ids
+     * @return true the list of card ids is changed or not, false otherwise
+     */
     private boolean checkIfChanged(List<Integer> oldStatus, List<Integer> newStatus){
         if (oldStatus.size() != newStatus.size())
             return true;
@@ -376,6 +391,10 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * Checks if is client turn, in case of true, let client play
+     * @param nickname nickname of the current turn player
+     */
     private void checkMyTurn(String nickname){
         Platform.runLater(new Runnable() {
             @Override
@@ -388,6 +407,10 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * Initializes desk
+     * @param newStatus {@link ImmutableGame}
+     */
     private void initDesk(ImmutableGame newStatus){
         Platform.runLater(new Runnable(){
             @Override
@@ -453,6 +476,10 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * @param nickname nickname of player
+     * @return true a player in contained in the players, false otherwise
+     */
     private boolean checkPlayerExistence(String nickname){
         return (players.stream()
                 .parallel()
@@ -460,6 +487,10 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * Update a player status
+     * @param newStatus {@link ImmutablePlayer}, the new status
+     */
     private void update(ImmutablePlayer newStatus) {
         ImmutablePlayer oldStatus = null;
         //find player who needs to be updated
@@ -544,6 +575,11 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * @param lastStatus old list of board card ids
+     * @param newStatus new list of board card ids
+     * @return true if list of board card ids is changed, false otherwise
+     */
     private boolean checkPlayerBoardChange(List<Integer> lastStatus, List<Integer> newStatus){
         return newStatus.size() > lastStatus.size();
     }
@@ -664,7 +700,10 @@ public class GUIApplication extends Application implements UserInterface {
         return inGameController;
     }
 
-
+    /**
+     * Shows on another stage a notice
+     * @param information notice
+     */
     public void showGameInformation(String information){
         Platform.runLater(new Runnable() {
             @Override
@@ -697,6 +736,13 @@ public class GUIApplication extends Application implements UserInterface {
     }
 
 
+    /**
+     * Shows a stage to ask client make choice
+     * @param type {@link PageType}
+     * @param idCard if of card
+     * @param goals id of objective card
+     * @param info {@link ImmutableEndGameInfo}
+     */
     public void showAskStage(PageType type, Integer idCard, Integer[] goals, ImmutableEndGameInfo info){
         Platform.runLater(new Runnable() {
             double initX;
@@ -754,9 +800,11 @@ public class GUIApplication extends Application implements UserInterface {
 
     }
 
+
     private boolean checkIsShowingStage(Stage stage){
         return (stage != null && stage.isShowing());
     }
+
 
     private void closeAskStage(Stage stage){
         Platform.runLater(new Runnable() {
@@ -767,6 +815,10 @@ public class GUIApplication extends Application implements UserInterface {
         });
     }
 
+
+    /**
+     * Closes all currently showing ask stages
+     */
     private void closeOpenedAskStage(){
         if (checkIsShowingStage(initCardAskStage))
             closeAskStage(initCardAskStage);

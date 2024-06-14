@@ -14,6 +14,10 @@ import it.polimi.ingsw.view.UserInterface;
 import java.io.PrintStream;
 import java.util.*;
 
+/**
+ * The TUI class provides all methods needed for a Textual User Interface
+ * It implements {@link UserInterface}
+ */
 public class TUI implements UserInterface{
     private final Scanner in;
     private final PrintStream out;
@@ -45,6 +49,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Asks the client to insert the server ip
+     */
     public void askServerIP(){
         String serverIP;
         do {
@@ -52,7 +59,9 @@ public class TUI implements UserInterface{
             if (ClientApp.checkIPValidity(serverIP))
                 askConnectionType(serverIP);
             else{
+                out.println();
                 System.out.println("Invalid IP address, a correct IPv4 address has format x.x.x.x  [x ranges from 0 to 255]");
+                out.println();
             }
         }while (!ClientApp.checkIPValidity(serverIP));
     }
@@ -64,6 +73,10 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Asks the client to choose the connection type
+     * @param ip server ip
+     */
     public void askConnectionType(String ip){
         String choice;
         out.println();
@@ -90,6 +103,9 @@ public class TUI implements UserInterface{
         askAccessMode();
     }
 
+    /**
+     * Asks the client to choose between login or registration
+     */
     private void askAccessMode(){
         String choice;
         out.println();
@@ -109,6 +125,9 @@ public class TUI implements UserInterface{
         }
     }
 
+    /**
+     * Asks the client to enter credentials
+     */
     private void login(){
         out.println();
         String password;
@@ -132,11 +151,14 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Asks the client to enter nickname and password for registration
+     */
     private void registration() {
         out.println();
         String pwd1, pwd2;
         out.println("REGISTRATION");
-        out.print("Please enter nickName [at least 1 alphabetic letter]:  ");
+        out.print("Please enter nickname [at least 1 alphabetic letter]:  ");
         tryNickname = nicknameRequest();
         do {
             out.print("Please enter password [min size: 6]: ");
@@ -163,17 +185,26 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * @return a string contains al least 1 alphabetic character and no space in
+     */
     private String nicknameRequest(){
         String input;
         do {
             input = in.nextLine();
-            if(!input.matches(".*[a-zA-Z]+.*"))
-                out.print("Nickname should contain at least 1 alphabetic letter: ");
-        }while (!input.matches(".*[a-zA-Z]+.*"));
+            if(!input.matches(".*[a-zA-Z]+.*") || input.matches(".*\\s+.*")) {
+                out.println("[Nickname should contain at least 1 alphabetic letter and no space]");
+                out.println();
+                out.print("Please enter nickname: ");
+            }
+        }while (!input.matches(".*[a-zA-Z]+.*") || input.matches(".*\\s+.*"));
         return input;
     }
 
 
+    /**
+     * @return a string with min size: 6
+     */
     private String pwdRequest(){
         String input;
         do {
@@ -233,6 +264,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Show home page options
+     */
     private void home() {
         out.println();
         out.println("HOME");
@@ -252,7 +286,9 @@ public class TUI implements UserInterface{
 
     }
 
-
+    /**
+     * Asks the client to choose between join a lobby and create a lobby
+     */
     private void playGame(){
         out.println();
         out.println("Make your choice:");
@@ -310,7 +346,9 @@ public class TUI implements UserInterface{
     }
 
 
-    @Override
+    /**
+     * Asks the client to choose the number of new lobby
+     */
     public synchronized void askNumOfPlayer(){
         out.println();
         boolean isValid = false;
@@ -425,6 +463,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Shows game status in phase of setup
+     */
     public void showInitGameStatus(){
         if (game == null)
             return;
@@ -435,6 +476,7 @@ public class TUI implements UserInterface{
         showDeskStatus();
         askInitCardPlace();
     }
+
 
     @Override
     public synchronized void setGameStatus(ImmutableGame newStatus){
@@ -531,6 +573,10 @@ public class TUI implements UserInterface{
         }
     }
 
+
+    /**
+     * Removes all information about the game
+     */
     private void removeLastGameInfo(){
         game = null;
         lobby = null;
@@ -556,6 +602,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Shows comments when waiting other players play initial card or choose personal goal
+     */
     private void showWaitingComment(){
         out.println();
         out.println("[Waiting all players take that action...]");
@@ -634,6 +683,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Asks the client to play a card
+     */
     private void askPlayHandCard(){
         if (handCards == null)
             return;
@@ -667,6 +719,12 @@ public class TUI implements UserInterface{
 
     }
 
+
+    /**
+     * Asks the side of the card that client wants to play
+     * @param id id of card
+     * @param position position that client wants to play
+     */
     private void askCardSide(Integer id, int[] position){
         askSide();
         String choice = in.nextLine();
@@ -698,6 +756,10 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Asks the client to choose the position that he/she wants to play
+     * @param idCard id of card already chosen
+     */
     private void askPosition(Integer idCard){
         //position that can be chosen
         List<int[]> admittedPositions = me.getPermissiblePosition();
@@ -798,6 +860,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Asks the client to draw a card from desk
+     */
     private void askDrawCard(){
         out.println();
         out.println("Which card do you want to draw?");
@@ -874,6 +939,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Shows chat service
+     */
     public void showChatService(){
         out.println();
         out.println("CHAT SERVICE:");
@@ -984,6 +1052,10 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Shows the message content
+     * @param message {@link ChatMessage}
+     */
     private void showChat(ChatMessage message){
         if (message.isPublic())
             out.println("[public]  " +message.getSender() + ": " + message.getContent());
@@ -1009,6 +1081,9 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * Asks the client doing an action when it is his/her turn
+     */
     private void askAction(){
         askActionOptions();
         String choice = in.nextLine();

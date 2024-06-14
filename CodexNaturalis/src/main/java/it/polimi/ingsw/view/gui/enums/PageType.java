@@ -1,5 +1,8 @@
 package it.polimi.ingsw.view.gui.enums;
 
+/**
+ * The PageType enum represents the different pages of graphical user interface
+ */
 public enum PageType {
     CONNECTION("/pages/Connection.fxml"),
     LOGIN("/pages/Login.fxml"),
