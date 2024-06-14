@@ -16,7 +16,7 @@ public class EndGame implements Runnable{
 
     /**
      * Constructor
-     * @param game the game to be ended
+     * @param game the {@link Game} to be ended
      */
     public EndGame(Game game){
         this.game = game;

@@ -19,7 +19,7 @@ public class DrawGoals implements Runnable{
 
     /**
      * Constructor
-     * @param game the game that want to do draw cards
+     * @param game the {@link Game} that wants to do draw cards
      */
     public DrawGoals(Game game){
         this.game = game;

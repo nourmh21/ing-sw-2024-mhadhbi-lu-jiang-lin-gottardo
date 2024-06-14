@@ -29,9 +29,9 @@ public class PlayCard implements Runnable{
 
     /**
      * Constructor
-     * @param client user who made the action
-     * @param game game that user is in
-     * @param card card that client want to play
+     * @param client the {@link Client} who made the action
+     * @param game the {@link Game} in which client participates
+     * @param card the {@link Card} that client want to play
      * @param position position[x,y] that client want to play
      * @param isBackSide side of card that client want to play
      */
@@ -89,7 +89,7 @@ public class PlayCard implements Runnable{
 
 
     /**
-     * @param board where contains check method
+     * @param board the {@link PlayerBoard} where contains check condition method
      * @return true if card is not a gold card or else is backside
      * or else it is gold card and required condition is fulfilled, false otherwise
      */

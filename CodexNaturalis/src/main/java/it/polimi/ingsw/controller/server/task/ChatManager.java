@@ -14,8 +14,8 @@ public class ChatManager implements Runnable{
 
     /**
      * Constructor
-     * @param game the game in which the exchange of chat messages takes place
-     * @param message the chat message
+     * @param game the {@link Game} in which the exchange of chat messages takes place
+     * @param message the {@link ChatMessage}
      */
     public ChatManager(Game game, ChatMessage message){
         this.game = game;

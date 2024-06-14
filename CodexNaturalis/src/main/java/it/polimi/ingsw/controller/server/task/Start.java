@@ -16,6 +16,11 @@ import java.util.Random;
 public class Start implements Runnable{
     private Game game;
     private List<Player> players;
+
+    /**
+     * Constructor
+     * @param game the {@link Game} to be started
+     */
     public Start(Game game){
         this.game = game;
         players = game.getPlayers();

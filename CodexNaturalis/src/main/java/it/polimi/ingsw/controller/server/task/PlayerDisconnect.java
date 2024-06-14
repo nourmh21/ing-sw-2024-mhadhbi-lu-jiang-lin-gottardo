@@ -16,8 +16,8 @@ public class PlayerDisconnect implements Runnable{
 
     /**
      * Constructor
-     * @param client user who made the action
-     * @param game game tha user is in
+     * @param client the {@link Client} who made the action
+     * @param game the {@link Game} in which client participates
      */
     public PlayerDisconnect(Client client, Game game){
         this.client = client;

@@ -17,6 +17,12 @@ public class SetPersonalGoal implements Runnable{
     Game game;
     Integer idCard;
 
+    /**
+     * Constructor
+     * @param client the {@link Client} who made the action
+     * @param game the {@link Game} in which client participates
+     * @param idCard the id of an objective(goal) card
+     */
     public SetPersonalGoal(Client client, Game game, Integer idCard){
         this.client = client;
         this.game = game;

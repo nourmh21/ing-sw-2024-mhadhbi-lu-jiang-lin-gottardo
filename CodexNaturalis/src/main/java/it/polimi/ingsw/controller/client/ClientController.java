@@ -2,6 +2,10 @@ package it.polimi.ingsw.controller.client;
 
 import it.polimi.ingsw.view.UserInterface;
 
+/**
+ * The ClientController class is used on client side to remember:
+ * the client's {@link UserInterface} choice and {@link ClientAction}, and the current connection status
+ */
 public class ClientController {
     private static ClientController instance;
     private UserInterface view;

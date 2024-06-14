@@ -18,8 +18,8 @@ public class PlayInitialCard implements Runnable{
 
     /**
      * Constructor
-     * @param client user who made the action
-     * @param game game that user is in
+     * @param client the {@link Client} who made the action
+     * @param game the {@link Game} in which client participates
      * @param card initial card
      * @param isBackSide side of card
      */

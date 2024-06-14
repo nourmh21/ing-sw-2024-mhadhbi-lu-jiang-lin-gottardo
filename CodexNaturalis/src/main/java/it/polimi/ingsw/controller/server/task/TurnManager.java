@@ -20,6 +20,10 @@ public class TurnManager implements Runnable{
 
     private List<Player> players;
 
+    /**
+     * Constructor
+     * @param game the {@link Game} to be updated
+     */
     public TurnManager(Game game){
         this.game = game;
         lastPlayedPlayer = game.getCurrentPlayer();
@@ -60,7 +64,7 @@ public class TurnManager implements Runnable{
 
 
     /**
-     * update the turn
+     * Updates the turn
      * @param j index of the last player
      */
     private void updateTurn(int j){

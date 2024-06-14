@@ -32,7 +32,7 @@ public class GameController {
 
     /**
      * Constructor that inits:
-     * a list of users logged in, a list of users in game, a list of ids used for lobby, a list of all cards...
+     * a list of users logged in, a map of users in game, a map of ids used for lobby, a list of all cards...
      */
     public GameController(){
         clientManager = new ClientManager();
@@ -48,8 +48,8 @@ public class GameController {
 
     /**
      * Executes the task for login/registration
-     * @param client user who made the action
-     * @param nickname nickname of that user
+     * @param client the {@link Client} who made the action
+     * @param nickname nickname of that client
      * @param pwd password
      * @param isRegistered true if already registered, false otherwise
      */
@@ -60,7 +60,7 @@ public class GameController {
 
     /**
      * Notifies the client about all available lobbies
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      */
     public synchronized void giveLobbies(Client client){
         if (isLoggedIn(client.getNickname())){
@@ -75,7 +75,7 @@ public class GameController {
 
     /**
      * Adds client in the request lobby and notifies that client if the request lobby is not present
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      * @param idLobby id of request lobby
      */
     public synchronized void joinLobby(Client client, Integer idLobby) {
@@ -99,7 +99,7 @@ public class GameController {
 
     /**
      * Creates a lobby
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      * @param numOfPlayer number of player of the new lobby
      */
     public synchronized void createLobby(Client client, int numOfPlayer){
@@ -114,7 +114,7 @@ public class GameController {
 
     /**
      * Executes the task that manages the play of the initial card
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      * @param idCard id of the initial card
      * @param isBackSide true if client wants to play back side of the card, false otherwise
      */
@@ -127,7 +127,7 @@ public class GameController {
 
     /**
      * Executes the task that manages the choice of the objective(goal) card
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      * @param idCard id of the objective(goal) card
      */
     public void setPersonalGoal(Client client, Integer idCard){
@@ -138,7 +138,7 @@ public class GameController {
 
     /**
      * Executes the task that manages the play of a card
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      * @param idCard id of card
      * @param position position that client want to place
      * @param isBackSide true if client wants to play back side of the card, false otherwise
@@ -152,8 +152,8 @@ public class GameController {
 
     /**
      * Executes the task that manages the draw of a card
-     * @param client user who made the action
-     * @param location location where the client drew the card
+     * @param client the {@link Client} who made the action
+     * @param location the {@link LocationType} that indicates where the client drew the card
      * @param idCard id of card
      */
     public void drawCard(Client client, LocationType location, Integer idCard){
@@ -169,7 +169,7 @@ public class GameController {
 
     /**
      * Executes the task that manages the disconnection of a user in game
-     * @param client user who left the game
+     * @param client the {@link Client} who left the game
      */
     public void disconnectPlayer(Client client){
         if (isInGame(client.getNickname()))
@@ -179,7 +179,7 @@ public class GameController {
 
     /**
      * Executes the task that manages chat message
-     * @param message massage that contains all chat information
+     * @param message the {@link ChatMessage} that contains all chat information
      */
     public void chatManage(ChatMessage message){
         if (isInGame(message.getSender()))
@@ -199,7 +199,7 @@ public class GameController {
 
     /**
      * Remove lobby from the list of available lobbies
-     * @param lobby lobby to be removed
+     * @param lobby the {@link Lobby} to be removed
      */
     public synchronized void removeLobby(Lobby lobby){
         availableLobby.remove(lobby);
@@ -243,7 +243,7 @@ public class GameController {
 
     /**
      * Manages the client leaving
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      */
     public void clientLeave(Client client){
         clientManager.removeClient(client);
@@ -257,7 +257,7 @@ public class GameController {
 
 
     /**
-     * Removes a user from the lobby if is inside one
+     * Removes a client from the lobby if is inside one
      * @param nickname nickname of user
      */
     private synchronized void removePlayerFromLobby(String nickname){

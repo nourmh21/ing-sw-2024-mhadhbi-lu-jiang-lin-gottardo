@@ -22,9 +22,9 @@ public class DrawCard  implements Runnable {
 
     /**
      * Constructor for deck draw
-     * @param client user who made the action
-     * @param game the game that user is in
-     * @param locationType location where the card is drawn
+     * @param client the {@link Client} who made the action
+     * @param game the {@link Game} model of the game in which client participates
+     * @param locationType the {{@link LocationType} that indicates where the card is drawn
      */
     public DrawCard(Client client, Game game, LocationType locationType){
         this.client = client;
@@ -34,9 +34,9 @@ public class DrawCard  implements Runnable {
 
     /**
      * Constructor for face up card pick
-     * @param client user who made the action
-     * @param game the game that user is in
-     * @param locationType location where the card is drawn
+     * @param client the {@link Client} who made the action
+     * @param game the {@link Game} in which client participates
+     * @param locationType the {{@link LocationType} that indicates where the card is drawn
      * @param idCard id of the face up card
      */
     public DrawCard(Client client, Game game, LocationType locationType, Integer idCard){

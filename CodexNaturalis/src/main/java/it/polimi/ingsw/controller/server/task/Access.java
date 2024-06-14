@@ -22,7 +22,7 @@ public class Access implements Runnable{
 
     /**
      * Constructor
-     * @param client user who made the action
+     * @param client the {@link Client} who made the action
      * @param nickname nickname of that user
      * @param pwd password
      * @param isRegistered true if already registered, false otherwise
