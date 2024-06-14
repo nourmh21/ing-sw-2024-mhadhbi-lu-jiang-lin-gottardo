@@ -13,7 +13,11 @@ import java.io.ObjectOutputStream;
 import java.net.SocketException;
 import java.util.List;
 
-public class SocketObserver implements Observer{
+/**
+ * The SocketObserver class implements {@link ModelObserver}
+ * It represents observer connected with socket
+ */
+public class SocketObserver implements ModelObserver {
     String nickname;
     ObjectOutputStream oos;
 

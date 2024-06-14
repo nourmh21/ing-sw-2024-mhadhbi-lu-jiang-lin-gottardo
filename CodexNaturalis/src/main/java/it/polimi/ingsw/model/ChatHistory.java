@@ -2,12 +2,12 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.message.general.ChatMessage;
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.ModelObservable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatHistory extends Observable {
+public class ChatHistory extends ModelObservable {
     private List<ChatMessage> chatMessageList;
 
     public ChatHistory(){

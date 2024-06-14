@@ -3,14 +3,14 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.controller.server.GameController;
 
 import it.polimi.ingsw.model.immutable.ImmutableLobby;
-import it.polimi.ingsw.observer.Observable;
-import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.observer.ModelObservable;
+import it.polimi.ingsw.observer.ModelObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Lobby extends Observable {
+public class Lobby extends ModelObservable {
     int idLobby;
     int numOfPlayer;
     private List<String> players;
@@ -47,8 +47,8 @@ public class Lobby extends Observable {
 
 
     public void removePlayer(String nickname){
-        Observer observer = null;
-        for (Observer o:observers) {
+        ModelObserver observer = null;
+        for (ModelObserver o: observers) {
             if (o.getNickname().equals(nickname)){
                 observer = o;
                 break;

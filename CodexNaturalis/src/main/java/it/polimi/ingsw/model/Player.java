@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.ModelObservable;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfHandCardsException;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * -isConnected: verify if the player is connected
  * -handCards define list of card in hand of player.
  */
-public class Player extends Observable {
+public class Player extends ModelObservable {
     private final String nickname;
     private int point;
     private int goalPoint;
@@ -54,7 +54,7 @@ public class Player extends Observable {
         } catch (EmptyDeckException e) {
             throw new RuntimeException(e);
         }
-        observers = game.getGameObservers();
+        observers = game.getObservers();
         //
         notify_player_status(new ImmutablePlayer(this,this.board));
     }

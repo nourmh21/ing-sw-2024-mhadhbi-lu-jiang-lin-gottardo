@@ -2,7 +2,7 @@ package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.message.enums.ErrorType;
 import it.polimi.ingsw.message.enums.NotifyType;
-import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.observer.ModelObserver;
 
 import java.util.List;
 
@@ -26,9 +26,9 @@ public abstract class Client {
     }
 
     /**
-     * @return an {@link Observer}
+     * @return an {@link ModelObserver}
      */
-    public abstract Observer getObserver();
+    public abstract ModelObserver getObserver();
 
     /**
      * Informs user about his/her action error

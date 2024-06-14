@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import java.util.List;
 
 //to be completed by Nourhane
-public class RMIObserver implements Observer{
+public class RMIObserver implements ModelObserver {
     @Override
     public String getNickname() {
         return null;

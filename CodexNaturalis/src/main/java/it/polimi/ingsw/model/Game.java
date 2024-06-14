@@ -6,15 +6,15 @@ import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
-import it.polimi.ingsw.observer.Observable;
-import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.observer.ModelObservable;
+import it.polimi.ingsw.observer.ModelObserver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class Game extends Observable{
+public class Game extends ModelObservable {
     private final int idGame;
     private GameState gameState;
     private int numOfPlayer;      //indicates the number of player in the game
@@ -50,17 +50,12 @@ public class Game extends Observable{
     }
 
 
-    public void setGameObservers(List<Observer> observers){
+    public void setGameObservers(List<ModelObserver> observers){
         this.observers = observers;
         notify_game_status(new ImmutableGame(this));
-        for (Observer o:observers) {
+        for (ModelObserver o: observers) {
             chatHistory.addObserver(o);
         }
-    }
-
-
-    public List<Observer> getGameObservers(){
-        return observers;
     }
 
 

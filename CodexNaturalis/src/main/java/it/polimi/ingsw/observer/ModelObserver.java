@@ -8,8 +8,12 @@ import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 
 import java.util.List;
 
-public interface Observer {
 
+/**
+ * A class can implement the ModelObserver interface when it wants to be informed of changes in observable objects.
+ * It is implemented by {@link SocketObserver} and {@link RMIObserver}
+ */
+public interface ModelObserver {
     public String getNickname();
     public void send_lobby_status(ImmutableLobby lobby);
     public void send_game_status(ImmutableGame game);

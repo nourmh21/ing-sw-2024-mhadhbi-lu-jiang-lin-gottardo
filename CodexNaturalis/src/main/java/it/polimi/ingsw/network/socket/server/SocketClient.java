@@ -7,7 +7,7 @@ import it.polimi.ingsw.message.enums.ErrorType;
 import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.notify.NotifyMessage;
-import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.observer.ModelObserver;
 import it.polimi.ingsw.observer.SocketObserver;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class SocketClient extends Client {
     }
 
     @Override
-    public Observer getObserver() {
+    public ModelObserver getObserver() {
         return new SocketObserver(getNickname(),this.oos);
     }
 

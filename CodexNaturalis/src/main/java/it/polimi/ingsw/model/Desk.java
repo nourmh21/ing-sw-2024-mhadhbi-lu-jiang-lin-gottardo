@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.observer.ModelObservable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import java.util.List;
  * Note: there are only card ids here, therefore only integers and not card objects
  * */
 
-public class Desk extends Observable{
+public class Desk extends ModelObservable {
     private List<Integer> resourceCardDeck;          //list of resource cards - resource card deck
     private List<Integer> goldCardDeck;              //list of gold cards - gold card deck
     private List<Integer> initialCardDeck;           //list of initial cards - initial card deck
@@ -34,7 +34,7 @@ public class Desk extends Observable{
      */
     public Desk(Game game){
         this.game = game;
-        observers = game.getGameObservers();
+        observers = game.getObservers();
         resourceCardDeck = new ArrayList<>(40);
         goldCardDeck = new ArrayList<>(40);
         initialCardDeck = new ArrayList<>(6);
