@@ -3,10 +3,15 @@ package it.polimi.ingsw.message.general;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 
-public class JoinLobbyeMessage implements Message {
+
+/**
+ * The JoinLobbyMessage implements {@link Message} [client -> server]
+ * Used to notify a client action: join a lobby
+ */
+public class JoinLobbyMessage implements Message {
     Integer idLobby;
 
-    public JoinLobbyeMessage(Integer idLobby){
+    public JoinLobbyMessage(Integer idLobby){
         this.idLobby = idLobby;
     }
 

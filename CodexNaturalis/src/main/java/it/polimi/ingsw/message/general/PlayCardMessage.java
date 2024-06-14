@@ -3,7 +3,10 @@ package it.polimi.ingsw.message.general;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 
-
+/**
+ * The PlayCardMessage implements {@link Message} [client -> server]
+ * Used to notify a client action: try to play a card
+ */
 public class PlayCardMessage implements Message {
 
     private final Integer idCard;

@@ -31,7 +31,7 @@ public class SocketAction implements ClientAction {
 
     @Override
     public void joinLobby(Integer idLobby) {
-        send(new JoinLobbyeMessage(idLobby));
+        send(new JoinLobbyMessage(idLobby));
     }
 
     @Override

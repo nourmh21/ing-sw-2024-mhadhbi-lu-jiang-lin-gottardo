@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * The Client abstract class is used to represents user's identity
- * It also provides methods to inform user about action result/error
+ * It also provides methods to inform user about some action result/error
  */
 public abstract class Client {
     private String nickname;

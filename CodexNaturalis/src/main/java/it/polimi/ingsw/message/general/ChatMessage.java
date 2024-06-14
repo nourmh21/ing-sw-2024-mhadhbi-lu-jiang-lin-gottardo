@@ -3,6 +3,10 @@ package it.polimi.ingsw.message.general;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 
+/**
+ * The ChatMessage implements {@link Message} [client <-> server]
+ * Used to notify a chat
+ */
 public class ChatMessage implements Message {
     boolean isPublic;
     String sender;

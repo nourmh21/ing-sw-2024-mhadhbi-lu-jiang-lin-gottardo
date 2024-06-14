@@ -1,5 +1,8 @@
 package it.polimi.ingsw.message.enums;
 
+/**
+ * The MessageType enum represents the different general messages
+ */
 public enum MessageType {
     HEARTBEAT,
     ACCESS,

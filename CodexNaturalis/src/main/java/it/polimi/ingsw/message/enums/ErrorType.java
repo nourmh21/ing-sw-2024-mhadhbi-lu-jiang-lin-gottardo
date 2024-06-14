@@ -1,5 +1,8 @@
 package it.polimi.ingsw.message.enums;
 
+/**
+ * The ErrorType enum represents the different negative results of client actions
+ */
 public enum ErrorType {
     CREDENTIAL_WRONG,
     NICKNAME_ALREADY_EXIST,

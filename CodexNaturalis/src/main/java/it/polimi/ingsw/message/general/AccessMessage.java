@@ -3,6 +3,10 @@ package it.polimi.ingsw.message.general;
 import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 
+/**
+ * The AccessMessage implements {@link Message} [client -> server]
+ * Used to notify a client action: login/registration
+ */
 public class AccessMessage implements Message {
 
     private final String nickname;

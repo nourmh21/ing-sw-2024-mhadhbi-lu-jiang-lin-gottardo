@@ -4,6 +4,10 @@ import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.enums.MessageType;
 
+/**
+ * The DrawCardMessage implements {@link Message} [client -> server]
+ * Used to notify a client action: try to draw a card
+ */
 public class DrawCardMessage implements Message {
 
     private LocationType location;

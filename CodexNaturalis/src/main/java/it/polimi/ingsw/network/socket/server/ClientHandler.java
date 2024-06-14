@@ -100,7 +100,7 @@ public class ClientHandler extends Thread{
                 GameController.getInstance().giveLobbies(thisClient);
                 break;
             case JOIN_LOBBY:
-                GameController.getInstance().joinLobby(thisClient, ((JoinLobbyeMessage)message).getIdLobby());
+                GameController.getInstance().joinLobby(thisClient, ((JoinLobbyMessage)message).getIdLobby());
                 break;
             case CREATE_LOBBY:
                 GameController.getInstance().createLobby(thisClient, ((CreateLobbyMessage) message).getNumOfPlayer());
