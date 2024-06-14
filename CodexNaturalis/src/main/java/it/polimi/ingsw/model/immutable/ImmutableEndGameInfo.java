@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * The ImmutableEndGameInfo is an immutable class that implements Serializable interface
+ * The ImmutableEndGameInfo is an immutable class that implements {@link Serializable} interface
  * It is used in the communication between server and client
  * It contains all information about final result of a game
  */

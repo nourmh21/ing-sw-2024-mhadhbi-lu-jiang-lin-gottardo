@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * The ImmutableGame is an immutable class that implements Serializable interface
+ * The ImmutableGame is an immutable class that implements {@link Serializable} interface
  * It is used in the communication between server and client
  * It contains all information about a game status
  */
