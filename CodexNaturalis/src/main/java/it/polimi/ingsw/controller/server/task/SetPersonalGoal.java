@@ -60,7 +60,7 @@ public class SetPersonalGoal implements Runnable{
 
 
     /**
-     * @param p player
+     * @param p the {@link Player}
      * @return true is the id of card is correct, false otherwise
      */
     private boolean checkValidity(Player p){
