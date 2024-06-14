@@ -72,7 +72,6 @@ public class ClientHandler extends Thread{
                     if (!message.getType().equals(MessageType.HEARTBEAT))
                         messageHandler(message);
                 }catch (SocketException|EOFException e) {
-                    System.out.println("Client disconnected");
                     close();
                 }
             }

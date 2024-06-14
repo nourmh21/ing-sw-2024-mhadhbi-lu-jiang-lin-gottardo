@@ -18,7 +18,6 @@ public class ServerApp {
                 try {
                     Socket socket = serverSocket.accept();
                     new ClientHandler(socket).start();
-                    System.out.println("Client connected");
                 } catch (IOException ignored) {
                 }
             }
