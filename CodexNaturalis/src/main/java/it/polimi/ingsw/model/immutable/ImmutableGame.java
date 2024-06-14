@@ -3,15 +3,18 @@ package it.polimi.ingsw.model.immutable;
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.enums.Symbol;
 
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The ImmutableGame is an immutable class that implements Serializable interface
+ * It is used in the communication between server and client
+ * It contains all information about a game status
+ */
 public class ImmutableGame implements Serializable {
-
     private final int idGame;
     private final int numOfPlayer;
     private final GameState gameState;
@@ -34,9 +37,7 @@ public class ImmutableGame implements Serializable {
         commonGoals = game.getCommonGoals();
         isLastRound = game.getIsLastRound();
         if (game.getPlayers() != null){
-            players = game.getPlayers().stream()
-                    .map(Player::getNickname)
-                    .toList();
+            players = game.getPlayersNickname();
         }else {
             players = null;
         }

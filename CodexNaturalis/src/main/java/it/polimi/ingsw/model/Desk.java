@@ -17,8 +17,6 @@ import java.util.List;
  *    1 card that represent the first card of gold card deck
  *    some methods to pick a card
  * Note: there are only card ids here, therefore only integers and not card objects
- * Status: almost complete
- * @author Valeria Lu
  * */
 
 public class Desk extends Observable{
@@ -268,6 +266,10 @@ public class Desk extends Observable{
         return nextGoldCard;
     }
 
+
+    /**
+     * @return true if both resource and gold deck are finished
+     */
     public boolean isEmptyBothRGDeck(){
         return resourceCardDeck.isEmpty() && goldCardDeck.isEmpty() &&
                 nextResourceCard == null && nextGoldCard == null;

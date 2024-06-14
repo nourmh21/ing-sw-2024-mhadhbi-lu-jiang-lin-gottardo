@@ -11,6 +11,11 @@ import it.polimi.ingsw.model.enums.Symbol;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The ImmutablePlayer is an immutable class that implements Serializable interface
+ * It is used in the communication between server and client
+ * It contains all information about a player status
+ */
 public class ImmutablePlayer implements Serializable {
     private final String nickname;
     private final Color color;

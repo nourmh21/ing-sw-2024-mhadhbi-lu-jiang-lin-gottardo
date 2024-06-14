@@ -10,6 +10,7 @@ import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -200,7 +201,7 @@ public class Game extends Observable{
         else
             winners = possibleWinners;
         //
-        notify_final_result(new ImmutableEndGameInfo(this));
+        notify_final_result(new ImmutableEndGameInfo(getPlayersPoint(), getWinnersNickname()));
     }
 
 
@@ -219,6 +220,26 @@ public class Game extends Observable{
                 winners.add(p);
         }
 
+    }
+
+    private HashMap<String,int[]> getPlayersPoint(){
+        HashMap<String,int[]> finalResult = new HashMap<>();
+        for (Player p: getPlayers()) {
+            finalResult.put(p.getNickname(), new int[]{p.getPoint(), p.getGoalPoint()});
+        }
+        return finalResult;
+    }
+
+    public List<String> getWinnersNickname(){
+        return getWinners().stream()
+                .map(Player::getNickname)
+                .toList();
+    }
+
+    public List<String> getPlayersNickname(){
+        return getPlayers().stream()
+                .map(Player::getNickname)
+                .toList();
     }
 
 
