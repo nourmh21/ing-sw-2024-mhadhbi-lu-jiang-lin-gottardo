@@ -69,7 +69,7 @@ public class ClientHandler extends Thread{
                 try {
                     Message message = (Message) ois.readObject();
                     lastReceivedTime = System.currentTimeMillis();
-                    if (message.getType() != MessageType.HEARTBEAT)
+                    if (!message.getType().equals(MessageType.HEARTBEAT))
                         messageHandler(message);
                 }catch (SocketException|EOFException e) {
                     System.out.println("Client disconnected");
