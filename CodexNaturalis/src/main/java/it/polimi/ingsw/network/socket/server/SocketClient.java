@@ -14,8 +14,17 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+/**
+ * The SocketClient class is a subtype of {@link Client}
+ * It represents client connected with socket
+ */
 public class SocketClient extends Client {
     private final ObjectOutputStream oos;
+
+    /**
+     * Constructor
+     * @param oos the output stream of client
+     */
     public SocketClient(ObjectOutputStream oos){
         this.oos = oos;
     }
@@ -40,6 +49,10 @@ public class SocketClient extends Client {
         sendMessage(new NotifyMessage(NotifyType.LOBBY_LIST, lobbies));
     }
 
+    /**
+     * Sends message to client
+     * @param message the {@link Message} to be sent
+     */
     private void sendMessage(Message message){
         try {
             oos.reset();

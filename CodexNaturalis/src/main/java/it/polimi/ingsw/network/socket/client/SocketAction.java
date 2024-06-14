@@ -8,6 +8,10 @@ import it.polimi.ingsw.message.general.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * The SocketAction class implements {@link ClientAction} interface
+ * Notifies the server of client actions when the chosen connection type is socket
+ */
 public class SocketAction implements ClientAction {
     private ObjectOutputStream oos;
 

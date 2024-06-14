@@ -16,14 +16,25 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The MessageExecutor is a class that handles messages
+ */
 public class MessageExecutor {
     private final ExecutorService normalMsgExecutor;
     private final ExecutorService chatMsgExecutor;
+
+    /**
+     * Construct: initialize two Executor
+     */
     public MessageExecutor(){
         normalMsgExecutor = Executors.newSingleThreadExecutor();
         chatMsgExecutor = Executors.newSingleThreadExecutor();
     }
 
+    /**
+     * Executes tasks for messages handle
+     * @param message the {@link Message} received
+     */
     public void execute(Message message){
         if (message.getType().equals(MessageType.CHAT)){
             chatMsgExecutor.execute(() -> messageHandler(message));
@@ -32,6 +43,10 @@ public class MessageExecutor {
         }
     }
 
+    /**
+     * Handles messages
+     * @param message the {@link Message} received
+     */
     private void messageHandler(Message message){
         switch (message.getType()) {
             case ERROR:

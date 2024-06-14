@@ -7,7 +7,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
-
+/**
+ * The HeartbeatSender is a thread that sends heartbeat messages periodically
+ */
 public class HeartbeatSender extends Thread{
 
     private ObjectOutputStream oos;

@@ -15,6 +15,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The ClientHandler thread permits to handle client, one instance for each client
+ * */
 public class ClientHandler extends Thread{
 
     private final Socket clientSocket;
@@ -25,7 +28,11 @@ public class ClientHandler extends Thread{
     private long lastReceivedTime;
     private boolean isCallToClose;
 
-
+    /**
+     * Constructor
+     * @param clientSocket the client asking to connect
+     * @throws IOException in case of stream initialize error
+     */
     public ClientHandler(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
         lastReceivedTime = System.currentTimeMillis();
@@ -42,6 +49,8 @@ public class ClientHandler extends Thread{
         try {
             GameController.getInstance().getClientManager().addClient(thisClient);
             thisClient.informActionResult(NotifyType.CONNECTED);
+
+            //Checks if client connection is alive, periodically
             scheduler.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
@@ -55,7 +64,7 @@ public class ClientHandler extends Thread{
                 }
             }, 5, 5, TimeUnit.SECONDS);
 
-
+            //Reads messages from client
             while (!this.isInterrupted()){
                 try {
                     Message message = (Message) ois.readObject();
@@ -76,6 +85,11 @@ public class ClientHandler extends Thread{
 
     }
 
+
+    /**
+     * Handles messages from client
+     * @param message the {@link Message}
+     */
     private void messageHandler(Message message){
         switch (message.getType()){
             case ACCESS:
@@ -117,6 +131,9 @@ public class ClientHandler extends Thread{
 
     }
 
+    /**
+     * Manages client disconnection
+     */
     private void close(){
         if (!isCallToClose){
             isCallToClose = true;

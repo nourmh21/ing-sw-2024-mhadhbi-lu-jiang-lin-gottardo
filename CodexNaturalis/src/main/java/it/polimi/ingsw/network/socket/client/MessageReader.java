@@ -9,6 +9,9 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * The MessageReader is a thread that read messages sent by server
+ */
 public class MessageReader extends Thread{
 
     private final ObjectInputStream ois;
