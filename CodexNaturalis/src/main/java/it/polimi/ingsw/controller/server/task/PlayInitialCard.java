@@ -5,6 +5,10 @@ import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.enums.GameState;
 
+/**
+ * The PlayInitialCard is one of Runnable executed by {@link GameController}
+ * It manages the play of initial card
+ */
 public class PlayInitialCard implements Runnable{
 
     Game game;
@@ -12,6 +16,13 @@ public class PlayInitialCard implements Runnable{
     InitialCard initialCard;
     boolean isBackside;
 
+    /**
+     * Constructor
+     * @param client user who made the action
+     * @param game game that user is in
+     * @param card initial card
+     * @param isBackSide side of card
+     */
     public PlayInitialCard(Client client, Game game, Card card, boolean isBackSide){
         this.client = client;
         this.game = game;
@@ -19,11 +30,11 @@ public class PlayInitialCard implements Runnable{
         this.isBackside = isBackSide;
     }
 
+
     @Override
     public void run() {
         //basic check
         if (game.getGameState() == GameState.SETUP_PHASE_1){
-
             int i = 0;
 
             for (Player p: game.getPlayers()) {

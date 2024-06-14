@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.server.task;
 
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.network.Client;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Game;
@@ -13,6 +14,10 @@ import java.util.List;
 
 import static it.polimi.ingsw.message.enums.ErrorType.GOLD_CARD_CONDITION_NOT_RESPECTED;
 
+/**
+ * The PlayCard is one of Runnable executed by {@link GameController}
+ * It manages the play of a card
+ */
 public class PlayCard implements Runnable{
 
     private Client client;
@@ -22,6 +27,14 @@ public class PlayCard implements Runnable{
     private Card card;
 
 
+    /**
+     * Constructor
+     * @param client user who made the action
+     * @param game game that user is in
+     * @param card card that client want to play
+     * @param position position[x,y] that client want to play
+     * @param isBackSide side of card that client want to play
+     */
     public PlayCard(Client client, Game game, Card card, int[] position, boolean isBackSide){
         this.client = client;
         this.game = game;
@@ -29,6 +42,7 @@ public class PlayCard implements Runnable{
         this.isBackSide = isBackSide;
         this.card = card;
     }
+
 
     @Override
     public void run() {
@@ -51,12 +65,20 @@ public class PlayCard implements Runnable{
     }
 
 
+    /**
+     * @return true if it is a currently admitted action, false otherwise
+     */
     private boolean checkPlayCondition(){
         return game.getGameState() == GameState.PLAY_CARD &&
                 game.getCurrentPlayer().getNickname().equals(client.getNickname());
     }
 
 
+    /**
+     * @param playerPositions a player's list of permitted position
+     * @param position position that want to play
+     * @return true if list of permitted position contains position
+     */
     private boolean isPositionValid(List<int[]> playerPositions, int[] position){
         for (int[] p:playerPositions) {
             if (Arrays.equals(p,position))
@@ -66,6 +88,11 @@ public class PlayCard implements Runnable{
     }
 
 
+    /**
+     * @param board where contains check method
+     * @return true if card is not a gold card or else is backside
+     * or else it is gold card and required condition is fulfilled, false otherwise
+     */
     private boolean isCardConditionFulfilled(PlayerBoard board){
         if (card.getType() == CardType.GOLD && !isBackSide){
             GoldCard goldCard = (GoldCard) card;

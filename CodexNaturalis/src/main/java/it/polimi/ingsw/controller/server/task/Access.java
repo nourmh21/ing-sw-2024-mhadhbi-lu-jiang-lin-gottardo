@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 import static it.polimi.ingsw.message.enums.ErrorType.*;
 
-/*
-  Comment about this class implementation status:
-  I almost completely ignored cyber-security issues
-  I didn't try to found an efficient algorithm to find content in a file <- Should I do it?
+
+/**
+ * The Access is one of Runnable executed by {@link GameController}
+ * It manages the login and the registration operation
  */
 public class Access implements Runnable{
     private String nickname;
@@ -20,6 +20,13 @@ public class Access implements Runnable{
     private Boolean isRegistered;
     private Client client;
 
+    /**
+     * Constructor
+     * @param client user who made the action
+     * @param nickname nickname of that user
+     * @param pwd password
+     * @param isRegistered true if already registered, false otherwise
+     */
     public Access(Client client, String nickname, String pwd, Boolean isRegistered){
         this.nickname = nickname;
         this.pwd = pwd;
@@ -69,6 +76,12 @@ public class Access implements Runnable{
 
     }
 
+
+    /**
+     * @param file file that contains all user credentials
+     * @return true if nickname is already used, false otherwise
+     * @throws FileNotFoundException if file is invalid
+     */
     private boolean nicknameExistence(File file) throws FileNotFoundException {
         Scanner sc = new Scanner(file);
         boolean existence = false;
@@ -80,6 +93,11 @@ public class Access implements Runnable{
         return existence;
     }
 
+
+    /**
+     * @param file file that contains all user credentials
+     * @return true if user's credentials are correct, false otherwise
+     */
     private boolean tryLogin(File file){
         boolean found = false;
         try {
@@ -103,6 +121,10 @@ public class Access implements Runnable{
         return found;
     }
 
+
+    /**
+     * Manages the client in case of login success
+     */
     private void loginSuccess(){
         client.setNickname(nickname);
         GameController.getInstance().addNewUserLoggedIn(nickname);

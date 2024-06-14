@@ -9,18 +9,36 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
 
+/**
+ * The DrawCard is one of Runnable executed by {@link GameController}
+ * It manages the draw of a card according the location that client drew
+ * In the end it calls the execution of TurnManager Runnable
+ */
 public class DrawCard  implements Runnable {
     private Client client;
     private Game game;
     private LocationType locationType;
     private int idCard;
 
-    
+    /**
+     * Constructor for deck draw
+     * @param client user who made the action
+     * @param game the game that user is in
+     * @param locationType location where the card is drawn
+     */
     public DrawCard(Client client, Game game, LocationType locationType){
         this.client = client;
         this.game = game;
         this.locationType = locationType;
     }
+
+    /**
+     * Constructor for face up card pick
+     * @param client user who made the action
+     * @param game the game that user is in
+     * @param locationType location where the card is drawn
+     * @param idCard id of the face up card
+     */
     public DrawCard(Client client, Game game, LocationType locationType, Integer idCard){
         this.client = client;
         this.game = game;
@@ -68,6 +86,11 @@ public class DrawCard  implements Runnable {
         
         
     }
+
+
+    /**
+     * @return true if it is a currently admitted action, false otherwise
+     */
     private boolean checkDrawCondition(){
         return game.getGameState() == GameState.DRAW_CARD &&
                 game.getCurrentPlayer().getNickname().equals(client.getNickname());

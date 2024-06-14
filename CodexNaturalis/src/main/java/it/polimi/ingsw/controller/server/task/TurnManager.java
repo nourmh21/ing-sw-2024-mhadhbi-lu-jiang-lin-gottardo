@@ -7,6 +7,10 @@ import it.polimi.ingsw.model.enums.GameState;
 
 import java.util.List;
 
+/**
+ * The TurnManager is one of Runnable executed for the progression of a game, called to execute by {@link DrawCard}
+ * It manages the change of turn and checks if end game condition is fulfilled
+ */
 public class TurnManager implements Runnable{
     private Game game;
 
@@ -54,6 +58,11 @@ public class TurnManager implements Runnable{
         }
     }
 
+
+    /**
+     * update the turn
+     * @param j index of the last player
+     */
     private void updateTurn(int j){
         if ( j < numOfPlayer-1){
             game.setCurrentPlayer(players.get(j+1));
@@ -62,6 +71,11 @@ public class TurnManager implements Runnable{
         }
     }
 
+
+    /**
+     * @param playerList list of all players
+     * @return true if one player has point >= 20 or if both gold and resource decks are empty, false otherwise
+     */
     private boolean checkEndTrigger(List<Player> playerList){
         return ((playerList.stream()
                 .parallel()

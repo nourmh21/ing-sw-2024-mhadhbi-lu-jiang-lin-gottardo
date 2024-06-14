@@ -8,6 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The Start is one of Runnable executed for the progression of a game
+ * It is called to execute by {@link SetPersonalGoal} in specific condition
+ * It manages the choice of the player who begins to play (randomly) and start the game
+ */
 public class Start implements Runnable{
     private Game game;
     private List<Player> players;

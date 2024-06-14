@@ -6,10 +6,19 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.GameState;
 
+/**
+ * The PlayerDisconnect is one of Runnable executed by {@link GameController}
+ * It manages the disconnection of a player currently in game
+ */
 public class PlayerDisconnect implements Runnable{
     Client client;
     Game game;
 
+    /**
+     * Constructor
+     * @param client user who made the action
+     * @param game game tha user is in
+     */
     public PlayerDisconnect(Client client, Game game){
         this.client = client;
         this.game = game;

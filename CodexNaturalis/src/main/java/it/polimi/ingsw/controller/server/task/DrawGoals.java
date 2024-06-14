@@ -6,12 +6,21 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 
+
+/**
+ * The DrawCard is one of Runnable executed for the progression of a game
+ * It is called to execute by {@link PlayInitialCard} in specific condition
+ * It manages the draw of all public or private objective(goal) cards
+ */
 public class DrawGoals implements Runnable{
 
     private Game game;
-    private String nickname;
 
 
+    /**
+     * Constructor
+     * @param game the game that want to do draw cards
+     */
     public DrawGoals(Game game){
         this.game = game;
     }
@@ -19,9 +28,7 @@ public class DrawGoals implements Runnable{
 
     @Override
     public void run() {
-
         Desk desk = game.getDesk();
-
         try {
             //draw common game's common goals
             game.setCommonGoals(desk.pickOneCard(CardType.OBJECTIVE));

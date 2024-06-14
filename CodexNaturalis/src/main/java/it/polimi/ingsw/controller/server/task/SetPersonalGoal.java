@@ -8,6 +8,10 @@ import it.polimi.ingsw.model.enums.GameState;
 
 import java.util.Objects;
 
+/**
+ * The SetPersonalGoal is one of Runnable executed by {@link GameController}
+ * It manages the choice of the personal objective(goal) card
+ */
 public class SetPersonalGoal implements Runnable{
     Client client;
     Game game;
@@ -35,22 +39,24 @@ public class SetPersonalGoal implements Runnable{
                     //otherwise this action will be considered illegal and will be ignored
                     break;
                 }
-
             }
-
             //count player who has already selected a personal goal
             for (Player p: game.getPlayers()) {
                 if (p.getPersonalGoal() != null){
                     i++;
                 }
             }
-
             //if all players have already set their goal;
             if (i == game.getNumOfPlayer())
                 GameController.getInstance().executeTask(new Start(game));
         }
     }
 
+
+    /**
+     * @param p player
+     * @return true is the id of card is correct, false otherwise
+     */
     private boolean checkValidity(Player p){
         Integer[] goals = p.getInitialPossibleGoals();
         return (Objects.equals(goals[0], idCard) || Objects.equals(goals[1], idCard));
