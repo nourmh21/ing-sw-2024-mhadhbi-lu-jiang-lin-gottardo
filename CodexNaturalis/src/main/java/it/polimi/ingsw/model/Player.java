@@ -200,7 +200,7 @@ public class Player extends ModelObservable {
 
 
     /**
-     * add card to hand
+     * add card to hand card
      * @param idCard id of the card
      * @throws InvalidNumOfHandCardsException when the player already has three cards in the hand
      */
