@@ -73,10 +73,6 @@ public class ImmutableGame implements Serializable {
             displayedGCards = null;
     }
 
-    public int getIdGame() {
-        return idGame;
-    }
-
 
     public int getNumOfPlayer() {
         return numOfPlayer;
