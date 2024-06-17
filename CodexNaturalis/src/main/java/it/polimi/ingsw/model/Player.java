@@ -38,6 +38,12 @@ public class Player extends ModelObservable {
     private Integer initialCard;
 
 
+    /**
+     * constructor of the Player class which extends ModelObserver
+     * @param nickname defines the name of player
+     * @param game defines the game which the player is part of
+     * @param color defines color of player
+     */
     public Player(String nickname, Game game, Color color){
         this.nickname = nickname;
         isPersonalGoalChosen = false;
@@ -60,15 +66,22 @@ public class Player extends ModelObservable {
     }
 
 
+    /**
+     * @return initial card of player
+     */
     public Integer getInitialCard(){
         return initialCard;
     }
 
 
+    /**
+     * @param idCard is the id of personal goal card
+     */
     public void setPersonalGoal(Integer idCard){
         personalGoal = idCard;
         setPersonalGoalChosen();
     }
+
 
     public void setPersonalGoalChosen() {
         isPersonalGoalChosen = true;
@@ -80,6 +93,10 @@ public class Player extends ModelObservable {
         return isPersonalGoalChosen;
     }
 
+
+    /**
+     * @param goals id of possible goals for the player
+     */
     public void setInitialPossibleGoals(Integer[] goals){
         initialPossibleGoals = goals;
         //
@@ -87,6 +104,9 @@ public class Player extends ModelObservable {
     }
 
 
+    /**
+     * @return possible goals of player
+     */
     public Integer[] getInitialPossibleGoals(){
         return initialPossibleGoals;
     }
@@ -195,14 +215,20 @@ public class Player extends ModelObservable {
     }
 
 
+    /**
+     * remove used card from HandCard
+     * @param idCard indicates id of the card used
+     */
     public void removeHandCard(Integer idCard){
         handCards.remove(idCard);
-        //
         notify_hand_cards(this);
         notify_player_status(new ImmutablePlayer(this,this.board));
     }
 
 
+    /**
+     * @return board of player
+     */
     public PlayerBoard getBoard() {
         return board;
     }

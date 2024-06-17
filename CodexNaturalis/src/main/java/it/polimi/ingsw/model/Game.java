@@ -32,6 +32,7 @@ public class Game extends ModelObservable {
 
     /***
      * the class constructor
+     * @param numOfPlayer defines number of player for the game
      */
     public Game(int numOfPlayer) {
         desk = new Desk(this);
@@ -59,6 +60,10 @@ public class Game extends ModelObservable {
     }
 
 
+    /**
+     * it sets common goal for the game
+     * @param idCard indicates id of the common goal
+     */
     public void setCommonGoals(Integer idCard){
         if (commonGoals.size() < 2)
             commonGoals.add(idCard);
@@ -176,7 +181,7 @@ public class Game extends ModelObservable {
 
 
     /**
-     * find a player or some players whose have max point
+     * find players with maximum points
      * @return the list of possible winner
      */
     public void checkMaxPoint(){
@@ -201,7 +206,7 @@ public class Game extends ModelObservable {
 
 
     /**
-     * find final winner in the game
+     * find final winners in the game
      * @return the final winners list
      */
     public void checkExtraPoint(){
@@ -217,6 +222,11 @@ public class Game extends ModelObservable {
 
     }
 
+
+    /**
+     * it gets points of player
+     * @return point
+     */
     private HashMap<String,int[]> getPlayersPoint(){
         HashMap<String,int[]> finalResult = new HashMap<>();
         for (Player p: getPlayers()) {
@@ -225,12 +235,20 @@ public class Game extends ModelObservable {
         return finalResult;
     }
 
+
+    /**
+     * @return winners' nickname
+     */
     public List<String> getWinnersNickname(){
         return getWinners().stream()
                 .map(Player::getNickname)
                 .toList();
     }
 
+
+    /**
+     * @return players' nickname
+     */
     public List<String> getPlayersNickname(){
         return getPlayers().stream()
                 .map(Player::getNickname)
@@ -238,6 +256,9 @@ public class Game extends ModelObservable {
     }
 
 
+    /**
+     * @retur List of winners
+     */
     public List<Player> getWinners(){
         return winners;
     }
@@ -259,13 +280,16 @@ public class Game extends ModelObservable {
     }
 
 
+    /**
+     * @return desk of the game
+     */
     public Desk getDesk() {
         return desk;
     }
 
 
     /**
-     * it randoms color
+     * it randoms color (without repeat)
      * @return the color get by random
      */
     public Color randomColor(){

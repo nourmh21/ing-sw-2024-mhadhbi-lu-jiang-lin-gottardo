@@ -22,6 +22,10 @@ public class Lobby extends ModelObservable {
     }
 
 
+    /**
+     * add new player in the lobby
+     * @param nickname indicate the player's name added in the lobby
+     */
     public void addNewPlayer(String nickname){
 
         players.add(nickname);
@@ -46,6 +50,10 @@ public class Lobby extends ModelObservable {
     }
 
 
+    /**
+     * remove player from lobby
+     * @param nickname is the nickname of player removed from lobby
+     */
     public void removePlayer(String nickname){
         ModelObserver observer = null;
         for (ModelObserver o: observers) {
