@@ -102,8 +102,7 @@ public class Game extends ModelObservable {
 
     /**
      * add the new player in the player list
-     * //@param p indicates the new player in addition
-     * @throws InvalidNumOfConnectedPlayer when only one player is connected
+     * @param nickname is the new player's name
      */
     public void addPlayers(String nickname) {
         players.add(new Player(nickname, this, randomColor()));
@@ -303,6 +302,15 @@ public class Game extends ModelObservable {
 
     public void addNewChat(ChatMessage message){
         chatHistory.addNewMessage(message);
+    }
+
+
+    /**
+     * @visible for GameTest
+     * @return chatHistory
+     */
+    public ChatHistory getChatHistory(){
+        return chatHistory;
     }
 
 }

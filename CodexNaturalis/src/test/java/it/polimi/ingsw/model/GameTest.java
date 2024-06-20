@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enums.Color;
+
+import it.polimi.ingsw.model.enums.GameState;
 import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
+import it.polimi.ingsw.model.exceptions.InvalidNumOfHandCardsException;
 import org.junit.Before;
 import org.junit.Test;
+import it.polimi.ingsw.message.general.ChatMessage;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +30,6 @@ public class GameTest {
         game.addPlayers("Rossi");
         game.addPlayers("Verdi");
         game.addPlayers("Neri");
-
 
     }
 
@@ -104,6 +104,57 @@ public class GameTest {
         game.disconnect(game.getPlayers().get(0));
         game.disconnect(game.getPlayers().get(1));
     }
+
+
+    @Test
+    public void removeHandCard_checkHandCard_ReallyRemoved(){
+        game.getPlayers().get(0).addCardToHandCards(63);
+        game.getPlayers().get(0).addCardToHandCards(54);
+        game.getPlayers().get(0).addCardToHandCards(21);
+
+        game.getPlayers().get(0).removeHandCard(game.getPlayers().get(0).getHandCards().get(1));
+        assertEquals(game.getPlayers().get(0).getHandCards().size(), 2);
+    }
+
+
+    @Test
+    public void setPersonalGoal_checkPersonalGoal_ReallySet(){
+        game.getPlayers().get(1).setPersonalGoal(94);
+        assertNotNull(game.getPlayers().get(1).getPersonalGoal());
+    }
+
+    @Test
+    public void addNewMessage_checkMessage_ReallyAdded(){
+        String sender = "firstsend";
+        String content = "Ciao";
+        String recipient = "A";
+        ChatMessage message = new ChatMessage(sender, recipient, content);
+        game.addNewChat(message);
+
+        assertTrue(game.getChatHistory()!=null);
+
+    }
+
+
+    @Test
+    public void getDesk_checkGameDesk_ReallyGet(){
+        assertNotNull(game.getDesk());
+    }
+
+
+    @Test
+    public void setGameState(){
+        game.setGameState(GameState.PLAY_CARD);
+        assertTrue(game.getGameState()==GameState.PLAY_CARD);
+    }
+
+
+    @Test
+    public void setCurrentPlayer(){
+        game.setCurrentPlayer(p1);
+        assertEquals(game.getCurrentPlayer(), p1);
+    }
+
 
 
 
