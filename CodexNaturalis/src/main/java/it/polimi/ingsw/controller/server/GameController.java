@@ -300,5 +300,23 @@ public class GameController {
         return instance;
     }
 
+
+    /**
+     * @visible for GameControllerTest
+     * @return usersInGame
+     */
+    public ConcurrentHashMap<String, Game> getUserInGame(){
+        return usersInGame;
+    }
+
+
+    /**
+     * @visible for GameControllerTest
+     * @return availableLobby
+     */
+    public List<Lobby> getAvailableLobby(){
+        return availableLobby;
+    }
+
 }
 
