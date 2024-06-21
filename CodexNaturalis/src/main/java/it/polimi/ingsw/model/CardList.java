@@ -21,7 +21,7 @@ public final class CardList{
         cardList.add(new Card(4, Symbol.FUNGI,Symbol.HIDDEN, Symbol.FUNGI, Symbol.FUNGI, Symbol.EMPTY, 0, CardType.RESOURCE));
         cardList.add(new Card(5, Symbol.FUNGI,Symbol.HIDDEN, Symbol.FEATHER, Symbol.FUNGI, Symbol.PLANT, 0, CardType.RESOURCE));
         cardList.add(new Card(6, Symbol.FUNGI,Symbol.INK_BOTTLE,Symbol.FUNGI, Symbol.ANIMAL, Symbol.HIDDEN, 0, CardType.RESOURCE));
-        cardList.add(new Card(7, Symbol.FUNGI,Symbol.FUNGI, Symbol.INSECT, Symbol.HIDDEN, Symbol.PARCHMENT, 0, CardType.RESOURCE));
+        cardList.add(new Card(7, Symbol.FUNGI,Symbol.FUNGI, Symbol.INSECT, Symbol.EMPTY, Symbol.PARCHMENT, 0, CardType.RESOURCE));
         cardList.add(new Card(8, Symbol.FUNGI,Symbol.EMPTY, Symbol.FUNGI, Symbol.HIDDEN, Symbol.EMPTY, 1, CardType.RESOURCE));
         cardList.add(new Card(9, Symbol.FUNGI,Symbol.FUNGI, Symbol.HIDDEN, Symbol.EMPTY, Symbol.EMPTY, 1, CardType.RESOURCE));
         cardList.add(new Card(10, Symbol.FUNGI,Symbol.HIDDEN, Symbol.EMPTY, Symbol.EMPTY, Symbol.FUNGI, 1, CardType.RESOURCE));
