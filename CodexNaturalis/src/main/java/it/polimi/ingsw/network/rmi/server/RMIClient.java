@@ -5,7 +5,7 @@ import it.polimi.ingsw.message.enums.NotifyType;
 import it.polimi.ingsw.message.error.ErrorMessage;
 import it.polimi.ingsw.message.notify.NotifyMessage;
 import it.polimi.ingsw.network.Client;
-import it.polimi.ingsw.network.rmi.client.RMIClientInter;
+import it.polimi.ingsw.network.rmi.client.RMIClientInterface;
 import it.polimi.ingsw.observer.ModelObserver;
 import it.polimi.ingsw.observer.RMIObserver;
 
@@ -13,9 +13,9 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public class RMIClient extends Client {
-    private final RMIClientInter rmiClient;
+    private final RMIClientInterface rmiClient;
 
-    public RMIClient(RMIClientInter rmiClient)  {
+    public RMIClient(RMIClientInterface rmiClient)  {
 
         this.rmiClient= rmiClient;
         try {

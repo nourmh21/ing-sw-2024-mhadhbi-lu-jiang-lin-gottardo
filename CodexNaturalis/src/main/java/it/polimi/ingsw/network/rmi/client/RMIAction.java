@@ -3,15 +3,15 @@ package it.polimi.ingsw.network.rmi.client;
 import it.polimi.ingsw.controller.client.ClientAction;
 import it.polimi.ingsw.message.enums.LocationType;
 import it.polimi.ingsw.message.general.ChatMessage;
-import it.polimi.ingsw.network.rmi.server.RMIServer;
+import it.polimi.ingsw.network.rmi.server.RMIServerInterface;
 
 import java.rmi.RemoteException;
 
 //to be completed by Nourhane
 public class RMIAction implements ClientAction {
-    private final RMIClientInter rmiClient;
-    private final RMIServer stub;
-    public RMIAction(RMIServer server , RMIClientInter rmiClient) {
+    private final RMIClientInterface rmiClient;
+    private final RMIServerInterface stub;
+    public RMIAction(RMIServerInterface server , RMIClientInterface rmiClient) {
         this.stub = server;
         this.rmiClient = rmiClient;
     }

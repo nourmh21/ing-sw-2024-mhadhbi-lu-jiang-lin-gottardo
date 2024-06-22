@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
 import it.polimi.ingsw.model.immutable.ImmutableLobby;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
-import it.polimi.ingsw.network.rmi.client.RMIClientInter;
+import it.polimi.ingsw.network.rmi.client.RMIClientInterface;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -19,9 +19,9 @@ import java.util.List;
 
 public class RMIObserver implements ModelObserver {
     String nickname;
-    RMIClientInter rmiClient;
+    RMIClientInterface rmiClient;
 
-    public RMIObserver(String nickname, RMIClientInter rmiClient) {
+    public RMIObserver(String nickname, RMIClientInterface rmiClient) {
         this.nickname = nickname;
         this.rmiClient = rmiClient;
     }
