@@ -17,7 +17,6 @@ import java.util.List;
  * -goalPoint: points acquired from objective cards
  * -playerColor: player's color
  * -personalGoal: objective that each player has to realize in order to acquire points at the end of game
- * -isConnected: verify if the player is connected
  * -handCards define list of card in hand of player.
  */
 public class Player extends ModelObservable {
@@ -29,7 +28,6 @@ public class Player extends ModelObservable {
 
     private Integer[] initialPossibleGoals;
 
-    private boolean isConnected;
 
     private boolean isPersonalGoalChosen;
     private PlayerBoard board;
@@ -52,7 +50,6 @@ public class Player extends ModelObservable {
         goalPoint = 0;
         personalGoal = null;
         playerColor = color;
-        isConnected = true;
         board = new PlayerBoard();
         initialPossibleGoals = new Integer[2];
         try {
@@ -176,22 +173,6 @@ public class Player extends ModelObservable {
 
 
     /**
-     * @return true if player's connected, otherwise false
-     */
-    public boolean isConnected() {
-        return isConnected;
-    }
-
-
-    /**
-     * Set player disconnected from the game
-     */
-    public void setDisconnected(){
-        isConnected = false;
-    }
-
-
-    /**
      * @return list of Hand cards
      */
     public List<Integer> getHandCards() {
@@ -206,7 +187,6 @@ public class Player extends ModelObservable {
      */
     public void addCardToHandCards(Integer idCard){
         handCards.add(idCard);
-        //
         if (handCards.size() == 3){
             notify_hand_cards(this);
             notify_player_status(new ImmutablePlayer(this,this.board));
