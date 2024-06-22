@@ -45,15 +45,12 @@ public class GameTest {
     public void checkMaxPoint_GetMaxPointOfPlayers_ShouldReturnPossibleWinners(){
         p1 = game.getPlayers().get(0);
         p1.updatePoint(21);
-        p1.isConnected();
 
         p2 = game.getPlayers().get(1);
         p2.updatePoint(25);
-        p2.isConnected();
 
         p3 = game.getPlayers().get(2);
         p3.updatePoint(25);
-        p3.isConnected();
 
         game.checkMaxPoint();
 
@@ -65,15 +62,12 @@ public class GameTest {
     public void checkMaxPoint_GetMaxPoint_ShouldReturnOnePlayer(){
         p1 = game.getPlayers().get(0);
         p1.updatePoint(21);
-        p1.isConnected();
 
         p2 = game.getPlayers().get(1);
         p2.updatePoint(21);
-        p2.isConnected();
 
         p3 = game.getPlayers().get(2);
         p3.updatePoint(25);
-        p3.isConnected();
 
         game.checkMaxPoint();
 
@@ -98,12 +92,6 @@ public class GameTest {
 
     }
 
-
-    @Test (expected = InvalidNumOfConnectedPlayer.class)
-    public void disconnect_InvalidNumOfPlayer_throwInvalidNumOfConnectedPlayer() throws InvalidNumOfConnectedPlayer {
-        game.disconnect(game.getPlayers().get(0));
-        game.disconnect(game.getPlayers().get(1));
-    }
 
 
     @Test

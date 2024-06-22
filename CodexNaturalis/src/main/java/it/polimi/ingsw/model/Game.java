@@ -24,7 +24,6 @@ public class Game extends ModelObservable {
     private List<Player> winners;
     public List<Player> possibleWinners;
     private boolean isLastRound;
-    private int numOfConnectedPlayers;   //num of player connect in the game
     private Player currentPlayer; //indicates the current player of the game
     private ChatHistory chatHistory;
     ArrayList<Color> colors;
@@ -41,7 +40,6 @@ public class Game extends ModelObservable {
         possibleWinners = new ArrayList<>();
         commonGoals = new ArrayList<>();
         this.numOfPlayer = numOfPlayer;
-        numOfConnectedPlayers = 0;
         Random random=new Random();                //genera codice alfanumerici (è presente un file dove memorizza...)
         idGame = random.nextInt(1000000);
         gameState = GameState.SETUP_PHASE_1;
@@ -106,7 +104,6 @@ public class Game extends ModelObservable {
      */
     public void addPlayers(String nickname) {
         players.add(new Player(nickname, this, randomColor()));
-        numOfConnectedPlayers++;
         if (players.size() == numOfPlayer){
             notify_game_status(new ImmutableGame(this));
         }
@@ -126,19 +123,6 @@ public class Game extends ModelObservable {
      */
     public int getPlayersSize(){
         return players.size();
-    }
-
-
-    /**
-     * @param p indicated the player disconnect
-     * @throws InvalidNumOfConnectedPlayer when in the game remains one player
-     */
-    public void disconnect(Player p) throws InvalidNumOfConnectedPlayer {
-        p.setDisconnected();
-        numOfConnectedPlayers -= 1;
-        if (numOfConnectedPlayers == 1) {
-            throw new InvalidNumOfConnectedPlayer();
-        }
     }
 
 
@@ -186,12 +170,12 @@ public class Game extends ModelObservable {
     public void checkMaxPoint(){
         int max = 20;
         for (Player p:players){
-            if ((p.getPoint() >= max) && (p.isConnected()))
+            if ((p.getPoint() >= max))
                 max = p.getPoint();
         }
 
         for (Player p:players){
-            if ((p.getPoint() == max) && (p.isConnected())){
+            if ((p.getPoint() == max)){
                 possibleWinners.add(p);
             }
         }
