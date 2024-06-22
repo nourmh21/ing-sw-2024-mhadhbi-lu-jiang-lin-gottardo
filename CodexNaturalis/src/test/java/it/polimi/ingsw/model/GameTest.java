@@ -131,18 +131,34 @@ public class GameTest {
 
 
     @Test
-    public void setGameState(){
+    public void setGameState_checkState_ReallyChange(){
         game.setGameState(GameState.PLAY_CARD);
         assertTrue(game.getGameState()==GameState.PLAY_CARD);
     }
 
 
     @Test
-    public void setCurrentPlayer(){
+    public void setCurrentPlayer_checkPlayer_ReallyChange(){
         game.setCurrentPlayer(p1);
         assertEquals(game.getCurrentPlayer(), p1);
     }
 
+
+    @Test
+    public void setCommonGoals(){
+        game.setCommonGoals(84);
+        game.setCommonGoals(86);
+
+        assertEquals(game.getCommonGoals().size(), 2);
+    }
+
+
+    @Test
+    public void setIsLastRound(){
+        game.setIsLastRound();
+
+        assertTrue(game.getIsLastRound());
+    }
 
 
 

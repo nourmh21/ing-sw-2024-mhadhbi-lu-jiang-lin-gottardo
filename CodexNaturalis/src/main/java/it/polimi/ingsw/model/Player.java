@@ -28,7 +28,6 @@ public class Player extends ModelObservable {
 
     private Integer[] initialPossibleGoals;
 
-
     private boolean isPersonalGoalChosen;
     private PlayerBoard board;
     private List<Integer> handCards;

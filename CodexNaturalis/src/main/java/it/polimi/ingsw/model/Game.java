@@ -17,14 +17,14 @@ import java.util.Random;
 public class Game extends ModelObservable {
     private final int idGame;
     private GameState gameState;
-    private int numOfPlayer;      //indicates the number of player in the game
-    private List<Player> players;  //is the list of player
-    private final List<Integer> commonGoals; //in contains the common goals for all players
+    private int numOfPlayer;
+    private List<Player> players;
+    private final List<Integer> commonGoals;
     private Desk desk;
     private List<Player> winners;
     public List<Player> possibleWinners;
     private boolean isLastRound;
-    private Player currentPlayer; //indicates the current player of the game
+    private Player currentPlayer;
     private ChatHistory chatHistory;
     ArrayList<Color> colors;
 
@@ -40,7 +40,7 @@ public class Game extends ModelObservable {
         possibleWinners = new ArrayList<>();
         commonGoals = new ArrayList<>();
         this.numOfPlayer = numOfPlayer;
-        Random random=new Random();                //genera codice alfanumerici (è presente un file dove memorizza...)
+        Random random=new Random();
         idGame = random.nextInt(1000000);
         gameState = GameState.SETUP_PHASE_1;
         isLastRound =false;
