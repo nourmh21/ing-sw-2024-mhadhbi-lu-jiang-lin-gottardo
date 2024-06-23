@@ -19,7 +19,7 @@ public class RMIClient extends Client {
 
         this.rmiClient= rmiClient;
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.CONNECTED));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.CONNECTED));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -33,7 +33,7 @@ public class RMIClient extends Client {
     @Override
     public void informError(ErrorType errorType) {
         try {
-            rmiClient.executMessage(new ErrorMessage(errorType));
+            rmiClient.executeMessage(new ErrorMessage(errorType));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +44,7 @@ public class RMIClient extends Client {
     @Override
     public void informActionResult(NotifyType notifyType) {
         try {
-            rmiClient.executMessage(new NotifyMessage(notifyType));
+            rmiClient.executeMessage(new NotifyMessage(notifyType));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +55,7 @@ public class RMIClient extends Client {
     @Override
     public void informLobbyList(List<Integer[]> lobbies) {
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.LOBBY_LIST, lobbies));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.LOBBY_LIST, lobbies));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

@@ -20,7 +20,7 @@ public class RMIClientImpl extends UnicastRemoteObject implements RMIClientInter
     public void ping() throws RemoteException {}
 
     @Override
-    public void executMessage(Message message) throws RemoteException {
+    public void executeMessage(Message message) throws RemoteException {
         messageExecutor.execute(message);
     }
 

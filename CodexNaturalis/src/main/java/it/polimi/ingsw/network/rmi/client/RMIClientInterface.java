@@ -7,5 +7,5 @@ import java.rmi.RemoteException;
 
 public interface RMIClientInterface extends Remote {
     void ping() throws RemoteException;
-    void executMessage(Message message)throws RemoteException;
+    void executeMessage(Message message)throws RemoteException;
 }

@@ -29,6 +29,7 @@ public class ImmutablePlayer implements Serializable {
     private final List<int[]> permissiblePosition;
     private final List<Symbol> handCardKingdoms;
     private final List<CardType> handCardTypes;
+    private final int[] symbolList;
 
     public ImmutablePlayer(Player player, PlayerBoard board){
         nickname = player.getNickname();
@@ -41,6 +42,7 @@ public class ImmutablePlayer implements Serializable {
         x = board.getX();
         y = board.getY();
         permissiblePosition = board.getAvailablePosition();
+        symbolList = board.getSymbolList();
         if (player.getHandCards() != null){
             handCardKingdoms = player.getHandCards().stream()
                     .map(integer -> (((Card)(GameController.getInstance().getCard(integer))).getKingdom()))
@@ -102,5 +104,9 @@ public class ImmutablePlayer implements Serializable {
     public List<Boolean> getIsBackSide() {
         return isBackSide;
     }
+
+    public int[] getSymbolList(){
+        return symbolList;
+    };
 }
 

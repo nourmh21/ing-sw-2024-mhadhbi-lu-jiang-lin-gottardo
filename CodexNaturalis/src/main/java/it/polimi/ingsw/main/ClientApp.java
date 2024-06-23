@@ -67,7 +67,6 @@ public class ClientApp {
                 RMIServerInterface stub = (RMIServerInterface) registry.lookup("Server");
                 ClientController.getInstance().setClientAction(new RMIAction( stub,client));
                 stub.registerClient(client);
-
         } catch (Exception e) {
                 System.err.println("ClientApp exception: " + e.toString());
                 ClientController.getInstance().getView().showConnectionError();

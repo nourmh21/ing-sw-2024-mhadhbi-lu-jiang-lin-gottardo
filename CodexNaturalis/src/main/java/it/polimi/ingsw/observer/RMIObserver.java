@@ -36,7 +36,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_lobby_status(ImmutableLobby lobby) {
         try {
-                rmiClient.executMessage(new NotifyMessage(NotifyType.LOBBY_STATUS,lobby));
+                rmiClient.executeMessage(new NotifyMessage(NotifyType.LOBBY_STATUS,lobby));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
@@ -46,7 +46,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_game_status(ImmutableGame game) {
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.GAME_STATUS,game));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.GAME_STATUS,game));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +55,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_player_status(ImmutablePlayer player) {
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.PLAYER_STATUS,player));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.PLAYER_STATUS,player));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +64,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_two_personal_goal(Integer[] personalGoals) {
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.PERSONAL_GOALS,personalGoals));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.PERSONAL_GOALS,personalGoals));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -73,7 +73,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_player_handCard(List<Integer> handCards) {
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.HAND_CARDS, handCards));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.HAND_CARDS, handCards));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +82,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_end_game_info(ImmutableEndGameInfo endGameInfo) {
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.END_GAME_INFO,endGameInfo));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.END_GAME_INFO,endGameInfo));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -91,7 +91,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_player_disconnected(String nickname) {
         try {
-            rmiClient.executMessage(new NotifyMessage(NotifyType.PLAYER_DISCONNECTED,nickname));
+            rmiClient.executeMessage(new NotifyMessage(NotifyType.PLAYER_DISCONNECTED,nickname));
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -100,7 +100,7 @@ public class RMIObserver implements ModelObserver {
     @Override
     public void send_chat(ChatMessage message) {
         try {
-            rmiClient.executMessage(message);
+            rmiClient.executeMessage(message);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
