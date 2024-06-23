@@ -4,7 +4,7 @@ package it.polimi.ingsw.main;
 import it.polimi.ingsw.controller.client.ClientController;
 import it.polimi.ingsw.network.rmi.client.RMIAction;
 import it.polimi.ingsw.network.rmi.client.RMIClientImpl;
-import it.polimi.ingsw.network.rmi.server.RMIServer;
+import it.polimi.ingsw.network.rmi.server.RMIServerInterface;
 import it.polimi.ingsw.network.socket.client.SocketAction;
 import it.polimi.ingsw.network.socket.client.HeartbeatSender;
 import it.polimi.ingsw.network.socket.client.MessageReader;
@@ -59,20 +59,19 @@ public class ClientApp {
     public static void tryRMIConnection(String ip){
 
         RMIClientImpl client= null;
-
-            try {
+        try {
                 client = new RMIClientImpl();
-                // Getting the registry
+                // Getting the registry.
                 Registry registry = LocateRegistry.getRegistry(ip, 1099);
                 // Looking up the registry for the remote object
-                RMIServer stub = (RMIServer) registry.lookup("Server");
+                RMIServerInterface stub = (RMIServerInterface) registry.lookup("Server");
                 ClientController.getInstance().setClientAction(new RMIAction( stub,client));
                 stub.registerClient(client);
 
-            } catch (Exception e) {
+        } catch (Exception e) {
                 System.err.println("ClientApp exception: " + e.toString());
                 ClientController.getInstance().getView().showConnectionError();
-            }
+        }
     }
 
 
