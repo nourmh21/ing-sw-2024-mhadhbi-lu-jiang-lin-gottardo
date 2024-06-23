@@ -9,6 +9,8 @@ import org.junit.Test;
 import it.polimi.ingsw.message.general.ChatMessage;
 
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 
@@ -145,7 +147,7 @@ public class GameTest {
 
 
     @Test
-    public void setCommonGoals(){
+    public void setCommonGoals_checkCommonGoals_ReallySet(){
         game.setCommonGoals(84);
         game.setCommonGoals(86);
 
@@ -154,10 +156,18 @@ public class GameTest {
 
 
     @Test
-    public void setIsLastRound(){
+    public void setIsLastRound_checkIsLastRound_isReallyLast(){
         game.setIsLastRound();
 
         assertTrue(game.getIsLastRound());
+    }
+
+    @Test
+    public void setInitialPossibleGoals_checkPossibleGoalsForPlayer_PlayerReallyReceived(){
+        Integer[] id = {92,93};
+        game.getPlayers().get(0).setInitialPossibleGoals(id);
+
+        assertNotNull(game.getPlayers().getFirst().getInitialPossibleGoals());
     }
 
 
