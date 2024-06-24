@@ -33,6 +33,7 @@ public class TUI implements UserInterface{
     private HashMap<ChatMessage, Boolean> chatMessages;
 
 
+
     public TUI() {
         in = new Scanner(System.in);
         out = new PrintStream(System.out, true);
@@ -48,6 +49,7 @@ public class TUI implements UserInterface{
         chatMessages = null;
     }
 
+// SHOW CARD IN BOARD
 
     /**
      * Asks the client to insert the server ip
@@ -87,7 +89,7 @@ public class TUI implements UserInterface{
         if (choice.equals("1")){
             ClientApp.trySocketConnection(ip);
         }else if(choice.equals("2")){
-            //
+            ClientApp.tryRMIConnection(ip);
         }else {
             invalidChoice();
             askConnectionType(ip);
@@ -173,7 +175,6 @@ public class TUI implements UserInterface{
         out.println("2- go back");
         String choice = in.nextLine();
         if(choice.equals("1")){
-            ;///
             ClientController.getInstance().getClientAction().access(tryNickname,pwd1,false);
         }else if(choice.equals("2")){
             askAccessMode();
@@ -358,17 +359,20 @@ public class TUI implements UserInterface{
             out.println("2- Three");
             out.println("3- Four");
             String choice = in.nextLine();
-            if (choice.equals("1")){
-                ClientController.getInstance().getClientAction().createLobby(2);
-                isValid = true;
-            }else if (choice.equals("2")){
-                ClientController.getInstance().getClientAction().createLobby(3);
-                isValid = true;
-            }else if (choice.equals("3")){
-                ClientController.getInstance().getClientAction().createLobby(4);
-                isValid = true;
-            }else {
-                invalidChoice();
+            switch (choice) {
+                case "1" -> {
+                    ClientController.getInstance().getClientAction().createLobby(2);
+                    isValid = true;
+                }
+                case "2" -> {
+                    ClientController.getInstance().getClientAction().createLobby(3);
+                    isValid = true;
+                }
+                case "3" -> {
+                    ClientController.getInstance().getClientAction().createLobby(4);
+                    isValid = true;
+                }
+                default -> invalidChoice();
             }
 
         }while (!isValid);
@@ -436,17 +440,100 @@ public class TUI implements UserInterface{
     }
 
 
+    /**
+     * show Symbols List
+     */
+    private void showSymbolsList(int[] symbolsList){
+        System.out.println("\nVisible objects and resources:");
+        System.out.println(AnsiColor.BLUE.getCode() + symbolsList[0] + "  Animal "+ AnsiColor.RESET.getCode());
+        System.out.println(AnsiColor.GREEN.getCode() + symbolsList[1] + "  Plant "+ AnsiColor.RESET.getCode());
+        System.out.println(AnsiColor.RED.getCode() + symbolsList[2] + "  Fungi "+ AnsiColor.RESET.getCode());
+        System.out.println(AnsiColor.MAGENTA.getCode() + symbolsList[3] + "  Insect "+ AnsiColor.RESET.getCode());
+        System.out.println(AnsiColor.BRIGHT_YELLOW.getCode() + symbolsList[4] + "  Quill"+ AnsiColor.RESET.getCode());
+        System.out.println(AnsiColor.BRIGHT_YELLOW.getCode() + symbolsList[5] + "  Inkwell"+ AnsiColor.RESET.getCode());
+        System.out.println(AnsiColor.BRIGHT_YELLOW.getCode() + symbolsList[6] + "  Manuscript"+ AnsiColor.RESET.getCode());
+        System.out.println();
+    }
+
+    /**
+     * Show player board
+     */
+    private void showPlayerBoard(ImmutablePlayer player) {
+
+        int minX = player.getX().stream().min(Integer::compareTo).orElse(Integer.MIN_VALUE)-1;
+        int maxX = player.getX().stream().max(Integer::compareTo).orElse(Integer.MAX_VALUE)+1;
+        int minY = player.getY().stream().min(Integer::compareTo).orElse(Integer.MIN_VALUE)-1;
+        int maxY = player.getY().stream().max(Integer::compareTo).orElse(Integer.MAX_VALUE)+1;
+
+        // Create a matrix of size rows y cols x and fill it with default values "   "
+        String[][] matrix = new String[maxY - minY + 1][maxX - minX + 1];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[i][j] = "   "; // default values
+            }
+        }
+
+        // Populate the matrix with the given coordinates, coloring the card ███ according to the kingdom
+        for (int i =0 ;i< player.getBoardCards().size() ;i++) {
+            int x = player.getX().get(i);
+            int y = player.getY().get(i);
+            int number = player.getBoardCards().get(i);
+            String color = getColor(number);
+
+            if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+                if ( number < 10) matrix[y - minY][x - minX] = color + AnsiColor.BLACK.getCode() +" "+ number +" " + AnsiColor.RESET.getCode();
+                if ( 9 < number && number < 100) matrix[y - minY][x - minX] = color + AnsiColor.BLACK.getCode()  +" "+ number  + AnsiColor.RESET.getCode();
+                if ( number > 99) matrix[y - minY][x - minX] = color + AnsiColor.BLACK.getCode() + number  + AnsiColor.RESET.getCode();
+            }
+        }
+
+        // Populate the matrix with the permissible coordinates, coloring it in white
+        for (int[] coord : player.getPermissiblePosition()) {
+            int x = coord[0];
+            int y = coord[1];
+            if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+                matrix[y - minY][x - minX] =  AnsiColor.WHITE.getCode() + "███" +  AnsiColor.RESET.getCode();
+            }
+        }
+
+        //Printing the matrix
+        System.out.print("  ");
+        for (int j = 0; j < matrix[0].length; j++) {
+            int n= j+minX;
+            if(n<0) System.out.print(" "+(j + minX) + " ");
+            else  System.out.print("  "+(j + minX) + " ");
+        }
+        System.out.println();
+        for (int i = matrix.length - 1; i >= 0; i--) {
+            int n= i+minY;
+            if((n<0)||(n>9)) System.out.print((n) + " ");
+            else  System.out.print(" "+(n) +" ");
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private static String getColor(int number) {
+        String color = AnsiColor.YELLOW_BACKGROUND.getCode();
+
+        if (( 0 < number && number < 11) || (40 < number && number < 51) ) { color = AnsiColor.RED_BACKGROUND.getCode();}
+        if ((10 < number && number < 21) || (50 < number && number < 61) ) { color = AnsiColor.GREEN_BACKGROUND.getCode();}
+        if ((20 < number && number < 31) || (60 < number && number < 71) ) { color = AnsiColor.BLUE_BACKGROUND.getCode();}
+        if ((30 < number && number < 41) || (70 < number && number < 81) ) { color = AnsiColor.MAGENTA_BACKGROUND.getCode();}
+
+        return color;
+    }
+
+
     public void showPlayerStatus(ImmutablePlayer player){
         out.println();
         out.println("Player: " + player.getNickname());
         out.println("Kingdoms of the back side of hand cards: " + player.getHandCardKingdoms());
-        out.print("Board: ");
-        if (!player.getBoardCards().isEmpty()){
-            for (int i = 0; i < player.getBoardCards().size(); i++) {
-                out.print(player.getBoardCards().get(i) + "[" + player.getX().get(i) + ", " + player.getY().get(i) + "]");
-                out.print("  ");
-            }
-        }
+        out.println("Board: ");
+        showPlayerBoard(player);
+        showSymbolsList(player.getSymbolList());
         out.println(" ");
 
     }
@@ -472,7 +559,7 @@ public class TUI implements UserInterface{
         out.println();
         out.println("[GAME SETUP]");
         out.println();
-        //showScoreBoard();
+        showScoreBoard();
         showDeskStatus();
         askInitCardPlace();
     }
@@ -590,7 +677,7 @@ public class TUI implements UserInterface{
 
     private void showCommonGoals(){
         out.println();
-        out.println("The two common goals: " + game.getCommonGoals());
+        out.println("The two common goals: \n" + Resource.getCard(game.getCommonGoals().get(0),false)+"\n"+ Resource.getCard(game.getCommonGoals().get(1),false));
     }
 
 
@@ -598,7 +685,7 @@ public class TUI implements UserInterface{
         if (myPersonalGoal == null)
             return;
         out.println();
-        out.println("Your personal goal: " + myPersonalGoal);
+        out.println("Your personal goal: \n" +  Resource.getCard(myPersonalGoal,false));
     }
 
 
@@ -613,14 +700,15 @@ public class TUI implements UserInterface{
 
     private void askInitCardPlace(){
         out.println();
-        out.println("Your initial card: " + me.getInitialCard());
+       // out.println("Your initial card: " + me.getInitialCard());
+        out.println("Your initial card: ");
         askInitialCardSide(me.getInitialCard());
         showWaitingComment();
     }
 
 
     private void askInitialCardSide(Integer id){
-        askSide();
+        askSide(id);
         String choice = in.nextLine();
         if (choice.equals("1"))
             ClientController.getInstance().getClientAction().playInitCard(id, false);
@@ -633,10 +721,10 @@ public class TUI implements UserInterface{
     }
 
 
-    private void askSide(){
+    private void askSide(Integer id){
         out.println("Which side of card do you want to play");
-        out.println("1- front");
-        out.println("2- back");
+        out.println("1- front :"+ Resource.getCard(id,false));
+        out.println("2- back :"+ Resource.getCard(id,true));
     }
 
 
@@ -649,8 +737,8 @@ public class TUI implements UserInterface{
     private void askPersonalGoalChoose(){
         out.println();
         out.println("Choose your personal goal: ");
-        out.println("1- "+possiblePersonalGoals[0]);
-        out.println("2- "+possiblePersonalGoals[1]);
+        out.println("1- "+ Resource.getCard(possiblePersonalGoals[0],false));
+        out.println("2- "+ Resource.getCard(possiblePersonalGoals[1],false));
         String choice = in.nextLine();
         if (choice.equals("1")){
             ClientController.getInstance().getClientAction().choosePersonalGoal(possiblePersonalGoals[0]);
@@ -679,7 +767,11 @@ public class TUI implements UserInterface{
 
     private void showHandCards(){
         out.println();
-        out.println("Your hand card: " + handCards);
+        out.println("Your hand card: " );
+        for (int i = 0; i < handCards.size(); i++) {
+            if (handCards.get(i) != null)
+                out.println((i+1) + "- " + Resource.getCard(handCards.get(i),false));
+        }
     }
 
 
@@ -692,10 +784,6 @@ public class TUI implements UserInterface{
 
         showHandCards();
         out.println("Which one do you want to play?");
-        for (int i = 0; i < handCards.size(); i++) {
-            if (handCards.get(i) != null)
-                out.println((i+1) + "- " + handCards.get(i));
-        }
 
         try{
             int choice = Integer.parseInt(in.nextLine());
@@ -726,7 +814,7 @@ public class TUI implements UserInterface{
      * @param position position that client wants to play
      */
     private void askCardSide(Integer id, int[] position){
-        askSide();
+        askSide(id);
         String choice = in.nextLine();
         if (!ClientController.getInstance().isConnected())
             return;
@@ -804,14 +892,14 @@ public class TUI implements UserInterface{
         out.println("DESK: ");
         if (game.getDisplayedRCards() != null){
             if (game.getDisplayedRCards().get(0) != null){
-                out.println("1- card: "+ game.getDisplayedRCards().get(0));
+                out.println("1- card: "+ Resource.getCard(game.getDisplayedRCards().get(0),false));
                 validChoices.add("1");
             }else {
                 out.println("1- empty");
             }
 
             if (game.getDisplayedRCards().get(1) != null){
-                out.println("2- card: "+ game.getDisplayedRCards().get(1));
+                out.println("2- card: "+ Resource.getCard(game.getDisplayedRCards().get(1),false));
                 validChoices.add("2");
             }else {
                 out.println("2- empty");
@@ -824,7 +912,7 @@ public class TUI implements UserInterface{
 
         if (game.getDisplayedGCards() != null){
             if (game.getDisplayedGCards().get(0) != null){
-                out.println("3- card: "+ game.getDisplayedGCards().get(0));
+                out.println("3- card: "+ Resource.getCard(game.getDisplayedGCards().get(0),false));
                 validChoices.add("3");
             }else {
                 out.println("3- empty");
@@ -832,7 +920,7 @@ public class TUI implements UserInterface{
             }
 
             if (game.getDisplayedGCards().get(1) != null){
-                out.println("4- card: "+ game.getDisplayedGCards().get(1));
+                out.println("4- card: "+ Resource.getCard(game.getDisplayedGCards().get(1),false));
                 validChoices.add("4");
             }else {
                 out.println("4- empty");
