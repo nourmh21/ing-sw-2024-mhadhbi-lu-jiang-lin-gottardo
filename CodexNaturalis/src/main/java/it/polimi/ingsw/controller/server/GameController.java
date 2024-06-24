@@ -302,7 +302,7 @@ public class GameController {
 
 
     /**
-     * @visible for GameControllerTest
+     * Visible for GameControllerTest
      * @return usersInGame
      */
     public ConcurrentHashMap<String, Game> getUserInGame(){
@@ -311,7 +311,7 @@ public class GameController {
 
 
     /**
-     * @visible for GameControllerTest
+     * Visible for GameControllerTest
      * @return availableLobby
      */
     public List<Lobby> getAvailableLobby(){

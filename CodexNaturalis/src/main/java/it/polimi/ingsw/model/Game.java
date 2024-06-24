@@ -164,8 +164,7 @@ public class Game extends ModelObservable {
 
 
     /**
-     * find players with maximum points
-     * @return the list of possible winner
+     * find players with maximum points and return the list of possible winner
      */
     public void checkMaxPoint(){
         int max = 20;
@@ -189,8 +188,7 @@ public class Game extends ModelObservable {
 
 
     /**
-     * find final winners in the game
-     * @return the final winners list
+     * find final winners in the game and return the final winners list
      */
     public void checkExtraPoint(){
         int maxExtraPoint=0;
@@ -240,7 +238,7 @@ public class Game extends ModelObservable {
 
 
     /**
-     * @retur List of winners
+     * @return List of winners
      */
     public List<Player> getWinners(){
         return winners;
@@ -290,7 +288,7 @@ public class Game extends ModelObservable {
 
 
     /**
-     * @visible for GameTest
+     * Visible for GameTest
      * @return chatHistory
      */
     public ChatHistory getChatHistory(){

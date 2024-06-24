@@ -18,7 +18,6 @@ public class ForHome {
     /**
      * try to play a match
      * @param event
-     * @throws IOException
      */
     @FXML
     void playGame(ActionEvent event){

@@ -5,7 +5,7 @@ import it.polimi.ingsw.message.general.ChatMessage;
 
 /**
  * The ClientAction interface provides methods to notify server about a client side action
- * Class that implements this: {@link it.polimi.ingsw.network.socket.client.SocketAction}, {@link it.polimi.ingsw.network.rmi.RMIAction}
+ * Class that implements this: {@link it.polimi.ingsw.network.socket.client.SocketAction}, {@link it.polimi.ingsw.network.rmi.client.RMIAction}
  */
 public interface ClientAction {
 

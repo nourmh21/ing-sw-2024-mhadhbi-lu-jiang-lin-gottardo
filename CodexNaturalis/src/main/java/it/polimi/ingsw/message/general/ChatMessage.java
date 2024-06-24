@@ -4,7 +4,7 @@ import it.polimi.ingsw.message.Message;
 import it.polimi.ingsw.message.enums.MessageType;
 
 /**
- * The ChatMessage implements {@link Message} [client <-> server]
+ * The ChatMessage implements {@link Message} for communication between client and server
  * Used to notify a chat
  */
 public class ChatMessage implements Message {
