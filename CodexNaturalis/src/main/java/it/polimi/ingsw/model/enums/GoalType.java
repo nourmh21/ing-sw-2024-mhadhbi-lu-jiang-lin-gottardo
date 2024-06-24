@@ -15,7 +15,7 @@ public enum GoalType {
     FF,
     //set of 2 PARCHMENT
     PP,
-    //set of 1 card ink bottle, 1 card feather and 1 card parchment
+    //set of 1 ink bottle, 1  feather and 1 parchment
     BFP,
     //position card 3 red increase
     REDG,
