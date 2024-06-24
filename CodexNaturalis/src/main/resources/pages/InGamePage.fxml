@@ -92,19 +92,19 @@
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
                         </Button>
-                        <Label fx:id="nicknameOne" alignment="CENTER" contentDisplay="CENTER" layoutX="42.0" layoutY="92.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.topAnchor="94.0">
+                        <Label fx:id="nicknameOne" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="94.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.rightAnchor="833.5" AnchorPane.topAnchor="94.0">
                            <padding>
                               <Insets top="0.3" />
                            </padding></Label>
-                        <Label fx:id="nicknameTwo" alignment="CENTER" layoutX="144.0" layoutY="92.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.topAnchor="94.0">
+                        <Label fx:id="nicknameTwo" alignment="CENTER" contentDisplay="CENTER" layoutX="140.0" layoutY="94.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.rightAnchor="733.5" AnchorPane.topAnchor="94.0">
                            <padding>
                               <Insets top="0.3" />
                            </padding></Label>
-                        <Label fx:id="nicknameThree" alignment="CENTER" layoutX="244.0" layoutY="92.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.topAnchor="94.0">
+                        <Label fx:id="nicknameThree" alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="92.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.rightAnchor="633.5" AnchorPane.topAnchor="94.0">
                            <padding>
                               <Insets top="0.3" />
                            </padding></Label>
-                        <Label fx:id="nicknameFour" alignment="CENTER" layoutX="342.0" layoutY="93.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.topAnchor="94.0">
+                        <Label fx:id="nicknameFour" alignment="CENTER" contentDisplay="CENTER" layoutX="342.0" layoutY="93.0" prefWidth="60.0" textAlignment="CENTER" AnchorPane.rightAnchor="533.5" AnchorPane.topAnchor="94.0">
                            <padding>
                               <Insets top="0.3" />
                            </padding></Label>

@@ -68,7 +68,7 @@ public class GUIApplication extends Application implements UserInterface {
         ((GUIApplication) ClientController.getInstance().getView()).setStage(stage);
         this.stage = stage;
 
-        //incon
+        //show game icon for 1 second
         Stage initStage = new Stage();
         Image image = new Image(getClass().getResourceAsStream("/img/utils/game_icon_square.png"));
         ImageView view = new ImageView(image);
@@ -110,12 +110,7 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void stop(){
-        if (initCardAskStage != null)
-            initCardAskStage.close();
-        if (goalAskStage != null && goalAskStage.isShowing())
-            goalAskStage.close();
-        if (endGameInfoStage != null && endGameInfoStage.isShowing())
-            endGameInfoStage.close();
+        closeOpenedAskStage();
         Platform.exit();
         System.exit(0);
     }
