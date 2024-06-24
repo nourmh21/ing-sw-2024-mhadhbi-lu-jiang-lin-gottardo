@@ -68,7 +68,7 @@ public class GUIApplication extends Application implements UserInterface {
         ((GUIApplication) ClientController.getInstance().getView()).setStage(stage);
         this.stage = stage;
 
-        //incon
+        //show game icon for 1 second
         Stage initStage = new Stage();
         Image image = new Image(getClass().getResourceAsStream("/img/utils/game_icon_square.png"));
         ImageView view = new ImageView(image);
