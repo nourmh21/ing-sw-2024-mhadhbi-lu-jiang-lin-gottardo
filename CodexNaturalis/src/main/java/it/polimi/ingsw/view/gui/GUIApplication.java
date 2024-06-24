@@ -110,12 +110,7 @@ public class GUIApplication extends Application implements UserInterface {
 
     @Override
     public void stop(){
-        if (initCardAskStage != null)
-            initCardAskStage.close();
-        if (goalAskStage != null && goalAskStage.isShowing())
-            goalAskStage.close();
-        if (endGameInfoStage != null && endGameInfoStage.isShowing())
-            endGameInfoStage.close();
+        closeOpenedAskStage();
         Platform.exit();
         System.exit(0);
     }
