@@ -94,8 +94,7 @@ public class PlayerBoard {
         addSymbolsList(card,isBackSide,xx,yy);
         updateAvailablePosition();
         if (isBackSide){
-            //removeSymbolsList(index);
-            calculatePoint(card , index);
+            removeSymbolsList(index);
             return 0;
         } else
             return calculatePoint(card , index);
