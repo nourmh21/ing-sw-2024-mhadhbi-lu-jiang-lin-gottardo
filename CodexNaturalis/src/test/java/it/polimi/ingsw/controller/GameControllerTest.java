@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import java.io.*;
 import static org.junit.Assert.*;
 
 
@@ -24,23 +23,20 @@ public class GameControllerTest {
     
 
 
-
-
     @Before
-    public void setUpController() throws IOException {
+    public void setUpController(){
         gameController = new GameController();
         game = new Game(3);
         p1 = new Player("Alice", game, Color.RED);
         p2 = new Player("Bob", game, Color.YELLOW);
         p3 = new Player("Neri", game, Color.BLUE);
-        //client.setNickname(p1.getNickname());
 
 
     }
 
 
     @Test
-    public void getRandomLobbyId(){
+    public void getRandomLobbyId_checkId_IdNotEquals(){
         int i1=  gameController.getRandomLobbyId();
         int i2 = gameController.getRandomLobbyId();
 
@@ -62,7 +58,7 @@ public class GameControllerTest {
 
 
     @Test
-    public void removeLoggedInUser(){
+    public void removeLoggedInUser_checkLoggedUser_ReallyRemoved(){
         gameController.addNewUserLoggedIn(p1.getNickname());
         gameController.addNewUserLoggedIn(p2.getNickname());
         gameController.addNewUserLoggedIn(p3.getNickname());
@@ -87,7 +83,7 @@ public class GameControllerTest {
 
 
     @Test
-    public void removeUserInGame_checkUser_ReallyMoved() throws IOException{
+    public void removeUserInGame_checkUser_ReallyMoved(){
         String name1 = p1.getNickname();
         String name2 = p2.getNickname();
         String name3 = p3.getNickname();
@@ -103,7 +99,7 @@ public class GameControllerTest {
     
 
     @Test
-    public void checkRemoveLobby_Reallyremoved(){
+    public void removeLobby_checkAvailableLobby_ReallyRemoved(){
         Lobby l1 = new Lobby(3, gameController.getRandomLobbyId());
         Lobby l2 = new Lobby (2, gameController.getRandomLobbyId());
 
