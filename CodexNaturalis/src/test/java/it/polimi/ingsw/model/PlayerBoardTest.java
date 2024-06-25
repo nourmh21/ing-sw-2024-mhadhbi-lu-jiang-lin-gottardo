@@ -82,7 +82,6 @@ public class PlayerBoardTest {
         int[] expected = {6, 2, 6, 5, 3, 2, 2};
 
         assertArrayEquals(expected, playerBoard.getSymbolList());
-
     }
 
     @Test
