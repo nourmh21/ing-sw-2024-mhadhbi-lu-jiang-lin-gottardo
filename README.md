@@ -14,7 +14,7 @@
 
 <td>
 
-<img height="155" src="src/main/resources/readme/game_image_physical.jpg" width="auto"/></a>
+<img height="155" src="CodexNaturalis/src/main/resources/readme/game_image_physical.jpg" width="auto"/></a>
 </td>
 </tr>
 </table>
@@ -34,7 +34,7 @@
 | Persistence    |   ❌    |
 | Chat           |   ✅    |
 
-### LAUNCH
+## LAUNCH
 
 The server app can be run with the following command:
 ```shell
@@ -54,18 +54,18 @@ GUI
 ## GAME SCENES
 * TUI
 <table>
-<td><img width=250px; src="src/main/resources/readme/tui_home.png"></td>
-<td><img width=250px; src="src/main/resources/readme/tui_board.png"></td>
+<td><img width=250px; src="CodexNaturalis/src/main/resources/readme/tui_home.png"></td>
+<td><img width=250px; src="CodexNaturalis/src/main/resources/readme/tui_board.png"></td>
 </table>
 
 * GUI
 <table>
-<td><img width=300px; src="src/main/resources/readme/Connection.png"></td>
-<td><img width=300px; src="src/main/resources/readme/Login.png"></td>
-<td rowspan="2"><img width=725px; src="src/main/resources/readme/InGame.png"></td>
+<td><img width=300px; src="CodexNaturalis/src/main/resources/readme/Connection.png"></td>
+<td><img width=300px; src="CodexNaturalis/src/main/resources/readme/Login.png"></td>
+<td rowspan="2"><img width=725px; src="CodexNaturalis/src/main/resources/readme/InGame.png"></td>
 <tr >
-<td><img width=300px; src="src/main/resources/readme/Home.png"></td>
-<td><img width=300px; src="src/main/resources/readme/Lobby.png"></td>
+<td><img width=300px; src="CodexNaturalis/src/main/resources/readme/Home.png"></td>
+<td><img width=300px; src="CodexNaturalis/src/main/resources/readme/Lobby.png"></td>
 </tr>
 </table>
 
