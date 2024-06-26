@@ -14,7 +14,7 @@
 
 <td>
 
-<img height="155" src="CodexNaturalis/src/main/resources/readme/game_image_physical.jpg" width="auto"/></a>
+<img height="175" src="CodexNaturalis/src/main/resources/readme/game_image_physical.jpg" width="auto"/></a>
 </td>
 </tr>
 </table>
