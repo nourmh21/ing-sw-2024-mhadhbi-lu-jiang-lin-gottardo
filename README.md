@@ -10,6 +10,7 @@
 <a href="https://github.com/ElenaLin31">Elena Lin</a></br>
 <a href="https://github.com/joshuagottardo-polimi">Joshua Gottardo</a></br>
 <br>
+<br>
 </td>
 
 <td>
