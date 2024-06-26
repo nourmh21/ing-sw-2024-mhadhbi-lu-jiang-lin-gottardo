@@ -24,7 +24,7 @@
 </tr>
 </table>
 
-<p style = "padding-top:1px;">
+<p style = "padding-top:3px;">
 
 ### IMPLEMENTATION 
 
@@ -42,7 +42,7 @@
 | Persistence    |   ❌    |
 | Chat           |   ✅    |
 
-<p style = "padding-top:1px;">
+<p style = "padding-top:3px;">
 
 ### LAUNCH
 
@@ -62,7 +62,7 @@ GUI
     
 ```
 
-<p style = "padding-top:1px;">
+<p style = "padding-top:3px;">
 
 ### GAME SCENES
 TUI
@@ -84,7 +84,7 @@ GUI
 
 
 
-<p style = "padding-top:1px;">
+<p style = "padding-top:3px;">
 
 ### LICENSE
 
