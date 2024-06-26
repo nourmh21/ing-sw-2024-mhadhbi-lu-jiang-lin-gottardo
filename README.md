@@ -1,7 +1,7 @@
-# Software engineer project - 2024
+## SOFTWARE ENGINEER PROJECT - 2024
 <table>
 <tr>
-<td width="165">
+<td width="185">
 
 ## Team
 <a href="https://github.com/lsy0000000">Valeria Lu</a> </br>
