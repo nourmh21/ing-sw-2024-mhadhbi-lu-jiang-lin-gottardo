@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 
 public class ForConnection {
 
@@ -77,8 +78,13 @@ public class ForConnection {
 
             if (socket.isSelected()) {
                 ClientApp.trySocketConnection(ip_address);
-            } else if (rmi.isSelected())
-                ClientApp.tryRMIConnection(ip_address);
+            } else if (rmi.isSelected()) {
+                try {
+                    ClientApp.tryRMIConnection(ip_address);
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         } else{
             error.setText("Invalid IP or connection type unselected!");
         }

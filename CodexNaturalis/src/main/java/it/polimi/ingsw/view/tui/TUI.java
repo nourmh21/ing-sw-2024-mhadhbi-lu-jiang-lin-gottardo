@@ -12,6 +12,8 @@ import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.view.UserInterface;
 
 import java.io.PrintStream;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.*;
 
 /**
@@ -89,7 +91,11 @@ public class TUI implements UserInterface{
         if (choice.equals("1")){
             ClientApp.trySocketConnection(ip);
         }else if(choice.equals("2")){
-            ClientApp.tryRMIConnection(ip);
+            try {
+                ClientApp.tryRMIConnection(ip);
+            } catch (RemoteException | NotBoundException e) {
+                throw new RuntimeException(e);
+            }
         }else {
             invalidChoice();
             askConnectionType(ip);
