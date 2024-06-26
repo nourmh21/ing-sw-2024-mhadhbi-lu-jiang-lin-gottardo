@@ -7,14 +7,21 @@ import it.polimi.ingsw.network.rmi.server.RMIServerInterface;
 
 import java.rmi.RemoteException;
 
-//to be completed by Nourhane
+/**
+ * The RMIAction class implements {@link ClientAction} interface
+ * Notifies the server of client actions when the chosen connection type is RMI
+ */
+
 public class RMIAction implements ClientAction {
+
     private final RMIClientInterface rmiClient;
     private final RMIServerInterface stub;
+
     public RMIAction(RMIServerInterface server , RMIClientInterface rmiClient) {
         this.stub = server;
         this.rmiClient = rmiClient;
     }
+
     @Override
     public void access(String nickname, String pwd, boolean isRegistered) {
         try {
@@ -29,109 +36,79 @@ public class RMIAction implements ClientAction {
     @Override
     public void reqLobbies() {
         try {
-
             stub.REQ_LOBBIES(rmiClient);
-
         }catch (IllegalArgumentException e){
             System.out.println("error");
         } catch (RemoteException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void joinLobby(Integer idLobby) {
         try {
-
             stub.JOIN_LOBBY(rmiClient,idLobby);
-
         }catch (IllegalArgumentException e){
             System.out.println("error");
         } catch (RemoteException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
     public void createLobby(int numOfPlayer) {
         try {
-
             stub.CREATE_LOBBY(rmiClient,numOfPlayer);
-
         }catch (IllegalArgumentException e){
             System.out.println("error");
         } catch (RemoteException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void playInitCard(Integer idCard, boolean isBackSide) {
-
-
         try {
-
                 stub.playInitCard(idCard,isBackSide,rmiClient);
-
         }catch (IllegalArgumentException e){
                 System.out.println("error");
         } catch (RemoteException e) {
-                e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void choosePersonalGoal(Integer idCard) {
-
         try {
-
-                stub.choosePersonalGoal(idCard,rmiClient);
-
+            stub.choosePersonalGoal(idCard,rmiClient);
         }catch (IllegalArgumentException e){
                 System.out.println("error");
         } catch (RemoteException e) {
-                e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void playCard(Integer idCard, boolean isBackSide, int[] position) {
-
         try {
-
                 stub.playCard(idCard,isBackSide,position,rmiClient);
-
         }catch (IllegalArgumentException e){
                 System.out.println("error");
         } catch (RemoteException e) {
-                e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void drawCard(LocationType location, Integer idCard) {
-
       try {
-
             stub.drawCard(location,idCard,rmiClient);
-
       }catch (IllegalArgumentException e){
             System.out.println("error");
       } catch (RemoteException e) {
-            e.printStackTrace();
+          throw new RuntimeException(e);
       }
-
     }
-
-
-
 
     @Override
     public void chat(ChatMessage message) {
@@ -140,9 +117,8 @@ public class RMIAction implements ClientAction {
         }catch (IllegalArgumentException e){
             System.out.println("error");
         } catch (RemoteException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
     }
 
 }
