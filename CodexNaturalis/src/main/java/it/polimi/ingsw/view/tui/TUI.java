@@ -458,7 +458,6 @@ public class TUI implements UserInterface{
         System.out.println(AnsiColor.BRIGHT_YELLOW.getCode() + symbolsList[4] + "  Quill"+ AnsiColor.RESET.getCode());
         System.out.println(AnsiColor.BRIGHT_YELLOW.getCode() + symbolsList[5] + "  Inkwell"+ AnsiColor.RESET.getCode());
         System.out.println(AnsiColor.BRIGHT_YELLOW.getCode() + symbolsList[6] + "  Manuscript"+ AnsiColor.RESET.getCode());
-        System.out.println();
     }
 
     /**
@@ -564,8 +563,8 @@ public class TUI implements UserInterface{
             return;
         out.println();
         out.println("[GAME SETUP]");
-        out.println();
         showScoreBoard();
+        out.println();
         showDeskStatus();
         askInitCardPlace();
     }
@@ -705,9 +704,8 @@ public class TUI implements UserInterface{
 
 
     private void askInitCardPlace(){
-        out.println();
+        out.println("\n[Initial card play]\n");
        // out.println("Your initial card: " + me.getInitialCard());
-        out.println("Your initial card: ");
         askInitialCardSide(me.getInitialCard());
         showWaitingComment();
     }
@@ -728,9 +726,9 @@ public class TUI implements UserInterface{
 
 
     private void askSide(Integer id){
-        out.println("Which side of card do you want to play");
-        out.println("1- front :"+ Resource.getCard(id,false));
-        out.println("2- back :"+ Resource.getCard(id,true));
+        out.println("Which side of card do you want to play?");
+        out.println("1- [front] "+ Resource.getCard(id,false));
+        out.println("2- [back] "+ Resource.getCard(id,true));
     }
 
 
@@ -741,7 +739,7 @@ public class TUI implements UserInterface{
     }
 
     private void askPersonalGoalChoose(){
-        out.println();
+        out.println("\n[Personal goal choose]\n");
         out.println("Choose your personal goal: ");
         out.println("1- "+ Resource.getCard(possiblePersonalGoals[0],false));
         out.println("2- "+ Resource.getCard(possiblePersonalGoals[1],false));
@@ -898,14 +896,14 @@ public class TUI implements UserInterface{
         out.println("DESK: ");
         if (game.getDisplayedRCards() != null){
             if (game.getDisplayedRCards().get(0) != null){
-                out.println("1- card: "+ Resource.getCard(game.getDisplayedRCards().get(0),false));
+                out.println("1- [card] "+ Resource.getCard(game.getDisplayedRCards().get(0),false));
                 validChoices.add("1");
             }else {
                 out.println("1- empty");
             }
 
             if (game.getDisplayedRCards().get(1) != null){
-                out.println("2- card: "+ Resource.getCard(game.getDisplayedRCards().get(1),false));
+                out.println("2- [card] "+ Resource.getCard(game.getDisplayedRCards().get(1),false));
                 validChoices.add("2");
             }else {
                 out.println("2- empty");
@@ -918,7 +916,7 @@ public class TUI implements UserInterface{
 
         if (game.getDisplayedGCards() != null){
             if (game.getDisplayedGCards().get(0) != null){
-                out.println("3- card: "+ Resource.getCard(game.getDisplayedGCards().get(0),false));
+                out.println("3- [card] "+ Resource.getCard(game.getDisplayedGCards().get(0),false));
                 validChoices.add("3");
             }else {
                 out.println("3- empty");
@@ -926,7 +924,7 @@ public class TUI implements UserInterface{
             }
 
             if (game.getDisplayedGCards().get(1) != null){
-                out.println("4- card: "+ Resource.getCard(game.getDisplayedGCards().get(1),false));
+                out.println("4- [card] "+ Resource.getCard(game.getDisplayedGCards().get(1),false));
                 validChoices.add("4");
             }else {
                 out.println("4- empty");
@@ -1239,6 +1237,9 @@ public class TUI implements UserInterface{
                         break;
                     }
                 }
+            }else {
+                invalidChoice();
+                askWhichPlayerBoard();
             }
         }catch (NumberFormatException e){
             invalidChoice();
