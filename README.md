@@ -3,7 +3,7 @@
 <tr>
 <td width="165">
 
-## TEAM
+## Team
 <a href="https://github.com/lsy0000000">Valeria Lu</a> </br>
 <a href="https://github.com/Jiang00001">Elena Jiang</a> </br>
 <a href="https://github.com/nourmh21">Nourhane M'hadhbi</a></br>
@@ -19,7 +19,7 @@
 </tr>
 </table>
 
-## IMPLEMENTATION 
+## Implemented functionalities 
 
 | Functionality  | Status |
 |----------------|:------:|
@@ -34,7 +34,7 @@
 | Persistence    |   ❌    |
 | Chat           |   ✅    |
 
-## LAUNCH
+## Launch
 
 The server app can be run with the following command:
 ```shell
@@ -51,7 +51,7 @@ GUI
     
 ```
 
-## GAME SCENES
+## Game scenes
 * TUI
 <table>
 <td><img width=250px; src="CodexNaturalis/src/main/resources/readme/tui_home.png"></td>
@@ -71,6 +71,6 @@ GUI
 
 
 
-## LICENSE
+## License
 
 This project contains copyrighted graphical assets which is property of <a href = "https://www.craniocreations.it/prodotto/codex-naturalis">Cranio Creations srl</a>.
