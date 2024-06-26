@@ -24,7 +24,6 @@
 </tr>
 </table>
 
-<p style = "padding-top:3px;">
 
 ### IMPLEMENTATION 
 
