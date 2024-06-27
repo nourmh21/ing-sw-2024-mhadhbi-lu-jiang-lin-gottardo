@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.enums.CardType;
+import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.observer.ModelObservable;
@@ -58,7 +60,7 @@ public class Player extends ModelObservable {
         }
         observers = game.getObservers();
         //
-        notify_player_status(new ImmutablePlayer(this,this.board));
+        notify_player_status(generateImmutablePlayer());
     }
 
 
@@ -81,7 +83,7 @@ public class Player extends ModelObservable {
 
     public void setPersonalGoalChosen() {
         isPersonalGoalChosen = true;
-        notify_player_status(new ImmutablePlayer(this, this.getBoard()));
+        notify_player_status(generateImmutablePlayer());
     }
 
 
@@ -133,7 +135,7 @@ public class Player extends ModelObservable {
     public void updatePoint(int newPoint){
         point = point + newPoint;
         //
-        notify_player_status(new ImmutablePlayer(this,this.board));
+        notify_player_status(generateImmutablePlayer());
     }
 
 
@@ -188,7 +190,7 @@ public class Player extends ModelObservable {
         handCards.add(idCard);
         if (handCards.size() == 3){
             notify_hand_cards(this);
-            notify_player_status(new ImmutablePlayer(this,this.board));
+            notify_player_status(generateImmutablePlayer());
         }
 
     }
@@ -201,7 +203,7 @@ public class Player extends ModelObservable {
     public void removeHandCard(Integer idCard){
         handCards.remove(idCard);
         notify_hand_cards(this);
-        notify_player_status(new ImmutablePlayer(this,this.board));
+        notify_player_status(generateImmutablePlayer());
     }
 
 
@@ -210,6 +212,26 @@ public class Player extends ModelObservable {
      */
     public PlayerBoard getBoard() {
         return board;
+    }
+
+
+    /**
+     * @return a new {@link ImmutablePlayer}
+     */
+    public ImmutablePlayer generateImmutablePlayer(){
+        List<Symbol> handCardKingdoms = null;
+        List<CardType> handCardTypes = null;
+        if (handCards != null){
+            handCardKingdoms = handCards.stream()
+                    .map(integer -> (((Card)(GameController.getInstance().getCard(integer))).getKingdom()))
+                    .toList();
+            handCardTypes = handCards.stream()
+                    .map(integer -> (((Card)(GameController.getInstance().getCard(integer))).getType()))
+                    .toList();
+        }
+        return new ImmutablePlayer(nickname, playerColor, point, initialCard, board.getBoardCards(), isPersonalGoalChosen,
+                board.getX(), board.getY(), board.getCardSide(), board.getAvailablePosition(), handCardKingdoms,
+                handCardTypes, board.getSymbolList());
     }
 
 

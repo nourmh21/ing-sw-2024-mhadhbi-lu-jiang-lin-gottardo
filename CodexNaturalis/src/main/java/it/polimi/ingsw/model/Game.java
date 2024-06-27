@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.message.general.ChatMessage;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.GameState;
-import it.polimi.ingsw.model.exceptions.InvalidNumOfConnectedPlayer;
+import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.immutable.ImmutableEndGameInfo;
 import it.polimi.ingsw.model.immutable.ImmutableGame;
+import it.polimi.ingsw.model.immutable.ImmutablePlayer;
 import it.polimi.ingsw.observer.ModelObservable;
 import it.polimi.ingsw.observer.ModelObserver;
 
@@ -17,7 +19,7 @@ import java.util.Random;
 public class Game extends ModelObservable {
     private final int idGame;
     private GameState gameState;
-    private int numOfPlayer;
+    private final int numOfPlayer;
     private List<Player> players;
     private final List<Integer> commonGoals;
     private Desk desk;
@@ -51,7 +53,7 @@ public class Game extends ModelObservable {
 
     public void setGameObservers(List<ModelObserver> observers){
         this.observers = observers;
-        notify_game_status(new ImmutableGame(this));
+        notify_game_status(generateImmutableGame());
         for (ModelObserver o: observers) {
             chatHistory.addObserver(o);
         }
@@ -67,7 +69,7 @@ public class Game extends ModelObservable {
             commonGoals.add(idCard);
         //
         if (commonGoals.size() == 2)
-            notify_game_status(new ImmutableGame(this));
+            notify_game_status(generateImmutableGame());
     }
 
 
@@ -94,7 +96,7 @@ public class Game extends ModelObservable {
     public synchronized void setGameState(GameState gameState) {
         this.gameState = gameState;
         //
-        notify_game_status(new ImmutableGame(this));
+        notify_game_status(generateImmutableGame());
     }
 
 
@@ -105,7 +107,7 @@ public class Game extends ModelObservable {
     public void addPlayers(String nickname) {
         players.add(new Player(nickname, this, randomColor()));
         if (players.size() == numOfPlayer){
-            notify_game_status(new ImmutableGame(this));
+            notify_game_status(generateImmutableGame());
         }
     }
 
@@ -141,7 +143,7 @@ public class Game extends ModelObservable {
     public void setCurrentPlayer(Player p) {
         this.currentPlayer = p;
         //
-        notify_game_status(new ImmutableGame(this));
+        notify_game_status(generateImmutableGame());
     }
 
 
@@ -151,7 +153,7 @@ public class Game extends ModelObservable {
     public void setIsLastRound() {
         isLastRound = true;
         //
-        notify_game_status(new ImmutableGame(this));
+        notify_game_status(generateImmutableGame());
     }
 
 
@@ -295,4 +297,30 @@ public class Game extends ModelObservable {
         return chatHistory;
     }
 
+
+    /**
+     * @return a new {@link ImmutableGame}
+     */
+    public ImmutableGame generateImmutableGame(){
+        List<String> playerNicknames = null;
+        String current = null;
+        Symbol firstRCardKingdom = null;
+        Symbol firstGCardKingdom = null;
+        List<Integer> displayedRCards = null;
+        List<Integer> displayedGCards = null;
+        if (players != null)
+            playerNicknames = getPlayersNickname();
+        if (currentPlayer != null)
+            current = currentPlayer.getNickname();
+        if (desk.getNextResourceCard()!= null)
+            firstRCardKingdom = ((Card)(GameController.getInstance().getCard(desk.getNextResourceCard()))).getKingdom();
+        if (desk.getNextGoldCard()!= null)
+            firstGCardKingdom = ((Card)GameController.getInstance().getCard(desk.getNextGoldCard())).getKingdom();
+        if (desk.getDisplayedRCards() != null)
+            displayedRCards = desk.getDisplayedRCards();
+        if (desk.getDisplayedGCards() != null)
+            displayedGCards = desk.getDisplayedGCards();
+        return new ImmutableGame(numOfPlayer, gameState, commonGoals, isLastRound, playerNicknames, current,
+                firstRCardKingdom, firstGCardKingdom, displayedRCards, displayedGCards);
+    }
 }

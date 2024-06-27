@@ -28,7 +28,7 @@ public class Desk extends ModelObservable {
     private List<Integer> displayedGoldCards;        //list that will contain two face up gold card
     private Integer nextResourceCard;                //the first card of resource card deck
     private Integer nextGoldCard;                    //the first card of gold card deck
-    private Game game;
+    private final Game game;
     /**
      * The class constructor
      */
@@ -208,11 +208,11 @@ public class Desk extends ModelObservable {
         try {
             nextResourceCard = pickOneCard(CardType.RESOURCE);
             //
-            notify_game_status(new ImmutableGame(game));
+            notify_game_status(game.generateImmutableGame());
         } catch (EmptyDeckException e) {
             nextResourceCard = null;
             //
-            notify_game_status(new ImmutableGame(game));
+            notify_game_status(game.generateImmutableGame());
         }
     }
 
@@ -224,11 +224,11 @@ public class Desk extends ModelObservable {
         try {
             nextGoldCard = pickOneCard(CardType.GOLD);
             //
-            notify_game_status(new ImmutableGame(game));
+            notify_game_status(game.generateImmutableGame());
         } catch (EmptyDeckException e) {
             nextGoldCard = null;
             //
-            notify_game_status(new ImmutableGame(game));
+            notify_game_status(game.generateImmutableGame());
         }
     }
 

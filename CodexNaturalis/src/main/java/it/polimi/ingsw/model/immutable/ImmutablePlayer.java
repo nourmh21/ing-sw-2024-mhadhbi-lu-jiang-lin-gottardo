@@ -31,29 +31,22 @@ public class ImmutablePlayer implements Serializable {
     private final List<CardType> handCardTypes;
     private final int[] symbolList;
 
-    public ImmutablePlayer(Player player, PlayerBoard board){
-        nickname = player.getNickname();
-        color = player.getPlayerColor();
-        point = player.getPoint();
-        initialCard = player.getInitialCard();
-        isBackSide = board.getCardSide();
-        isPersonalGoalChosen = player.isPersonalGoalChosen();
-        boardCards = board.getBoardCards();
-        x = board.getX();
-        y = board.getY();
-        permissiblePosition = board.getAvailablePosition();
-        symbolList = board.getSymbolList();
-        if (player.getHandCards() != null){
-            handCardKingdoms = player.getHandCards().stream()
-                    .map(integer -> (((Card)(GameController.getInstance().getCard(integer))).getKingdom()))
-                    .toList();
-            handCardTypes = player.getHandCards().stream()
-                    .map(integer -> (((Card)(GameController.getInstance().getCard(integer))).getType()))
-                    .toList();
-        }else {
-            handCardKingdoms = null;
-            handCardTypes = null;
-        }
+    public ImmutablePlayer(String nickname, Color color, int point, Integer initialCard, List<Integer> boardCards, boolean isPersonalGoalChosen,
+                           List<Integer> x, List<Integer> y, List<Boolean> isBackSide, List<int[]> permissiblePosition, List<Symbol> handCardKingdoms,
+                           List<CardType> handCardTypes, int[] symbolList){
+       this.nickname = nickname;
+       this.color = color;
+       this.point = point;
+       this.initialCard = initialCard;
+       this.boardCards = boardCards;
+       this.isPersonalGoalChosen = isPersonalGoalChosen;
+       this.x = x;
+       this.y = y;
+       this.isBackSide = isBackSide;
+       this.permissiblePosition = permissiblePosition;
+       this.handCardKingdoms = handCardKingdoms;
+       this.handCardTypes = handCardTypes;
+       this.symbolList = symbolList;
     }
 
 

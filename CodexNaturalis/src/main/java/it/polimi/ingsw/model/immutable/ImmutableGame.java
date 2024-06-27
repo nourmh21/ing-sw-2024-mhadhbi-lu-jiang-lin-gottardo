@@ -15,7 +15,6 @@ import java.util.List;
  * It contains all information about a game status
  */
 public class ImmutableGame implements Serializable {
-    private final int idGame;
     private final int numOfPlayer;
     private final GameState gameState;
     private final List<Integer> commonGoals;
@@ -30,47 +29,18 @@ public class ImmutableGame implements Serializable {
     private final List<Integer> displayedGCards;
 
 
-    public ImmutableGame(Game game){
-        idGame = game.getIdGame();
-        numOfPlayer = game.getNumOfPlayer();
-        gameState = game.getGameState();
-        commonGoals = game.getCommonGoals();
-        isLastRound = game.getIsLastRound();
-        if (game.getPlayers() != null){
-            players = game.getPlayersNickname();
-        }else {
-            players = null;
-        }
-
-        if (game.getCurrentPlayer() != null)
-            currentPlayer = game.getCurrentPlayer().getNickname();
-        else
-            currentPlayer = null;
-
-        if (game.getDesk().getNextResourceCard()!= null){
-            firstRCardKingdom = ((Card)(GameController.getInstance().getCard(game.getDesk().getNextResourceCard())))
-                            .getKingdom();
-        }else{
-            firstRCardKingdom = null;
-        }
-
-        if (game.getDesk().getNextGoldCard()!= null){
-            firstGCardKingdom = ((Card)GameController.getInstance().
-                    getCard(game.getDesk().getNextGoldCard())).getKingdom();
-        }else {
-            firstGCardKingdom = null;
-        }
-
-        if (game.getDesk().getDisplayedRCards() != null)
-            displayedRCards = game.getDesk().getDisplayedRCards();
-        else
-            displayedRCards = null;
-
-
-        if (game.getDesk().getDisplayedGCards() != null)
-            displayedGCards = game.getDesk().getDisplayedGCards();
-        else
-            displayedGCards = null;
+    public ImmutableGame(int numOfPlayer, GameState gameState, List<Integer> commonGoals, boolean isLastRound, List<String> players,
+                         String currentPlayer, Symbol firstRCardKingdom, Symbol firstGCardKingdom, List<Integer> displayedRCards, List<Integer> displayedGCards){
+       this.numOfPlayer = numOfPlayer;
+       this.gameState = gameState;
+       this.commonGoals = commonGoals;
+       this.isLastRound = isLastRound;
+       this.players = players;
+       this.currentPlayer = currentPlayer;
+       this.firstRCardKingdom = firstRCardKingdom;
+       this.firstGCardKingdom = firstGCardKingdom;
+       this.displayedRCards = displayedRCards;
+       this.displayedGCards = displayedGCards;
     }
 
 

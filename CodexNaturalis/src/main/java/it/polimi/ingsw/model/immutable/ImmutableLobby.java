@@ -13,9 +13,9 @@ import java.util.List;
 public class ImmutableLobby implements Serializable {
     private final List<String> players;
     private final int numOfPlayer;
-    public ImmutableLobby(Lobby lobby){
-        players = lobby.getPlayers();
-        numOfPlayer = lobby.getNumOfPlayer();
+    public ImmutableLobby(List<String> players, int numOfPlayer){
+        this.players = players;
+        this.numOfPlayer = numOfPlayer;
     }
 
     public List<String> getPlayers() {

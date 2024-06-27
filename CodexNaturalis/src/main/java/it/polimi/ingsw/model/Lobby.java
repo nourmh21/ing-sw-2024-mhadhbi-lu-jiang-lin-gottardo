@@ -30,7 +30,7 @@ public class Lobby extends ModelObservable {
 
         players.add(nickname);
 
-        notify_lobby_status(new ImmutableLobby(this));
+        notify_lobby_status(new ImmutableLobby(players, numOfPlayer));
 
 
         if (players.size() == numOfPlayer){
@@ -65,7 +65,7 @@ public class Lobby extends ModelObservable {
         removeObserver(observer);
         players.remove(nickname);
         if(!getObservers().isEmpty()){
-            notify_lobby_status(new ImmutableLobby(this));
+            notify_lobby_status(new ImmutableLobby(players, numOfPlayer));
         }else {
             GameController.getInstance().removeLobby(this);
         }
