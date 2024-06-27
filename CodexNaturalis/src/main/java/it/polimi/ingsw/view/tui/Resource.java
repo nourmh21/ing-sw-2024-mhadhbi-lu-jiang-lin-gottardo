@@ -99,7 +99,7 @@ public class Resource {
             put(80,"type: GOLD, kingdom: INSECT, points: 5, condition:5 insect, top_left_angle:EMPTY , top_right_angle:EMPTY, bottom_right_angle:HIDDEN, bottom_left_angle:HIDDEN ");
 
             put(81, String.format("""
-                            type: ObjectiveCard, points: 2,
+                            type: OBJECTIVE, points: 2,
                                   %s███%s
                                %s███%s
                             %s███%s
@@ -108,7 +108,7 @@ public class Resource {
                     AnsiColor.RED.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.RED.getCode(), AnsiColor.RESET.getCode()));
             put(82, String.format("""
-                            type: ObjectiveCard, points: 2,
+                            type: OBJECTIVE, points: 2,
                             %s███%s
                                %s███%s
                                   %s███%s
@@ -117,7 +117,7 @@ public class Resource {
                     AnsiColor.GREEN.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.GREEN.getCode(), AnsiColor.RESET.getCode()));
             put(83, String.format("""
-                            type: ObjectiveCard, points: 2,
+                            type: OBJECTIVE, points: 2,
                                   %s███%s
                                %s███%s
                             %s███%s
@@ -126,7 +126,7 @@ public class Resource {
                     AnsiColor.BLUE.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.BLUE.getCode(), AnsiColor.RESET.getCode()));
             put(84, String.format("""
-                            type: ObjectiveCard, points: 2,
+                            type: OBJECTIVE, points: 2,
                             %s███%s
                                %s███%s
                                   %s███%s
@@ -135,7 +135,7 @@ public class Resource {
                     AnsiColor.MAGENTA.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.MAGENTA.getCode(), AnsiColor.RESET.getCode()));
             put(85, String.format("""
-                            type: ObjectiveCard, points: 2,
+                            type: OBJECTIVE, points: 2,
                             %s███%s
                             %s███%s
                                %s███%s
@@ -144,7 +144,7 @@ public class Resource {
                     AnsiColor.RED.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.GREEN.getCode(), AnsiColor.RESET.getCode()));
             put(86, String.format("""
-                            type: ObjectiveCard, points:2,
+                            type: OBJECTIVE, points:2,
                                %s███%s
                                %s███%s
                             %s███%s
@@ -153,7 +153,7 @@ public class Resource {
                     AnsiColor.GREEN.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.MAGENTA.getCode(), AnsiColor.RESET.getCode()));
             put(87, String.format("""
-                            type: ObjectiveCard, points:2,
+                            type: OBJECTIVE, points:2,
                                %s███%s
                             %s███%s
                             %s███%s
@@ -162,7 +162,7 @@ public class Resource {
                     AnsiColor.BLUE.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.BLUE.getCode(), AnsiColor.RESET.getCode()));
             put(88, String.format("""
-                            type: ObjectiveCard, points:2,
+                            type: OBJECTIVE, points:2,
                             %s███%s
                                %s███%s
                                %s███%s
@@ -171,28 +171,28 @@ public class Resource {
                     AnsiColor.MAGENTA.getCode(), AnsiColor.RESET.getCode(),
                     AnsiColor.MAGENTA.getCode(), AnsiColor.RESET.getCode()));
 
-            put(89,"type: ObjectiveCard, set of 3 FUNGI, points: 2");
-            put(90,"type: ObjectiveCard, set of 3 PLANT, points: 2");
-            put(91,"type: ObjectiveCard, set of 3 ANIMAL, points: 2");
-            put(92,"type: ObjectiveCard, set of 3 INSECT, points: 2");
-            put(93,"type: ObjectiveCard, set of 1_INK_BATTLE+1_FEATHER+1_PARCHMENT, points: 3");
-            put(94,"type: ObjectiveCard, set of 2 PARCHMENT, points: 2");
-            put(95,"type: ObjectiveCard, set of 2 INK_BOTTLE, points: 2");
-            put(96,"type: ObjectiveCard, set of 2 FEATHER, points: 2");
+            put(89,"type: OBJECTIVE, set of 3 FUNGI, points: 2");
+            put(90,"type: OBJECTIVE, set of 3 PLANT, points: 2");
+            put(91,"type: OBJECTIVE, set of 3 ANIMAL, points: 2");
+            put(92,"type: OBJECTIVE, set of 3 INSECT, points: 2");
+            put(93,"type: OBJECTIVE, set of 1_INK_BATTLE+1_FEATHER+1_PARCHMENT, points: 3");
+            put(94,"type: OBJECTIVE, set of 2 PARCHMENT, points: 2");
+            put(95,"type: OBJECTIVE, set of 2 INK_BOTTLE, points: 2");
+            put(96,"type: OBJECTIVE, set of 2 FEATHER, points: 2");
 
-            put( 97,"type: InitialCard, top_left_angle:FUNGI, top_right_angle:PLANT, bottom_right_angle:ANIMAL, bottom_left_angle:INSECT");
-            put( 98,"type: InitialCard, top_left_angle:PLANT , top_right_angle:ANIMAL, bottom_right_angle:INSECT, bottom_left_angle:FUNGI");
-            put( 99,"type: InitialCard, top_left_angle:INSECT , top_right_angle:ANIMAL, bottom_right_angle:PLANT, bottom_left_angle:FUNGI");
-            put(100,"type: InitialCard, top_left_angle:PLANT , top_right_angle:INSECT, bottom_right_angle:Fungi, bottom_left_angle:ANIMAL");
-            put(101,"type: InitialCard, top_left_angle:INSECT , top_right_angle:FUNGI , bottom_right_angle:ANIMAL, bottom_left_angle:PLANT");
-            put(102,"type: InitialCard, top_left_angle:FUNGI , top_right_angle:ANIMAL, bottom_right_angle:INSECT, bottom_left_angle:PLANT");
+            put( 97,"type: INITIAL, top_left_angle:FUNGI, top_right_angle:PLANT, bottom_right_angle:ANIMAL, bottom_left_angle:INSECT");
+            put( 98,"type: INITIAL, top_left_angle:PLANT , top_right_angle:ANIMAL, bottom_right_angle:INSECT, bottom_left_angle:FUNGI");
+            put( 99,"type: INITIAL, top_left_angle:INSECT , top_right_angle:ANIMAL, bottom_right_angle:PLANT, bottom_left_angle:FUNGI");
+            put(100,"type: INITIAL, top_left_angle:PLANT , top_right_angle:INSECT, bottom_right_angle:Fungi, bottom_left_angle:ANIMAL");
+            put(101,"type: INITIAL, top_left_angle:INSECT , top_right_angle:FUNGI , bottom_right_angle:ANIMAL, bottom_left_angle:PLANT");
+            put(102,"type: INITIAL, top_left_angle:FUNGI , top_right_angle:ANIMAL, bottom_right_angle:INSECT, bottom_left_angle:PLANT");
 
-            put(197,"type: InitialCard, center:INSECT ,top_left_angle:EMPTY, top_right_angle:PLANT, bottom_right_angle:EMPTY, bottom_left_angle:INSECT");
-            put(198,"type: InitialCard, center:FUNGI , top_left_angle:ANIMAL , top_right_angle:EMPTY, bottom_right_angle:FUNGI, bottom_left_angle:EMPTY");
-            put(199,"type: InitialCard, center:PLANT.FUNGI , top_left_angle:EMPTY , top_right_angle:EMPTY, bottom_right_angle:EMPTY, bottom_left_angle:EMPTY");
-            put(200,"type: InitialCard, center:ANIMAL.INSECT , top_left_angle:EMPTY , top_right_angle:EMPTY, bottom_right_angle:EMPTY, bottom_left_angle:EMPTY");
-            put(201,"type: InitialCard, center:ANIMAL.INSECT.PLANT , top_left_angle:EMPTY , top_right_angle:EMPTY , bottom_right_angle:HIDDEN, bottom_left_angle:HIDDEN");
-            put(202,"type: InitialCard, center:PLANT.ANIMAL.FUNGI , top_left_angle:EMPTY , top_right_angle:EMPTY, bottom_right_angle:HIDDEN, bottom_left_angle:HIDDEN");
+            put(197,"type: INITIAL, center:INSECT ,top_left_angle:EMPTY, top_right_angle:PLANT, bottom_right_angle:EMPTY, bottom_left_angle:INSECT");
+            put(198,"type: INITIAL, center:FUNGI , top_left_angle:ANIMAL , top_right_angle:EMPTY, bottom_right_angle:FUNGI, bottom_left_angle:EMPTY");
+            put(199,"type: INITIAL, center:PLANT.FUNGI , top_left_angle:EMPTY , top_right_angle:EMPTY, bottom_right_angle:EMPTY, bottom_left_angle:EMPTY");
+            put(200,"type: INITIAL, center:ANIMAL.INSECT , top_left_angle:EMPTY , top_right_angle:EMPTY, bottom_right_angle:EMPTY, bottom_left_angle:EMPTY");
+            put(201,"type: INITIAL, center:ANIMAL.INSECT.PLANT , top_left_angle:EMPTY , top_right_angle:EMPTY , bottom_right_angle:HIDDEN, bottom_left_angle:HIDDEN");
+            put(202,"type: INITIAL, center:PLANT.ANIMAL.FUNGI , top_left_angle:EMPTY , top_right_angle:EMPTY, bottom_right_angle:HIDDEN, bottom_left_angle:HIDDEN");
 
         }
     };
