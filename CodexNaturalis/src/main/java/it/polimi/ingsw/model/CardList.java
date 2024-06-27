@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The CardList class represents a list of cards (List<Object>)
+ * The CardList class represents a list of cards)
  */
 public final class CardList {
     private final List<Object> cardList;
