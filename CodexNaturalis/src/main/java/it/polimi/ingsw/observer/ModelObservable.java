@@ -18,21 +18,22 @@ import java.util.List;
 public abstract class ModelObservable {
     protected List<ModelObserver> observers = new ArrayList<>();
 
-    public void addObserver(ModelObserver modelObserver){
+    public void addObserver(ModelObserver modelObserver) {
         observers.add(modelObserver);
     }
 
-    public void removeObserver(ModelObserver modelObserver){
+    public void removeObserver(ModelObserver modelObserver) {
         observers.remove(modelObserver);
     }
 
 
     /**
      * Notifies all observers of the lobby status
+     *
      * @param lobby {@link ImmutableLobby}
      */
-    public void notify_lobby_status(ImmutableLobby lobby){
-        for (ModelObserver o: observers) {
+    public void notify_lobby_status(ImmutableLobby lobby) {
+        for (ModelObserver o : observers) {
             o.send_lobby_status(lobby);
         }
     }
@@ -40,10 +41,11 @@ public abstract class ModelObservable {
 
     /**
      * Notifies all observers of the game status
+     *
      * @param game {@link ImmutableGame}
      */
-    public void notify_game_status(ImmutableGame game){
-        for (ModelObserver o: observers) {
+    public void notify_game_status(ImmutableGame game) {
+        for (ModelObserver o : observers) {
             o.send_game_status(game);
         }
     }
@@ -51,10 +53,11 @@ public abstract class ModelObservable {
 
     /**
      * Notifies all observers of the final result
+     *
      * @param info {@link ImmutableEndGameInfo}
      */
-    public void notify_final_result(ImmutableEndGameInfo info){
-        for (ModelObserver o: observers) {
+    public void notify_final_result(ImmutableEndGameInfo info) {
+        for (ModelObserver o : observers) {
             o.send_end_game_info(info);
         }
     }
@@ -62,10 +65,11 @@ public abstract class ModelObservable {
 
     /**
      * Notifies all observers of a player's status
+     *
      * @param player {@link Player}
      */
-    public void notify_player_status(ImmutablePlayer player){
-        for (ModelObserver o: observers) {
+    public void notify_player_status(ImmutablePlayer player) {
+        for (ModelObserver o : observers) {
             o.send_player_status(player);
         }
     }
@@ -73,11 +77,12 @@ public abstract class ModelObservable {
 
     /**
      * Notifies the specific observer of two objective card ids
+     *
      * @param player the target {@link Player}
      */
-    public void notify_two_personal_goals(Player player){
-        for (ModelObserver o: observers) {
-            if (o.getNickname().equals(player.getNickname())){
+    public void notify_two_personal_goals(Player player) {
+        for (ModelObserver o : observers) {
+            if (o.getNickname().equals(player.getNickname())) {
                 o.send_two_personal_goal(player.getInitialPossibleGoals());
                 break;
             }
@@ -87,11 +92,12 @@ public abstract class ModelObservable {
 
     /**
      * Notifies the specific observer of his/her hand cards
+     *
      * @param player the target {@link Player}
      */
-    public void notify_hand_cards(Player player){
-        for (ModelObserver o: observers) {
-            if ((o.getNickname().equals(player.getNickname()))){
+    public void notify_hand_cards(Player player) {
+        for (ModelObserver o : observers) {
+            if ((o.getNickname().equals(player.getNickname()))) {
                 o.send_player_handCard(player.getHandCards());
                 break;
             }
@@ -101,10 +107,11 @@ public abstract class ModelObservable {
 
     /**
      * Notifies all observers that a player has left the game
+     *
      * @param nickname nickname of player
      */
-    public void notify_game_interrupted(String nickname){
-        for (ModelObserver o: observers){
+    public void notify_game_interrupted(String nickname) {
+        for (ModelObserver o : observers) {
             if (!o.getNickname().equals(nickname))
                 o.send_player_disconnected(nickname);
         }
@@ -113,11 +120,12 @@ public abstract class ModelObservable {
 
     /**
      * Notifies the specific observer of the chat message
+     *
      * @param message {@link ChatMessage}
      */
-    public void notify_private_chat(ChatMessage message){
-        for (ModelObserver o: observers){
-            if (o.getNickname().equals(message.getRecipient())){
+    public void notify_private_chat(ChatMessage message) {
+        for (ModelObserver o : observers) {
+            if (o.getNickname().equals(message.getRecipient())) {
                 o.send_chat(message);
                 break;
             }
@@ -127,18 +135,19 @@ public abstract class ModelObservable {
 
     /**
      * Notifies observers of a public chat message
+     *
      * @param message {@link ChatMessage}
      */
-    public void notify_public_chat(ChatMessage message){
-        for (ModelObserver o: observers){
-            if (!o.getNickname().equals(message.getSender())){
+    public void notify_public_chat(ChatMessage message) {
+        for (ModelObserver o : observers) {
+            if (!o.getNickname().equals(message.getSender())) {
                 o.send_chat(message);
             }
         }
     }
 
 
-    public List<ModelObserver> getObservers(){
+    public List<ModelObserver> getObservers() {
         return observers;
     }
 

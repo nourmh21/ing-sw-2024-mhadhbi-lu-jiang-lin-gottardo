@@ -21,7 +21,7 @@ public class ChatHistory extends ModelObservable {
     }
 
     /**
-     * adds a message to the chatMessageList as a ChatMessage object.
+     * adds a message to the chatMessageList as a {@link ChatMessage} object.
      * Additionally, the designated chat (private or public) is notified depending on the isPublic attribute of the message
      *
      * @param message specifies the messages that needs to be added
