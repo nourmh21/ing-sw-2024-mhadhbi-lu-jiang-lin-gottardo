@@ -41,8 +41,10 @@ public class Access implements Runnable{
         }else{
             //file containing password
             String rootPath = System.getProperty("user.dir");
-            String path = "/CodexNaturalis/src/main/java/it/polimi/ingsw/controller/server/task/data.txt";
-            File file = new File(rootPath + path);
+            String sep = System.getProperty("file.separator");
+            String path = "data.txt";
+            File file = new File(rootPath + sep + path);
+
 
             //if user is already register
             if (isRegistered){
@@ -69,7 +71,8 @@ public class Access implements Runnable{
                         client.informError(NICKNAME_ALREADY_EXIST);
                     }
                 } catch (FileNotFoundException e) {
-                    System.out.println("Invalid file path");
+                    System.out.println("check");
+                    System.out.println(path);
                 }
             }
         }
@@ -117,6 +120,8 @@ public class Access implements Runnable{
             sc.close();
         } catch (FileNotFoundException e) {
             System.out.println("Invalid file path");
+            System.out.println(file.getAbsolutePath());
+            System.out.println("prova");
         }
         return found;
     }
