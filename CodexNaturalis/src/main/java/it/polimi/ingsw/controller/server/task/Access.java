@@ -40,10 +40,16 @@ public class Access implements Runnable{
             client.informError(ACCOUNT_ALREADY_LOGGED);
         }else{
             //file containing password
-            String rootPath = System.getProperty("user.dir");
-            String sep = System.getProperty("file.separator");
+            //String rootPath = System.getProperty("user.dir");
+            //String sep = System.getProperty("file.separator");
+
             String path = "data.txt";
-            File file = new File(rootPath + sep + path);
+            File file = new File(path);
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
 
             //if user is already register
