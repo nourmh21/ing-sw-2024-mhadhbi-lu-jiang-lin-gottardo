@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model;
+
 import it.polimi.ingsw.controller.server.GameController;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Symbol;
@@ -39,11 +40,12 @@ public class Player extends ModelObservable {
 
     /**
      * constructor of the Player class which extends ModelObserver
+     *
      * @param nickname defines the name of player
-     * @param game defines the game which the player is part of
-     * @param color defines color of player
+     * @param game     defines the game which the player is part of
+     * @param color    defines color of player
      */
-    public Player(String nickname, Game game, Color color){
+    public Player(String nickname, Game game, Color color) {
         this.nickname = nickname;
         isPersonalGoalChosen = false;
         handCards = new ArrayList<>();
@@ -67,7 +69,7 @@ public class Player extends ModelObservable {
     /**
      * @return initial card of player
      */
-    public Integer getInitialCard(){
+    public Integer getInitialCard() {
         return initialCard;
     }
 
@@ -75,7 +77,7 @@ public class Player extends ModelObservable {
     /**
      * @param idCard is the id of personal goal card
      */
-    public void setPersonalGoal(Integer idCard){
+    public void setPersonalGoal(Integer idCard) {
         personalGoal = idCard;
         setPersonalGoalChosen();
     }
@@ -95,7 +97,7 @@ public class Player extends ModelObservable {
     /**
      * @param goals id of possible goals for the player
      */
-    public void setInitialPossibleGoals(Integer[] goals){
+    public void setInitialPossibleGoals(Integer[] goals) {
         initialPossibleGoals = goals;
         //
         notify_two_personal_goals(this);
@@ -105,7 +107,7 @@ public class Player extends ModelObservable {
     /**
      * @return possible goals of player
      */
-    public Integer[] getInitialPossibleGoals(){
+    public Integer[] getInitialPossibleGoals() {
         return initialPossibleGoals;
     }
 
@@ -118,21 +120,20 @@ public class Player extends ModelObservable {
     }
 
 
-
     /**
      * @return player's game point
      */
-    public int getPoint(){
+    public int getPoint() {
         return point;
     }
 
 
-
     /**
      * Update player's point
+     *
      * @param newPoint new points to be added
      */
-    public void updatePoint(int newPoint){
+    public void updatePoint(int newPoint) {
         point = point + newPoint;
         //
         notify_player_status(generateImmutablePlayer());
@@ -149,6 +150,7 @@ public class Player extends ModelObservable {
 
     /**
      * update player's goalPoint
+     *
      * @param goalPoint player's goalPoint
      */
     public void addGoalPoint(int goalPoint) {
@@ -183,12 +185,13 @@ public class Player extends ModelObservable {
 
     /**
      * add card to hand card
+     *
      * @param idCard id of the card
      * @throws InvalidNumOfHandCardsException when the player already has three cards in the hand
      */
-    public void addCardToHandCards(Integer idCard){
+    public void addCardToHandCards(Integer idCard) {
         handCards.add(idCard);
-        if (handCards.size() == 3){
+        if (handCards.size() == 3) {
             notify_hand_cards(this);
             notify_player_status(generateImmutablePlayer());
         }
@@ -198,9 +201,10 @@ public class Player extends ModelObservable {
 
     /**
      * remove used card from HandCard
+     *
      * @param idCard indicates id of the card used
      */
-    public void removeHandCard(Integer idCard){
+    public void removeHandCard(Integer idCard) {
         handCards.remove(idCard);
         notify_hand_cards(this);
         notify_player_status(generateImmutablePlayer());
@@ -218,15 +222,15 @@ public class Player extends ModelObservable {
     /**
      * @return a new {@link ImmutablePlayer}
      */
-    public ImmutablePlayer generateImmutablePlayer(){
+    public ImmutablePlayer generateImmutablePlayer() {
         List<Symbol> handCardKingdoms = null;
         List<CardType> handCardTypes = null;
-        if (handCards != null){
+        if (handCards != null) {
             handCardKingdoms = handCards.stream()
-                    .map(integer -> (((Card)(GameController.getInstance().getCard(integer))).getKingdom()))
+                    .map(integer -> (((Card) (GameController.getInstance().getCard(integer))).getKingdom()))
                     .toList();
             handCardTypes = handCards.stream()
-                    .map(integer -> (((Card)(GameController.getInstance().getCard(integer))).getType()))
+                    .map(integer -> (((Card) (GameController.getInstance().getCard(integer))).getType()))
                     .toList();
         }
         return new ImmutablePlayer(nickname, playerColor, point, initialCard, board.getBoardCards(), isPersonalGoalChosen,

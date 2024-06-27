@@ -13,17 +13,15 @@ public class DrawCardMessage implements Message {
     private LocationType location;
     private Integer idCard;
 
-
-    public DrawCardMessage(LocationType location){
+    public DrawCardMessage(LocationType location) {
         this.location = location;
         idCard = null;
     }
 
-    public DrawCardMessage(LocationType location, Integer idCard){
+    public DrawCardMessage(LocationType location, Integer idCard) {
         this.location = location;
         this.idCard = idCard;
     }
-
 
     @Override
     public MessageType getType() {

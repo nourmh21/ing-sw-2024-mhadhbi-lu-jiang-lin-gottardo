@@ -13,7 +13,7 @@ public class PlayCardMessage implements Message {
     private final boolean isBackSide;
     private final int[] position;
 
-    public PlayCardMessage(Integer idCard, boolean isBackSide, int[] position){
+    public PlayCardMessage(Integer idCard, boolean isBackSide, int[] position) {
         this.idCard = idCard;
         this.isBackSide = isBackSide;
         this.position = position;

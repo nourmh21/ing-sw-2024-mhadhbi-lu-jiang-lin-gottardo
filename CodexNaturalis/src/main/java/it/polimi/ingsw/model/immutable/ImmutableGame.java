@@ -30,17 +30,17 @@ public class ImmutableGame implements Serializable {
 
 
     public ImmutableGame(int numOfPlayer, GameState gameState, List<Integer> commonGoals, boolean isLastRound, List<String> players,
-                         String currentPlayer, Symbol firstRCardKingdom, Symbol firstGCardKingdom, List<Integer> displayedRCards, List<Integer> displayedGCards){
-       this.numOfPlayer = numOfPlayer;
-       this.gameState = gameState;
-       this.commonGoals = commonGoals;
-       this.isLastRound = isLastRound;
-       this.players = players;
-       this.currentPlayer = currentPlayer;
-       this.firstRCardKingdom = firstRCardKingdom;
-       this.firstGCardKingdom = firstGCardKingdom;
-       this.displayedRCards = displayedRCards;
-       this.displayedGCards = displayedGCards;
+                         String currentPlayer, Symbol firstRCardKingdom, Symbol firstGCardKingdom, List<Integer> displayedRCards, List<Integer> displayedGCards) {
+        this.numOfPlayer = numOfPlayer;
+        this.gameState = gameState;
+        this.commonGoals = commonGoals;
+        this.isLastRound = isLastRound;
+        this.players = players;
+        this.currentPlayer = currentPlayer;
+        this.firstRCardKingdom = firstRCardKingdom;
+        this.firstGCardKingdom = firstGCardKingdom;
+        this.displayedRCards = displayedRCards;
+        this.displayedGCards = displayedGCards;
     }
 
 

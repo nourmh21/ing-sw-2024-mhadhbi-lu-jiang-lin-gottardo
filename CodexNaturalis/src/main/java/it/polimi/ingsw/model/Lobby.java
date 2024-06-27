@@ -49,7 +49,6 @@ public class Lobby extends ModelObservable {
 
     }
 
-
     /**
      * remove player from lobby
      * @param nickname is the nickname of player removed from lobby
@@ -71,11 +70,9 @@ public class Lobby extends ModelObservable {
         }
     }
 
-
     public List<String> getPlayers() {
         return players;
     }
-
 
     public int getNumOfPlayer(){
         return numOfPlayer;

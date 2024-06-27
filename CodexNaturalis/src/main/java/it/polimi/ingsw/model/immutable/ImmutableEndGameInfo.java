@@ -13,7 +13,7 @@ public class ImmutableEndGameInfo implements Serializable {
     private final HashMap<String, int[]> finalResult;
     private final List<String> winners;
 
-    public ImmutableEndGameInfo(HashMap<String,int[]> finalResult, List<String> winners){
+    public ImmutableEndGameInfo(HashMap<String, int[]> finalResult, List<String> winners) {
         this.finalResult = finalResult;
         this.winners = winners;
     }

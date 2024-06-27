@@ -42,19 +42,19 @@ public class Game extends ModelObservable {
         possibleWinners = new ArrayList<>();
         commonGoals = new ArrayList<>();
         this.numOfPlayer = numOfPlayer;
-        Random random=new Random();
+        Random random = new Random();
         idGame = random.nextInt(1000000);
         gameState = GameState.SETUP_PHASE_1;
-        isLastRound =false;
+        isLastRound = false;
         colors = new ArrayList<>(List.of((Color.values())));
         chatHistory = new ChatHistory();
     }
 
 
-    public void setGameObservers(List<ModelObserver> observers){
+    public void setGameObservers(List<ModelObserver> observers) {
         this.observers = observers;
         notify_game_status(generateImmutableGame());
-        for (ModelObserver o: observers) {
+        for (ModelObserver o : observers) {
             chatHistory.addObserver(o);
         }
     }
@@ -62,9 +62,10 @@ public class Game extends ModelObservable {
 
     /**
      * it sets common goal for the game
+     *
      * @param idCard indicates id of the common goal
      */
-    public void setCommonGoals(Integer idCard){
+    public void setCommonGoals(Integer idCard) {
         if (commonGoals.size() < 2)
             commonGoals.add(idCard);
         //
@@ -74,8 +75,8 @@ public class Game extends ModelObservable {
 
 
     /**
-    * @return the unique code of game generated random
-    * */
+     * @return the unique code of game generated random
+     */
     public int getIdGame() {
         return idGame;
     }
@@ -91,6 +92,7 @@ public class Game extends ModelObservable {
 
     /**
      * sets game state
+     *
      * @param gameState indicate the present state of the game
      */
     public synchronized void setGameState(GameState gameState) {
@@ -102,11 +104,12 @@ public class Game extends ModelObservable {
 
     /**
      * add the new player in the player list
+     *
      * @param nickname is the new player's name
      */
     public void addPlayers(String nickname) {
         players.add(new Player(nickname, this, randomColor()));
-        if (players.size() == numOfPlayer){
+        if (players.size() == numOfPlayer) {
             notify_game_status(generateImmutableGame());
         }
     }
@@ -123,23 +126,22 @@ public class Game extends ModelObservable {
     /**
      * @return the size of player list
      */
-    public int getPlayersSize(){
+    public int getPlayersSize() {
         return players.size();
     }
 
 
-
     /**
      * @return the current player
-     * */
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
 
-     /**
-      * @param p defines the next current player
-      */
+    /**
+     * @param p defines the next current player
+     */
     public void setCurrentPlayer(Player p) {
         this.currentPlayer = p;
         //
@@ -160,7 +162,7 @@ public class Game extends ModelObservable {
     /**
      * @return if is last turn
      */
-    public boolean getIsLastRound(){
+    public boolean getIsLastRound() {
         return isLastRound;
     }
 
@@ -168,15 +170,15 @@ public class Game extends ModelObservable {
     /**
      * find players with maximum points and return the list of possible winner
      */
-    public void checkMaxPoint(){
+    public void checkMaxPoint() {
         int max = 20;
-        for (Player p:players){
+        for (Player p : players) {
             if ((p.getPoint() >= max))
                 max = p.getPoint();
         }
 
-        for (Player p:players){
-            if ((p.getPoint() == max)){
+        for (Player p : players) {
+            if ((p.getPoint() == max)) {
                 possibleWinners.add(p);
             }
         }
@@ -192,13 +194,13 @@ public class Game extends ModelObservable {
     /**
      * find final winners in the game and return the final winners list
      */
-    public void checkExtraPoint(){
-        int maxExtraPoint=0;
-        for (Player p:possibleWinners){
+    public void checkExtraPoint() {
+        int maxExtraPoint = 0;
+        for (Player p : possibleWinners) {
             if (p.getPoint() >= maxExtraPoint)
                 maxExtraPoint = p.getPoint();
         }
-        for (Player p:possibleWinners){
+        for (Player p : possibleWinners) {
             if (p.getPoint() == maxExtraPoint)
                 winners.add(p);
         }
@@ -208,11 +210,12 @@ public class Game extends ModelObservable {
 
     /**
      * it gets points of player
+     *
      * @return point
      */
-    private HashMap<String,int[]> getPlayersPoint(){
-        HashMap<String,int[]> finalResult = new HashMap<>();
-        for (Player p: getPlayers()) {
+    private HashMap<String, int[]> getPlayersPoint() {
+        HashMap<String, int[]> finalResult = new HashMap<>();
+        for (Player p : getPlayers()) {
             finalResult.put(p.getNickname(), new int[]{p.getPoint(), p.getGoalPoint()});
         }
         return finalResult;
@@ -222,7 +225,7 @@ public class Game extends ModelObservable {
     /**
      * @return winners' nickname
      */
-    public List<String> getWinnersNickname(){
+    public List<String> getWinnersNickname() {
         return getWinners().stream()
                 .map(Player::getNickname)
                 .toList();
@@ -232,7 +235,7 @@ public class Game extends ModelObservable {
     /**
      * @return players' nickname
      */
-    public List<String> getPlayersNickname(){
+    public List<String> getPlayersNickname() {
         return getPlayers().stream()
                 .map(Player::getNickname)
                 .toList();
@@ -242,7 +245,7 @@ public class Game extends ModelObservable {
     /**
      * @return List of winners
      */
-    public List<Player> getWinners(){
+    public List<Player> getWinners() {
         return winners;
     }
 
@@ -258,7 +261,7 @@ public class Game extends ModelObservable {
     /**
      * @return the number of player in the game
      */
-    public int getNumOfPlayer(){
+    public int getNumOfPlayer() {
         return numOfPlayer;
     }
 
@@ -273,9 +276,10 @@ public class Game extends ModelObservable {
 
     /**
      * it randoms color (without repeat)
+     *
      * @return the color get by random
      */
-    public Color randomColor(){
+    public Color randomColor() {
         Random random = new Random();
         int randomIndex = random.nextInt(colors.size());
         Color randomColor = colors.get(randomIndex);
@@ -284,16 +288,17 @@ public class Game extends ModelObservable {
         return randomColor;
     }
 
-    public void addNewChat(ChatMessage message){
+    public void addNewChat(ChatMessage message) {
         chatHistory.addNewMessage(message);
     }
 
 
     /**
      * Visible for GameTest
+     *
      * @return chatHistory
      */
-    public ChatHistory getChatHistory(){
+    public ChatHistory getChatHistory() {
         return chatHistory;
     }
 
@@ -301,7 +306,7 @@ public class Game extends ModelObservable {
     /**
      * @return a new {@link ImmutableGame}
      */
-    public ImmutableGame generateImmutableGame(){
+    public ImmutableGame generateImmutableGame() {
         List<String> playerNicknames = null;
         String current = null;
         Symbol firstRCardKingdom = null;
@@ -312,10 +317,10 @@ public class Game extends ModelObservable {
             playerNicknames = getPlayersNickname();
         if (currentPlayer != null)
             current = currentPlayer.getNickname();
-        if (desk.getNextResourceCard()!= null)
-            firstRCardKingdom = ((Card)(GameController.getInstance().getCard(desk.getNextResourceCard()))).getKingdom();
-        if (desk.getNextGoldCard()!= null)
-            firstGCardKingdom = ((Card)GameController.getInstance().getCard(desk.getNextGoldCard())).getKingdom();
+        if (desk.getNextResourceCard() != null)
+            firstRCardKingdom = ((Card) (GameController.getInstance().getCard(desk.getNextResourceCard()))).getKingdom();
+        if (desk.getNextGoldCard() != null)
+            firstGCardKingdom = ((Card) GameController.getInstance().getCard(desk.getNextGoldCard())).getKingdom();
         if (desk.getDisplayedRCards() != null)
             displayedRCards = desk.getDisplayedRCards();
         if (desk.getDisplayedGCards() != null)

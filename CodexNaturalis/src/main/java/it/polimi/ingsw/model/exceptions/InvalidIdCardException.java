@@ -7,21 +7,21 @@ package it.polimi.ingsw.model.exceptions;
 
 @SuppressWarnings("ALL")
 public class InvalidIdCardException extends RuntimeException {
-   /**
-   * Constructs a new {@code InvalidIdCardException} with the specified error message.
-   *
-   *  @param errorMessage the error message describing the exception
-   */
+    /**
+     * Constructs a new {@code InvalidIdCardException} with the specified error message.
+     *
+     * @param errorMessage the error message describing the exception
+     */
 
     public InvalidIdCardException(String errorMessage) {
         super(errorMessage);
     }
 
-   /**
-   * Constructs a new {@code InvalidIdCardException} with no error message.
-   */
+    /**
+     * Constructs a new {@code InvalidIdCardException} with no error message.
+     */
 
     public InvalidIdCardException() {
-     }
+    }
 
 }

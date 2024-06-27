@@ -11,13 +11,13 @@ import java.util.List;
 
 /**
  * Desk is a class that contains:
- *    4 deck of Card, one for each card type
- *    2 displayed card list,
- *    1 card that represent the first card of resource card deck
- *    1 card that represent the first card of gold card deck
- *    some methods to pick a card
+ * 4 deck of Card, one for each card type
+ * 2 displayed card list,
+ * 1 card that represent the first card of resource card deck
+ * 1 card that represent the first card of gold card deck
+ * some methods to pick a card
  * Note: there are only card ids here, therefore only integers and not card objects
- * */
+ */
 
 public class Desk extends ModelObservable {
     private List<Integer> resourceCardDeck;          //list of resource cards - resource card deck
@@ -29,10 +29,13 @@ public class Desk extends ModelObservable {
     private Integer nextResourceCard;                //the first card of resource card deck
     private Integer nextGoldCard;                    //the first card of gold card deck
     private final Game game;
+
     /**
      * The class constructor
+     *
+     * @param game defines the game for which the desk is created
      */
-    public Desk(Game game){
+    public Desk(Game game) {
         this.game = game;
         observers = game.getObservers();
         resourceCardDeck = new ArrayList<>(40);
@@ -44,16 +47,16 @@ public class Desk extends ModelObservable {
         nextGoldCard = null;
         nextResourceCard = null;
 
-        for (int i = 1; i <= 40; i++){
+        for (int i = 1; i <= 40; i++) {
             resourceCardDeck.add(i);
         }
-        for (int i = 41; i <= 80; i++){
+        for (int i = 41; i <= 80; i++) {
             goldCardDeck.add(i);
         }
-        for (int i = 81; i <= 96; i++){
+        for (int i = 81; i <= 96; i++) {
             objectiveCardDeck.add(i);
         }
-        for (int i = 97; i <= 102; i++){
+        for (int i = 97; i <= 102; i++) {
             initialCardDeck.add(i);
         }
 
@@ -87,12 +90,14 @@ public class Desk extends ModelObservable {
 
     /**
      * Pick one card id from the right deck
+     *
      * @param type the type of card that one wants to pick
      * @return a card id of the required type
+     * @throws EmptyDeckException if there are no cards on the deck
      */
-    public Integer pickOneCard(CardType type) throws EmptyDeckException{
+    public Integer pickOneCard(CardType type) throws EmptyDeckException {
         Integer idCard = null;
-        switch (type){
+        switch (type) {
             case RESOURCE:
                 idCard = pick(resourceCardDeck);
                 break;
@@ -112,6 +117,7 @@ public class Desk extends ModelObservable {
 
     /**
      * Support the pickOneCard method, in order to avoid repetitive code
+     *
      * @param list the list of card id
      * @return a card id
      * @throws EmptyDeckException if the list is empty
@@ -128,10 +134,10 @@ public class Desk extends ModelObservable {
     /**
      * Fill the list of displayed resource card with resource card
      */
-    public void updateDisplayedRCard(){
-        if (nextResourceCard != null){
+    public void updateDisplayedRCard() {
+        if (nextResourceCard != null) {
             displayedResourceCards.add(pickNextRCard());
-        }else if (nextGoldCard != null){
+        } else if (nextGoldCard != null) {
             displayedResourceCards.add(pickNextGCard());
         }
     }
@@ -140,40 +146,45 @@ public class Desk extends ModelObservable {
     /**
      * Fill the list of displayed gold card with gold card
      */
-    public void updateDisplayedGCard(){
-        if (nextGoldCard != null){
+    public void updateDisplayedGCard() {
+        if (nextGoldCard != null) {
             displayedGoldCards.add(pickNextGCard());
-        }else if (nextResourceCard != null){
+        } else if (nextResourceCard != null) {
             displayedGoldCards.add(pickNextRCard());
         }
     }
 
 
     /**
+     * getter for displayedResourceCards
+     *
      * @return the current list of displayed resource card id
      */
-    public List<Integer> getDisplayedRCards(){
+    public List<Integer> getDisplayedRCards() {
         return displayedResourceCards;
     }
 
 
     /**
+     * getter for displayedGoldCards
+     *
      * @return the current list of displayed gold card id
      */
-    public List<Integer> getDisplayedGCards(){
+    public List<Integer> getDisplayedGCards() {
         return displayedGoldCards;
     }
 
 
     /**
      * Pick one resource card from displayed resource card list
+     *
      * @param idCard the id of the card that one wants to pick
      * @return a resource card id
      */
-    public Integer pickOneDisplayedRCard(int idCard){
+    public Integer pickOneDisplayedRCard(int idCard) {
         Integer c = null;
-        for (int i = 0; i < displayedResourceCards.size(); i++){
-            if(idCard == displayedResourceCards.get(i)){
+        for (int i = 0; i < displayedResourceCards.size(); i++) {
+            if (idCard == displayedResourceCards.get(i)) {
                 c = displayedResourceCards.get(i);
                 displayedResourceCards.remove(i);
                 break;
@@ -185,13 +196,14 @@ public class Desk extends ModelObservable {
 
     /**
      * Pick one gold card from displayed gold card list
+     *
      * @param idCard the id of the card that one wants to pick
      * @return a gold card id
      */
-    public Integer pickOneDisplayedGCard(int idCard){
+    public Integer pickOneDisplayedGCard(int idCard) {
         Integer c = null;
-        for (int i = 0; i < 2; i++){
-            if( idCard == displayedGoldCards.get(i)){
+        for (int i = 0; i < 2; i++) {
+            if (idCard == displayedGoldCards.get(i)) {
                 c = displayedGoldCards.get(i);
                 displayedGoldCards.remove(i);
                 break;
@@ -204,7 +216,7 @@ public class Desk extends ModelObservable {
     /**
      * Update the first card of resource card deck (when it was used)
      */
-    public void updateNextRCard(){
+    public void updateNextRCard() {
         try {
             nextResourceCard = pickOneCard(CardType.RESOURCE);
             //
@@ -235,9 +247,10 @@ public class Desk extends ModelObservable {
 
     /**
      * Pick the first card of resource card deck
+     *
      * @return a resource card id
      */
-    public Integer pickNextRCard(){
+    public Integer pickNextRCard() {
         Integer c = nextResourceCard;
         nextResourceCard = null;
         updateNextRCard();
@@ -247,21 +260,30 @@ public class Desk extends ModelObservable {
 
     /**
      * Pick the first card of gold card deck
+     *
      * @return a gold card id
      */
-    public Integer pickNextGCard(){
+    public Integer pickNextGCard() {
         Integer c = nextGoldCard;
         nextGoldCard = null;
         updateNextGCard();
         return c;
     }
 
-
+    /**
+     * getter for nextResourceCard
+     *
+     * @return next card on the resource cards deck
+     */
     public Integer getNextResourceCard() {
         return nextResourceCard;
     }
 
-
+    /**
+     * getter for nextGoldCard
+     *
+     * @return next card on the gold cards deck
+     */
     public Integer getNextGoldCard() {
         return nextGoldCard;
     }
@@ -270,11 +292,10 @@ public class Desk extends ModelObservable {
     /**
      * @return true if both resource and gold deck are finished
      */
-    public boolean isEmptyBothRGDeck(){
+    public boolean isEmptyBothRGDeck() {
         return resourceCardDeck.isEmpty() && goldCardDeck.isEmpty() &&
                 nextResourceCard == null && nextGoldCard == null;
     }
-
 
 
 }

@@ -13,9 +13,10 @@ public class ErrorMessage implements Message {
 
     /**
      * Constructor
+     *
      * @param error {@link ErrorType}
      */
-    public ErrorMessage(ErrorType error){
+    public ErrorMessage(ErrorType error) {
         this.error = error;
     }
 
@@ -23,7 +24,12 @@ public class ErrorMessage implements Message {
         return MessageType.ERROR;
     }
 
-    public ErrorType getError(){
+    /**
+     * getter for error
+     *
+     * @return error
+     */
+    public ErrorType getError() {
         return error;
     }
 

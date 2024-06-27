@@ -11,7 +11,7 @@ public class PlayInitCardMessage implements Message {
     private Integer idCard;
     private boolean isBackSide;
 
-    public PlayInitCardMessage(Integer idCard, boolean isBackSide){
+    public PlayInitCardMessage(Integer idCard, boolean isBackSide) {
         this.idCard = idCard;
         this.isBackSide = isBackSide;
     }

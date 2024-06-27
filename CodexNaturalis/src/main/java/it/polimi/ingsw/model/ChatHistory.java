@@ -7,14 +7,26 @@ import it.polimi.ingsw.observer.ModelObservable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The ChatHistory class represents the history of the messages sent through the chat
+ */
 public class ChatHistory extends ModelObservable {
     private List<ChatMessage> chatMessageList;
 
-    public ChatHistory(){
+    /**
+     * the constructor creates an empty ArrayList
+     */
+    public ChatHistory() {
         chatMessageList = new ArrayList<>();
     }
 
-    public void addNewMessage(ChatMessage message){
+    /**
+     * adds a message to the chatMessageList as a ChatMessage object.
+     * Additionally, the designated chat (private or public) is notified depending on the isPublic attribute of the message
+     *
+     * @param message specifies the messages that needs to be added
+     */
+    public void addNewMessage(ChatMessage message) {
         chatMessageList.add(message);
         if (!message.isPublic())
             notify_private_chat(message);

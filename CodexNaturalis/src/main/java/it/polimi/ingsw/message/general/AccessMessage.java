@@ -13,7 +13,7 @@ public class AccessMessage implements Message {
     private final String pwd;
     private final boolean isRegistered;
 
-    public AccessMessage(String nickname, String pwd, boolean isRegistered){
+    public AccessMessage(String nickname, String pwd, boolean isRegistered) {
         this.nickname = nickname;
         this.pwd = pwd;
         this.isRegistered = isRegistered;

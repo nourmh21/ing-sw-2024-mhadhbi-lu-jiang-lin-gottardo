@@ -10,7 +10,8 @@ import it.polimi.ingsw.message.enums.MessageType;
 public class CreateLobbyMessage implements Message {
 
     int numOfPlayer;
-    public CreateLobbyMessage(int numOfPlayer){
+
+    public CreateLobbyMessage(int numOfPlayer) {
         this.numOfPlayer = numOfPlayer;
     }
 

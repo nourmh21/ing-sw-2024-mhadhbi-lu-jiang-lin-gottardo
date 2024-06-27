@@ -3,13 +3,14 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.Symbol;
 import it.polimi.ingsw.model.enums.CardType;
 
-public class InitialCard extends Card{
+public class InitialCard extends Card {
     private final int[] centerResource = new int[4];
     private final Symbol topLeftAngleFront, topRightAngleFront, bottomLeftAngleFront, bottomRightAngleFront;
 
 
     /**
      * constructor of the InitialCard class which extends the Card constructor
+     *
      * @param n_fungi
      * @param n_plant
      * @param n_animal
@@ -19,7 +20,7 @@ public class InitialCard extends Card{
      * @param bottomRightAngleFront
      * @param bottomLeftAngleFront
      */
-    public InitialCard(int idCard, Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, CardType type, int n_fungi, int n_plant, int n_animal, int n_insect,Symbol topLeftAngleFront,Symbol topRightAngleFront,Symbol bottomRightAngleFront,Symbol bottomLeftAngleFront ) {
+    public InitialCard(int idCard, Symbol kingdom, Symbol topLeftAngle, Symbol topRightAngle, Symbol bottomLeftAngle, Symbol bottomRightAngle, int points, CardType type, int n_fungi, int n_plant, int n_animal, int n_insect, Symbol topLeftAngleFront, Symbol topRightAngleFront, Symbol bottomRightAngleFront, Symbol bottomLeftAngleFront) {
         super(idCard, kingdom, topLeftAngle, topRightAngle, bottomLeftAngle, bottomRightAngle, points, type);
         centerResource[0] = n_animal;
         centerResource[1] = n_plant;

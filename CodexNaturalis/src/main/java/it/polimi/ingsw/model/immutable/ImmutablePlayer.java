@@ -33,20 +33,20 @@ public class ImmutablePlayer implements Serializable {
 
     public ImmutablePlayer(String nickname, Color color, int point, Integer initialCard, List<Integer> boardCards, boolean isPersonalGoalChosen,
                            List<Integer> x, List<Integer> y, List<Boolean> isBackSide, List<int[]> permissiblePosition, List<Symbol> handCardKingdoms,
-                           List<CardType> handCardTypes, int[] symbolList){
-       this.nickname = nickname;
-       this.color = color;
-       this.point = point;
-       this.initialCard = initialCard;
-       this.boardCards = boardCards;
-       this.isPersonalGoalChosen = isPersonalGoalChosen;
-       this.x = x;
-       this.y = y;
-       this.isBackSide = isBackSide;
-       this.permissiblePosition = permissiblePosition;
-       this.handCardKingdoms = handCardKingdoms;
-       this.handCardTypes = handCardTypes;
-       this.symbolList = symbolList;
+                           List<CardType> handCardTypes, int[] symbolList) {
+        this.nickname = nickname;
+        this.color = color;
+        this.point = point;
+        this.initialCard = initialCard;
+        this.boardCards = boardCards;
+        this.isPersonalGoalChosen = isPersonalGoalChosen;
+        this.x = x;
+        this.y = y;
+        this.isBackSide = isBackSide;
+        this.permissiblePosition = permissiblePosition;
+        this.handCardKingdoms = handCardKingdoms;
+        this.handCardTypes = handCardTypes;
+        this.symbolList = symbolList;
     }
 
 
@@ -62,7 +62,7 @@ public class ImmutablePlayer implements Serializable {
         return point;
     }
 
-    public Integer getInitialCard(){
+    public Integer getInitialCard() {
         return initialCard;
     }
 
@@ -98,8 +98,10 @@ public class ImmutablePlayer implements Serializable {
         return isBackSide;
     }
 
-    public int[] getSymbolList(){
+    public int[] getSymbolList() {
         return symbolList;
-    };
+    }
+
+    ;
 }
 

@@ -11,7 +11,7 @@ import it.polimi.ingsw.message.enums.MessageType;
 public class JoinLobbyMessage implements Message {
     Integer idLobby;
 
-    public JoinLobbyMessage(Integer idLobby){
+    public JoinLobbyMessage(Integer idLobby) {
         this.idLobby = idLobby;
     }
 

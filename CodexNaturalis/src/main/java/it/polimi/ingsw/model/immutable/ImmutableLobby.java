@@ -13,7 +13,8 @@ import java.util.List;
 public class ImmutableLobby implements Serializable {
     private final List<String> players;
     private final int numOfPlayer;
-    public ImmutableLobby(List<String> players, int numOfPlayer){
+
+    public ImmutableLobby(List<String> players, int numOfPlayer) {
         this.players = players;
         this.numOfPlayer = numOfPlayer;
     }

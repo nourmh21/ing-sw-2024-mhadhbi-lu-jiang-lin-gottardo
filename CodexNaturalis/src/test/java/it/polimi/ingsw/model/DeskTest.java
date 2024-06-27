@@ -11,10 +11,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-
-/**
- * To be updated because I have modified desk class
- */
 public class DeskTest {
 
     Desk desk = null;

@@ -11,7 +11,7 @@ public class PersonalGoalChooseMessage implements Message {
 
     Integer idCard;
 
-    public PersonalGoalChooseMessage(Integer idCard){
+    public PersonalGoalChooseMessage(Integer idCard) {
         this.idCard = idCard;
     }
 

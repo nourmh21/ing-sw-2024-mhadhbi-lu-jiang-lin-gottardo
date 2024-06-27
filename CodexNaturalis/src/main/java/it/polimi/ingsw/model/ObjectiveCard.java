@@ -8,8 +8,8 @@ public class ObjectiveCard{
 
     /**
      * constructor
-     * @param type         defines the Type of GoalCard POSITION or SET.
-     * @param idCard       defines ID of the card
+     * @param type defines the Type of GoalCard POSITION or SET.
+     * @param idCard defines ID of the card
      */
     public ObjectiveCard(int idCard, int points, GoalType type) {
         this.idCard = idCard;
