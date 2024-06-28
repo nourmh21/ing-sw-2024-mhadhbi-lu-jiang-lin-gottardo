@@ -56,7 +56,6 @@ public class ServerApp {
         }
 
 
-
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
