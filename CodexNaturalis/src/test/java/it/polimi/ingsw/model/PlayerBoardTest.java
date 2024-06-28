@@ -3,11 +3,12 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.GoalType;
 import it.polimi.ingsw.model.enums.Symbol;
+import it.polimi.ingsw.model.exceptions.InvalidIdCardException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,10 +21,8 @@ public class PlayerBoardTest {
 
 
     @Before
-    public void setUp() throws FileNotFoundException {
+    public void setUp()  {
         playerBoard = new PlayerBoard();
-
-
     }
 
     @After
@@ -50,15 +49,7 @@ public class PlayerBoardTest {
         Card c29 = new Card(29, Symbol.ANIMAL, Symbol.FEATHER, Symbol.HIDDEN, Symbol.FUNGI, Symbol.ANIMAL, 0, CardType.RESOURCE);
         Card c31 = new Card(31, Symbol.INSECT, Symbol.INSECT, Symbol.INSECT, Symbol.HIDDEN, Symbol.EMPTY, 0, CardType.RESOURCE);
         Card c39 = new Card(39, Symbol.INSECT, Symbol.PARCHMENT, Symbol.INSECT, Symbol.FUNGI, Symbol.HIDDEN, 0, CardType.RESOURCE);
-        ObjectiveCard c81 = new ObjectiveCard(81, 2, GoalType.REDG);
-        ObjectiveCard c88 = new ObjectiveCard(88, 3, GoalType.VVB);
-        ObjectiveCard c89 = new ObjectiveCard(89, 2, GoalType.FFF);
-        ObjectiveCard c91 = new ObjectiveCard(91, 2, GoalType.AAA);
-        ObjectiveCard c92 = new ObjectiveCard(92, 2, GoalType.III);
-        ObjectiveCard c93 = new ObjectiveCard(93, 3, GoalType.BFP);
-        ObjectiveCard c94 = new ObjectiveCard(94, 2, GoalType.PP);
-        ObjectiveCard c95 = new ObjectiveCard(95, 2, GoalType.BB);
-        ObjectiveCard c96 = new ObjectiveCard(96, 2, GoalType.FF);
+
 
         playerBoard.placeInitCard(c98, true);
 
@@ -103,15 +94,7 @@ public class PlayerBoardTest {
         Card c29 = new Card(29, Symbol.ANIMAL, Symbol.FEATHER, Symbol.HIDDEN, Symbol.FUNGI, Symbol.ANIMAL, 0, CardType.RESOURCE);
         Card c31 = new Card(31, Symbol.INSECT, Symbol.INSECT, Symbol.INSECT, Symbol.HIDDEN, Symbol.EMPTY, 0, CardType.RESOURCE);
         Card c39 = new Card(39, Symbol.INSECT, Symbol.PARCHMENT, Symbol.INSECT, Symbol.FUNGI, Symbol.HIDDEN, 0, CardType.RESOURCE);
-        ObjectiveCard c81 = new ObjectiveCard(81, 2, GoalType.REDG);
-        ObjectiveCard c88 = new ObjectiveCard(88, 3, GoalType.VVB);
-        ObjectiveCard c89 = new ObjectiveCard(89, 2, GoalType.FFF);
-        ObjectiveCard c91 = new ObjectiveCard(91, 2, GoalType.AAA);
-        ObjectiveCard c92 = new ObjectiveCard(92, 2, GoalType.III);
-        ObjectiveCard c93 = new ObjectiveCard(93, 3, GoalType.BFP);
-        ObjectiveCard c94 = new ObjectiveCard(94, 2, GoalType.PP);
-        ObjectiveCard c95 = new ObjectiveCard(95, 2, GoalType.BB);
-        ObjectiveCard c96 = new ObjectiveCard(96, 2, GoalType.FF);
+
 
         playerBoard.placeInitCard(c98, true);
         playerBoard.placeCard(c6, false, 1, 1);
@@ -129,7 +112,6 @@ public class PlayerBoardTest {
         playerBoard.placeCard(c29, false, 2, -4);
         playerBoard.placeCard(c31, false, 1, -5);
         playerBoard.placeCard(c39, false, 2, 0);
-
 
 
         System.out.println("Available Position");
@@ -219,7 +201,22 @@ public class PlayerBoardTest {
 
     }
 
+    @Test(expected = InvalidIdCardException.class)
+    public void placeCard_wrongInput_InvalidIdCardException() {
+        Card c6 = new Card(99, Symbol.FUNGI, Symbol.HIDDEN, Symbol.EMPTY, Symbol.EMPTY, Symbol.FUNGI, 1, CardType.RESOURCE);
+        InitialCard c98 = new InitialCard(98, Symbol.EMPTY, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, Symbol.FUNGI, 0, CardType.INITIAL, 2, 0, 1, 0, Symbol.ANIMAL, Symbol.EMPTY, Symbol.FUNGI, Symbol.EMPTY);
 
+        playerBoard.placeInitCard( c98, false);
+        playerBoard.placeCard(c6, false, 1, 1);
+    }
+
+    @Test(expected = InvalidIdCardException.class)
+    public void placeInitCard_wrongInput_InvalidIdCardException() {
+        InitialCard c98 = new InitialCard(70, Symbol.EMPTY, Symbol.PLANT, Symbol.ANIMAL, Symbol.INSECT, Symbol.FUNGI, 0, CardType.INITIAL, 2, 0, 1, 0, Symbol.ANIMAL, Symbol.EMPTY, Symbol.FUNGI, Symbol.EMPTY);
+
+        playerBoard.placeInitCard( c98, false);
+
+    }
 
 
 
@@ -293,7 +290,6 @@ public class PlayerBoardTest {
         int actual9 = playerBoard.calculateGoalPoint(c96);
 
 
-
         assertEquals(expected1, actual1);
         assertEquals(expected2, actual2);
         assertEquals(expected3, actual3);
@@ -304,13 +300,6 @@ public class PlayerBoardTest {
         assertEquals(expected8, actual8);
         assertEquals(expected9, actual9);
     }
-
-
-
-
-
-
-
 
 
 }
