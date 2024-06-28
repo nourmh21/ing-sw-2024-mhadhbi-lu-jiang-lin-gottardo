@@ -8,7 +8,6 @@ import it.polimi.ingsw.network.socket.server.ClientHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.concurrent.Executors;
@@ -25,10 +24,18 @@ public class ServerApp {
         int port_RMI = 1099;
 
         if (args.length >= 1) {
-            hostname = args[0];
+            try {
+                hostname = args[0];
+            }catch (NumberFormatException e){
+                errorClose();
+            }
         }
         if (args.length >= 2) {
-            port_RMI = Integer.parseInt(args[1]);
+            try {
+                port_RMI = Integer.parseInt(args[1]);
+            }catch (NumberFormatException e){
+                errorClose();
+            }
         }
 
         try {
@@ -36,9 +43,6 @@ public class ServerApp {
             RMIServerImpl obj =new RMIServerImpl();
             Registry registry = LocateRegistry.createRegistry(port_RMI);
             registry.rebind("Server",obj);
-
-
-
 
             // Creare un ScheduledExecutorService per eseguire checkClients ogni 5 secondi
             ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -68,10 +72,11 @@ public class ServerApp {
         } catch (IOException e) {
             //e.printStackTrace();
         }
+    }
 
-
-
-
+    public static void errorClose(){
+        System.out.println("ERROR: invalid argument(s)");
+        System.exit(0);
     }
 }
 
