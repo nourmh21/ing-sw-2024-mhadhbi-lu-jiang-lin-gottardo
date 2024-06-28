@@ -45,7 +45,7 @@ Note:
 - ip_address is IPv4 of the party that runs server application
 - the party running the server application must verify the available port numbers themselves
 #### CLIENT
-The client app can be run one of following command: <br>
+The client app can be run with one of the following command: <br>
 TUI
 ```shell
 java -jar codex_naturalis_client.jar --tui
