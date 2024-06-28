@@ -18,39 +18,43 @@ import java.util.concurrent.TimeUnit;
 public class ServerApp {
 
     private static final int port = 49257;
-    private static final int port_RMI= 1099;
+
     public static void main(String[] args) {
+
+        String hostname = "127.0.0.1";
+        int port_RMI = 1099;
+
+        if (args.length >= 1) {
+            hostname = args[0];
+        }
+        if (args.length >= 2) {
+            port_RMI = Integer.parseInt(args[1]);
+        }
+
         try {
-            var ref = new Object() {
-                RMIServerImpl obj = null;
-            };
-            ref.obj = new RMIServerImpl();
-
-            try {
-                Registry registry = LocateRegistry.createRegistry(port_RMI);
-                registry.rebind("Server", ref.obj);
-                //da controllare
-                System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+            System.setProperty("java.rmi.server.hostname", hostname);
+            RMIServerImpl obj =new RMIServerImpl();
+            Registry registry = LocateRegistry.createRegistry(port_RMI);
+            registry.rebind("Server",obj);
 
 
-                // Creare un ScheduledExecutorService per eseguire checkClients ogni 5 secondi
-                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-                scheduler.scheduleAtFixedRate(() -> {
-                    try {
-                        ref.obj.checkClients();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+
+            // Creare un ScheduledExecutorService per eseguire checkClients ogni 5 secondi
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+            scheduler.scheduleAtFixedRate(() -> {
+                try {
+                    obj.checkClients();
+                } catch (Exception e) {
+                    System.err.println("ServerApp exception: " + e);
+                }
                 }, 0, 5, TimeUnit.SECONDS);
 
 
-            } catch (Exception e) {
-                System.err.println("Server exception: " + e.toString());
-                e.printStackTrace();
-            }
         } catch (Exception e) {
-            System.err.println("Cannot start RMI.");
+            System.err.println("ServerApp exception: " + e);
         }
+
 
 
         try {
