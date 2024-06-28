@@ -39,17 +39,17 @@
 
 The server app can be run with the following command:
 ```shell
-    
+java -jar codex_naturalis_server.jar ip_address port_number    
 ```
 The client app can be run one of following command: <br>
 
 TUI
 ```shell
-
+java -jar codex_naturalis_client.jar --tui
 ```
 GUI
 ```shell
-    
+java -jar codex_naturalis_client.jar    
 ```
 
 ## Game scenes
