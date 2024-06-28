@@ -14,7 +14,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implementation of the RMIServerInterface using RMI.
+ * This class manages client connections and provides remote methods for client interaction.
+ * It maintains a mapping of connected RMIClientInterface objects to Client instances.
+ * extends UnicastRemoteObject to facilitate RMI communication.
+ *
+ */
 public class RMIServerImpl extends UnicastRemoteObject implements RMIServerInterface {
+    //the clientMap to store connected clients.
     Map<RMIClientInterface, Client> clientMap = new HashMap<>();
     public RMIServerImpl() throws RemoteException {}
 
