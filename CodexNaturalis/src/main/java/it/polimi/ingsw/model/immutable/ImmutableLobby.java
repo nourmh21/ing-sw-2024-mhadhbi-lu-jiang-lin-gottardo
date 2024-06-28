@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.immutable;
 
-import it.polimi.ingsw.model.Lobby;
-
 import java.io.Serializable;
 import java.util.List;
 

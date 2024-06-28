@@ -1,9 +1,5 @@
 package it.polimi.ingsw.model.immutable;
 
-import it.polimi.ingsw.controller.server.GameController;
-import it.polimi.ingsw.model.Card;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.PlayerBoard;
 import it.polimi.ingsw.model.enums.CardType;
 import it.polimi.ingsw.model.enums.Color;
 import it.polimi.ingsw.model.enums.Symbol;
