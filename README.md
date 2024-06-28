@@ -39,7 +39,7 @@
 #### SERVER
 The server app can be run with the following command: 
 ```shell
-java -jar codex_naturalis_server.jar ip_address port_number   
+java -Djava.rmi.server.hostname=ip_address -Djava.rmi.server.port=port_number -jar codex_naturalis_server.jar ip_address
 ```
 Note: 
 - ip_address is IPv4 of the party that runs server application
@@ -52,7 +52,7 @@ java -jar codex_naturalis_client.jar --tui
 ```
 GUI
 ```shell
-java -jar codex_naturalis_client.jar    
+java -jar codex_naturalis_client.jar
 ```
 
 ## Game scenes
