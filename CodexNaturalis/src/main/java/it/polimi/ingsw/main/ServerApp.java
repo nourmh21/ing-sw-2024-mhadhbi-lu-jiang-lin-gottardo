@@ -1,7 +1,5 @@
 package it.polimi.ingsw.main;
 
-
-
 import it.polimi.ingsw.network.rmi.server.RMIServerImpl;
 import it.polimi.ingsw.network.socket.server.ClientHandler;
 
@@ -14,21 +12,30 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Main class that starts a server to handle RMI and Socket client connections.
+ * The server uses RMI to expose a remote interface and Socket to accept connections from clients.
+ * Uses an instance of RMIServerImpl to handle RMI operations and starts a thread for each Socket client
+ * that connects, handled by the ClientHandler class.
+ */
 public class ServerApp {
 
-    private static final int port = 49257;
+    private static final int port = 49257;// Default Socket port
 
+    /**
+     * Main method that starts the server.
+     * Configure hostname for RMI, initialize RMI server, manage Socket clients and related exceptions.
+     *
+     * @param args Command line arguments: [hostname] [RMI port]
+     *            hostname: IP address of the host (optional, default: 127.0.0.1)
+     *            RMI port: Port for RMI register (optional, default: 1099)
+     */
     public static void main(String[] args) {
-
-        String hostname = "127.0.0.1";
-        int port_RMI = 1099;
-
+        String hostname = "127.0.0.1";// Default IP
+        int port_RMI = 1099; // Default RMI port
+        // Check if hostname and port arguments have been provided
         if (args.length >= 1) {
-            try {
-                hostname = args[0];
-            }catch (NumberFormatException e){
-                errorClose();
-            }
+            hostname = args[0];
         }
         if (args.length >= 2) {
             try {
@@ -39,12 +46,14 @@ public class ServerApp {
         }
 
         try {
+            // Set the hostname for the RMI server
             System.setProperty("java.rmi.server.hostname", hostname);
+
             RMIServerImpl obj =new RMIServerImpl();
             Registry registry = LocateRegistry.createRegistry(port_RMI);
             registry.rebind("Server",obj);
 
-            // Creare un ScheduledExecutorService per eseguire checkClients ogni 5 secondi
+            // Create a ScheduledExecutorService to run checkClients every 5 seconds
             ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
             scheduler.scheduleAtFixedRate(() -> {
                 try {
@@ -53,15 +62,15 @@ public class ServerApp {
                     System.err.println("ServerApp exception: " + e);
                 }
                 }, 0, 5, TimeUnit.SECONDS);
-
-
         } catch (Exception e) {
             System.err.println("ServerApp exception: " + e);
         }
 
 
         try {
+            // Create a ServerSocket to accept connections from clients on the primary port
             ServerSocket serverSocket = new ServerSocket(port);
+            // Main loop to accept incoming clients
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();
