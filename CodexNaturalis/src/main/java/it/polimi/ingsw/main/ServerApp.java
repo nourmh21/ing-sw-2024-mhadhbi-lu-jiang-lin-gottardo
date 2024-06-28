@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
  * that connects, handled by the ClientHandler class.
  */
 public class ServerApp {
-
     private static final int port = 49257;// Default Socket port
 
     /**
@@ -65,7 +64,6 @@ public class ServerApp {
         } catch (Exception e) {
             System.err.println("ServerApp exception: " + e);
         }
-
 
         try {
             // Create a ServerSocket to accept connections from clients on the primary port
