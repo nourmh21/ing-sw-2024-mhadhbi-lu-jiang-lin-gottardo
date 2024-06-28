@@ -41,7 +41,9 @@ The server app can be run with the following command:
 ```shell
 java -jar codex_naturalis_server.jar ip_address port_number   
 ```
-Note: the party running the server application must verify the available port numbers themselves.
+Note: 
+- ip_address is IPv4 of the party that runs server application
+- the party running the server application must verify the available port numbers themselves
 #### CLIENT
 The client app can be run one of following command: <br>
 TUI
